@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hensel's Lemma</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back (TODO: should we keep this? should we move to bottom?)</a>
+
+<h1>Hensel's Lemma</h1>
+<p class="meta">February 2026</p>
+
+<p>
+Calculus is the mathematics of <em>approximations of continuous quantities</em>; number theory asks exact problems about discrete quantities. These seem, therefore, to be unrelated studies.
+</p>
+
+<p>
+Yet Kurt Hensel made a remarkable discovery: using ideas from calculus, one can better understand number theory problems. We're going to explain Hensel's wonderful discovery, by trying to solve polynomial equations in <em>modular arithmetic</em>. More particularly, we are going to try and find all integers \(x\) such that
+\[x^3 - 17x^2 + 12x + 16 \equiv 0 \pmod{3000}.\]
+</p>
+
+<p>
+While this sort of problem -- solving a polynomial equation in <em>modular arithmetic</em> -- might seem a bit strange, it actually leads directly to the \emph{Langlands program} in modern number theory, as we'll comment a little about at the end.
+</p>
+
+<h2>A first reduction</h2>
+
+<p>
+The prime factorization of 3000 is 
+\[3000 = 2^3 \times 3 \times 5^3.\]
+</p>
+
+<p>
+The <em>Chinese remainder theorem</em> tells us that solving
+\[x^3 -17x^2 + 12x + 16 \equiv 0 \pmod{3000}\]
+is, therefore, equivalent to solving the \emph{three} different congruences
+\[x^3 - 17x^2 + 12x + 16 \equiv 0\pmod{2^3},\]
+\[x^3 - 17x^2 + 12x + 16 \equiv 0\pmod{3},\]
+\[x^3 - 17x^2 + 12x + 16 \equiv 0\pmod{125}.\]
+</p>
+
+<p>
+It might seem like we've made our problem \emph{harder}, not easier: we used to have one equation, but now we have three! However, there is a sense in which our life has been made simpler: to solve 
+\[x^3 - 17x^2 + 12x + 16 \equiv 0 \pmod{8},\]
+for example, we only need to plug in \(x = 0, 1, 2, 3, 4, 5, 6,\) and \(7.\) This is only eight values to try. If we simplify our polynomial to
+\[x^3 -17x^2 + 12x + 16 \equiv x^3 - x^2 + 4x \pmod{8},\]
+and plug in each of the possible values, we quickly find that the only solutions to our equation modulo 8 are 
+\[x \equiv 0, 4 \pmod{8}.\]
+</p>
+
+<p>
+Similarly, we can plug in \(x= 0, 1, 2\) to find that the only solution to 
+\[x^3 - 17x^2 + 12x + 16 \equiv 0\pmod{3}\]
+is \(x \equiv 1 \pmod{3}.\)
+</p>
+
+<p>
+Just by plugging in a few values, we managed to solve 2 out of 3 of our equations. Unfortunately, plugging in every value from \(x = 0\) to \(x = 124\) to solve
+\[x^3 - 17x^2 + 12x + 16 \equiv 0\pmod{125},\]
+seems like it would take much too long. Are there any quicker ways to proceed?
+</p>
+
+<h2>Working modulo 5</h2>
+
+<p>
+Recall \(125 = 5^3.\) So, if \(x\) is an integer making
+\[x^3 - 17x^2 + 12x + 16 \equiv 0 \pmod{125},\]
+then we also have
+\begin{equation} \label{eq52} x^3 - 17x^2 + 12x + 16 \equiv 0 \pmod{5}.\end{equation}
+</p>
+
+<p>
+This equation is a little easier to solve: we can plug in \(x = 0, 1, 2, 3,\) and 4 to find that the only solutions to \autoref{eq52} is
+\[x \equiv 2 \pmod{5}.\]
+</p>
+
+<p>
+When we plug in \(x = 2\) to our polynomial, we get
+\[2^3 - 17 \cdot 2^2 + 12 \cdot 2 + 16 = -20.\]
+</p>
+
+<p>
+This number is indeed divisible by 5... but it is not a multiple of \(125.\) However, Hensel thought that \(-20\) is \emph{close} to being zero modulo 125, because \(125 = 5^3,\) and \(-20\) is at least divisible by 5 once, even if it isn't divisible by 5 three times.
+</p>
+
+<p>
+On its own, this thought would probably not be so helpful. What made this idea so remarkable was what Hensel did \emph{next}. Before we can explain that, though, we need to take a brief digression to recall an insight from calculus.
+</p>
+
+</body>
+</html>

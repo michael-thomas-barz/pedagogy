@@ -1,28 +1,38 @@
 @import url("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css");
 
 :root {
-  --bg: #1c1c1c;
-  --fg: #e6e6e6;
-  --muted: #a0a0a0;
-  --link: #d6b27c;
-  --link-hover: #f0c987;
+  --bg: #282828;
+  --fg: #fbf1c7;
+  --link: #cc241d;
+  --link-hover: #fb4934;
+  --muted: #fbf1c7;
 }
 
 html {
   background: var(--bg);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
-  line-height: 1.6;
+  font-family: Monaco, monospace;
 }
 
 body {
-  max-width: 700px;
-  margin: 4rem auto;
-  padding: 0 1.2rem;
+  max-width: 600px;
+  margin: 0;
+  padding: 20px;
+  font-size: 14px;
 }
 
-h1, h2, h3 {
-  font-weight: normal;
+hr {
+        border: 0;
+        height: 1px;
+        background-color: var(--fg);
+}
+
+h1, h2 {
+        color: #b16286;
+}
+
+h3 {
+        color: #689d6a;
 }
 
 a {
@@ -53,4 +63,13 @@ footer {
   color: var(--muted);
   font-size: 0.85rem;
 }
+.latex-itemize {
+  list-style: disc;
+  padding-left: 2.2rem;
+  margin: 1.2rem 0;
+}
 
+.latex-itemize li {
+  margin: 0.6rem 0;
+  line-height: 1.6;
+}

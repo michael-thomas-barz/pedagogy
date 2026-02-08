@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Primitive Roots</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back (TODO: should we keep this? should we move to bottom?)</a>
+
+<h1>Primitive Roots</h1>
+<p class="meta">February 2026</p>
+
+<p>
+Generally addition is easier than multiplication.
+In calculus the logarithm and exponent are important tools because they can translate problems about multiplication to problems about addition. They are functions such that
+\[
+a^{x+y}=a^x\cdot a^y\text{ and }\log_a(xy)=\log_a(x)+\log_a(y),
+\]
+and the 17th century mathematician Napier used them to simplify complicated computations. For example, if he wanted to compute $145940^3$, he would look up the table of logarithms to see
+\[
+\log_{10}(1.4594)=0.164\text{ so }\log_{10}(145940)=5.164.
+\]
+He would then use properties of logarithms to see
+\[
+\log_{10}(145940^3)=5.164\cdot3=15.492,
+\]
+then look back at his table of logarithms to see $10^{0.492}=3.104$, so
+\[
+145940^3=3.104\times10^{15},
+\]
+approximately.
+</p>
+
+<p>
+Moreover, we could have chosen any base instead of $10$. For example logarithms and exponentials with base $2$ can be translated to logarithms and exponentials with base $10$ since
+\[
+2^x=10^{\log_{10}(2)x}\text{ and }\log_2(x)=\log_2(10)\cdot\log_{10}(x).
+\]
+</p>
+
+<p>
+In number theory we are interested in working modulo a prime number $p$. There are crucial differences from exponentials and logarithms in calculus:
+<ul class="latex-itemize">
+        <li> we can only take numbers to integer powers. For example, $3^{7.9}\pmod5$ does not make sense; and </li>
+ <li> the base of exponentials matters. For example, the exponentials $2^x$ and $3^x$ are not necessarily equivalent.
+ </li>
+</ul>
+</p>
+
+<p>
+COMPLETE LATER
+</p>
+
+</body>
+</html>
