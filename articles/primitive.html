@@ -20,14 +20,13 @@
 <p class="meta">February 2026</p>
 
 <p>
-Generally addition is easier than multiplication.
-In calculus the logarithm and exponent are important tools because they can translate problems about multiplication to problems about addition. They are functions such that
+Generally addition is easier than multiplication. The logarithm and exponent are important tools because they can translate problems about multiplication to problems about addition. They are functions such that
 \[
 a^{x+y}=a^x\cdot a^y\text{ and }\log_a(xy)=\log_a(x)+\log_a(y),
 \]
-and the 17th century mathematician Napier used them to simplify complicated computations. For example, if he wanted to compute $145940^3$, he would look up the table of logarithms to see
+and the 17th century mathematician Napier used them to simplify complicated computations. For example, if he wanted to compute $145940^3$, he would look up through a table of logarithms to see
 \[
-\log_{10}(1.4594)=0.164\text{ so }\log_{10}(145940)=5.164.
+\log_{10}(1.4594)=0.164,\text{ so }\log_{10}(145940)=5.164.
 \]
 He would then use properties of logarithms to see
 \[
@@ -51,13 +50,300 @@ Moreover, we could have chosen any base instead of $10$. For example logarithms 
 In number theory we are interested in working modulo a prime number $p$. There are crucial differences from exponentials and logarithms in calculus:
 <ul class="latex-itemize">
         <li> we can only take numbers to integer powers. For example, $3^{7.9}\pmod5$ does not make sense; and </li>
- <li> the base of exponentials matters. For example, the exponentials $2^x$ and $3^x$ are not necessarily equivalent.
+        <li> in normal arithmetic, every real number is of the form \(10^x\) for some \(x\); but in modular arithmetic, not every number is of this form! This means the choice of <em>base</em> of our logarithm is very important, much moreso than in usual math.
  </li>
 </ul>
 </p>
 
 <p>
-COMPLETE LATER
+To illustrate this second point, let's see how different bases work modulo \(p=7.\)
+<table border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <th></th>
+    <th>n=0</th>
+    <th>n=1</th>
+    <th>n=2</th>
+    <th>n=3</th>
+    <th>n=4</th>
+    <th>n=5</th>
+    <th>n=6</th>
+  </tr>
+  <tr>
+    <th>2ⁿ mod 7</th>
+    <td>1</td><td>2</td><td>4</td><td>1</td><td>2</td><td>4</td><td>1</td>
+  </tr>
+  <tr>
+    <th>3ⁿ mod 7</th>
+    <td>1</td><td>3</td><td>2</td><td>6</td><td>4</td><td>5</td><td>1</td>
+  </tr>
+</table>
+</p>
+
+<p>
+This table shows a sampling of three particular bases. Note that, when we use the base \(2,\) the numbers \(3, 5,\) and \(6\) are never hit, so \(2\) is not a very good base for the exponential. 
+
+However, when we use base \(3\), we find that every possible nonzero residue \(1, 2, 3, 4, 5, 6\) modulo 7 is hit. This means that, if we want to use logarithms to perform mod 7 arithmetic, the same Napier did with usual arithmetic, then we can't use base 2 logarithms, but we can use base 3 logarithms.
+</p>
+
+<p>
+We say \(g\) is a <em>primitive root</em> modulo the prime \(p\) if the exponentials \(g^n\) cover all residues \(1, 2, ..., p-1\) modulo \(p.\) For example, when \(p=7,\) we saw above that \(3\) was a primitive root, but \(2\) was not. Mod 7 arithmetic has another primitive root, 5, because the powers of 5 also hit every residue modulo 7, as shown in the below table. 
+<table border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <th></th>
+    <th>n=0</th>
+    <th>n=1</th>
+    <th>n=2</th>
+    <th>n=3</th>
+    <th>n=4</th>
+    <th>n=5</th>
+    <th>n=6</th>
+  </tr>
+  <tr>
+    <th>5ⁿ mod 7</th>
+    <td>1</td><td>5</td><td>4</td><td>6</td><td>2</td><td>3</td><td>1</td>
+  </tr>
+  <tr>
+    <th>3ⁿ mod 7</th>
+    <td>1</td><td>3</td><td>2</td><td>6</td><td>4</td><td>5</td><td>1</td>
+  </tr>
+</table>
+</p>
+
+<p>
+It is known that primitive roots always exist, modulo any prime \(p\)! With the calculator below, you can find primitive roots modulo a few small primes, as an example. 
+</p>
+
+<label>
+        Prime \(p\):
+        <select id="prime">
+                <option value="5">5</option>
+                <option value="7">7</option>
+                <option value="11">11</option>
+                <option value="13">13</option>
+                <option value="17">17</option>
+        </select>
+</label>
+
+<label>
+  Base b:
+  <input type="number" id="base" value="2">
+</label>
+
+<table  border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <thead>
+    <tr id="header-row">
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="value-row">
+      <th id="base-label"></th>
+    </tr>
+  </tbody>
+</table>
+
+<div id="result"></div>
+
+<script>
+  const primeSelect = document.getElementById("prime");
+  const baseInput = document.getElementById("base");
+  const headerRow = document.getElementById("header-row");
+  const valueRow = document.getElementById("value-row");
+  const baseLabel = document.getElementById("base-label");
+  const resultDiv = document.getElementById("result");
+
+  function modPow(base, exp, mod) {
+    let result = 1;
+    base = ((base % mod) + mod) % mod;
+    for (let i = 0; i < exp; i++) {
+      result = (result * base) % mod;
+    }
+    return result;
+  }
+  
+  function isPrimitiveRoot(b, p) {
+        const seen = new Set();
+          for (let n = 1; n < p; n++) {
+                  seen.add(modPow(b, n, p));
+          }
+
+          if (seen.size !== p-1) return false;
+          return !seen.has(0);
+  }
+
+  function updateTable() {
+    const p = Number(primeSelect.value);
+    const b = Number(baseInput.value);
+
+    headerRow.innerHTML = "<th>n</th>";
+    valueRow.innerHTML = "";
+    baseLabel.textContent = `${b}ⁿ mod ${p}`;
+    valueRow.appendChild(baseLabel);
+
+    const values = new Set();
+
+    for (let n = 0; n < p; n++) {
+      const val = modPow(b, n, p);
+      values.add(val);
+
+      const th = document.createElement("th");
+      th.textContent = n;
+      headerRow.appendChild(th);
+
+      const td = document.createElement("td");
+      td.textContent = val;
+      valueRow.appendChild(td);
+    }
+
+    values.delete(0);
+    values.delete(1);
+
+    const isPrimitive = isPrimitiveRoot(b, p);
+
+    resultDiv.innerHTML = isPrimitive
+      ? `${b} is a primitive root modulo ${p}.`
+                  : `${b} is <em class="redem">not</em> a primitive root modulo ${p}.`;
+  }
+
+  primeSelect.addEventListener("change", updateTable);
+  baseInput.addEventListener("input", updateTable);
+
+  updateTable();
+</script>
+
+<p>
+Notice how, whenever you do have a primitive root \(g,\) you always have \(g^{p-1} = 1.\) In other words, the last power of a primitive root is always 1.
+</p>
+
+<h2>An application</h2>
+
+<p>
+Primitive roots, like logarithms, are a great tool for turning questions about multiplication (hard) into questions about addition (easy). 
+</p>
+
+<p>
+For example, when is a number \(a\) a square modulo \(p\), i.e., when does the equation \(x^2\equiv a\pmod p\) have a solution? 
+</p>
+
+<p>
+This is a question about multiplication, because of this \(x^2.\) So to answer it, let's use a primitive root. Take \(g\) a primitive root modulo \(p.\) Then any \(x\) can be written as \(x=g^k\) for some number \(k,\) so that 
+\[
+x^2=(g^k)^2=g^{2k}.
+\]
+Note that \(a = g^n,\) for some integer \(n.\) So the question of when 
+\[x^2 \equiv a \pmod{p}\]
+has a solution is equivalent to the question of if \(n\) is even or odd. Checking if a number is even or odd is much easier than checking if a number is a perfect square! 
+</p>
+
+<p>
+As an example of this procedure, let's compute some square roots modulo \(17.\) One example of a primitive root modulo 17 is \(3\); so, all the <em>even</em> powers of 3 are square roots modulo 17, and all the <em>odd</em> powers of 17 are <em>not</em> squares modulo 17. 
+</p>
+
+<table border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <th>n</th>
+    <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+    <th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th>
+    <th>13</th><th>14</th><th>15</th><th>16</th>
+  </tr>
+  <tr>
+    <th>3ⁿ mod 17</th>
+    <td>1</td><td>3</td><td>9</td><td>10</td><td>13</td><td>5</td><td>15</td>
+    <td>11</td><td>16</td><td>14</td><td>8</td><td>7</td><td>4</td>
+    <td>12</td><td>2</td><td>6</td><td>1</td>
+  </tr>
+  <tr>
+    <th>Perfect square mod 17?</th>
+    <td>Yes</td><td>No</td><td>Yes</td><td>No</td><td>Yes</td><td>No</td><td>No</td>
+    <td>No</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td>
+    <td>No</td><td>Yes</td><td>No</td><td>Yes</td>
+  </tr>
+</table>
+
+<p>
+From this table, we can see that \(3^{10} \equiv 8\pmod{17},\) so that 8 is a perfect square modulo 17, with square root 
+\[3^{10/2} \equiv 3^5 \equiv 5\pmod{17}.\]
+
+And indeed,
+\[5^2 - 8 = 17\]
+is a multiple of 17, so \(8 \equiv 5^2\pmod{17},\) just as our table predicted!
+</p>
+
+<p>
+This method has one downside, though: finding a primitive root \(g,\) and writing \(a\) as a power of \(g,\) can be quite hard computationally! (This is called the <em>discrete logarithm problem</em>, and in fact is so computationally hard that its difficulty is exploited in cryptography.) However, Euler still found a remarkable theoretical application of this procedure. 
+</p>
+
+<p>
+When is \(-1\) a perfect square modulo \(p\)? Over the real numbers, \(-1\) isn't a perfect square... this is why we had to invent the imaginary number \(i.\) But sometimes in modular arithmetic, it is the case that \(-1\) is a perfect square! For example, \(2^2 \equiv 4 \equiv -1\pmod{5}.\) 
+</p>
+
+<p>
+Euler wanted to know when \(-1\) is a square modulo a prime \(p.\) It sometimes is (like for \(p=5\)), and sometimes isn't (like when \(p=3\)). To answer this, Euler observed that if there was some integer \(i\) so that
+\[i^2 \equiv -1\pmod{p},\]
+then \(i^4 \equiv +1 \pmod{p}.\) Thus, if we write
+\[i = g^k,\]
+for \(k\) some integer and \(g\) a primitive root modulo \(p,\) then 
+\[1 = g^{4k}.\]
+</p>
+
+<p>
+We can always write \(1 = g^{p-1},\) whenever we have a primitive root \(g,\) as we observed at the end of the last section. So, \(-1\) is a perfect square modulo \(p\) precisely when \(p-1\) is a multiple of 4! 
+</p>
+
+<h2>Primes as sums of two squares</h2>
+
+<p>
+Let me end by explaining why should you care whether or not \(\sqrt{-1}\) exists modulo \(p\).
+</p>
+
+<p>
+The existence of $\sqrt{-1}$ is related to the following gem, discovered by Fermat in the 1600s: an odd prime number \(p\) can be written a sum of two perfect squares exactly when \(p\equiv1\pmod4\). For example:
+\[
+5=1^2+2^2,\ 13=2^2+3^2,\ 17=1^2+4^2,\ 29=2^2+5^2,\ 37=1^2+6^2,\cdots,
+\]
+but \(7, 11, 19\), etc. cannot be expressed in this way. How on earth is this related to \(\sqrt{-1}\)? Well, if we know \(x^2+y^2=p\) then modulo \(p\), we know
+\[
+x^2+y^2\equiv0\pmod p,
+\]
+or in other words,
+\[
+x^2\equiv -y^2\pmod p.
+\]
+Dividing both sides by \(y^2\), we see that 
+\[
+(x/y)^2\equiv -1\pmod p!
+\]
+</p>
+
+<p>
+For example, \(17=1^2+4^2\)is saying that \(4\) is a square root of \(-1\) modulo \(17\). 
+</p>
+
+<p>
+When \(p = 13,\) something a little more interesting happens. In this case, the equation would read
+\[
+(3/2)^2\equiv-1\pmod{13},
+\]
+but what does \(3/2\) mean modulo \(13\)? 
+</p>
+
+<p>
+There is a very clever slight of hand which mathematicians performed here. Recall the story of exponents: \(2^3\) means \(2 \times 2 \times 2,\) and generally \(2^n\) means ``multiply \(2\) by itself \(n\) times." But then how do \(2^{-1}\) or \(2^{1/2}\) make sense? The idea is to define them using the exponent rule
+\[2^{a+b} = 2^a \cdot 2^b.\]
+It follows that, whatever \(2^{-1}\) means, it should obey
+\[2^{1 + (-1)} = 2^1 \cdot 2^{-1},\]
+and whatever \(2^{1/2}\) means, it should obey
+\[2^{(1/2) + (1/2)} = 2^{1/2} \cdot 2^{1/2}.\]
+From these equations, you see that \(2^{-1}\) has to be \(1/2,\) and \(2^{1/2}\) has to be \(\sqrt{2}.\)
+</p>
+
+<p>
+Following this idea, we will interpret \(3/2\) modulo \(13\) to be some number such that
+\[2 \cdot \frac{3}{2} \equiv 3 \pmod{13}.\] 
+
+You can check that
+\[2 \cdot 8 \equiv 3 \pmod{13},\]
+so we can say \(3/2 \equiv 8 \pmod{13}.\) Thus the expression \(13 = 2^2 + 3^2\) is telling us that \(3/2 \equiv 8\pmod{13}\) is a square root of \(-1\) modulo \(13.\)
 </p>
 
 </body>
