@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Quadratic Residues</title>
+  <title>What is sqrt(-1) modulo 5?</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -16,7 +16,7 @@
 
 <a href="../index.html">← back</a>
 
-<h1>Quadratic Residues</h1>
+<h1>What is \(\sqrt{-1}\) modulo \(5\)?</h1>
 <p class="meta">February 2026</p>
 
 <p>
@@ -54,7 +54,7 @@ So, how would we solve an equation like
 We can repeat the completing-the-square trick to see the solutions are
 \[x \equiv \frac{3 \pm \sqrt{3^2 - 4\cdot 2 \cdot 5}}{2 \cdot 2} \equiv \frac{3 \pm \sqrt{-31}}{4} \pmod{15}.\]
 
-In <a href="primitive.html">Primitive Roots</a>, we discussed finding square roots, and doing division, in modular arithmetic. The key point was that, because
+In <a href="primitive.html">What is \(\log(3)\) modulo \(7\)?</a>, we discussed finding square roots, and doing division, in modular arithmetic. The key point was that, because
 \[8 \cdot 2 \equiv 1 \pmod{15},\]
 we should treat \(8\) as \(1/2.\) And in particular, division by 2 is the same as multiplication by 8. Thus division by 4 is the same as multiplication by \(8^2 = 64 \equiv 4\pmod{15},\) so we can rewrite our quadratic formula as
 \[x \equiv 12 \pm 4\sqrt{-31} \pmod{15}.\]
@@ -78,7 +78,7 @@ With the same strategy, quadratic equations in modular arithmetic can always be 
 </p>
 
 <p>
-By the Chinese remainder theorem and a tool called <em>Hensel's lemma</em>, which we explore more in the article <a href="hensels.html">Hensel's lemma</a>, studying square roots in modular arithmetic more or less boils down to understanding square roots modulo <em>prime</em> numbers. 
+By the Chinese remainder theorem and a tool called <em>Hensel's lemma</em>, which we explore more in the article <a href="hensels.html">Using calculus to do number theory</a>, studying square roots in modular arithmetic more or less boils down to understanding square roots modulo <em>prime</em> numbers. 
 </p>
 
 <p>
