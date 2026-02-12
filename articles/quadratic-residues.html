@@ -457,7 +457,7 @@ Combining everything, we see
 so \(463\) is a square modulo \(1031\)! In fact, even though we now know \(463\) is a square, we have no idea what it's square root is (it turns out to be \(325\)).
 </p>
 
-<h3>Future directions</h3>
+<h2>Future directions</h2>
 <p>
 Today we explored solutions to quadratic equations in modular arithmetic. What if we instead look at cubic equations, such as \(x^3-x-1 \equiv 0\pmod{p}\)? By trying every residue with a calculator, you can check \(x^3-x-1\equiv0\pmod p\) has a solution when
 \[
@@ -476,9 +476,23 @@ f(q)=q\prod_{n=1}^\infty(1-q^n)(1-q^{23n})
 \]
 has the power series expansion
 \[
-f(q)=q-q^2-q^3+q^6+q^8+\cdots
+f(q)=q - q^2 - q^3 + q^6 + q^8 - q^{13} - q^{16} + q^{23} - \cdots
 \]
-It turns out that \(x^3-x-1\equiv0\pmod p\) has a solution exactly when the coefficient of \(q^p\) is \(0\) or \(+1\), and has no solution when the coefficient is \(-1\). The Langlands program generally predicts such a connection between the existence of solutions to polynomials mod \(p\) and coefficients of certain exotic functions, called <em>modular forms</em>.
+It turns out that \(x^3-x-1\equiv0\pmod p\) has a solution exactly when the coefficient of \(q^p\) is \(0\) or \(+2\), and has no solution when the coefficient is \(-1\). The Langlands program generally predicts such a connection between the existence of solutions to polynomials mod \(p\) and coefficients of certain exotic functions, called <em>modular forms</em>.
+</p>
+
+<p>
+As an aside, you might have noticed that our \(f(q)\) only seems to have coefficients which are 0, 1, or \(-1.\) So why did we say sometimes \(q^p\) could be \(+2\)? The reason is that the \(+2\)'s do appear, but only if you go very far out... here are the first hundred or so terms of \(f\): 
+\[
+\begin{align*}
+f(q) &= q - q^2 - q^3 + q^6 + q^8 - q^{13} - q^{16} + q^{23} \\
+&-q^{24} + q^{25} + q^{26} + q^{27} - q^{29} - q^{31} + q^{39} \\
+&-q^{41} - q^{46} - q^{47} + q^{48} + q^{49} - q^{50} - q^{54} \\
+&+ q^{58} + 2q^{59} +q^{62} + q^{64} - q^{69} - q^{71} - q^{73} \\
+&- q^{75} - q^{78} - q^{81}+q^{82} + q^{87} + q^{93} + q^{94} \\
+&- q^{98} + 2q^{101} - q^{104} - 2q^{118}.
+\end{align*}
+\]
 </p>
 
 </body>
