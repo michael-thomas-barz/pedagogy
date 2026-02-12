@@ -14,32 +14,472 @@
 </head>
 <body>
 
-<a href="../index.html">← back (TODO: should we keep this? should we move to bottom?)</a>
+<a href="../index.html">← back</a>
 
 <h1>Quadratic Residues</h1>
 <p class="meta">February 2026</p>
 
 <p>
-We discussed in [modular] 
-</p>
-<p>
-We consider the equation
-$$
-x_{n+1} + x_{n-1} = \frac{a_n}{1 - x_n^2}
-$$
-and study its birational dynamics.
+In <a href="/modular.html">Why study Diophantine equations?</a>, we discussed studying polynomial equations in modular arithmetic. One of the first equations encountered in high school algebra is the quadratic equation
+\[ax^2 + bx + c = 0.\]
+
+It is thus natural to ask about the modular arithmetic version: if \(a, b, c\) are integers, and \(n\) is another integer, what are the solutions to
+\[ax^2 + bx + c \equiv 0 \pmod{n}?\]
 </p>
 
 <p>
-This can be interpreted as a translation in the affine Weyl group
-$$
-W(E_8^{(1)}).
-$$
+In high school algebra, to solve the quadratic equation, we start by noticing that life would be much easier if \(b = 0,\) since then our quadratic equation is just
+\[ax^2 + c = 0,\]
+which is solved by
+\[x = \pm\sqrt{\frac{c}{a}}.\]
 </p>
 
-<footer>
-        dogs 
-</footer>
+<p>
+Fortunately, we can always reduce to the case where \(b=0,\) by <em>completing the square</em>. That is, we can rewrite our equation
+\[ax^2 + bx + c = 0\]
+as
+\[a\left(x + \frac{b}{2a}\right)^2 + \left(c - \frac{b^2}{4a}\right) = 0,\]
+so that
+\[x + \frac{b}{2a} = \pm \sqrt{\frac{c - \frac{b^2}{4a}}{a}}.\]
+Cleaning up this equation a little bit gives us the familar-looking quadratic formula
+\[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.\]
+</p>
+
+<p>
+So, how would we solve an equation like 
+\[2x^2 - 3x + 5 \equiv 0 \pmod{15}?\]
+</p>
+
+<p>
+We can repeat the completing-the-square trick to see the solutions are
+\[x \equiv \frac{3 \pm \sqrt{3^2 - 4\cdot 2 \cdot 5}}{2 \cdot 2} \equiv \frac{3 \pm \sqrt{-31}}{4} \pmod{15}.\]
+
+In <a href="primitive.html">Primitive Roots</a>, we discussed finding square roots, and doing division, in modular arithmetic. The key point was that, because
+\[8 \cdot 2 \equiv 1 \pmod{15},\]
+we should treat \(8\) as \(1/2.\) And in particular, division by 2 is the same as multiplication by 8. Thus division by 4 is the same as multiplication by \(8^2 = 64 \equiv 4\pmod{15},\) so we can rewrite our quadratic formula as
+\[x \equiv 12 \pm 4\sqrt{-31} \pmod{15}.\]
+
+The other challenge now is to find some integer \(y\) so that \(y^2 \equiv -31 \pmod{15}.\) In other words, we want to solve
+\[y^2 \equiv 14 \pmod{15}.\]
+</p>
+
+<p>
+But in fact, this equation has no solutions! Any solution must also satisfy
+\[y^2 \equiv 14 \pmod{3},\]
+meaning
+\[y^2 \equiv 2 \pmod{3}.\]
+But we can compute all the squares modulo 3:
+\[0^2 \equiv 0, 1^2 \equiv 1, 2^2 \equiv 1 \pmod{3},\]
+and we find that no matter what residue you square modulo 3, you will never get 2. 
+</p>
+
+<p>
+With the same strategy, quadratic equations in modular arithmetic can always be reduced to `square root' questions. As we saw above, sometimes these square roots exist, and sometimes they don't. Our goal now is to understand when square roots exist in modular arithmetic.
+</p>
+
+<p>
+By the Chinese remainder theorem and a tool called <em>Hensel's lemma</em>, which we explore more in the article <a href="hensels.html">Hensel's lemma</a>, studying square roots in modular arithmetic more or less boils down to understanding square roots modulo <em>prime</em> numbers. 
+</p>
+
+<p>
+So for the rest of this article, we focus on the following question: when is an integer \(a\) congruent to a perfect square modulo a prime number \(p\)?
+</p>
+
+<p>
+For example, when \(p = 7,\) the residues \(0, 1, 2,\) and \(4\) are all perfect squares: 
+\[0^2 \equiv 0 \pmod{7},\]
+\[1^2 \equiv 6^2 \equiv 1 \pmod{7},\]
+\[2^2 \equiv 5^2 \equiv 4 \pmod{7},\]
+and
+\[3^2 \equiv 4^2 \equiv 2 \pmod{7}.\]
+
+There are no other numbers we can square modulo 7 besides \(0, 1, 2, 3, 4, 5,\) and \(6,\) so the only perfect squares modulo 7 are the numbers \(0, 1, 2, 4\) we get as outputs. 
+</p>
+
+<p>
+Similarly, by squaring every possible residue, it's possible to compute the list of all perfect squares modulo a prime \(p.\) Below, you can ask your computer to do this procedure; it will list all the nonzero perfect squares for you, and also all the non-zero squares. We note though that the below table of residues doesn't include 0, which is always a square!
+</p>
+
+<label>
+  Prime p:
+  <select id="prime">
+    <option>3</option>
+    <option>5</option>
+    <option>7</option>
+    <option>11</option>
+    <option>13</option>
+    <option selected>17</option>
+    <option>19</option>
+    <option>23</option>
+  </select>
+</label>
+
+<table border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <tbody>
+    <tr id="squares-row">
+      <th>Squares mod p</th>
+    </tr>
+    <tr id="nonsquares-row">
+      <th>Non-squares mod p</th>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+  const primeSelect = document.getElementById("prime");
+  const squaresRow = document.getElementById("squares-row");
+  const nonsquaresRow = document.getElementById("nonsquares-row");
+
+  function updateTable() {
+    const p = Number(primeSelect.value);
+
+    // Clear rows
+    squaresRow.innerHTML = "<th>Squares mod p</th>";
+    nonsquaresRow.innerHTML = "<th>Non-squares mod p</th>";
+
+    // Compute quadratic residues
+    const squares = new Set();
+    for (let x = 1; x < p; x++) {
+      squares.add((x * x) % p);
+    }
+
+    // Separate residues
+    const squareList = [];
+    const nonsquareList = [];
+
+    for (let a = 1; a < p; a++) {
+      if (squares.has(a)) {
+        squareList.push(a);
+      } else {
+        nonsquareList.push(a);
+      }
+    }
+
+    // Fill rows
+    for (const a of squareList) {
+      const td = document.createElement("td");
+      td.textContent = a;
+      squaresRow.appendChild(td);
+    }
+
+    for (const a of nonsquareList) {
+      const td = document.createElement("td");
+      td.textContent = a;
+      nonsquaresRow.appendChild(td);
+    }
+  }
+
+  primeSelect.addEventListener("change", updateTable);
+  updateTable();
+</script>
+
+<p>
+What do you notice from these tables? Maybe the first thing you saw was that there are always the same number of nonzero perfect squares as there are non-squares. Why could that be true? 
+</p>
+
+<p>
+Recall that, when we were finding all the squares modulo 7, we found that square roots came in pairs: 
+\[1^2 \equiv 6^2 \equiv 1 \pmod{7},\]
+\[2^2 \equiv 5^2 \equiv 4 \pmod{7},\]
+and
+\[3^2 \equiv 4^2 \equiv 2 \pmod{7}.\]
+</p>
+
+<p>
+This is analogous to the fact that, over the real numbers, \(a^2 = (-a)^2.\) In modular arithmetic, the corresponding fact is that \(a^2 \equiv (p-a)^2 \pmod{p}.\) So, for example, when \(p = 7,\) we find that \(1\) and \(7-1=6\) both have the same square; and \(2\) and \(7-2=5\) have the same square; and \(3\) and \(7-3=4\) have the same square.
+</p>
+
+<p>
+Thus, to find all the squares modulo \(p,\) we don't need to square every residue from \(0\) to \(p-1.\) We just need to compute
+\[0^2, 1^2, 2^2, ..., \left(\frac{p-1}{2}\right)^2.\]
+
+By stopping halfway, we never miss any squares, because any of the bigger numbers have the same square as a smaller number, thanks to this \(a^2 \equiv (p-a)^2\pmod{p}\) trick. 
+
+This tells us that there are exactly \(\frac{p+1}{2}\) perfect squares and \(\frac{p-1}{2}\) non-squares modulo \(p.\)
+</p>
+
+<p>
+While this observation is interesting, it doesn't seem to reveal much else on which numbers are squares modulo \(p.\) However, Legendre had an amazing insight on this question: above, we chose a prime \(p\) and listed all the squares; instead, let's fix an integer \(a,\) and ask for which primes \(p\) the integer \(a\) is a perfect square. Try playing with the following table, and see what patterns you notice.
+</p>
+
+<label>
+  Integer a:
+  <select id="a-value">
+    <option value="-1">−1</option>
+    <option value="2" selected>2</option>
+    <option value="3">3</option>
+    <option value="5">5</option>
+    <option value="7">7</option>
+  </select>
+</label>
+
+<table border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <thead>
+    <tr id="header-row">
+      <th>p</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="result-row">
+      <th>a is a square mod p?</th>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+  const aSelect = document.getElementById("a-value");
+  const headerRow = document.getElementById("header-row");
+  const resultRow = document.getElementById("result-row");
+
+  const primes = [
+    3, 5, 7, 11, 13, 17, 19, 23,
+    29, 31, 37, 41, 43, 47
+  ];
+
+  function isSquareMod(a, p) {
+    a = ((a % p) + p) % p; // normalize
+    if (a === 0) return true;
+
+    for (let x = 1; x < p; x++) {
+      if ((x * x) % p === a) return true;
+    }
+    return false;
+  }
+
+  function updateTable() {
+    const a = Number(aSelect.value);
+
+    headerRow.innerHTML = "<th>p</th>";
+    resultRow.innerHTML = `<th>Is ${a} a square mod p?</th>`;
+
+    for (const p of primes) {
+      const th = document.createElement("th");
+      th.textContent = p;
+      headerRow.appendChild(th);
+
+      const td = document.createElement("td");
+      td.textContent = isSquareMod(a, p) ? "Yes" : "No";
+      resultRow.appendChild(td);
+    }
+  }
+
+  aSelect.addEventListener("change", updateTable);
+  updateTable();
+</script>
+
+<p>
+After spending a long time with these tables, Legendre found a sneaky pattern. To illustrate his pattern, let's add one more row to these tables...
+</p>
+
+<label>
+  Integer a:
+  <select id="b-value">
+    <option value="-1">−1</option>
+    <option value="2" selected>2</option>
+    <option value="3">3</option>
+    <option value="5">5</option>
+    <option value="7">7</option>
+  </select>
+</label>
+
+<table border="1" cellpadding="6" style="border-collapse: collapse; text-align: center;">
+  <thead>
+    <tr id="t2-header">
+      <th>p</th>
+    </tr>
+  </thead>
+  <tbody id="t2-body"></tbody>
+</table>
+
+<script>
+ const aSelect2 = document.getElementById("b-value");
+
+ const primes2 = [
+    3, 5, 7, 11, 13, 17, 19, 23,
+    29, 31, 37, 41, 43, 47
+  ];
+
+  function isSquareMod2(a, p) {
+    a = ((a % p) + p) % p;
+    for (let x = 1; x < p; x++) {
+      if ((x * x) % p === a) return true;
+    }
+    return false;
+  }
+
+  function updateTable2() {
+    const a = Number(document.getElementById("b-value").value);
+    const header = document.getElementById("t2-header");
+    const body = document.getElementById("t2-body");
+
+    header.innerHTML = "<th>p</th>";
+    body.innerHTML = "";
+
+    let modulus = null;
+    let label = "";
+
+    if (a === -1) {
+      modulus = 4; label = "p mod 4";
+    } else if (a === 2) {
+      modulus = 8; label = "p mod 8";
+    } else if (a === 3) {
+      modulus = 12; label = "p mod 12";
+    } else if (a === 5) {
+      modulus = 5; label = "p mod 5";
+    }
+
+    const rowSquare = document.createElement("tr");
+    rowSquare.innerHTML = `<th>Is ${a} a square mod p?</th>`;
+
+    const rowMod = document.createElement("tr");
+    rowMod.innerHTML = `<th>${label}</th>`;
+
+    for (const p of primes2) {
+      header.innerHTML += `<th>${p}</th>`;
+            rowSquare.innerHTML += `<td>${isSquareMod2(a, p) ? "<b class=\"greenem\">Yes</b>" : "No"}</td>`;
+            rowMod.innerHTML += `<td>${isSquareMod2(a, p) ? "<b class=\"greenem\">" : ""} ${modulus ? (p % modulus) : ""} ${isSquareMod2(a, p) ? "</b>" : ""}</td>`;
+    }
+
+    body.appendChild(rowSquare);
+    body.appendChild(rowMod);
+  }
+
+  document.getElementById("b-value")
+    .addEventListener("change", updateTable2);
+
+  updateTable2();
+</script>
+
+<p>
+Legendre observed an amazing pattern: 
+<ul class="latex-itemize">
+        <li>The number \(2\) is a perfect square modulo \(p\) when \(p \equiv 1\text{ or} 7\pmod{8},\) and is not a perfect square when \(p\equiv 3\text{ or }5\pmod{8}.</li>
+        <li>The number \(3\) is a square modulo \(p\) when \(p \equiv 1, 11\pmod{12},\) and \(3\) is not a square when \(p\equiv 5, 7\pmod{12}.\)</li>
+        <li>The number \(5\) is a square modulo \(p\) when \(p \equiv 1, 4\pmod{5},\) and \(5\) is not a square modulo \(p\) when \(p \equiv 2, 3 \pmod{5}.\) </li>
+        <li>The number \(-1\) is a square modulo \(p\) when \(p \equiv 1\pmod{4},\) and is not a square modulo \(p\) when \(p \equiv 3\pmod{4}.\)</li>
+</ul>
+</p>
+
+<p>
+So, Legendre observed that the primes \(p\) such that \(a\) is a square modulo \(p\) only depend on the residue of \(p\) modulo some other number! Moreover, in this example of \(p=5,\) note that \(5\) is a perfect square modulo \(p\) exactly when \(p\) is a perfect square modulo \(5.\)
+</p>
+
+<h2>Legendre symbols</h2>
+
+<p>
+To formalize his laws, Legendre introduced the <em>quadratic residue symbol</em>. The definition is very simple:
+\[\left(\frac{a}{p}\right) := \begin{cases} 0 & \text{ if \(a\) is divisible by \(p\),} \\ 1 & \text{ if \(a\) is a perfect square modulo \(p\) (and not divisible by \(p\)),} \\ -1 & \text{ if \(a\) is not a perfect square modulo \(p\).}\end{cases}\]
+
+For example, 
+\[\left(\frac{3}{23}\right) = +1,\]
+because \(3\) is a perfect square modulo 23 (note \(7^2 \equiv 3\pmod{23}\)).
+</p>
+
+<p>
+We can now state Legendre's observations as follows. 
+
+<b>The first supplementary law</b> asserts that, for any odd prime \(p,\)
+\[\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}} = \begin{cases} 1 & p \equiv 1\pmod{4}, \\ -1 & p \equiv 3\pmod{4}.\end{cases}\]
+
+<b>The second supplementary law</b> asserts that, for any odd prime \(p,\)
+\[\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}} = \begin{cases} 1 & p \equiv 1, 7 \pmod{8}, \\ -1 & p \equiv 3, 5\pmod{8}.\end{cases}\]
+
+These first and second supplementary laws encode what Legendre observed when ooking at \(a = -1\) and \(a = 2\) in the tables above.
+</p>
+
+<p>
+Legendre's general observation is called <b>Gauss' law of quadratic reciprocity</b>, and it asserts that, for any odd primes \(p, q\) with \(p \neq q,\) we have
+\[\left(\frac{p}{q}\right) = (-1)^{\frac{p-1}{2} \cdot \frac{q-1}{2}} \cdot \left(\frac{q}{p}\right).\]
+</p>
+
+<p>
+For example, when \(q = 5,\) quadratic reciprocity states
+\[\left(\frac{p}{5}\right) = \left(\frac{5}{p}\right),\]
+because the sign becomes
+\[(-1)^{\frac{p-1}{2} \cdot \frac{5-1}{2}} = (-1)^{\frac{p-1}{2} \cdot 2} = 1,\]
+as \(-1\) raised to an even power is always \(+1.\)
+
+This is exactly the observation Legendre made about when \(5\) is a square modulo \(p\): \((5/p) = (p/5),\) so \(5\) is a square modulo \(p\) if and only if \(p\) is a square modulo \(5.\)
+</p>
+
+<p>
+You might wonder how Gauss got involved. The answer is that, while Legendre conjectured the law of quadratic reciprocity -- and even got very close to a proof! -- Gauss was ultimately the person to prove quadratic reciprocity, and explain why it held (instead of simply observing it held in different examples). Gauss proved quadratic reciprocity in his famous book <em>Disquisitiones Arithmeticae</em>, in which he also laid the foundations of modern number theory. The law of quadratic reciprocity is named after Gauss in honor of his contributions towards it.
+</p>
+
+<h2>An example</h2>
+
+<p>
+Gauss' law of quadratic reciprocity can be used to give a quick algorithm for deciding whether a number \(a\) is a square modulo a prime number \(p.\) Before giving this algorithm, we observe the following fundamental identity:
+\[
+\bigg(\frac{ab}p\bigg)=\bigg(\frac ap\bigg)\bigg(\frac bp\bigg).
+\]
+</p>
+
+<p>
+For example this says that if \(a\) and \(b\) are squares modulo \(p\) then
+\[
+\bigg(\frac{ab}p\bigg)=1\cdot1=1
+\]
+so \(ab\) is also a square modulo \(p\). Of course we expect this, since if \(a=s^2\) and \(b=t^2\) then \(ab=(st)^2\) is still a square. Less obviously (but nevertheless still true!) is the fact that if neither \(a\) nor \(b\) are squares modulo \(p\) then \(ab\) must be a square, since
+\[
+\bigg(\frac{ab}p\bigg)=(-1)\cdot(-1)=1.
+\]
+For example, earlier we saw \(3\) and \(6\) are not squares modulo \(7\), and hence \(3\cdot6\equiv4\pmod{7}\) must be a square modulo \(7\)!
+</p>
+
+<p>
+With this additional observation, let us answer: is \(463\) a square modulo \(1031\)? First, since both \(463\) and \(1031\) are prime, we can use quadratic reciprocity to see
+\[
+\bigg(\frac{463}{1031}\bigg)=-\bigg(\frac{1031}{463}\bigg).
+\]
+</p>
+
+<p>
+But since \(1031\equiv105\pmod{463}\) this is just equal to \(\big\frac{105}{463}\big)\). Now \(105\) factorizes as \(3\cdot5\cdot7\), so by the multiplicativity of quadratic residues,
+\[
+-\bigg(\frac{105}{463}\bigg)=-\bigg(\frac3{463}\bigg)\bigg(\frac5{463}\bigg)\bigg(\frac7{463}\bigg).
+\]
+</p>
+
+<p>
+Now we can use quadratic reciprocity on each of these factors:
+\[
+\begin{align*}
+\bigg(\frac3{463}\bigg)&=-\bigg(\frac{463}3\bigg)=-\bigg(\frac13\bigg)=-1, \\
+\bigg(\frac5{463}\bigg)&=\bigg(\frac{463}5\bigg)=\bigg(\frac35\bigg)=-1, \\
+\bigg(\frac7{463}\bigg)&=-\bigg(\frac{463}7\bigg)=-\bigg(\frac17\bigg)=-1.
+\end{align*}
+\]
+Combining everything, we see
+\[
+\bigg(\frac{463}{1031}\bigg)=-\bigg(\frac3{463}\bigg)\bigg(\frac5{463}\bigg)\bigg(\frac7{463}\bigg)=-(-1)(-1)(-1)=1,
+\]
+so \(463\) is a square modulo \(1031\)! In fact, even though we now know \(463\) is a square, we have no idea what it's square root is (it turns out to be \(325\)).
+</p>
+
+<h3>Future directions</h3>
+<p>
+Today we explored solutions to quadratic equations in modular arithmetic. What if we instead look at cubic equations, such as \(x^3-x-1 \equiv 0\pmod{p}\)? By trying every residue with a calculator, you can check \(x^3-x-1\equiv0\pmod p\) has a solution when
+\[
+p=5,7,11,17,19,23,37,43,53,59,61,\cdots
+\]
+and doesn't have a solution when
+\[
+p=2,3,13,29,31,41,47,71,73,\cdots
+\]
+</p>
+
+<p>
+Unlike quadratic reciprocity, there is no clear pattern here. It turns out that there is a pattern, but it is highly non-obvious. The function
+\[
+f(q)=q\prod_{n=1}^\infty(1-q^n)(1-q^{23n})
+\]
+has the power series expansion
+\[
+f(q)=q-q^2-q^3+q^6+q^8+\cdots
+\]
+It turns out that \(x^3-x-1\equiv0\pmod p\) has a solution exactly when the coefficient of \(q^p\) is \(0\) or \(+1\), and has no solution when the coefficient is \(-1\). The Langlands program generally predicts such a connection between the existence of solutions to polynomials mod \(p\) and coefficients of certain exotic functions, called <em>modular forms</em>.
+</p>
 
 </body>
 </html>
