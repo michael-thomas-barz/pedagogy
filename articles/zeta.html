@@ -30,8 +30,92 @@ However, some infinite sets are more `common' than others. For example, even num
 <p>
 To measure the size of an infinite set of numbers \(A\), it is useful to think about its <em>natural density</em>, defined as
 \[d(A) := \lim_{n\to\infty} \frac{\#(\text{elements of \(A\) from \(1\) to \(N\)})}{N}.\]
-
 </p>
+
+<p>
+For example, the natural density of the the even integers is \(1/2.\) This is because the number of even integers between \(1\) and \(n\) is always \(\lfloor n/2\rfloor,\) and 
+\[\lim_{n\to\infty} \frac{\lfloor n/2\rfloor}{n} = \lim_{n\to\infty} \frac{n/2}{n} = \frac{1}{2}.\]
+</p>
+
+<p>
+The natural density of the set of powers of \(2\), on the other hand, is zero. This is because between \(1\) and \(n,\) there are \(1 + \lfloor \log_2(n)\rfloor\) powers of 2, and
+\[\lim_{n\to\infty} \frac{1 + \lfloor \log_2(n) \rfloor}{n} = \lim_{n\to\infty} = 0,\]
+because the logarithm grows much much slower than \(n.\) 
+</p>
+
+<p>
+To get a feel for what natural density is expressing, playing with the following calculator might be helpful. For a number \(n,\) it tells you what percent of the numbers between \(1\) and \(n\) are even, and what percent are powers of 2.
+</p>
+
+<hr>
+<label for="nInput">Enter a number n:</label>
+<input id="nInput" type="number" min="1" value="10" />
+
+<div class="result" id="output"></div>
+
+</div>
+
+<script>
+const nInput = document.getElementById('nInput');
+const output = document.getElementById('output');
+
+function countEvens(n) {
+return Math.floor(n / 2);
+}
+
+function countPowersOfTwo(n) {
+let count = 0;
+let value = 1;
+while (value <= n) {
+count++;
+value *= 2;
+}
+return count;
+}
+
+function update() {
+const n = parseInt(nInput.value, 10);
+if (!n || n < 1) {
+output.innerHTML = '<p>Please enter a positive integer.</p>';
+return;
+}
+
+const evens = countEvens(n);
+const powers = countPowersOfTwo(n);
+
+const evenPct = ((evens / n) * 100).toFixed(2);
+const powerPct = ((powers / n) * 100).toFixed(4);
+
+output.innerHTML = `
+<p><strong>From 1 to ${n}:</strong></p>
+<table style="border-collapse: collapse; margin-top: 0.5rem;">
+<thead>
+<tr>
+<th style="text-align:left; border-bottom: 2px solid #ccc; padding: 0.1rem 0.3rem;">Set</th>
+<th style="text-align:right; border-bottom: 2px solid #ccc; padding: 0.1rem 0.3rem;">Count</th>
+<th style="text-align:right; border-bottom: 2px solid #ccc; padding: 0.1rem 0.3rem;">Density</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 0.1rem 0.3rem;">Even numbers</td>
+<td style="text-align:right; padding: 0.1rem 0.3rem;">${evens}</td>
+<td style="text-align:right; padding: 0.1rem 0.3rem;">${evenPct}%</td>
+</tr>
+<tr>
+<td style="padding: 0.1rem 0.3rem;">Powers of 2</td>
+<td style="text-align:right; padding: 0.1rem 0.3rem;">${powers}</td>
+<td style="text-align:right; padding: 0.1rem 0.3rem;">${powerPct}%</td>
+</tr>
+</tbody>
+</table>
+`;
+}
+
+nInput.addEventListener('input', update);
+update();
+</script>
+<hr>
 
 </body>
 </html>
