@@ -6,6 +6,8 @@
   --link: #cc241d;
   --link-hover: #fb4934;
   --muted: #a89984;
+  --red: #cc241d;
+  --green: #689d6a;
 }
 
 html {
@@ -56,6 +58,18 @@ a:hover {
 .meta {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.greenem {
+        color: var(--green);
+}
+
+.redem {
+  color: var(--red);
+}
+
+.muted {
+        color: var(--muted);
 }
 
 footer {
