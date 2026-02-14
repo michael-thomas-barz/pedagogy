@@ -421,7 +421,7 @@ Thus, our mystery function \(F(x)\) obeys \(F'(x)\log(x) = 1.\) From here you de
 \[F(x) = \int_0^x \frac{dt}{\log(t)}.\]
 This function \(\int_0^x \frac{dt}{\log(t)}\) is a famous special function, called the <em>logarithmic integral</em>, and people usually denote it by \(\operatorname{Li}(x).\)
 
-It's good that we got this logarithmic integral, because you might remember that we saw it earlier, when recalling Gauss' approximation to \(\pi(x).\)
+It's good that we got this logarithmic integral, because you might remember that we saw it earlier, when recalling Gauss's approximation to \(\pi(x).\)
 </p>
 
 <p>
@@ -439,13 +439,13 @@ we get
 <p>
 Here \(\mathrm{Li}(x)\) is called the <em>main term</em>, because it turns out to be much larger than the terms \(\operatorname{Li}(x^{\rho_n}).\) Recall how earlier we explained that Gauss conjectured
 \[\pi(x) \approx \operatorname{Li}(x),\]
-by looking at tables of prime numbers. You can think that Gauss managed to, by looking at numerical data, discover the largest term of a Taylor series; Riemann extended Gauss' work to find the full series
+by looking at tables of prime numbers. You can think that Gauss managed to, by looking at numerical data, discover the largest term of a Taylor series; Riemann extended Gauss's work to find the full series
 \[\pi(x) \approx \operatorname{Li}(x) - \sum_{n=1}^{\infty} \operatorname{Li}(x^{\rho_n}).\]
-The extra terms Riemann added are not as large as Gauss' initial term (meaning if you just use Gauss' guess, you will still get a very good approximation!), but they do add accuracy, and in certain contexts you might need this extra accuracy. This is just like using a Taylor series approximation: the first term gives you a pretty accurate guess, but if you need more precision you might need to use a few more terms.
+The extra terms Riemann added are not as large as Gauss's initial term (meaning if you just use Gauss's guess, you will still get a very good approximation!), but they do add accuracy, and in certain contexts you might need this extra accuracy. This is just like using a Taylor series approximation: the first term gives you a pretty accurate guess, but if you need more precision you might need to use a few more terms.
 </p>
 
 <p>
-But why are the terms \(\operatorname{Li}(x^{\rho})\) so much smaller than \(\operatorname{Li}(x)\)? It turns out (as we remarked when introducing Gauss' guess) that
+But why are the terms \(\operatorname{Li}(x^{\rho})\) so much smaller than \(\operatorname{Li}(x)\)? It turns out (as we remarked when introducing Gauss's guess) that
 \[\operatorname{Li}(x) \approx \frac{x}{\log(x)}.\]
 Thus
 \[\operatorname{Li}(x^{\rho}) \approx \frac{x^{\rho}}{\log(x^{\rho})} = \frac{x^{\rho}}{\rho\log(x)}.\]
@@ -468,9 +468,9 @@ This is because, for very large numbers \(x,\) a quantity like \(x^{1/2}\) or ev
 </p>
 
 <p>
-Gauss' approximation 
+Gauss's approximation 
 \[\pi(x) \approx \operatorname{Li}(x)\]
-is as good as possible when <em>all</em> the extra terms \(\operatorname{Li}(x^{\rho})\) are as small as possible; in other words, the best case scenario for Gauss' approximation is that all the values \(s\) (in \(\rho = s+it\)) from above are as close to 0 as possible. If even one value of \(s\) is large, the estimate is messed up.
+is as good as possible when <em>all</em> the extra terms \(\operatorname{Li}(x^{\rho})\) are as small as possible; in other words, the best case scenario for Gauss's approximation is that all the values \(s\) (in \(\rho = s+it\)) from above are as close to 0 as possible. If even one value of \(s\) is large, the estimate is messed up.
 </p>
 
 <p>
@@ -478,7 +478,7 @@ Unfortunately, Riemann observed a certain symmetry of the \(\zeta\) function: if
 </p>
 
 <p>
-Thus the <em>best case scenario</em>, in which Gauss' approximation
+Thus the <em>best case scenario</em>, in which Gauss's approximation
 \[\pi(x) \approx \operatorname{Li}(x)\]
 is as good as possible, is when every \(\rho\) has \(s = 0.5\) exactly, lying in the exact middle of the interval \([0, 1].\) The famous <em>Riemann hypothesis</em> is the conjecture that every \(\rho\) does have \(s = 0.5\) exactly. Unfortunately, it seems to be very hard to prove, and nobody has yet found a reason why all the zeroes have \(s = 0.5\) exactly! 
 </p>
