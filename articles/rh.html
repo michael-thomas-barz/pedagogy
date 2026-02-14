@@ -206,7 +206,7 @@ Even though the sum
 \[
 \frac12+\frac13+\frac15+\frac17+\frac1{11}+\frac1{13}+\cdots
 \]
-eventually approaches infinity, it grows extremely slowly. For example, for the sum to surpass 3, you would need to sum all the prime numbers less than 100 million. Euler's remarkable discovery is that even if the series takes forever to surpass 3, it will eventually surpass 3, and 4, and 100, and a million! Too bad we will not live long enough for us to see the sum surpass 5...
+eventually approaches infinity, it grows <em>extremely</em> slowly. For example, for the sum to surpass 3, you would need to sum all the prime numbers less than 100 million. Euler's remarkable discovery is that even if the series takes forever to surpass 3, it will eventually surpass 3, and 4, and 100, and a million! Too bad we will not live long enough for us to see the sum surpass 5...
 </p>
 
 <p>
@@ -373,16 +373,16 @@ A point where a function takes on the value \(\infty\) is the opposite of a poin
 
 <p>
 This leads to the following formula for the Riemann zeta function:
-\[\zeta(s) \approx \frac{1}{1-s}\prod_{n=1}^{\infty} \left(1 - \frac{x}{\rho_n}\right),\]
-where recall the \(\rho_n\) are just the zeroes of \(\zeta(s),\) whatever they end up being. Thus
-\[\frac{\log\zeta(s)}{s} \approx \frac{\log\left(\frac{1}{1-s}\right)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1 - \frac{x}{\rho_n}\right)}{s}.\] 
+\[\zeta(s) \approx \frac{1}{1-s}\prod_{n=1}^{\infty} \left(1 - \frac{s}{\rho_n}\right),\]
+where recall the \(\rho_n\) are just the zeroes of \(\zeta(s),\) whatever they end up being (we write \(\approx\) because there are technical subtleties with Hadamard and Weierstrass's factorization, which we will ignore). Thus
+\[\frac{\log\zeta(s)}{s} \approx \frac{\log\left(\frac{1}{1-s}\right)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1 - \frac{s}{\rho_n}\right)}{s}.\] 
 </p>
 
 <p>
 Combining this with our earlier identity
 \[\frac{\log\zeta(s)}{s} \approx \int_1^{\infty} \pi(x)x^{-s-1} \, dx,\]
 we find that
-\[\frac{-\log(1-s)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1 - \frac{x}{\rho_n}\right)}{s} \approx \int_1^{\infty} \pi(x)x^{-s-1} \, dx.\]
+\[\frac{-\log(1-s)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1 - \frac{s}{\rho_n}\right)}{s} \approx \int_1^{\infty} \pi(x)x^{-s-1} \, dx.\]
 We want to solve for \(\pi(x)\) in this equation, but right now that's a bit tricky! 
 </p>
 
@@ -426,12 +426,12 @@ It's good that we got this logarithmic integral, because you might remember that
 
 <p>
 Now, recall that we we trying to solve for \(\pi(x)\) in the equation
-\[\frac{-\log(1-s)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1-\frac{s}{\rho_n}\right)}{s} \approx \pi(x)x^{-s-1} \, dx,\]
+\[\frac{-\log(1-s)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1-\frac{s}{\rho_n}\right)}{s} \approx \int_1^\infty\pi(x)x^{-s-1} \, dx,\]
 where recall that the \(\rho_n\) were the zeroes of the Riemann zeta function. 
 </p>
 <p>
 The term \(-\log(1-s)/s\) will contribute a \(\operatorname{Li}(x)\) term to \(x.\) A similar analysis can be used to prove that the term \(\log(1-s/\rho_n)/s\) will contribute a \(-\operatorname{Li}(x^{\rho_n})\) to \(\pi(x),\) so that when we solve for \(\pi(x)\) in the equation 
-\[\frac{-\log(1-s)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1-\frac{s}{\rho_n}\right)}{s} \approx \pi(x)x^{-s-1} \, dx,\]
+\[\frac{-\log(1-s)}{s} + \sum_{n=1}^{\infty} \frac{\log\left(1-\frac{s}{\rho_n}\right)}{s} \approx \int_1^\infty\pi(x)x^{-s-1} \, dx,\]
 we get 
 \[\pi(x) \approx \operatorname{Li}(x) - \sum_{n=1}^{\infty} \operatorname{Li}(x^{\rho_n}).\]
 </p>
@@ -461,7 +461,7 @@ so the size of \(x^{\rho}\) depends only on how big \(s\) is.
 
 <p>
 Because \(s\) is always strictly smaller than \(1,\) the term
-\[\operatorname{Li}(x^{\rho}) \approx \frac{x^s}{\rho \log(x)}\]
+\[ \bigg|\operatorname{Li}(x^{\rho})\bigg|\approx \frac{x^s}{|\rho| \log(x)}\]
 will always be of a smaller order of magnitude then the main term
 \[\operatorname{Li}(x) \approx \frac{x}{\log x}.\]
 This is because, for very large numbers \(x,\) a quantity like \(x^{1/2}\) or even \(x^{0.99}\) is much smaller than \(x\) itself. 
@@ -470,7 +470,7 @@ This is because, for very large numbers \(x,\) a quantity like \(x^{1/2}\) or ev
 <p>
 Gauss' approximation 
 \[\pi(x) \approx \operatorname{Li}(x)\]
-is as good as possible when all the extra terms \(\operatorname{Li}(x^{\rho})\) are as small as possible; in other words, the best case scenario for Gauss' approximation is that all the values \(s\) (in \(\rho = s+it\)) from above are as close to 0 as possible.
+is as good as possible when <em>all</em> the extra terms \(\operatorname{Li}(x^{\rho})\) are as small as possible; in other words, the best case scenario for Gauss' approximation is that all the values \(s\) (in \(\rho = s+it\)) from above are as close to 0 as possible. If even one value of \(s\) is large, the estimate is messed up.
 </p>
 
 <p>
