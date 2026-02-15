@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Primes in arithmetic progressions</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>todo: give a good title</h1>
+<p class="meta">February 13, 2026</p>
+
+<p>
+What is the point of proving a theorem a second way? For example, Euclid (the geometer!) found a wonderful proof that there are infinitely many primes. And yet later mathematicians, even ones as illustrious as Euler, still revisited this result to give new proofs! What is the point?
+</p>
+
+<p>
+Part of this purpose is personal; mathematicians tend to prefer <em>doing</em> math to <em>reading</em> math, which means it is more fun for them to invent their own proofs than it is read existing ones. But part of it is practical: even if you fully understand the existing proof, it is nice to create a new one, for two reasons. First, proofs in mathematics very rarely prove exactly what they say on the tin; usually a slightly more precise statement is proven, and then the final result is stated in a catchier way, and so different proofs can actually prove slightly different theorems if you look past the introduction. And second, proofs in mathematics often generalize in very different directions.
+</p>
+
+<p>
+The goal of this article is to talk about how Euler found a <em>new</em> proof of the infinitude of the primes, which generalizes much more nicely than Euclid's original proof. 
+</p>
+
+<h2>What was Euclid's proof, though?</h2>
+
+<p>
+To begin, we give Euclid's proof that infinitely many primes exist, and then show how you can use the same strategy to prove a related theorem.
+</p>
+
+<p>
+To prove the infinitude of the primes, Euclid started by taking a list \(p_1, p_2, ..., p_n\) of \(n\) primes. We are now going to describe an algorithm, discovered by Euclid, which from this data produces a <em>new</em> prime. In particular, no finite list of primes can contain every prime, and thus the primes must be infinite.
+</p>
+
+<p>
+Euclid's idea is very simple. Set
+\[N := p_1p_2\cdots p_n + 1.\]
+
+Then, find the smallest prime factor \(q\) of \(N.\) This prime factor \(q\) must exist (because every positive integer has a prime factorization). But this prime \(q\) cannot be any of the \(p_1, ..., p_n.\) This is because \(q\) is a factor of \(N\) (meaning \(N\) is divisible by \(q\)), but when you divide \(N\) by \(p_1,\) or \(p_2,\) or \(p_3,\) etc., you always get remainder \(1.\) Thus \(q\) is a prime number not in your list! 
+</p>
+
+<p>
+We can use this same trick to prove a slightly stronger result: not only do there exist infinitely many primes, but there also exist infinitely many primes \(p\) of the form \(p = 4n+3.\) Indeed, take \(p_1, p_2, ..., p_n\) a list of prime numbers which are all 1 modulo 4. Then set
+\[N := 4p_1p_2\cdots p_n - 1.\]
+Note
+\[N \equiv 0 - 1 \equiv 3\pmod{4},\]
+and so \(N\) must have at least one prime factor which is 3 modulo 4.
+
+Indeed, we know \(N\) does have some prime factorization, so it is a product of primes. Assume none of those prime factors was congruent to 3 modulo 4. Then \(N\) is a product of numbers which are 0, 1, or 2 modulo 4. 
+
+However, \(N\) is an odd number, so none of its factors could be 0 or 2 modulo 4; thus \(N\) is a product of primes, all of which are 1 todo
+</p>
+
+</body>
+</html>
