@@ -40,7 +40,7 @@ For example, there are many prime numbers ending in a 7:
 7,17,37,47,67,97,107,127,137,157,167,197,227,\cdots,\]
 but how do we know there are infinitely many? It turns our Euclid's strategy doesn't generalize well, but Euler's strategy does! Dirichlet was able to push Euler's strategy further and prove the sequence never terminates.
 
-<h2>What was Euclid's proof, though?</h2>
+<h2>300BC: What was Euclid's proof, though?</h2>
 
 <p>
 To begin, we give Euclid's proof that infinitely many primes exist, and then show how you can use the same strategy to prove a related theorem.
@@ -61,7 +61,7 @@ Then, find the smallest prime factor \(q\) of \(N.\) This prime factor \(q\) mus
 Euclid's argument is very elementary, and a really nice proof of the infinitude of the primes. You might have seen it before, because it is so quick that it's still repeated to this day! 
 </p>
 
-<h2>What did Euler do?</h2>
+<h2>1737: What did Euler do?</h2>
 
 <p>
 In our <a href="rh.html">last article</a>, on the Riemann zeta function, we explained how Euler found a new proof of the infinitude of the primes. Euler proved a slightly stronger statement: he showed the sum
@@ -130,7 +130,7 @@ See <a href="rh.html">our article on the Riemann hypothesis</a> for more details
 But the upshot is we now know \(\sum_p 1/p=+\infty,\) and so there are infinitely many primes! This was Euler's proof of the infinitude of the primes. 
 </p>
 
-<h2>Enter Dirichlet</h2>
+<h2>1837: Enter Dirichlet</h2>
 
 <p>
 Dirichlet was interested in a slightly more precise question: are there infinitely many primes \(p\) such that 
@@ -142,9 +142,16 @@ and it seems like these go on forever. But do they?
 </p>
 
 <p>
-Try as you might, it does not seem possible to prove the infinitude of primes which are 1 mod 4 using a Euclid-style argument. So, for this specific generalization, the original proof of the infinitude of the primes doesn't cut it! Dirichlet's insight was that <em>Euler's</em> proof of the infinitude of the primes <em>does</em> generalize! In other words, Dirichlet decided to try computing
+Try as you might, it does not seem possible to prove the infinitude of primes which are 1 mod 4 using a Euclid-style argument. 
+Starting with primes \(p_1,\dots,p_n\) which are 1 mod 4, we can try to find a prime factor of \(N=p_1\cdots p_n+1\) which is again 1 mod 4. 
+This isn't always possible: for example, even though \(p_1=5\) and \(p_2=13\) are both 1 mod 4, the number \(N=5\cdot13+1=66\) does not have any prime factors which are 1 mod 4!
+So, for this specific generalization, the original proof of the infinitude of the primes doesn't cut it! 
+</p>
+
+<p>
+Dirichlet's insight was that <em>Euler's</em> proof of the infinitude of the primes <em>does</em> generalize! In other words, Dirichlet decided to try computing
 \[\sum_{p \equiv 1\pmod{4}} \frac{1}{p} = \frac{1}{5} + \frac{1}{13} + \frac{1}{17} + \frac{1}{29} + \frac{1}{37} + \cdots,\]
-and hoping it was infinite.
+and hoped it was infinite.
 </p>
 
 <p>
@@ -219,7 +226,7 @@ After that, we will find some way to recover the original sum we care about from
 <h2>Back to Dirichlet's argument</h2>
 
 <p>
-Every prime number (except the prime number 2, which likes to be unique) is congruent to either 1 or 3 modulo 4. Dirichlet thought that this \(\pm 1\) dichotomy of primes modulo 4 was similar to the even-odd function dichotomy explained above. So, Euler's strategy was simple: introduce the 3 mod 4 primes in, but <em>weight them differently</em>, and hope to then do some Fourier analysis to extract out the \(1\) modulo 4 primes from the total.
+Every prime number (except the prime number 2, which likes to be unique) is congruent to either 1 or 3 modulo 4. Dirichlet thought that this dichotomy of primes modulo 4 was similar to the even-odd function dichotomy explained above. So, Dirichlet's strategy was simple: introduce the 3 mod 4 primes in, but <em>weight them differently</em>, and hope to then do some Fourier analysis to extract out the \(1\) modulo 4 primes from the total.
 </p>
 
 <p>
@@ -298,6 +305,12 @@ This was the point of introducing the extra terms coming from the primes \(p\equ
 </p>
 
 <p>
+In fact the same argument shows that
+\[\infty-\log L \approx 2 \cdot \sum_{p\equiv 3\pmod{4}} \frac{1}{p},\]
+which shows that there are also infinitely many primes which are 3 modulo 4!
+</p>
+
+<p>
 Now, earlier we observed \(L \gt 0.\) Why did we need to know that? Because if \(L = 0,\) then we could have
 \[\log L + \infty = \log(0) + \infty = -\infty + \infty,\]
 an indeterminate form (the infinities cancel out and that sum can be anything). But because \(L \gt 0,\) we know \(\log L \gt -\infty,\) so that
@@ -310,11 +323,7 @@ which means
 This is great! We now see that, in particular, there have to be infinitely many primes which are 1 modulo 4, because otherwise there is no way the sum on the left could be finite.
 </p>
 
-<p>
-In fact the same argument shows that
-\[\infty-\log L \approx 2 \cdot \sum_{p\equiv 3\pmod{4}} \frac{1}{p},\]
-which shows that there are also infinitely many primes which are 3 modulo 4!
-</p>
+
 
 <p>
 Thus, by taking adapting Euler's method of proof, Dirichlet managed to prove a much stronger theorem, which cannot be proven using Euclid's original method.
@@ -323,7 +332,8 @@ Thus, by taking adapting Euler's method of proof, Dirichlet managed to prove a m
 <h2>Dirichlet's full theorem</h2>
 
 <p>
-Dirichlet's full theorem asserts the following: if \(a, n\) are two positive integers having no common prime factors, then there are always infinitely many primes \(p\) such that \(p \equiv a \pmod{n}.\)
+Dirichlet's full theorem asserts the following: if \(a, n\) are two positive integers having no common prime factors, then there are always infinitely many primes \(p\) such that \(p \equiv a \pmod{n}.\) 
+For example, when \(n=10\), this says there are infinitely many prime numbers ending in a 1, 3, 7, or 9. Primes can end in other numbers, like 2, but that only happens once!
 </p>
 
 <p>
