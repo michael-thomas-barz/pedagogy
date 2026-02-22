@@ -49,15 +49,7 @@ Then, find the smallest prime factor \(q\) of \(N.\) This prime factor \(q\) mus
 </p>
 
 <p>
-We can use this same trick to prove a slightly stronger result: not only do there exist infinitely many primes, but there also exist infinitely many primes \(p\) of the form \(p = 4n+3.\) Indeed, take \(p_1, p_2, ..., p_n\) a list of prime numbers which are all 1 modulo 4. Then set
-\[N := 4p_1p_2\cdots p_n - 1.\]
-Note
-\[N \equiv 0 - 1 \equiv 3\pmod{4},\]
-and so \(N\) must have at least one prime factor which is 3 modulo 4.
-
-Indeed, we know \(N\) does have some prime factorization, so it is a product of primes. Assume none of those prime factors was congruent to 3 modulo 4. Then \(N\) is a product of numbers which are 0, 1, or 2 modulo 4. 
-
-However, \(N\) is an odd number, so none of its factors could be 0 or 2 modulo 4; thus \(N\) is a product of primes, all of which are 1 todo
+Euclid's argument is very elementary, and a really nice proof of the infinitude of the primes. You might have seen it before, because it is so quick that it's still repeated to this day! 
 </p>
 
 <h2>What did Euler do?</h2>
@@ -172,12 +164,56 @@ Discrete Fourier theory decomposes functions in terms of simpler types of symmet
 The simplest type of discrete Fourier theory, and the one relevant to Dirichlet's work, is the decomposition of functions into <em>even</em> and <em>odd</em> functions. 
 </p>
 
+<img src="even.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+
 <p>
-TODO: include grpahs illustrating even/odd symmetry
+An <em>even</em> function, like the one pictured above, is a function which is symmetric about the \(y\)-axis. In formulas, an even function obeys \(f(x) = f(-x),\) but it might be a little more natural to think about the symmetry.
 </p>
 
 <p>
-Every function can be written as the sum of an even function and an odd function. This is because, given a function \(f(x),\) we can build TODO do graphics of this. TODO: mention multiplicative group \(\pm 1\)
+In contrast, an <em>odd</em>function, like the one pictured below, has a \(180^{\circ}\) rotational symmetry; that is, if you rotate the graph \(180^{\circ}\) around the origin, then it won't change at all. In formulas, an odd function obeys \(f(x) = -f(-x),\) but again it is a little easier to think about the visual symmetry.
+</p>
+<img src="odd.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+
+
+
+<p>
+Every function can be written as the sum of an even function and an odd function. This is because, given a function \(f(x),\) we can build the function
+\[E(x) = \frac{f(x) + f(-x)}{2}\]
+and the function
+\[O(x) = \frac{f(x) - f(-x)}{2}.\]
+</p>
+
+<p>
+The function \(E(x)\) is always an even function, \(E(x) = E(-x)\) (can you see why?) and the function \(O(x)\) is always an odd function, \(O(x) = -O(-x).\)
+</p>
+
+<p>
+Moreover, 
+\[f(x) = E(x) + O(x),\]
+because when we add \(E\) and \(O,\) the \(f(-x)\) terms cancel out.
+</p>
+
+<p>
+This is the trick of Fourier analysis. We start with some function \(f(x)\) we want to study. We then form the expression 
+\[E(x) = \frac{f(x) + f(-x)}{2},\]
+where we take the function \(f(x)\) we want to study, and add some related quantity \(f(-x)\) to make the final result \(E(x)\) easier to understand (because \(E(x)\) is now an even function, and has some symmetry). 
+
+However, now it seems like we've lost sight of the goal: we're only studying this \(E(x)\), and not \(f(x)\) itself! But we can do a similar trick, and define
+\[O(x) = \frac{f(x) - f(-x)}{2}.\]
+This is an odd function (and so has some symmetry), which is easier to study than \(f(x).\) And because \(f(x) = E(x) + O(x),\) if we can understand \(E\) and \(O\), then we can understand \(f.\) So we've broken this function \(f(x)\) up into two more symmetric pieces.
+</p>
+
+<p>
+We will employ this trick below. Namely, we have a certain sum
+\[\sum_{p\equiv 1\pmod{4}} \frac{1}{p}\]
+we want to compute. We won't be able to compute this directly; instead, we will find some other terms to tack on to this infinite sum which make it easier to understand. After that, we will find some way to recover the original sum we care about from the modified sum. Thus we never have to study this tricky sum directly; instead, we break it up into two much easier to understand pieces!
 </p>
 
 <h2>Back to Dirichlet's argument</h2>
