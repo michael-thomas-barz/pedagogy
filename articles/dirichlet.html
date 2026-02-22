@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Primes in arithmetic progressions</title>
+  <title>Infinitely many primes end in a 7</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -16,20 +16,29 @@
 
 <a href="../index.html">← back</a>
 
-<h1>todo: give a good title</h1>
-<p class="meta">February 13, 2026</p>
+<h1>Infinitely many primes end in a 7</h1>
+<p class="meta">February 22, 2026</p>
 
 <p>
 Euclid (the geometer!) found a wonderful proof that there are infinitely many primes. But later mathematicians, even ones as illustrious as Euler, still revisited this result to give new proofs! What is the point of proving a theorem you already know is true?
 </p>
 
 <p>
-Part of this purpose is personal; mathematicians tend to prefer <em>doing</em> math to <em>reading</em> math, which means it is more fun for them to invent their own proofs than it is read existing ones. But part of it is practical: even if you fully understand the existing proof, it is nice to create a new one, for two reasons. First, proofs in mathematics very rarely prove exactly what they say on the tin; usually a slightly more precise statement is proven, and then the final result is stated in a catchier way, and so different proofs can actually prove slightly different theorems if you look past the introduction. And second, proofs in mathematics often generalize in very different directions.
+Part of this purpose is personal; mathematicians tend to prefer <em>doing</em> math to <em>reading</em> math, which means it is more fun for them to invent their own proofs than it is read existing ones. 
+But part of it is practical: new proofs can lead to new insights.
+<ul>
+  <li>First, proofs very rarely prove exactly what they say on the tin. Usually a slightly more precise statement is proven, and different proofs can give you different mileage. </li>
+  <li>  And second, different proofs often generalize in very different directions.</li>
+</ul>
 </p>
 
 <p>
 The goal of this article is to talk about how Euler found a <em>new</em> proof of the infinitude of the primes, which generalizes much more nicely than Euclid's original proof. 
 </p>
+For example, there are many prime numbers ending in a 7:
+\[
+7,17,37,47,67,97,107,127,137,157,167,197,227,\cdots,\]
+but how do we know there are infinitely many? It turns our Euclid's strategy doesn't generalize well, but Euler's strategy does! Dirichlet was able to push Euler's strategy further and prove the sequence never terminates.
 
 <h2>What was Euclid's proof, though?</h2>
 
@@ -170,11 +179,11 @@ The simplest type of discrete Fourier theory, and the one relevant to Dirichlet'
             height:auto;">
 
 <p>
-An <em>even</em> function, like the one pictured above, is a function which is symmetric about the \(y\)-axis. In formulas, an even function obeys \(f(x) = f(-x),\) but it might be a little more natural to think about the symmetry.
+An <em>even</em> function, like the one pictured above, is a function which is symmetric about the \(y\)-axis. In formulas, an even function obeys \(f(-x) = f(x),\) but it might be a little more natural to think about the symmetry.
 </p>
 
 <p>
-In contrast, an <em>odd</em>function, like the one pictured below, has a \(180^{\circ}\) rotational symmetry; that is, if you rotate the graph \(180^{\circ}\) around the origin, then it won't change at all. In formulas, an odd function obeys \(f(x) = -f(-x),\) but again it is a little easier to think about the visual symmetry.
+In contrast, an <em>odd</em> function, like the one pictured below, has a \(180^{\circ}\) rotational symmetry; that is, if you rotate the graph \(180^{\circ}\) around the origin, then it won't change at all. In formulas, an odd function obeys \(f(-x)=-f(x),\) but again it is a little easier to think about the visual symmetry.
 </p>
 <img src="odd.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
@@ -191,46 +200,37 @@ and the function
 </p>
 
 <p>
-The function \(E(x)\) is always an even function, \(E(x) = E(-x)\) (can you see why?) and the function \(O(x)\) is always an odd function, \(O(x) = -O(-x).\)
+The function \(E(x)\) is always an even function, \(E(-x) = E(x)\) (can you see why?) and the function \(O(x)\) is always an odd function, \(O(-x) = -O(x).\)
 </p>
 
 <p>
 Moreover, 
 \[f(x) = E(x) + O(x),\]
-because when we add \(E\) and \(O,\) the \(f(-x)\) terms cancel out.
-</p>
-
-<p>
-This is the trick of Fourier analysis. We start with some function \(f(x)\) we want to study. We then form the expression 
-\[E(x) = \frac{f(x) + f(-x)}{2},\]
-where we take the function \(f(x)\) we want to study, and add some related quantity \(f(-x)\) to make the final result \(E(x)\) easier to understand (because \(E(x)\) is now an even function, and has some symmetry). 
-
-However, now it seems like we've lost sight of the goal: we're only studying this \(E(x)\), and not \(f(x)\) itself! But we can do a similar trick, and define
-\[O(x) = \frac{f(x) - f(-x)}{2}.\]
-This is an odd function (and so has some symmetry), which is easier to study than \(f(x).\) And because \(f(x) = E(x) + O(x),\) if we can understand \(E\) and \(O\), then we can understand \(f.\) So we've broken this function \(f(x)\) up into two more symmetric pieces.
+because when we add \(E\) and \(O,\) the \(f(-x)\) terms cancel out. The functions \(E\) and \(O\) are easier than the function \(f\) we started off with, since it has an extra symmetry we can play around with.
 </p>
 
 <p>
 We will employ this trick below. Namely, we have a certain sum
 \[\sum_{p\equiv 1\pmod{4}} \frac{1}{p}\]
-we want to compute. We won't be able to compute this directly; instead, we will find some other terms to tack on to this infinite sum which make it easier to understand. After that, we will find some way to recover the original sum we care about from the modified sum. Thus we never have to study this tricky sum directly; instead, we break it up into two much easier to understand pieces!
+we want to compute. We won't be able to compute this directly; instead, we will find some other terms to tack on to this infinite sum which make it easier to understand. 
+After that, we will find some way to recover the original sum we care about from the modified sum. Thus we never have to study this tricky sum directly; instead, we break it up into two much easier to understand pieces!
 </p>
 
 <h2>Back to Dirichlet's argument</h2>
 
 <p>
-Every prime number (except the prime number 2, which likes to be unique) is congruent to either \(1\) or \(-1\) modulo 4. Dirichlet thought that this \(\pm 1\) dichotomy of primes modulo 4 was similar to the even-odd function dichotomy explained above. So, Euler's strategy was simple: introduce the \(-1\) mod 4 primes in, but <em>weight them differently</em>, and hope to then do some Fourier analysis to extract out the \(1\) modulo 4 primes from the total.
+Every prime number (except the prime number 2, which likes to be unique) is congruent to either 1 or 3 modulo 4. Dirichlet thought that this \(\pm 1\) dichotomy of primes modulo 4 was similar to the even-odd function dichotomy explained above. So, Euler's strategy was simple: introduce the 3 mod 4 primes in, but <em>weight them differently</em>, and hope to then do some Fourier analysis to extract out the \(1\) modulo 4 primes from the total.
 </p>
 
 <p>
 Thus, Dirichlet considered the infinite product
-\[L = \prod_{p\equiv 1\pmod{4}} \left(1 + \frac{1}{p} + \frac{1}{p^2} + \cdots\right) \cdot \prod_{p\equiv -1\pmod{4}} \left(1 - \frac{1}{p} + \frac{1}{p^2} - \frac{1}{p^3} + \cdots\right).\]
+\[L = \prod_{p\equiv 1\pmod{4}} \left(1 + \frac{1}{p} + \frac{1}{p^2} + \cdots\right) \cdot \prod_{p\equiv 3\pmod{4}} \left(1 - \frac{1}{p} + \frac{1}{p^2} - \frac{1}{p^3} + \cdots\right).\]
 Dirichlet used the letter \(L\) for this infinite product; we now call certain generalizations of the Riemann zeta function by the name \(L\)-functions, in honor of Dirichlet's work. (It seems a little unfair that Riemann is honored by getting a function named after him, but Dirichlet gets honored by having a function named after the notation he used, but oh well.)
 </p>
 
 <p>
-Note the subtle difference in the products used for the 1 mod 4 primes and the \(-1\) mod 4 primes. If we use the geometric series formula to simplify those products, we find 
-\[L = \prod_{p\equiv 1\pmod{4}} \frac{1}{1 - \frac{1}{p}} \cdot \prod_{p\equiv -1\pmod{4}} \frac{1}{1 + \frac{1}{p}}.\]
+Note the subtle difference in the products used for the 1 mod 4 primes and the 3 mod 4 primes. If we use the geometric series formula to simplify those products, we find 
+\[L = \prod_{p\equiv 1\pmod{4}} \frac{1}{1 - \frac{1}{p}} \cdot \prod_{p\equiv 3\pmod{4}} \frac{1}{1 + \frac{1}{p}}.\]
 </p>
 
 <p>
@@ -243,7 +243,7 @@ The fact that we've left out the prime number 2 isn't a very serious problem; it
 The trickier issue is understanding when we will have positive fractions and when we will have negative fractions after expanding out. As a simple example, let's consider the two-term product
 \[\left(1 + \frac{1}{5} + \frac{1}{25} + \frac{1}{125} + \cdots\right)\left(1 - \frac{1}{3} + \frac{1}{9} - \frac{1}{27} + \cdots\right).\]
 
-Here, the left term is a sum over all the powers of 5 (the smallest prime which is 1 mod 4) and the right term is an <em>alternating</em> sum over all the powers of 3 (the smallest prime that is \(-1\) mod 4). When we expand this out, we'll get fractions \(1/n\) whose denominator \(n\) can be made out of 3's and 5's. So, for example, we'll get denominators like \(5, 15, 45,\) or \(75.\) 
+Here, the left term is a sum over all the powers of 5 (the smallest prime which is 1 mod 4) and the right term is an <em>alternating</em> sum over all the powers of 3 (the smallest prime that is 3 mod 4). When we expand this out, we'll get fractions \(1/n\) whose denominator \(n\) can be made out of 3's and 5's. So, for example, we'll get denominators like \(5, 15, 45,\) or \(75.\) 
 </p>
 
 <p>
@@ -273,11 +273,12 @@ so we can rewrite
 \[L = \sum_{n=0}^{\infty} \frac{2}{(4n+1)(4n+3)}.\]
 In particular, despite the subtraction signs we originally used to express our sum \(L,\) it is actually a sum of <em>positive</em> terms. Thus, 
 \[L \gt 0.\]
+In fact, Leibniz showed that \(L=\pi/4\), though we won't be using this!
 </p>
 
 <p>
 But wait, why does this matter? Well, recall that
-\[L = \prod_{p\equiv 1\pmod{4}} \frac{1}{1 - \frac{1}{p}} \cdot \prod_{p \equiv -1 \pmod{4}} \frac{1}{1 + \frac{1}{p}}.\]
+\[L = \prod_{p\equiv 1\pmod{4}} \frac{1}{1 - \frac{1}{p}} \cdot \prod_{p \equiv 3\pmod{4}} \frac{1}{1 + \frac{1}{p}}.\]
 So, taking logarithms and using the same approximation that Euler used, we find
 \[\log L \approx \sum_{p \equiv 1\pmod{4}} \frac{1}{p} - \sum_{p\equiv 3\pmod{4}} \frac{1}{p}.\]
 </p>
@@ -307,6 +308,12 @@ Thus
 which means 
 \[\sum_{p\equiv 1\pmod{4}} \frac{1}{p} = \infty.\]
 This is great! We now see that, in particular, there have to be infinitely many primes which are 1 modulo 4, because otherwise there is no way the sum on the left could be finite.
+</p>
+
+<p>
+In fact the same argument shows that
+\[\infty-\log L \approx 2 \cdot \sum_{p\equiv 3\pmod{4}} \frac{1}{p},\]
+which shows that there are also infinitely many primes which are 3 modulo 4!
 </p>
 
 <p>
@@ -340,7 +347,8 @@ Then, you can add all of these expressions up to recover the value of \(4 \cdot 
 </p>
 
 <p>
-This sort of trick is called a discrete Fourier transform; we only needed to do the two variable version because all prime numbers (except 2) were either 1 mod 4 or 3 mod 4; in other words, we only had two possibilities. But if we were working, say, modulo 5, then there would be four possibilities: with one exception, every prime number is either 1, 2, 3, or 4 modulo 5; this is four possibilities, which is why we end up needing a total of four variables to use this proof strategy.
+This sort of trick is called a discrete Fourier transform; we only needed to do the two variable version because all prime numbers (except 2) were either 1 mod 4 or 3 mod 4; in other words, we only had two possibilities. But if we were working, say, modulo 10, then there would be four possibilities: with two exceptions, every prime number ends in either 1, 3, 7, or 9. 
+This is four possibilities, which is why we end up needing a total of four variables to use this proof strategy.
 </p>
 
 <p>
