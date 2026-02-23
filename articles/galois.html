@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Galois theory and the cubic formula</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>Galois theory and the cubic formula</h1>
+<p class="meta">February 13, 2026</p>
+
+<p>
+In high school, most people learn the quadratic formula: the equation
+\[ax^2 + bx + c = 0\]
+has two different solutions, given by 
+\[x = \frac{-b + \sqrt{b^2 - 4ac}}{2a} \text{ or } x = \frac{-b - \sqrt{b^2-4ac}}{2a}.\]
+</p>
+
+<p>
+However, it is rarer to have to learn the <em>cubic</em> formula. This is a formula which, like the quadratic formula, allows you to solve any equation of the form
+\[ax^3 + bx^2 + cx + d = 0.\]
+</p>
+
+<p>
+Coming up with the cubic formula is considerably more complicated than deriving the quadratic formula. In this article, we will explain how to derive the cubic formula using <em>Galois theory</em>. The fundamental idea of Galois theory is that <em>just like shapes, numbers can have symmetry</em>.
+</p>
+
+<p>
+We are going to explain the symmetry of numbers, and then illustrate how to use this symmetry to solve cubic equations. Let's get right to it! 
+</p>
+
+<h2>What is a symmetry?</h2>
+
+<p>
+Let's play a game. I put a square on a table in front of us, like so: todo pic of square
+</p>
+
+<p>
+Then, you close your eyes for five seconds. During that five seconds, I will either move the square, or I won't touch the square. When you open your eyes, you will guess: did I move the square, or not? 
+</p>
+
+<p>
+There are some bad moves I could make in this game. For example, suppose I rotate the square \(45^{\circ}\) around its center; then, when you open your eyes, it will look like this: todo pic of square
+</p>
+
+<p>
+It's pretty easy for you to tell I moved it! This is because \(45^{\circ}\) rotation is not a symmetry of squares. However, suppose I instead rotated the square \(90^{\circ}.\) Then, you'd open your eyes and see this: todo pic of square
+</p>
+
+<p>
+This looks exactly like the first square! You'd have no way of knowing if I moved it or not. This is what a symmetry is: a way of manipulating a shape such that nobody can tell if you touched the shape or not.
+</p>
+
+<h2>The symmetry of the square root operation</h2>
+
+<p>
+The square root operation has an interesting symmetry. If you're asked to find a solution to
+\[x^2 = 9,\]
+say, then there are two answers: \(3\) and \(-3.\) And if you're asked to find a solution to
+\[x^2 = 4,\]
+then again there are two answers: \(2\) and \(-2.\) 
+</p>
+
+<p>
+How does this fit into the symmetry from before? Well, let's take the equation
+\[x^2 = 4\]
+again. If I replace \(x\) with \(-x\) in this equation, then it reads
+\[(-x)^2 = 4.\]
+But of course,
+\[(-x) \cdot (-x) = x^2,\]
+so replacing \(x\) with \(-x\) does not actually change the equation \(x^2 = 4\) at all. 
+</p>
+
+<p>
+In other words, imagine we're playing the following game. I write down
+\[x^2 = 4\]
+on a piece of paper. You close your eyes, and I replace \(x\) with some other expression, you open your eyes, and then you tell me if I changed \(x\) or not. We just saw that when I replace \(x\) by \(-x,\) the equation still reads
+\[x^2 = 4,\]
+so you're none the wiser about my substitution.
+</p>
+
+<p>
+But if instead I replaced \(x\) with \(x+1,\) you'd notice that my new equation becomes
+\[(x+1)^2 = 4,\]
+or 
+\[x^2 +2x + 1 = 4,\]
+and you could tell I changed something! So, replacing \(x\) with \(-x\) is a symmetry of \(x^2 = 4,\) but replacing \(x\) with \(x+1\) is not. 
+</p>
+
+<p>
+We can use this idea of symmetry to derive the quadratic formula. 
+</p>
+
+<p>
+Take a quadratic equation
+\[ax^2 + bx + c = 0.\]
+
+We know it factors as 
+\[ax^2 + bx + c = a(x-r)(x-s)\]
+for its two solutions \(r\) and \(s.\) Our goal is to find some way of expressing \(r\) and \(s\) in terms of \(a, b,\) and \(c,\) the coefficients of the quadratic equation.
+</p>
+
+<p>
+The equation
+\[ax^2 + bx + c = 0\]
+has an interesting symmetry: if I swap \(r\) and \(s,\) then it doesn't change at all. Indeed, we know
+\[ax^2 + bx + c = a(x-r)(x-s),\]
+and if I swap \(r\) and \(s,\) then the right hand side just becomes \(a(x-s)(x-r).\) But multiplication doesn't care about what order you multiply the factors in; the product is always the same. So, the quadratic doesn't change if we swap \(r\) and \(s.\) 
+</p>
+
+<p>
+We saw that square roots have a `multiplication by \(-1\)' symmetry. And we see now that a general quadratic has a `swapping \(r\) and \(s\)' symmetry. These look like two different types of symmetries; in order to solve a general quadratic using square roots, we have to turn this `swapping \(r\) and \(s\)' symmetry into a `multiply by \(-1\)' symmetry.
+</p>
+
+<p>
+The trick to doing this is to observe that \(r - s\), the <em>difference</em> of the roots, does have a multiplication by \(-1\) symmetry when you swap the roots. That is, if you switch \(r\) and \(s,\) then \(r-s\) becomes \(s-r,\) and
+\[s-r = (-1) \cdot (r-s).\]
+</p>
+
+<p>
+So, \(r-s\) has the same sort of symmetry that a square root does. This suggests that \(r-s\) should be \(\sqrt{\text{something}}.\) But the square root of what? 
+</p>
+
+<p>
+Well, if
+\[r - s = \sqrt{\text{something}},\]
+then that something has to be \((r-s)^2.\) Now we just need to figure out \((r-s)^2.\) This seems tricky at first glance, but notice that, in contrast to \(r-s,\) the square \((r-s)^2\) <em>is</em> symmetric in \(r\) and \(s.\) That is, if we swap \(r\) and \(s,\) then \((r-s)^2\) becomes \((s-r)^2.\) But 
+\[(s-r)^2 = ((-1) \cdot (r-s))^2 = (-1)^2 \cdot (r-s)^2 = (r-s)^2.\]
+So, \((r-s)^2\) is completely symmetric in \(r\) and \(s.\) But why does that help us figure out what it's value is? 
+</p>
+
+<p>
+Here we introduce something fun, called <em>Vieta's formulas</em>. If we expand out 
+\[a(x-r)(x-s),\]
+we get 
+\[a(x^2 - (r+s)x + rs),\]
+or 
+\[ax^2 - a(r+s)x + ars.\]
+
+But we said
+\[a(x-r)(x-s) = ax^2 + bx + c.\]
+Thus, by comparing coefficients, we find that
+\[rs = \frac{c}{a},\]
+\[r+s = -\frac{b}{a}.\]
+In other words, we can find the <em>product</em> of the roots of our quadratic, and the <em>sum</em> of the roots of our quadratic, just by looking at \(a, b,\) and \(c.\) 
+</p>
+
+<p>
+What Vieta realized (and his observation is now called the <em>fundamental theorem of symmetric polynomials</em>) was that <em>any arithmetic expression which is symmetric in \(r\) and \(s\) can be rewritten in terms of \(a, b,\) and \(c.\)</em>
+</p>
+
+<p>
+For example, we know \((r-s)^2\) is symmetric in \(r\) and \(s.\) Expand it out as
+\[(r-s)^2 = r^2 - 2 \cdot rs + s^2.\] 
+If we observe that
+\[(r+s)^2 = r^2 + 2 \cdot rs + s^2,\]
+then we can subtract these two expressions to find
+\[(r-s)^2 - (r+s)^2 = - 4 \cdot rs.\]
+In other words,
+\[(r-s)^2 = (r+s)^2 - 4rs = \frac{b^2}{a^2} - \frac{4c}{a} = \frac{b^2 - 4ac}{a^2}.\]
+</p>
+
+<p>
+Nice: we wrote \((r-s)^2\) purely in terms of \(a, b,\) and \(c.\) And note that \(b^2 - 4ac\) appears, just like the expression under the square root in the quadratic formula! 
+</p>
+
+<p>
+As 
+\[(r-s)^2 = \frac{b^2 - 4ac}{a^2},\]
+we can take square roots to find
+\[r - s = \frac{\pm \sqrt{b^2 - 4ac}}{a}.\]
+</p>
+
+<p>
+But we already saw
+\[r + s = -\frac{b}{a}.\]
+Adding these two expressions for \(r-s\) and \(r+s,\) we find that
+\[2r = \frac{-b \pm \sqrt{b^2 - 4ac}}}{a}.\]
+Dividing by 2, we get the famous quadratic formula
+\[r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.\]
+Note that there is a \(\pm\) in that formula, indicating that there are two values for \(r.\) This is because \(r\) and \(s\) are completely symmetric, so there will be two solutions for the pair \((r, s)\); that is, depending on which square root you use when computing \(r-s\) by taking square roots above, you will either get
+\[r = \frac{-b + \sqrt{b^2 - 4ac}}{2a}, s = \frac{-b - \sqrt{b^2 - 4ac}}{2a},\]
+or 
+\[r = \frac{-b - \sqrt{b^2 - 4ac}}{2a}, s = \frac{-b + \sqrt{b^2 - 4ac}}{2a}.\]
+</p>
+
+<h2>On to cubics</h2>
+
+<p>
+Now that we've warmed up by reviewing quadratics, let's derive the cubic formula using the same style of symmetry based reasoning. But before we do that, let's take a step back and think of what a cubic formula ought to look like.
+</p>
+
+<p>
+The quadratic formula involves square roots, so the cubic formula involves cube roots. But slightly surprisingly, it also needs to involve square roots! This is because, given any quadratic like \(x^2 - 2,\) we can turn it into a cubic by multiplication by \(x.\) This would produce
+\[x^3 - 2x = 0,\]
+for example. This cubic has roots \(x = 0, \sqrt{2}, -\sqrt{2}.\) Because of this, we should expect that a cubic formula will have a square root term in it, because it seems implausible that a formula with only cube roots could spit out an answer like \(\sqrt{2}.\)
+</p>
+
+<p>
+Now, on to the cubic formula. Write our cubic as
+\[ax^3 + bx^2 + cx + d = 0.\]
+
+Call its roots \(r, s,\) and \(t,\) so that we have the factorization
+\[ax^3 + bx^2 + cx + d = a(x-r)(x-s)(x-t).\] 
+</p>
+
+<p>
+Now that we have three roots, instead of just two, we have many more symmetries. For quadratics, our only symmetry was swapping the two roots. But now, with 3 roots, we have six total permutations: we can rearrange \(r, s, t\) in the six ways
+\[r, s, t,\]
+\[s, t, r,\]
+\[t, r, s,\]
+\[r, t, s,\]
+\[t, s, r,\]
+\[s, r, t.\]
+</p>
+
+<p>
+These six symmetries are more complicated to handle, so we introduce a certain geometric representation of these six symmetries now. Take an equilateral triangle, and label its vertices by \(r, s,\) and \(t.\) Then, the six different symmetries of the triangle correspond to the six different permutations TODO pictures.
+</p>
+
+<h2>Cubic formula, part one: the square root</h2>
+
+<p>
+To start with our derivation of the cubic formula, let's look for a way to understand the square root which will appear in it. We already saw that square roots have a `multiplication by \(-1\)' symmetry. In the equilateral triangle, the reflection symmetry we saw seems to be the one most similar to this square root symmetry.
+</p>
+
+<p>
+So, to try and understand what square root will appear in the cubic formula, let's look for some expression in \(r, s, t\) which <em>breaks</em> the reflection symmetry, swapping two roots, but which <em>respects</em> the rotational symmetry. That is, we want some expression so that the expression gets negated if you swap two roots, but the value stays the same if you cyclically permutes, taking \(r, s, t\) to either
+\[s, t, r,\]
+or
+\[t, r, s.\]
+</p>
+
+<p>
+A first guess as to such an expression is \(r - s.\) Unfortunately, this only gets negated if you swap \(r\) and \(s\) (if you swap, say, \(s\) and \(t,\) then this expression is completely uncontrolled), and is definitely not preserved under cyclic permutations. When we use the permutation taking \(r, s, t\) to \(s, t, r,\) this \(r-s\) becomes \(s - t.\) And when we use the permutation taking \(r, s, t\) to \(t, r, s,\) then \(r-s\) becomes \(t - r.\) 
+</p>
+
+<p>
+This suggests we look at 
+\[\Delta := (r-s)(s-t)(t-r).\]
+This is the product of the three expressions we got by cyclically permuting variables in \(r-s.\) Thus, it is invariant under cyclic permutations; but if you swap two roots, for example \(r\) and \(s,\) then \(\Delta\) becomes
+\[(s-r) \cdot (r - t) \cdot (t - s).\]
+Note that all three factors got negated from this one swap; as \((-1)^3 = -1,\) this means that swapping two variables changes \(\Delta\) to \(-\Delta.\)
+</p>
+
+<p>
+So, it seems like the cubic formula will involve a \(\sqrt{\Delta}.\) This \(\Delta\) is called the \emph{discriminant} of the cubic equation.
+</p>
+
+<h2>Symmetries of cube roots</h2>
+
+todo!
+
+<h2>Finally, the cubic formula</h2>
+
+<p>
+
+</p>
+
+</body>
+</html>

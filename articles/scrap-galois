@@ -1,0 +1,38 @@
+<p>
+When you first learn the complex numbers, people often write down the equation
+\[i = \sqrt{-1}.\]
+</p>
+
+<p>
+But this equation is perhaps a little misleading. There are <em>two</em> complex solutions to \(x^2 = -1.\) Somehow, we choose one of them to call \(i\), and the other to call \(-i,\) but there is actually no way of distinguishing these two solutions if you only know about real numbers.
+</p>
+
+<p>
+Let's make this claim a little more precise: if you have any polynomial equation with <em>real number coefficients</em> (so something like
+\[x^5 + x^3 - 3x^2 = 3\]
+or
+\[x^2 + 2 = 7,\]
+or any other type of polynomial equation), then if \(x = i\) is a solution, the number \(x = -i\) will also be a solution.
+</p>
+
+<p>
+So, if all you know about is real numbers and algebra, then nothing you can do will ever distinguish between \(i\) and \(-i.\) Phrased differently, there is no experiment you can do to distinguish between \(i\) and \(-i.\) 
+</p>
+
+<p>
+That is, suppose your friend has chosen a square root of \(-1\); so they have either \(i\) or \(-i.\) You are trying to ask them questions to figure out which one they chose, but you only know about real numbers. So you just ask them: OK, does your square root of \(-1\) satisfy 
+\[x^5 + x^3 - 3x^2 = 3?\]
+And they'll tell you that yes, their number does satisfy this equation. But you've gotten no information: <em>both</em> square roots of negative one satisfy this equation! 
+</p>
+
+<p>
+And if you ask them ``does your square root of \(-1\) satisfy
+\[x^2 + 2 =7?",\]
+then they'll tell you no, but again you've gained no information: neither square root of \(-1\) satisfies this! 
+</p>
+
+<p>
+So no matter how hard you try, you'll never be able to figure out which square root of \(-1\) they have!
+</p>
+
+
