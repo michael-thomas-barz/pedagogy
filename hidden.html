@@ -29,11 +29,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem 1rem 3rem;
+    padding: 1.5rem 1rem 3rem;
   }
 
   h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 0.02em;
     color: var(--accent);
@@ -44,142 +44,108 @@
   .subtitle {
     color: var(--text-dim);
     font-style: italic;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
+  /* ── Desktop: info panel left, canvases right ── */
   .main-layout {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
-    max-width: 1300px;
     width: 100%;
+    max-width: 1300px;
   }
 
   .info-panel {
-    flex: 0 0 270px;
+    flex: 0 0 260px;
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: 1rem;
   }
 
   .canvases-col {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    flex: 1;
+    gap: 1.2rem;
+    min-width: 0;
   }
 
+  /* On desktop the two canvases sit side by side */
   .canvases-row {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.2rem;
     align-items: flex-start;
   }
 
   .canvas-block {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .canvas-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .canvas-hint {
-    font-size: 0.82rem;
-    font-style: italic;
-    color: var(--text-dim);
-    text-align: center;
-    max-width: 420px;
-  }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1.1rem 1.3rem;
-  }
-
-  .card-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-dim);
-    margin-bottom: 0.6rem;
   }
 
-  .center-display { font-size: 1.3rem; color: var(--accent2); }
-  .sqrt-display   { font-size: 1.1rem; margin-top: 0.4rem; color: var(--accent); }
-
-  .series-display {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--series-color);
-    line-height: 1.8;
-    white-space: pre;
-  }
-  .series-display .coeff { color: var(--accent); }
-  .series-display .var   { color: var(--accent2); }
-
-  .branch-indicator { font-size: 1.05rem; padding: 0.4rem 0; }
-  .branch-1      { color: var(--accent2); }
-  .branch-minus1 { color: var(--accent3); }
-
-  .history {
-    max-height: 160px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .history-entry {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    padding: 0.18rem 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .history-entry.current { color: #ebdbb2; }
-  .history-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
+  /* Canvas fills its flex cell, never overflows */
   canvas {
+    width: 100%;
+    aspect-ratio: 1;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
     display: block;
+    touch-action: none;
   }
   #canvas { cursor: crosshair; }
 
-  .reset-btn {
-    background: transparent;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    padding: 0.5rem 1.2rem;
-    cursor: pointer;
-    border-radius: 2px;
-    letter-spacing: 0.1em;
-    transition: background 0.2s, color 0.2s;
-    align-self: flex-start;
+  .canvas-hint {
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--text-dim);
+    text-align: center;
   }
-  .reset-btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* ── Info cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+  }
+
+  .card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .center-display { font-size: 1.2rem; color: var(--accent2); }
+  .sqrt-display   { font-size: 1rem;   margin-top: 0.3rem; color: var(--accent); }
+
+  .series-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--series-color);
+    line-height: 1.8;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .series-display .coeff { color: var(--accent); }
+  .series-display .var   { color: var(--accent2); }
 
   .monodromy-alert {
     background: #3c2020;
@@ -187,15 +153,51 @@
     border-radius: 4px;
     padding: 0.9rem 1.1rem;
     color: var(--accent3);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     display: none;
   }
   .monodromy-alert.show { display: block; }
 
-  @media (max-width: 1000px) {
-    .main-layout { flex-direction: column; align-items: center; }
-    .info-panel  { flex: none; width: 100%; max-width: 600px; }
-    .canvases-row { flex-direction: column; align-items: center; }
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    transition: background 0.2s, color 0.2s;
+    align-self: flex-start;
+    /* larger touch target */
+    min-height: 44px;
+  }
+  .reset-btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* ── Mobile: stack everything vertically ── */
+  @media (max-width: 800px) {
+    body { padding: 1rem 0.75rem 2.5rem; font-size: 15px; }
+
+    h1   { font-size: 1.5rem; }
+
+    .main-layout {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.2rem;
+    }
+
+    .info-panel { flex: none; }
+
+    /* On mobile, canvases stack vertically and each fills screen width */
+    .canvases-row {
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .canvas-block { width: 100%; }
+
+    .series-display { font-size: 0.65rem; }
   }
 </style>
 </head>
@@ -205,7 +207,6 @@
 <p class="subtitle">Analytic continuation of the square root around the branch point z = 0</p>
 
 <div class="main-layout">
-  <!-- LEFT: info panel -->
   <div class="info-panel">
     <div class="card">
       <div class="card-label">Current Center</div>
@@ -218,27 +219,24 @@
       <div class="series-display" id="series-display"></div>
     </div>
 
-
-
     <div class="monodromy-alert" id="monodromy-alert">
-      ⚠ <strong>Monodromy!</strong> You've returned to a disk containing z = 1, but the branch has flipped: √(1) = −1 on this sheet. Going around the branch point z = 0 exchanged the two branches of √z.
+      ⚠ <strong>Monodromy!</strong> You've returned to a disk containing z = 1, but the branch has flipped: √(1) = −1 on this sheet. Going around z = 0 exchanged the two branches of √z.
     </div>
 
-    <button class="reset-btn" onclick="reset()">↺ Reset</button>
+    <button class="reset-btn" onclick="doReset()">↺ Reset</button>
   </div>
 
-  <!-- RIGHT: two canvases -->
   <div class="canvases-col">
     <div class="canvases-row">
       <div class="canvas-block">
-        <div class="canvas-title">z — plane &nbsp;(input)</div>
-        <canvas id="canvas"  width="430" height="430"></canvas>
-        <p class="canvas-hint">Click inside the disk to analytically continue √z to a new center.</p>
+        <div class="canvas-title">z — plane (input)</div>
+        <canvas id="canvas" width="430" height="430"></canvas>
+        <p class="canvas-hint">Tap inside the current disk to continue √z to a new center.</p>
       </div>
       <div class="canvas-block">
-        <div class="canvas-title">√z — plane &nbsp;(output)</div>
+        <div class="canvas-title">√z — plane (output)</div>
         <canvas id="canvas2" width="430" height="430"></canvas>
-        <p class="canvas-hint">Each colored point here is the square root of the matching point on the left. Watch how the path crosses the imaginary axis after a full loop.</p>
+        <p class="canvas-hint">Each point here is the square root of the matching point on the left.</p>
       </div>
     </div>
   </div>
@@ -246,342 +244,356 @@
 
 <script>
 // ── Complex arithmetic ────────────────────────────────────────────────────
-function cadd(a,b){return {r:a.r+b.r, i:a.i+b.i};}
-function csub(a,b){return {r:a.r-b.r, i:a.i-b.i};}
-function cmul(a,b){return {r:a.r*b.r-a.i*b.i, i:a.r*b.i+a.i*b.r};}
+function cadd(a,b){return {r:a.r+b.r,i:a.i+b.i};}
+function csub(a,b){return {r:a.r-b.r,i:a.i-b.i};}
+function cmul(a,b){return {r:a.r*b.r-a.i*b.i,i:a.r*b.i+a.i*b.r};}
 function cdiv(a,b){
-  const d=b.r*b.r+b.i*b.i;
-  return {r:(a.r*b.r+a.i*b.i)/d, i:(a.i*b.r-a.r*b.i)/d};
+  var d=b.r*b.r+b.i*b.i;
+  return {r:(a.r*b.r+a.i*b.i)/d,i:(a.i*b.r-a.r*b.i)/d};
 }
 function cabs(a){return Math.sqrt(a.r*a.r+a.i*a.i);}
 function cpow(a,n){
-  let res={r:1,i:0};
-  for(let k=0;k<Math.abs(n);k++) res=cmul(res,a);
+  var res={r:1,i:0};
+  for(var k=0;k<Math.abs(n);k++) res=cmul(res,a);
   if(n<0) res=cdiv({r:1,i:0},res);
   return res;
 }
 
-function fmtC(z, digits){
-  digits = digits===undefined ? 2 : digits;
-  const r=+z.r.toFixed(digits), i=+z.i.toFixed(digits);
-  if(Math.abs(i)<0.005) return String(r);
-  if(Math.abs(r)<0.005) return i+'i';
-  const sign=i<0?'−':'+';
-  return r+' '+sign+' '+Math.abs(i)+'i';
+// ── Formatting ────────────────────────────────────────────────────────────
+function fmtC(z,digits){
+  if(digits===undefined) digits=2;
+  var rv=+z.r.toFixed(digits), iv=+z.i.toFixed(digits);
+  if(Math.abs(iv)<0.005) return String(rv);
+  if(Math.abs(rv)<0.005) return iv+'i';
+  var sign=iv<0?'\u2212':'+';
+  return rv+' '+sign+' '+Math.abs(iv)+'i';
+}
+function fmtCoeff(c){
+  var rv=+c.r.toFixed(2), iv=+c.i.toFixed(2);
+  if(Math.abs(iv)<0.005) return String(rv);
+  if(Math.abs(rv)<0.005) return iv+'i';
+  var sign=iv<0?'\u2212':'+';
+  return '('+rv+' '+sign+' '+Math.abs(iv)+'i)';
 }
 
-// ── Rainbow color helper ──────────────────────────────────────────────────
-// idx=0..total-1; hue sweeps 200°→ 200+300° = 500° (mod 360) = blue→green→yellow→red
-function stepColor(idx, total){
-  const hue=(200 + (total<=1 ? 0 : idx*300/(total-1))) % 360;
+// ── Rainbow colors ────────────────────────────────────────────────────────
+function stepColor(idx,total){
+  var hue=(200+(total<=1?0:idx*300/(total-1)))%360;
   return 'hsl('+hue+',85%,65%)';
 }
-function stepColorA(idx, total, alpha){
-  const hue=(200 + (total<=1 ? 0 : idx*300/(total-1))) % 360;
+function stepColorA(idx,total,alpha){
+  var hue=(200+(total<=1?0:idx*300/(total-1)))%360;
   return 'hsla('+hue+',85%,65%,'+alpha+')';
-}
-
-// ── State ─────────────────────────────────────────────────────────────────
-var state = {
-  center:    {r:1, i:0},
-  sqrtVal:   {r:1, i:0},
-  history:   [],   // [{center, sqrt}, ...]
-  stepCount: 0
-};
-
-function reset(){
-  state.center   = {r:1,i:0};
-  state.sqrtVal  = {r:1,i:0};
-  state.history  = [];
-  state.stepCount= 0;
-  document.getElementById('monodromy-alert').classList.remove('show');
-  state.history.push({center:{r:1,i:0}, sqrt:{r:1,i:0}});
-  updateUI();
-  drawBoth();
 }
 
 // ── Power series ──────────────────────────────────────────────────────────
 function binomCoeff(n){
   var num=1;
   for(var k=0;k<n;k++) num*=(0.5-k);
-  var den=1; for(var k=1;k<=n;k++) den*=k;
+  var den=1;
+  for(var k=1;k<=n;k++) den*=k;
   return num/den;
 }
-
-function seriesCoeffs(z0, sqrtZ0, terms){
-  terms = terms===undefined ? 5 : terms;
+function seriesCoeffs(z0,sqrtZ0,terms){
+  if(terms===undefined) terms=5;
   var coeffs=[];
   for(var n=0;n<terms;n++){
     var bc=binomCoeff(n);
     var z0n=cpow(z0,n);
-    coeffs.push(cmul({r:bc,i:0}, cdiv(sqrtZ0, z0n)));
+    coeffs.push(cmul({r:bc,i:0},cdiv(sqrtZ0,z0n)));
   }
   return coeffs;
 }
-
-function evalSeries(z0, coeffs, z){
+function evalSeries(z0,coeffs,z){
   var dz=csub(z,z0);
-  var val={r:0,i:0}, dzn={r:1,i:0};
+  var val={r:0,i:0},dzn={r:1,i:0};
   for(var n=0;n<coeffs.length;n++){
-    val=cadd(val, cmul(coeffs[n], dzn));
+    val=cadd(val,cmul(coeffs[n],dzn));
     dzn=cmul(dzn,dz);
   }
   return val;
 }
+function radiusOfConvergence(z0){return cabs(z0);}
 
-function radiusOfConvergence(z0){ return cabs(z0); }
+// ── Build series HTML ─────────────────────────────────────────────────────
+function buildSeriesHTML(z0,coeffs,R){
+  var terms=[];
+  for(var n=0;n<coeffs.length;n++){
+    var cs=fmtCoeff(coeffs[n]);
+    if(n===0){
+      terms.push('<span class="coeff">'+cs+'</span>');
+    } else if(n===1){
+      terms.push('<span class="coeff">'+cs+'</span>'
+        +'<span class="var">\u00b7(z\u2212'+fmtC(z0,2)+')</span>');
+    } else {
+      terms.push('<span class="coeff">'+cs+'</span>'
+        +'<span class="var">\u00b7(z\u2212'+fmtC(z0,2)+')^'+n+'</span>');
+    }
+  }
+  return terms.join('\n+ ')+'\n+ \u2026'
+    +'\n\nRadius of convergence:\nR = |z\u2080| = '+R.toFixed(2);
+}
 
-// ── UI ────────────────────────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────────────────
+var state={
+  center:{r:1,i:0},
+  sqrtVal:{r:1,i:0},
+  history:[],
+  stepCount:0
+};
+
+function doReset(){
+  state.center={r:1,i:0};
+  state.sqrtVal={r:1,i:0};
+  state.history=[{center:{r:1,i:0},sqrt:{r:1,i:0}}];
+  state.stepCount=0;
+  document.getElementById('monodromy-alert').classList.remove('show');
+  updateUI();
+  drawBoth();
+}
+
 function updateUI(){
   var z0=state.center, sq=state.sqrtVal;
   document.getElementById('center-display').textContent='z\u2080 = '+fmtC(z0);
   document.getElementById('sqrt-display').textContent='\u221a(z\u2080) = '+fmtC(sq);
-
   var coeffs=seriesCoeffs(z0,sq,4);
   var R=radiusOfConvergence(z0);
   document.getElementById('series-display').innerHTML=buildSeriesHTML(z0,coeffs,R);
 }
 
-function fmtCoeff(c){
-  var r=+c.r.toFixed(2), im=+c.i.toFixed(2);
-  if(Math.abs(im)<0.005) return String(r);
-  if(Math.abs(r)<0.005) return im+'i';
-  var s=im<0?'\u2212':'+';
-  return '('+r+' '+s+' '+Math.abs(im)+'i)';
-}
+// ── Canvas ────────────────────────────────────────────────────────────────
+// The canvas element has width/height=430 (its internal resolution).
+// CSS makes it fluid (width:100%). We always work in internal 430-unit coords
+// and convert mouse/touch events using getBoundingClientRect().
+var CSIZE=430;
+var WORLD=2.5;
+var WORLD2=2.0;
 
-function buildSeriesHTML(z0, coeffs, R){
-  var terms=[];
-  for(var n=0;n<coeffs.length;n++){
-    var cStr=fmtCoeff(coeffs[n]);
-    if(n===0){
-      terms.push('<span class="coeff">'+cStr+'</span>');
-    } else if(n===1){
-      terms.push('<span class="coeff">'+cStr+'</span><span class="var">\u00b7(z\u2212'+fmtC(z0,2)+')</span>');
-    } else {
-      terms.push('<span class="coeff">'+cStr+'</span><span class="var">\u00b7(z\u2212'+fmtC(z0,2)+')^'+n+'</span>');
-    }
-  }
-  return terms.join('\n+ ')+'\n+ \u2026\n\nRadius of convergence:\nR = |z\u2080| = '+R.toFixed(2);
-}
-
-// ── Canvas setup ──────────────────────────────────────────────────────────
 var canvas  = document.getElementById('canvas');
 var canvas2 = document.getElementById('canvas2');
-var ctx  = canvas.getContext('2d');
-var ctx2 = canvas2.getContext('2d');
-var W = canvas.width, H = canvas.height;
+var ctx     = canvas.getContext('2d');
+var ctx2    = canvas2.getContext('2d');
 
-var WORLD=2.5;   // z-plane  shows [-2.5, 2.5]
-var WORLD2=2.0;  // √z-plane shows [-2.0, 2.0]
+// Convert world → canvas internal coords
+function toC(wx,wy){
+  return [(wx/WORLD+1)*CSIZE/2,(1-wy/WORLD)*CSIZE/2];
+}
+function toC2(wx,wy){
+  return [(wx/WORLD2+1)*CSIZE/2,(1-wy/WORLD2)*CSIZE/2];
+}
+// Convert a CSS-pixel point (from mouse/touch event) → internal canvas coords
+function cssToInternal(canvas, cssX, cssY){
+  var rect=canvas.getBoundingClientRect();
+  var scaleX=CSIZE/rect.width;
+  var scaleY=CSIZE/rect.height;
+  return [(cssX-rect.left)*scaleX,(cssY-rect.top)*scaleY];
+}
+// Convert internal canvas coords → world coords
+function internalToWorld(ix,iy){
+  return [ix/CSIZE*2*WORLD-WORLD, -(iy/CSIZE*2*WORLD-WORLD)];
+}
 
-function toC(wx,wy){  return [(wx/WORLD+1)*W/2,  (1-wy/WORLD)*H/2];  }
-function fromC(cx,cy){ return [cx/W*2*WORLD-WORLD, -(cy/H*2*WORLD-WORLD)]; }
-function toC2(wx,wy){ return [(wx/WORLD2+1)*W/2, (1-wy/WORLD2)*H/2]; }
-
-// ── Generic draw helpers ──────────────────────────────────────────────────
-function drawGrid(c, world){
+// ── Drawing helpers ───────────────────────────────────────────────────────
+function drawGrid(c,world){
   c.strokeStyle='#504945'; c.lineWidth=1;
   var lim=Math.ceil(world);
   for(var v=-lim;v<=lim;v++){
-    var x=(v/world+1)*W/2;
-    c.beginPath(); c.moveTo(x,0); c.lineTo(x,H); c.stroke();
-    var y=(1-v/world)*H/2;
-    c.beginPath(); c.moveTo(0,y); c.lineTo(W,y); c.stroke();
+    var x=(v/world+1)*CSIZE/2;
+    c.beginPath(); c.moveTo(x,0); c.lineTo(x,CSIZE); c.stroke();
+    var y=(1-v/world)*CSIZE/2;
+    c.beginPath(); c.moveTo(0,y); c.lineTo(CSIZE,y); c.stroke();
   }
 }
-
-function drawAxes(c, world){
+function drawAxes(c,world){
+  var ox=CSIZE/2, oy=CSIZE/2;
   c.strokeStyle='#665c54'; c.lineWidth=1.5;
-  var ox=(0/world+1)*W/2, oy=(1-0/world)*H/2;
-  c.beginPath(); c.moveTo(ox,0); c.lineTo(ox,H); c.stroke();
-  c.beginPath(); c.moveTo(0,oy); c.lineTo(W,oy); c.stroke();
+  c.beginPath(); c.moveTo(ox,0); c.lineTo(ox,CSIZE); c.stroke();
+  c.beginPath(); c.moveTo(0,oy); c.lineTo(CSIZE,oy); c.stroke();
   return [ox,oy];
 }
-
-function drawAxisLabels(c, world, ox, oy){
+function drawAxisLabels(c,world,ox,oy){
   c.fillStyle='#928374'; c.font='11px JetBrains Mono';
   var lim=Math.floor(world);
   for(var v=-lim;v<=lim;v++){
     if(v===0) continue;
-    var x=(v/world+1)*W/2;
-    c.fillText(String(v), x-4, oy+15);
-    var y=(1-v/world)*H/2;
-    c.fillText(v+'i', ox+4, y+4);
+    var x=(v/world+1)*CSIZE/2;
+    c.fillText(String(v),x-4,oy+15);
+    var y=(1-v/world)*CSIZE/2;
+    c.fillText(v+'i',ox+4,y+4);
   }
 }
 
 // ── Draw z-plane ──────────────────────────────────────────────────────────
 function drawZPlane(){
-  ctx.clearRect(0,0,W,H);
-  drawGrid(ctx, WORLD);
-  var axes=drawAxes(ctx, WORLD);
-  var ox=axes[0], oy=axes[1];
+  ctx.clearRect(0,0,CSIZE,CSIZE);
+  drawGrid(ctx,WORLD);
+  var axes=drawAxes(ctx,WORLD);
+  var ox=axes[0],oy=axes[1];
 
   var total=state.history.length;
 
-  // Disks (drawn back-to-front so newer ones are on top)
+  // Disks
   for(var idx=0;idx<total;idx++){
     var h=state.history[idx];
-    var col=stepColor(idx, total-1);
     var R=radiusOfConvergence(h.center);
-    var cp=toC(h.center.r, h.center.i);
-    var cx=cp[0], cy=cp[1];
-    var rx=R/WORLD*W/2;
+    var cp=toC(h.center.r,h.center.i);
+    var rx=R/WORLD*CSIZE/2;
     var isLast=idx===total-1;
-
-    ctx.beginPath(); ctx.arc(cx,cy,rx,0,2*Math.PI);
-    ctx.strokeStyle=isLast ? col : stepColorA(idx,total-1,0.35);
-    ctx.lineWidth=isLast ? 2 : 1;
+    ctx.beginPath(); ctx.arc(cp[0],cp[1],rx,0,2*Math.PI);
+    ctx.strokeStyle=isLast?stepColor(idx,total-1):stepColorA(idx,total-1,0.35);
+    ctx.lineWidth=isLast?2:1;
     ctx.stroke();
-    ctx.fillStyle=isLast ? stepColorA(idx,total-1,0.08) : stepColorA(idx,total-1,0.03);
+    ctx.fillStyle=isLast?stepColorA(idx,total-1,0.08):stepColorA(idx,total-1,0.03);
     ctx.fill();
   }
 
-  // Trail connecting centers
+  // Trail
   if(total>1){
     ctx.beginPath();
-    var p0=toC(state.history[0].center.r, state.history[0].center.i);
+    var p0=toC(state.history[0].center.r,state.history[0].center.i);
     ctx.moveTo(p0[0],p0[1]);
     for(var i=1;i<total;i++){
-      var pi=toC(state.history[i].center.r, state.history[i].center.i);
+      var pi=toC(state.history[i].center.r,state.history[i].center.i);
       ctx.lineTo(pi[0],pi[1]);
     }
     ctx.strokeStyle='rgba(235,219,178,0.15)'; ctx.lineWidth=1.5;
     ctx.setLineDash([3,4]); ctx.stroke(); ctx.setLineDash([]);
   }
 
-  // Center dots
+  // Dots
   for(var idx=0;idx<total;idx++){
     var h=state.history[idx];
-    var col=stepColor(idx, total-1);
-    var cp=toC(h.center.r, h.center.i);
+    var cp=toC(h.center.r,h.center.i);
     var isLast=idx===total-1;
     ctx.beginPath(); ctx.arc(cp[0],cp[1],isLast?6:4,0,2*Math.PI);
-    ctx.fillStyle=col; ctx.fill();
-    if(isLast){
-      ctx.strokeStyle='rgba(235,219,178,0.6)'; ctx.lineWidth=1.5; ctx.stroke();
-    }
+    ctx.fillStyle=stepColor(idx,total-1); ctx.fill();
+    if(isLast){ctx.strokeStyle='rgba(235,219,178,0.6)';ctx.lineWidth=1.5;ctx.stroke();}
   }
 
-  // Current center label
+  // Label
   if(total>0){
     var last=state.history[total-1];
-    var col=stepColor(total-1, total-1);
-    var lp=toC(last.center.r, last.center.i);
-    ctx.fillStyle=col; ctx.font='13px EB Garamond';
-    ctx.fillText('z\u2080 = '+fmtC(last.center,2), lp[0]+10, lp[1]-10);
+    var lp=toC(last.center.r,last.center.i);
+    ctx.fillStyle=stepColor(total-1,total-1); ctx.font='13px EB Garamond';
+    ctx.fillText('z\u2080='+fmtC(last.center,2),lp[0]+10,lp[1]-10);
   }
 
-  // Origin marker
+  // Origin
   var op=toC(0,0);
   ctx.beginPath(); ctx.arc(op[0],op[1],4,0,2*Math.PI);
   ctx.fillStyle='#b16286'; ctx.fill();
   ctx.fillStyle='#b16286'; ctx.font='12px EB Garamond';
+  ctx.fillText('0 (branch pt)',op[0]+7,op[1]-6);
 
-  drawAxisLabels(ctx, WORLD, ox, oy);
+  drawAxisLabels(ctx,WORLD,ox,oy);
 }
 
 // ── Draw √z-plane ─────────────────────────────────────────────────────────
 function drawSqrtPlane(){
-  ctx2.clearRect(0,0,W,H);
-  drawGrid(ctx2, WORLD2);
-  var axes=drawAxes(ctx2, WORLD2);
-  var ox=axes[0], oy=axes[1];
+  ctx2.clearRect(0,0,CSIZE,CSIZE);
+  drawGrid(ctx2,WORLD2);
+  var axes=drawAxes(ctx2,WORLD2);
+  var ox=axes[0],oy=axes[1];
 
   var total=state.history.length;
 
-  // Shade right half-plane (principal branch region)
+  // Shade right half-plane
   ctx2.fillStyle='rgba(131,165,152,0.04)';
-  ctx2.fillRect(ox,0, W-ox, H);
+  ctx2.fillRect(ox,0,CSIZE-ox,CSIZE);
   ctx2.strokeStyle='rgba(131,165,152,0.2)'; ctx2.lineWidth=1;
   ctx2.setLineDash([4,4]);
-  ctx2.beginPath(); ctx2.moveTo(ox,0); ctx2.lineTo(ox,H); ctx2.stroke();
+  ctx2.beginPath(); ctx2.moveTo(ox,0); ctx2.lineTo(ox,CSIZE); ctx2.stroke();
   ctx2.setLineDash([]);
   ctx2.fillStyle='rgba(131,165,152,0.5)'; ctx2.font='10px JetBrains Mono';
+  ctx2.fillText('principal branch',ox+6,14);
 
-  // Trail connecting sqrt values
+  // Trail
   if(total>1){
     ctx2.beginPath();
-    var p0=toC2(state.history[0].sqrt.r, state.history[0].sqrt.i);
+    var p0=toC2(state.history[0].sqrt.r,state.history[0].sqrt.i);
     ctx2.moveTo(p0[0],p0[1]);
     for(var i=1;i<total;i++){
-      var pi=toC2(state.history[i].sqrt.r, state.history[i].sqrt.i);
+      var pi=toC2(state.history[i].sqrt.r,state.history[i].sqrt.i);
       ctx2.lineTo(pi[0],pi[1]);
     }
     ctx2.strokeStyle='rgba(235,219,178,0.15)'; ctx2.lineWidth=1.5;
     ctx2.setLineDash([3,4]); ctx2.stroke(); ctx2.setLineDash([]);
   }
 
-  // Dots for each sqrt value
+  // Dots
   for(var idx=0;idx<total;idx++){
     var h=state.history[idx];
-    var col=stepColor(idx, total-1);
-    var sp=toC2(h.sqrt.r, h.sqrt.i);
+    var sp=toC2(h.sqrt.r,h.sqrt.i);
     var isLast=idx===total-1;
     ctx2.beginPath(); ctx2.arc(sp[0],sp[1],isLast?6:4,0,2*Math.PI);
-    ctx2.fillStyle=col; ctx2.fill();
-    if(isLast){
-      ctx2.strokeStyle='rgba(235,219,178,0.6)'; ctx2.lineWidth=1.5; ctx2.stroke();
-    }
+    ctx2.fillStyle=stepColor(idx,total-1); ctx2.fill();
+    if(isLast){ctx2.strokeStyle='rgba(235,219,178,0.6)';ctx2.lineWidth=1.5;ctx2.stroke();}
   }
 
-  // Label current sqrt
+  // Label
   if(total>0){
     var last=state.history[total-1];
-    var col=stepColor(total-1, total-1);
-    var sp=toC2(last.sqrt.r, last.sqrt.i);
-    ctx2.fillStyle=col; ctx2.font='13px EB Garamond';
-    ctx2.fillText('\u221az\u2080 = '+fmtC(last.sqrt,2), sp[0]+10, sp[1]-10);
+    var sp=toC2(last.sqrt.r,last.sqrt.i);
+    ctx2.fillStyle=stepColor(total-1,total-1); ctx2.font='13px EB Garamond';
+    ctx2.fillText('\u221az\u2080='+fmtC(last.sqrt,2),sp[0]+10,sp[1]-10);
   }
 
-  drawAxisLabels(ctx2, WORLD2, ox, oy);
+  drawAxisLabels(ctx2,WORLD2,ox,oy);
 }
 
-function drawBoth(){ drawZPlane(); drawSqrtPlane(); }
+function drawBoth(){drawZPlane();drawSqrtPlane();}
 
-// ── Click handler ─────────────────────────────────────────────────────────
-canvas.addEventListener('click', function(e){
-  var rect=canvas.getBoundingClientRect();
-  var cx=(e.clientX-rect.left)*(W/rect.width);
-  var cy=(e.clientY-rect.top)*(H/rect.height);
-  var wxy=fromC(cx,cy);
-  var clicked={r:wxy[0], i:wxy[1]};
+// ── Handle a tap/click at CSS pixel (cssX, cssY) on the z-plane canvas ───
+function handleTap(cssX,cssY){
+  var ic=cssToInternal(canvas,cssX,cssY);
+  var wx=internalToWorld(ic[0],ic[1]);
+  var clicked={r:wx[0],i:wx[1]};
 
   var R=radiusOfConvergence(state.center);
-  var dist=cabs(csub(clicked, state.center));
+  var dist=cabs(csub(clicked,state.center));
   if(dist>=R){
-    ctx.beginPath(); ctx.arc(cx,cy,14,0,2*Math.PI);
+    // Flash red dot and bail
+    ctx.beginPath(); ctx.arc(ic[0],ic[1],14,0,2*Math.PI);
     ctx.fillStyle='rgba(251,73,52,0.3)'; ctx.fill();
-    setTimeout(drawBoth, 350);
+    setTimeout(drawBoth,350);
     return;
   }
 
-  var coeffs=seriesCoeffs(state.center, state.sqrtVal, 6);
-  var newSqrt=evalSeries(state.center, coeffs, clicked);
+  var coeffs=seriesCoeffs(state.center,state.sqrtVal,6);
+  var newSqrt=evalSeries(state.center,coeffs,clicked);
 
-  state.history.push({center:{r:clicked.r,i:clicked.i}, sqrt:{r:newSqrt.r,i:newSqrt.i}});
+  state.history.push({center:{r:clicked.r,i:clicked.i},sqrt:{r:newSqrt.r,i:newSqrt.i}});
   state.center=clicked;
   state.sqrtVal=newSqrt;
   state.stepCount++;
 
   // Monodromy check
   var newR=radiusOfConvergence(state.center);
-  var distTo1=cabs(csub({r:1,i:0}, state.center));
-  if(distTo1<newR && state.stepCount>1){
-    var c2=seriesCoeffs(state.center, state.sqrtVal, 6);
-    var val1=evalSeries(state.center, c2, {r:1,i:0});
-    if(val1.r<0){
-      document.getElementById('monodromy-alert').classList.add('show');
-    }
+  var d1=cabs(csub({r:1,i:0},state.center));
+  if(d1<newR&&state.stepCount>1){
+    var c2=seriesCoeffs(state.center,state.sqrtVal,6);
+    var v1=evalSeries(state.center,c2,{r:1,i:0});
+    if(v1.r<0) document.getElementById('monodromy-alert').classList.add('show');
   }
 
   updateUI();
   drawBoth();
+}
+
+// Mouse clicks
+canvas.addEventListener('click',function(e){
+  handleTap(e.clientX,e.clientY);
 });
 
+// Touch taps (prevent default to stop scroll/zoom interference)
+canvas.addEventListener('touchend',function(e){
+  e.preventDefault();
+  var t=e.changedTouches[0];
+  handleTap(t.clientX,t.clientY);
+},{passive:false});
+
 // ── Init ──────────────────────────────────────────────────────────────────
-state.history.push({center:{r:1,i:0}, sqrt:{r:1,i:0}});
+state.history=[{center:{r:1,i:0},sqrt:{r:1,i:0}}];
 updateUI();
 drawBoth();
 </script>
