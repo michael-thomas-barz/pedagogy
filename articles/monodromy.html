@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Using the Mobius strip to solve a differential equation</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>Using the Mobius strip to solve a differential equation</h1>
+<p class="meta">February 13, 2026</p>
+
+<p>
+Algebraic topology is a field of mathematics which is usually presented as the study of certain amusing shapes, like the Klein bottle or Mobius strip. But this presentation perhaps fails to convey just how vital algebraic topology is to almost all areas of modern mathematics. 
+</p>
+
+<p>
+It turns out that a huge number of mathematical problems can be profitably turned into geometry problems; however, when you take a random problem and convert it into a geometry problem, you might get some crazy shapes as the output! Algebraic topology gives us a simple way to understand the geometric phenomena underlying this shapes.
+</p>
+
+<p>
+To try and illustrate this perspective, today we're going to explain one of history's first applications of an algebraic topology concept (the <em>fundamental group</em>), by explaining how it relates to the theory of differential equations. We will assume the reader is familiar with basic calculus (in particular, how to differentiate polynomials), but we will not assume you have seen any differential equations before.
+</p>
+
+<h2>The Mobius strip</h2>
+
+<p>
+We mentioned in the introducing that turning math problems into geometry problems sometimes leaves you with very strange shapes. It turns out that the shape relevant to our problem will be the Mobius strip! So, before getting into our differential equation, we want to take some time to explain the Mobius strip, and point out a strange geometric property of it. 
+</p>
+
+<p>
+Take a sheet of paper. If you tape two opposite edges together, then you will produce a cylinder, a nice shape. The Mobius strip is produced in a similar way; if you want to make it out of paper, it's easier if, instead of taking a sheet of paper, you cut out a strip of paper which is much longer than it is wide. Then, taking the two short edges of the strip, curve them towards each other, and then <em>twist</em> one of the edges upside down. After this twist, <em>then</em> tape them together.
+</p>
+<div "mobius-static-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
+  <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Möbius Strip</p>
+  <canvas id="mobius-static-canvas" width="400" height="300" style="display:block; border-radius: 4px; background: #1d2021;"></canvas>
+  <p style="color: #665c54; font-size: 11px; margin: 8px 0 0 0; font-style: italic;">drag to rotate</p>
+</div>
+
+<script>
+(function () {
+  const canvas = document.getElementById('mobius-static-canvas');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) { canvas.insertAdjacentHTML('afterend','<p style="color:#fb4934">WebGL not supported</p>'); return; }
+
+  const extUint = gl.getExtension('OES_element_index_uint');
+
+  /* ── shaders ── */
+  const VS = `
+    attribute vec3 aPos;
+    attribute vec3 aNorm;
+    attribute float aEdge;
+    uniform mat4 uMVP;
+    uniform mat3 uNM;
+    varying vec3 vNorm;
+    varying float vEdge;
+    void main(){
+      gl_Position = uMVP * vec4(aPos, 1.0);
+      vNorm = normalize(uNM * aNorm);
+      vEdge = aEdge;
+    }`;
+  const FS = `
+    precision mediump float;
+    varying vec3 vNorm;
+    varying float vEdge;
+    void main(){
+      vec3 light = normalize(vec3(1.0, 1.5, 2.0));
+      vec3 base  = mix(vec3(0.843,0.600,0.129), vec3(0.800,0.141,0.114), vEdge);
+      float d1 = max(dot(vNorm, light), 0.0);
+      float d2 = max(dot(-vNorm, light), 0.0);
+      float lum = 0.30 + 0.70 * max(d1, d2);
+      gl_FragColor = vec4(base * lum, 1.0);
+    }`;
+
+  function mkShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(prog));
+
+  /* ── Möbius geometry ── */
+  const NU = 200, NV = 30;
+  const R = 1.0, W = 0.42;
+  const posArr = [], nrmArr = [], edgArr = [], idxArr = [];
+
+  for (let i = 0; i <= NU; i++) {
+    const u = (i / NU) * 2 * Math.PI;
+    for (let j = 0; j <= NV; j++) {
+      const v  = (j / NV) * 2 - 1;
+      const cu = Math.cos(u), su = Math.sin(u);
+      const c2 = Math.cos(u / 2), s2 = Math.sin(u / 2);
+
+      posArr.push(
+        (R + W * v * c2) * cu,
+        (R + W * v * c2) * su,
+         W * v * s2
+      );
+
+      // partial derivatives → cross product → normal
+      const dxdu = -(R + W*v*c2)*su + W*v*(-s2/2)*cu;
+      const dydu =  (R + W*v*c2)*cu + W*v*(-s2/2)*su;
+      const dzdu =  W * v * (c2 / 2);
+      const dxdv =  W * c2 * cu;
+      const dydv =  W * c2 * su;
+      const dzdv =  W * s2;
+      let nx = dydu*dzdv - dzdu*dydv;
+      let ny = dzdu*dxdv - dxdu*dzdv;
+      let nz = dxdu*dydv - dydu*dxdv;
+      const nl = Math.sqrt(nx*nx + ny*ny + nz*nz) || 1;
+      nrmArr.push(nx/nl, ny/nl, nz/nl);
+
+      edgArr.push(Math.abs(v) > 0.82 ? 1.0 : 0.0);
+    }
+  }
+  for (let i = 0; i < NU; i++) {
+    for (let j = 0; j < NV; j++) {
+      const a = i*(NV+1)+j, b = a+1, c = a+(NV+1), d = c+1;
+      idxArr.push(a,b,c, b,d,c);
+    }
+  }
+
+  function mkBuf(type, TypedArray, data) {
+    const b = gl.createBuffer();
+    gl.bindBuffer(type, b);
+    gl.bufferData(type, new TypedArray(data), gl.STATIC_DRAW);
+    return b;
+  }
+  const posBuf = mkBuf(gl.ARRAY_BUFFER, Float32Array, posArr);
+  const nrmBuf = mkBuf(gl.ARRAY_BUFFER, Float32Array, nrmArr);
+  const edgBuf = mkBuf(gl.ARRAY_BUFFER, Float32Array, edgArr);
+  const idxBuf = mkBuf(gl.ELEMENT_ARRAY_BUFFER, extUint ? Uint32Array : Uint16Array, idxArr);
+  const idxType = extUint ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT;
+
+  /* ── column-major matrix math ── */
+  // WebGL wants column-major. Element [col*4 + row].
+  function mul4(a, b) {
+    const r = new Float32Array(16);
+    for (let col = 0; col < 4; col++)
+      for (let row = 0; row < 4; row++) {
+        let s = 0;
+        for (let k = 0; k < 4; k++) s += a[k*4+row] * b[col*4+k];
+        r[col*4+row] = s;
+      }
+    return r;
+  }
+  function perspective(fov, asp, n, f) {
+    const t = Math.tan(fov / 2);
+    return new Float32Array([
+      1/(asp*t), 0,      0,                    0,
+      0,         1/t,    0,                    0,
+      0,         0,     -(f+n)/(f-n),          -1,
+      0,         0,     -2*f*n/(f-n),           0
+    ]);
+  }
+  function translation(tx, ty, tz) {
+    return new Float32Array([
+      1,  0,  0,  0,
+      0,  1,  0,  0,
+      0,  0,  1,  0,
+      tx, ty, tz, 1
+    ]);
+  }
+  function rotX(a) {
+    const c = Math.cos(a), s = Math.sin(a);
+    return new Float32Array([
+      1, 0,  0, 0,
+      0, c,  s, 0,
+      0,-s,  c, 0,
+      0, 0,  0, 1
+    ]);
+  }
+  function rotY(a) {
+    const c = Math.cos(a), s = Math.sin(a);
+    return new Float32Array([
+       c, 0, -s, 0,
+       0, 1,  0, 0,
+       s, 0,  c, 0,
+       0, 0,  0, 1
+    ]);
+  }
+  function upperLeft3(m4) {
+    // col-major 4x4 → col-major 3x3
+    return new Float32Array([
+      m4[0], m4[1], m4[2],
+      m4[4], m4[5], m4[6],
+      m4[8], m4[9], m4[10]
+    ]);
+  }
+
+  /* ── interaction ── */
+  let angX = 0.45, angY = 0.0;
+  let drag = false, lx = 0, ly = 0;
+  canvas.addEventListener('mousedown', e => { drag=true; lx=e.offsetX; ly=e.offsetY; });
+  window.addEventListener('mousemove', e => {
+    if (!drag) return;
+    angY += (e.clientX - lx) * 0.013; lx = e.clientX;
+    angX += (e.clientY - ly) * 0.013; ly = e.clientY;
+  });
+  window.addEventListener('mouseup', () => drag = false);
+
+  /* ── get attribute/uniform locations once ── */
+  gl.useProgram(prog);
+  const locMVP  = gl.getUniformLocation(prog, 'uMVP');
+  const locNM   = gl.getUniformLocation(prog, 'uNM');
+  const locPos  = gl.getAttribLocation(prog, 'aPos');
+  const locNorm = gl.getAttribLocation(prog, 'aNorm');
+  const locEdge = gl.getAttribLocation(prog, 'aEdge');
+
+  /* ── render loop ── */
+  function draw() {
+    if (!drag) angY += 0.005;
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.114, 0.125, 0.129, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST);
+
+    const proj  = perspective(Math.PI / 4, canvas.width / canvas.height, 0.1, 20.0);
+    const view  = translation(0, 0, -3.5);
+    const model = mul4(rotX(angX), rotY(angY));
+    const mvp   = mul4(proj, mul4(view, model));
+    const nm    = upperLeft3(model);
+
+    gl.uniformMatrix4fv(locMVP, false, mvp);
+    gl.uniformMatrix3fv(locNM,  false, nm);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+    gl.enableVertexAttribArray(locPos);
+    gl.vertexAttribPointer(locPos, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, nrmBuf);
+    gl.enableVertexAttribArray(locNorm);
+    gl.vertexAttribPointer(locNorm, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, edgBuf);
+    gl.enableVertexAttribArray(locEdge);
+    gl.vertexAttribPointer(locEdge, 1, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
+    gl.drawElements(gl.TRIANGLES, idxArr.length, idxType, 0);
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+
+<p>
+The Mobius strip doesn't seem so different from a cylinder at first, but there is one very strange property of it: it only has one side! 
+</p>
+
+<p>
+Let's break down what people mean when they say that. On a surface like a cylinder, at each point you can decide on which way is `up' and which way is `down.' These decisions need to be locally consistent: nearby points should agree on which way is up and which is down. This suggests it should be pretty easy to find two sides of any surface: pick one point to start with, and arbitrarily label one side `up' and one side `down.' Then just move around, copying your meaning of up. Here's a little animation of this; we start with a notion of up at one point (illustrated by an upwards pointing vector), and then move the vector around to nearby points, to give them a consistent notion of up.
+</p>
+<!-- Möbius Strip Local Orientability Widget — Gruvbox Theme -->
+<div id="mobius-local-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
+  <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Local Orientability</p>
+  <canvas id="mobius-local-canvas" width="400" height="300" style="display:block; border-radius: 4px; background: #1d2021;"></canvas>
+  <div style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+    <button id="mobius-local-btn" style="background:#458588; color:#ebdbb2; border:none; border-radius:4px; padding:6px 18px; font-family:'Georgia',serif; font-size:13px; cursor:pointer; letter-spacing:0.05em;">▶ Play</button>
+    <span id="mobius-local-label" style="color:#665c54; font-size:12px; font-style:italic; min-width:180px; text-align:left;">Press play to animate</span>
+  </div>
+  <p style="color:#665c54; font-size:11px; margin:8px 0 0 0; font-style:italic;">Locally, the normal always comes back pointing the same way</p>
+</div>
+
+<script>
+(function () {
+  const canvas  = document.getElementById('mobius-local-canvas');
+  const playBtn = document.getElementById('mobius-local-btn');
+  const label   = document.getElementById('mobius-local-label');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const extUint = gl.getExtension('OES_element_index_uint');
+
+  /* ── shaders ── */
+  const VS_STRIP = `
+    attribute vec3 aPos;
+    attribute vec3 aNorm;
+    attribute float aEdge;
+    uniform mat4 uMVP;
+    uniform mat3 uNM;
+    varying vec3 vNorm;
+    varying float vEdge;
+    void main(){
+      gl_Position = uMVP * vec4(aPos, 1.0);
+      vNorm  = normalize(uNM * aNorm);
+      vEdge  = aEdge;
+    }`;
+  const FS_STRIP = `
+    precision mediump float;
+    varying vec3 vNorm;
+    varying float vEdge;
+    void main(){
+      vec3 L    = normalize(vec3(0.3, 0.7, 1.0));
+      vec3 base = mix(vec3(0.843,0.600,0.129), vec3(0.800,0.141,0.114), vEdge);
+      float lum = 0.30 + 0.70 * max(max(dot(vNorm,L), 0.0), max(dot(-vNorm,L), 0.0));
+      gl_FragColor = vec4(base * lum, 1.0);
+    }`;
+  const VS_FLAT = `
+    attribute vec3 aPos;
+    uniform mat4 uMVP;
+    void main(){ gl_Position = uMVP * vec4(aPos, 1.0); }`;
+  const FS_FLAT = `
+    precision mediump float;
+    uniform vec3 uColor;
+    void main(){ gl_FragColor = vec4(uColor, 1.0); }`;
+
+  function mkShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  function mkProg(vs, fs) {
+    const p = gl.createProgram();
+    gl.attachShader(p, mkShader(gl.VERTEX_SHADER, vs));
+    gl.attachShader(p, mkShader(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(p));
+    return p;
+  }
+  const stripProg = mkProg(VS_STRIP, FS_STRIP);
+  const flatProg  = mkProg(VS_FLAT,  FS_FLAT);
+
+  /* ── Möbius parametric functions ── */
+  const R = 1.0, W = 0.42;
+  function mPt(u, v) {
+    const cu=Math.cos(u), su=Math.sin(u), c2=Math.cos(u/2), s2=Math.sin(u/2);
+    return [(R + W*v*c2)*cu, (R + W*v*c2)*su, W*v*s2];
+  }
+  function mNrm(u, v) {
+    const cu=Math.cos(u), su=Math.sin(u), c2=Math.cos(u/2), s2=Math.sin(u/2);
+    const dxdu = -(R+W*v*c2)*su + W*v*(-s2/2)*cu;
+    const dydu =  (R+W*v*c2)*cu + W*v*(-s2/2)*su;
+    const dzdu =  W*v*(c2/2);
+    const dxdv = W*c2*cu, dydv = W*c2*su, dzdv = W*s2;
+    let nx = dydu*dzdv - dzdu*dydv;
+    let ny = dzdu*dxdv - dxdu*dzdv;
+    let nz = dxdu*dydv - dydu*dxdv;
+    const nl = Math.sqrt(nx*nx+ny*ny+nz*nz) || 1;
+    return [nx/nl, ny/nl, nz/nl];
+  }
+
+  /* ── Loop parameters (small ellipse in parameter space) ── */
+  const U_C = 0.0, V_C = 0.0;
+  const LU  = 0.25, LV  = 0.38;
+  function loopUV(a) { return [U_C + LU*Math.cos(a), V_C + LV*Math.sin(a)]; }
+
+  /* ── Patch centre — used to centre the whole scene at origin ── */
+  const PC     = mPt(U_C, V_C);  // = [1, 0, 0]
+  const NRM_OFF = 0.022;
+
+  function scenePt(pt) { return [pt[0]-PC[0], pt[1]-PC[1], pt[2]-PC[2]]; }
+  function patchBase(u, v) {
+    const pt = mPt(u, v), nr = mNrm(u, v);
+    return [pt[0]-PC[0]+nr[0]*NRM_OFF, pt[1]-PC[1]+nr[1]*NRM_OFF, pt[2]-PC[2]+nr[2]*NRM_OFF];
+  }
+
+  /* ── Full Möbius strip geometry (centred) ── */
+  const NU = 200, NV = 30;
+  const posArr = [], nrmArr = [], edgArr = [], idxArr = [];
+  for (let i = 0; i <= NU; i++) {
+    const u = (i / NU) * 2 * Math.PI;
+    for (let j = 0; j <= NV; j++) {
+      const v = (j / NV) * 2 - 1;
+      const pt = mPt(u, v), nr = mNrm(u, v);
+      posArr.push(pt[0]-PC[0], pt[1]-PC[1], pt[2]-PC[2]);
+      nrmArr.push(nr[0], nr[1], nr[2]);
+      edgArr.push(Math.abs(v) > 0.82 ? 1.0 : 0.0);
+    }
+  }
+  for (let i = 0; i < NU; i++) for (let j = 0; j < NV; j++) {
+    const a=i*(NV+1)+j, b=a+1, c=a+(NV+1), d=c+1;
+    idxArr.push(a,b,c, b,d,c);
+  }
+
+  function mkStaticBuf(type, Ctor, data) {
+    const b = gl.createBuffer(); gl.bindBuffer(type, b);
+    gl.bufferData(type, new Ctor(data), gl.STATIC_DRAW); return b;
+  }
+  const posBuf  = mkStaticBuf(gl.ARRAY_BUFFER, Float32Array, posArr);
+  const nrmBuf  = mkStaticBuf(gl.ARRAY_BUFFER, Float32Array, nrmArr);
+  const edgBuf  = mkStaticBuf(gl.ARRAY_BUFFER, Float32Array, edgArr);
+  const idxBuf  = mkStaticBuf(gl.ELEMENT_ARRAY_BUFFER, extUint ? Uint32Array : Uint16Array, idxArr);
+  const idxType = extUint ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT;
+  const dynBuf  = gl.createBuffer();
+
+  /* ── Pre-sample loop path ── */
+  const LOOP_SAMPLES = 360;
+  const loopPts = [];
+  for (let i = 0; i <= LOOP_SAMPLES; i++) {
+    const a = (i / LOOP_SAMPLES) * 2 * Math.PI;
+    const [u, v] = loopUV(a);
+    loopPts.push(patchBase(u, v));
+  }
+
+  /* ── Pinned arrow step: every 10° ── */
+  const PIN_STEP = Math.PI / 9;  // every 20 degrees
+
+  /* ── Column-major matrix math ── */
+  function mul4(a, b) {
+    const r = new Float32Array(16);
+    for (let col=0; col<4; col++) for (let row=0; row<4; row++) {
+      let s=0; for (let k=0; k<4; k++) s += a[k*4+row]*b[col*4+k]; r[col*4+row]=s;
+    } return r;
+  }
+  function persp(fov, asp, n, f) {
+    const t = Math.tan(fov/2);
+    return new Float32Array([1/(asp*t),0,0,0, 0,1/t,0,0, 0,0,-(f+n)/(f-n),-1, 0,0,-2*f*n/(f-n),0]);
+  }
+  function transl(tx,ty,tz){ return new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,tx,ty,tz,1]); }
+  function rotX(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1]);}
+  function rotY(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1]);}
+  function ul3(m){return new Float32Array([m[0],m[1],m[2],m[4],m[5],m[6],m[8],m[9],m[10]]);}
+
+  /* ── Fixed MVP ──
+     rotX=-0.40, rotY=PI+0.30 chosen so that:
+     - the patch normal ends up pointing up (+Y) and toward camera (+Z)
+     - the whole strip is visible (camera far enough back)
+  ── */
+  const MODEL = mul4(rotX(-0.40), rotY(Math.PI + 0.30));
+  const NM    = ul3(MODEL);
+  const VIEW  = transl(0, 0, -2.3);   // pull back enough to see whole strip
+  const PROJ  = persp(Math.PI / 4.5, canvas.width/canvas.height, 0.1, 20.0);
+  const MVP   = mul4(PROJ, mul4(VIEW, MODEL));
+
+  /* ── Draw helper ── */
+  function uploadAndDraw(data, mode, count, color, lw) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, dynBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.DYNAMIC_DRAW);
+    gl.enableVertexAttribArray(fL.pos);
+    gl.vertexAttribPointer(fL.pos, 3, gl.FLOAT, false, 0, 0);
+    gl.uniform3f(fL.color, color[0], color[1], color[2]);
+    if (lw) gl.lineWidth(lw);
+    gl.drawArrays(mode, 0, count);
+  }
+
+  /* ── Fixed arrowhead perpendicular — computed once from the initial normal ── */
+  const _initNrm = mNrm(...loopUV(0));
+  const _ax=Math.abs(_initNrm[0]), _ay=Math.abs(_initNrm[1]), _az=Math.abs(_initNrm[2]);
+  let _cx, _cy, _cz;
+  if (_ax<=_ay && _ax<=_az)  { _cx=0; _cy=-_initNrm[2]; _cz=_initNrm[1]; }
+  else if (_ay<=_az)          { _cx=-_initNrm[2]; _cy=0; _cz=_initNrm[0]; }
+  else                        { _cx=-_initNrm[1]; _cy=_initNrm[0]; _cz=0; }
+  const _cl = Math.sqrt(_cx*_cx+_cy*_cy+_cz*_cz) || 1;
+  const ARROW_PERP = [_cx/_cl, _cy/_cl, _cz/_cl]; // unit perpendicular, frozen at t=0
+
+  /* ── Arrow builder — spread always uses ARROW_PERP ── */
+  function buildArrow(base, dir, scale) {
+    const tip = [base[0]+dir[0]*scale, base[1]+dir[1]*scale, base[2]+dir[2]*scale];
+    const hs = scale*0.22, hw = hs*0.25;
+    const cx=ARROW_PERP[0]*hw, cy=ARROW_PERP[1]*hw, cz=ARROW_PERP[2]*hw;
+    const bk = [tip[0]-dir[0]*hs, tip[1]-dir[1]*hs, tip[2]-dir[2]*hs];
+    return [
+      base[0],base[1],base[2], tip[0],tip[1],tip[2],
+      tip[0],tip[1],tip[2], bk[0]+cx,bk[1]+cy,bk[2]+cz,
+      tip[0],tip[1],tip[2], bk[0]-cx,bk[1]-cy,bk[2]-cz,
+    ];
+  }
+
+  /* ── Uniform/attrib locations ── */
+  const sL = {
+    mvp:  gl.getUniformLocation(stripProg,'uMVP'),
+    nm:   gl.getUniformLocation(stripProg,'uNM'),
+    pos:  gl.getAttribLocation(stripProg,'aPos'),
+    nrm:  gl.getAttribLocation(stripProg,'aNorm'),
+    edge: gl.getAttribLocation(stripProg,'aEdge'),
+  };
+  const fL = {
+    mvp:   gl.getUniformLocation(flatProg,'uMVP'),
+    color: gl.getUniformLocation(flatProg,'uColor'),
+    pos:   gl.getAttribLocation(flatProg,'aPos'),
+  };
+
+  /* ── Animation state ── */
+  let playing = false, loopAngle = 0, lastTS = 0;
+  const LOOP_SPEED = 0.55;
+
+  playBtn.addEventListener('click', () => {
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+    if (playing) lastTS = performance.now();
+  });
+
+  /* ── Render loop ── */
+  function draw(ts) {
+    const dt = Math.min((ts - lastTS)/1000, 0.05); lastTS = ts;
+    if (playing) loopAngle = (loopAngle + dt*LOOP_SPEED) % (2*Math.PI);
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.114, 0.125, 0.129, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST);
+
+    /* ── Full Möbius strip ── */
+    gl.useProgram(stripProg);
+    gl.uniformMatrix4fv(sL.mvp,  false, MVP);
+    gl.uniformMatrix3fv(sL.nm,   false, NM);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+    gl.enableVertexAttribArray(sL.pos);
+    gl.vertexAttribPointer(sL.pos, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, nrmBuf);
+    gl.enableVertexAttribArray(sL.nrm);
+    gl.vertexAttribPointer(sL.nrm, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, edgBuf);
+    gl.enableVertexAttribArray(sL.edge);
+    gl.vertexAttribPointer(sL.edge, 1, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
+    gl.drawElements(gl.TRIANGLES, idxArr.length, idxType, 0);
+
+    /* ── Flat overlays ── */
+    gl.useProgram(flatProg);
+    gl.uniformMatrix4fv(fL.mvp, false, MVP);
+
+    /* Traversed path (bright green) */
+    if (loopAngle > 0.01) {
+      const nT = Math.floor((loopAngle / (2*Math.PI)) * LOOP_SAMPLES);
+      if (nT > 1) {
+        const verts = [];
+        for (let i = 0; i < nT; i++) verts.push(...loopPts[i], ...loopPts[i+1]);
+        uploadAndDraw(verts, gl.LINES, nT*2, [0.40, 0.78, 0.55], 2.5);
+      }
+    }
+
+    /* Pinned arrows — one per completed 10° */
+    const numPins = Math.floor(loopAngle / PIN_STEP);
+    for (let p = 1; p <= numPins; p++) {
+      const a = p * PIN_STEP;
+      const [pu, pv] = loopUV(a);
+      const base = patchBase(pu, pv);
+      const nrm  = mNrm(pu, pv);
+      uploadAndDraw(buildArrow(base, nrm, 0.18), gl.LINES, 6, [0.18, 0.32, 0.30], 1.5);
+    }
+
+    /* Current arrow (bright aqua) */
+    {
+      const [cu, cv] = loopUV(loopAngle);
+      const base = patchBase(cu, cv);
+      const nrm  = mNrm(cu, cv);
+      uploadAndDraw(buildArrow(base, nrm, 0.22), gl.LINES, 6, [0.27, 0.50, 0.45], 2.5);
+
+      /* Dot as cross — avoids gl.POINTS flashing */
+      const [bx, by, bz] = base;
+      const ds = 0.018;
+      uploadAndDraw([bx-ds,by,bz, bx+ds,by,bz, bx,by-ds,bz, bx,by+ds,bz], gl.LINES, 4, [0.984,0.741,0.184], 2.5);
+    }
+
+    /* Label */
+    if (playing) {
+      const pct = Math.round((loopAngle / (2*Math.PI)) * 100);
+      if (pct < 99) {
+        label.style.color = '#83a598';
+        label.textContent = `${pct}% around the loop — still pointing up`;
+      } else {
+        label.style.color = '#b8bb26';
+        label.textContent = `Full loop complete — same orientation ✓`;
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+<p>
+Unfortunately, this procedure has a small hiccup when you do it to the Mobius strip. If we take a long journey, in a loop going around the entire Mobius strip, <em>the notion of up flips when we get back to where we started!</em> 
+
+We made a small animation to see this; after the animation plays, you can drag the Mobius strip to rotate it around, to better see the full path.
+</p>
+
+<!-- Möbius Strip Non-Orientability Widget — Gruvbox Theme -->
+<div id="mobius-orient-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
+  <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Non-Orientability</p>
+  <canvas id="mobius-orient-canvas" width="400" height="300" style="display:block; border-radius: 4px; background: #1d2021;"></canvas>
+  <div style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+    <button id="mobius-play-btn" style="background:#458588; color:#ebdbb2; border:none; border-radius:4px; padding:6px 18px; font-family:'Georgia',serif; font-size:13px; cursor:pointer; letter-spacing:0.05em;">▶ Play</button>
+    <span id="mobius-orient-label" style="color:#665c54; font-size:12px; font-style:italic; min-width:200px; text-align:left;">Press play to animate</span>
+  </div>
+  <p style="color:#665c54; font-size:11px; margin:8px 0 0 0; font-style:italic;">After one full loop, the vector flips — same surface, opposite orientation</p>
+</div>
+
+<script>
+(function () {
+  const canvas  = document.getElementById('mobius-orient-canvas');
+  const playBtn = document.getElementById('mobius-play-btn');
+  const label   = document.getElementById('mobius-orient-label');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const extUint = gl.getExtension('OES_element_index_uint');
+
+  /* ── shaders ── */
+  const VS_STRIP = `
+    attribute vec3 aPos;
+    attribute vec3 aNorm;
+    attribute float aEdge;
+    uniform mat4 uMVP;
+    uniform mat3 uNM;
+    varying vec3 vNorm;
+    varying float vEdge;
+    void main(){
+      gl_Position = uMVP * vec4(aPos, 1.0);
+      vNorm = normalize(uNM * aNorm);
+      vEdge = aEdge;
+    }`;
+  const FS_STRIP = `
+    precision mediump float;
+    varying vec3 vNorm;
+    varying float vEdge;
+    void main(){
+      vec3 L    = normalize(vec3(1.0, 1.5, 2.0));
+      vec3 base = mix(vec3(0.843,0.600,0.129), vec3(0.800,0.141,0.114), vEdge);
+      float lum = 0.30 + 0.70 * max(max(dot(vNorm,L), 0.0), max(dot(-vNorm,L), 0.0));
+      gl_FragColor = vec4(base * lum, 1.0);
+    }`;
+  const VS_FLAT = `
+    attribute vec3 aPos;
+    uniform mat4 uMVP;
+    void main(){ gl_Position = uMVP * vec4(aPos, 1.0); }`;
+  const FS_FLAT = `
+    precision mediump float;
+    uniform vec3 uColor;
+    void main(){ gl_FragColor = vec4(uColor, 1.0); }`;
+
+  function mkShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  function mkProg(vs, fs) {
+    const p = gl.createProgram();
+    gl.attachShader(p, mkShader(gl.VERTEX_SHADER, vs));
+    gl.attachShader(p, mkShader(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(p));
+    return p;
+  }
+  const stripProg = mkProg(VS_STRIP, FS_STRIP);
+  const flatProg  = mkProg(VS_FLAT,  FS_FLAT);
+
+  /* ── Möbius parametric functions ── */
+  const R = 1.0, W = 0.42;
+  function mPt(u, v) {
+    const cu=Math.cos(u), su=Math.sin(u), c2=Math.cos(u/2), s2=Math.sin(u/2);
+    return [(R+W*v*c2)*cu, (R+W*v*c2)*su, W*v*s2];
+  }
+  function mNrm(u, v) {
+    const cu=Math.cos(u), su=Math.sin(u), c2=Math.cos(u/2), s2=Math.sin(u/2);
+    const dxdu=-(R+W*v*c2)*su+W*v*(-s2/2)*cu, dydu=(R+W*v*c2)*cu+W*v*(-s2/2)*su, dzdu=W*v*(c2/2);
+    const dxdv=W*c2*cu, dydv=W*c2*su, dzdv=W*s2;
+    let nx=dydu*dzdv-dzdu*dydv, ny=dzdu*dxdv-dxdu*dzdv, nz=dxdu*dydv-dydu*dxdv;
+    const nl=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;
+    return [nx/nl, ny/nl, nz/nl];
+  }
+
+  /* ── Full strip geometry ── */
+  const NU=200, NV=30;
+  const posArr=[], nrmArr=[], edgArr=[], idxArr=[];
+  for (let i=0; i<=NU; i++) {
+    const u=(i/NU)*2*Math.PI;
+    for (let j=0; j<=NV; j++) {
+      const v=(j/NV)*2-1;
+      posArr.push(...mPt(u,v));
+      nrmArr.push(...mNrm(u,v));
+      edgArr.push(Math.abs(v)>0.82 ? 1.0 : 0.0);
+    }
+  }
+  for (let i=0; i<NU; i++) for (let j=0; j<NV; j++) {
+    const a=i*(NV+1)+j, b=a+1, c=a+(NV+1), d=c+1;
+    idxArr.push(a,b,c, b,d,c);
+  }
+  function mkStaticBuf(type, Ctor, data) {
+    const b=gl.createBuffer(); gl.bindBuffer(type,b);
+    gl.bufferData(type, new Ctor(data), gl.STATIC_DRAW); return b;
+  }
+  const posBuf  = mkStaticBuf(gl.ARRAY_BUFFER, Float32Array, posArr);
+  const nrmBuf  = mkStaticBuf(gl.ARRAY_BUFFER, Float32Array, nrmArr);
+  const edgBuf  = mkStaticBuf(gl.ARRAY_BUFFER, Float32Array, edgArr);
+  const idxBuf  = mkStaticBuf(gl.ELEMENT_ARRAY_BUFFER, extUint?Uint32Array:Uint16Array, idxArr);
+  const idxType = extUint ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT;
+  const dynBuf  = gl.createBuffer();
+
+  /* ── The vector travels along v=0 (centre of strip), u goes 0→2π ── */
+  const NRM_OFF   = 0.022;
+  const PATH_SAMP = 360;
+
+  // Pre-sample full path in model space (offset above surface)
+  const pathPts = [];
+  for (let i=0; i<=PATH_SAMP; i++) {
+    const u = (i/PATH_SAMP)*2*Math.PI;
+    const pt=mPt(u,0), nr=mNrm(u,0);
+    // offset along -normal to match arrow direction
+    pathPts.push([pt[0]-nr[0]*NRM_OFF, pt[1]-nr[1]*NRM_OFF, pt[2]-nr[2]*NRM_OFF]);
+  }
+
+  /* ── Pin step: every 20° ── */
+  const PIN_STEP = Math.PI / 9; // 20 degrees
+
+  /* ── Fixed arrowhead perpendicular — from initial normal at u=0 ── */
+  const _n0 = mNrm(0, 0);
+  const _n0neg = [-_n0[0], -_n0[1], -_n0[2]]; // we draw arrows along -normal
+  const _ax=Math.abs(_n0neg[0]), _ay=Math.abs(_n0neg[1]), _az=Math.abs(_n0neg[2]);
+  let _cx, _cy, _cz;
+  if (_ax<=_ay && _ax<=_az)  { _cx=0; _cy=-_n0neg[2]; _cz=_n0neg[1]; }
+  else if (_ay<=_az)          { _cx=-_n0neg[2]; _cy=0; _cz=_n0neg[0]; }
+  else                        { _cx=-_n0neg[1]; _cy=_n0neg[0]; _cz=0; }
+  const _cl = Math.sqrt(_cx*_cx+_cy*_cy+_cz*_cz)||1;
+  const ARROW_PERP = [_cx/_cl, _cy/_cl, _cz/_cl];
+
+  function buildArrow(base, dir, scale) {
+    const tip = [base[0]+dir[0]*scale, base[1]+dir[1]*scale, base[2]+dir[2]*scale];
+    const hs=scale*0.22, hw=hs*0.25;
+    const cx=ARROW_PERP[0]*hw, cy=ARROW_PERP[1]*hw, cz=ARROW_PERP[2]*hw;
+    const bk=[tip[0]-dir[0]*hs, tip[1]-dir[1]*hs, tip[2]-dir[2]*hs];
+    return [
+      base[0],base[1],base[2], tip[0],tip[1],tip[2],
+      tip[0],tip[1],tip[2], bk[0]+cx,bk[1]+cy,bk[2]+cz,
+      tip[0],tip[1],tip[2], bk[0]-cx,bk[1]-cy,bk[2]-cz,
+    ];
+  }
+
+  /* ── Matrix math (column-major) ── */
+  function mul4(a,b){
+    const r=new Float32Array(16);
+    for(let col=0;col<4;col++) for(let row=0;row<4;row++){
+      let s=0; for(let k=0;k<4;k++) s+=a[k*4+row]*b[col*4+k]; r[col*4+row]=s;
+    } return r;
+  }
+  function persp(fov,asp,n,f){
+    const t=Math.tan(fov/2);
+    return new Float32Array([1/(asp*t),0,0,0, 0,1/t,0,0, 0,0,-(f+n)/(f-n),-1, 0,0,-2*f*n/(f-n),0]);
+  }
+  function transl(tx,ty,tz){return new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,tx,ty,tz,1]);}
+  function rotX(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1]);}
+  function rotY(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1]);}
+  function ul3(m){return new Float32Array([m[0],m[1],m[2],m[4],m[5],m[6],m[8],m[9],m[10]]);}
+
+  /* ── Static model — strip never moves ── */
+  const MODEL = new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]); // identity
+  const NM_STATIC = ul3(MODEL);
+
+  const PROJ = persp(Math.PI/4, canvas.width/canvas.height, 0.1, 20.0);
+
+  /* ── lookAt helper (column-major) ── */
+  function lookAt(eye, center, up) {
+    const fx=center[0]-eye[0], fy=center[1]-eye[1], fz=center[2]-eye[2];
+    const fl=Math.sqrt(fx*fx+fy*fy+fz*fz)||1;
+    const f=[fx/fl,fy/fl,fz/fl];
+    const ul=Math.sqrt(up[0]*up[0]+up[1]*up[1]+up[2]*up[2])||1;
+    const u=[up[0]/ul,up[1]/ul,up[2]/ul];
+    const rx=f[1]*u[2]-f[2]*u[1], ry=f[2]*u[0]-f[0]*u[2], rz=f[0]*u[1]-f[1]*u[0];
+    const rl=Math.sqrt(rx*rx+ry*ry+rz*rz)||1;
+    const r=[rx/rl,ry/rl,rz/rl];
+    const uu=[r[1]*f[2]-r[2]*f[1], r[2]*f[0]-r[0]*f[2], r[0]*f[1]-r[1]*f[0]];
+    // column-major: columns are r, uu, -f, then translation
+    return new Float32Array([
+      r[0],  uu[0], -f[0], 0,
+      r[1],  uu[1], -f[1], 0,
+      r[2],  uu[2], -f[2], 0,
+      -(r[0]*eye[0]+r[1]*eye[1]+r[2]*eye[2]),
+      -(uu[0]*eye[0]+uu[1]*eye[1]+uu[2]*eye[2]),
+       (f[0]*eye[0]+f[1]*eye[1]+f[2]*eye[2]),
+      1
+    ]);
+  }
+
+  /* ── Draw helper ── */
+  function uploadAndDraw(data, mode, count, color, lw) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, dynBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.DYNAMIC_DRAW);
+    gl.enableVertexAttribArray(fL.pos);
+    gl.vertexAttribPointer(fL.pos, 3, gl.FLOAT, false, 0, 0);
+    gl.uniform3f(fL.color, color[0], color[1], color[2]);
+    if (lw) gl.lineWidth(lw);
+    gl.drawArrays(mode, 0, count);
+  }
+
+  /* ── Uniform/attrib locations ── */
+  const sL = {
+    mvp:  gl.getUniformLocation(stripProg,'uMVP'),
+    nm:   gl.getUniformLocation(stripProg,'uNM'),
+    pos:  gl.getAttribLocation(stripProg,'aPos'),
+    nrm:  gl.getAttribLocation(stripProg,'aNorm'),
+    edge: gl.getAttribLocation(stripProg,'aEdge'),
+  };
+  const fL = {
+    mvp:   gl.getUniformLocation(flatProg,'uMVP'),
+    color: gl.getUniformLocation(flatProg,'uColor'),
+    pos:   gl.getAttribLocation(flatProg,'aPos'),
+  };
+
+  /* ── Animation state ── */
+  let playing=false, tParam=0, lastTS=0;
+  const SPEED = 0.55; // radians/sec, full loop ~11s
+
+  playBtn.addEventListener('click', () => {
+    if (tParam >= 2*Math.PI) tParam = 0; // restart
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+    if (playing) lastTS = performance.now();
+  });
+
+  /* ── Render ── */
+  function draw(ts) {
+    const dt=Math.min((ts-lastTS)/1000, 0.05); lastTS=ts;
+    if (playing) {
+      tParam = Math.min(tParam + dt*SPEED, 2*Math.PI);
+      if (tParam >= 2*Math.PI) {
+        playing = false;
+        playBtn.textContent = '▶ Play';
+      }
+    }
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.114, 0.125, 0.129, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST);
+
+    // Camera: fixed distance above and behind the current basepoint.
+    // The basepoint travels around a circle of radius R in the XY plane at height z≈0.
+    // We place the eye at a fixed offset in the outward radial + upward direction,
+    // always looking at the current basepoint.
+    // Camera: sit above the basepoint along the *outward normal* direction
+    // (so the arrow always points roughly toward the camera), plus a small
+    // radial offset so some of the strip is visible for context.
+    const bPt = mPt(tParam, 0);
+    const radX = Math.cos(tParam), radY = Math.sin(tParam);
+    // Eye sits at fixed radial distance + fixed Z height above basepoint.
+    // Distance is always constant = sqrt(D^2 + H^2), no zoom.
+    const D = 1.5, H = 1.2;
+    const eye = [
+      bPt[0] + radX*D,
+      bPt[1] + radY*D,
+      bPt[2] + H
+    ];
+    const target = [bPt[0], bPt[1], bPt[2]];
+    // Up vector: use world Z. But to avoid gimbal flip when view dir approaches Z,
+    // blend in the outward radial so up is always well-defined.
+    const up = [-radX*0.3, -radY*0.3, 1.0]; // inward radial + Z, never parallel to view
+    const VIEW = lookAt(eye, target, up);
+    const MVP  = mul4(PROJ, mul4(VIEW, MODEL));
+    const NM   = NM_STATIC;
+
+    /* ── Strip ── */
+    gl.useProgram(stripProg);
+    gl.uniformMatrix4fv(sL.mvp, false, MVP);
+    gl.uniformMatrix3fv(sL.nm,  false, NM);
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+    gl.enableVertexAttribArray(sL.pos);
+    gl.vertexAttribPointer(sL.pos, 3, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, nrmBuf);
+    gl.enableVertexAttribArray(sL.nrm);
+    gl.vertexAttribPointer(sL.nrm, 3, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, edgBuf);
+    gl.enableVertexAttribArray(sL.edge);
+    gl.vertexAttribPointer(sL.edge, 1, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
+    gl.drawElements(gl.TRIANGLES, idxArr.length, idxType, 0);
+
+    /* ── Overlays ── */
+    gl.useProgram(flatProg);
+    gl.uniformMatrix4fv(fL.mvp, false, MVP);
+
+    const flipped = tParam > Math.PI; // second half of loop = flipped normal
+    const tFrac   = tParam / (2*Math.PI); // 0..1
+
+    /* Traversed path */
+    if (tParam > 0.01) {
+      const nT = Math.floor(tFrac * PATH_SAMP);
+      if (nT > 1) {
+        const verts=[];
+        for (let i=0; i<nT; i++) verts.push(...pathPts[i], ...pathPts[i+1]);
+        // First half: green; second half: red
+        const col = flipped ? [0.75, 0.18, 0.12] : [0.40, 0.78, 0.55];
+        uploadAndDraw(verts, gl.LINES, nT*2, col, 2.5);
+      }
+    }
+
+    /* Pinned arrows every 20° */
+    const numPins = Math.floor(tParam / PIN_STEP);
+    for (let p=1; p<=numPins; p++) {
+      const u = p * PIN_STEP;
+      const pt=mPt(u,0), nr=mNrm(u,0);
+      const dn = [-nr[0],-nr[1],-nr[2]]; // draw along -normal
+      const base=[pt[0]+dn[0]*NRM_OFF, pt[1]+dn[1]*NRM_OFF, pt[2]+dn[2]*NRM_OFF];
+      const wasFlipped = u > Math.PI;
+      const col = wasFlipped ? [0.30, 0.10, 0.10] : [0.18, 0.32, 0.30];
+      uploadAndDraw(buildArrow(base, dn, 0.18), gl.LINES, 6, col, 1.5);
+    }
+
+    /* Current arrow */
+    {
+      const u = tParam;
+      const pt=mPt(u,0), nr=mNrm(u,0);
+      const dn = [-nr[0],-nr[1],-nr[2]]; // draw along -normal
+      const base=[pt[0]+dn[0]*NRM_OFF, pt[1]+dn[1]*NRM_OFF, pt[2]+dn[2]*NRM_OFF];
+      const col = flipped ? [0.80, 0.20, 0.15] : [0.27, 0.50, 0.45];
+      uploadAndDraw(buildArrow(base, dn, 0.22), gl.LINES, 6, col, 2.5);
+
+      /* Dot as cross — no gl.POINTS */
+      const [bx,by,bz] = base;
+      const ds=0.018;
+      uploadAndDraw([bx-ds,by,bz, bx+ds,by,bz, bx,by-ds,bz, bx,by+ds,bz],
+                    gl.LINES, 4, [0.984,0.741,0.184], 2.5);
+    }
+
+    if (tParam >= 2*Math.PI) {
+        label.style.color = '#fb4934';
+        label.textContent = `Full loop done — vector has flipped! ↺ press play to replay`;
+    } else if (playing || tParam > 0) {
+      const tFrac = tParam / (2*Math.PI);
+      if (!flipped) {
+        label.style.color = '#83a598';
+        label.textContent = `${Math.round(tFrac*100)}% around — normal orientation`;
+      } else {
+        label.style.color = '#fb4934';
+        label.textContent = `${Math.round(tFrac*100)}% around — vector has flipped!`;
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+
+<p>
+This is why we cannot define a notion of up or down on the Mobius strip; while in small patches it makes sense, if you travel all around the Mobius strip you'll end up reversing your notion of up and down! This is why people say a Mobius strip has only one side; while at every point on the strip, it looks like there's a `top' and a `bottom,' if you go around the entire strip you'll find that the top and bottom switch roles. If you have a Mobius strip made out of paper, you can observe this in the real world: trace your finger around a Mobius strip, and you'll find that if your finger started off on `top' of the strip, it will end on the `bottom.'
+</p>
+
+<h2>A problem in differential equations</h2>
+
+<p>
+With the Mobius strip introduced, let's turn to a problem of calculus.
+</p>
+
+</body>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+</html>
