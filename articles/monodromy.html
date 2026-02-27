@@ -586,7 +586,7 @@ Let's break down what people mean when they say that. On a surface like a cylind
 <p>
 Unfortunately, this procedure has a small hiccup when you do it to the Mobius strip. If we take a long journey, in a loop going around the entire Mobius strip, <em>the notion of up flips when we get back to where we started!</em> 
 
-We made a small animation to see this; after the animation plays, you can drag the Mobius strip to rotate it around, to better see the full path.
+We made a small animation to see this; after the animation plays, you can drag the Mobius strip to rotate it around, to better see the full path. In this animation, the Mobius strip is translucent.
 </p>
 
 <!-- Möbius Strip Non-Orientability Widget — Gruvbox Theme -->
@@ -631,7 +631,7 @@ We made a small animation to see this; after the animation plays, you can drag t
       vec3 L    = normalize(vec3(1.0, 1.5, 2.0));
       vec3 base = mix(vec3(0.843,0.600,0.129), vec3(0.800,0.141,0.114), vEdge);
       float lum = 0.30 + 0.70 * max(max(dot(vNorm,L), 0.0), max(dot(-vNorm,L), 0.0));
-      gl_FragColor = vec4(base * lum, 1.0);
+      gl_FragColor = vec4(base * lum, 0.45);
     }`;
   const VS_FLAT = `
     attribute vec3 aPos;
@@ -814,8 +814,56 @@ We made a small animation to see this; after the animation plays, you can drag t
   let playing=false, tParam=0, lastTS=0;
   const SPEED = 0.55; // radians/sec, full loop ~11s
 
+  /* ── Drag rotation (active only when not playing) ──
+     We orbit in spherical coords around the world origin so the camera
+     position is continuous with the tracking camera's final position. ── */
+  // Spherical coords: theta = azimuth (around Z), phi = elevation above XY
+  let orbTheta = 0, orbPhi = 0, orbDist = 0;
+  let dragging=false, dragLX=0, dragLY=0;
+  let dragMode = false; // true once animation finishes and we switch to drag
+
+  function eyeFromTracking(t) {
+    const bPt = mPt(t, 0);
+    const radX = Math.cos(t), radY = Math.sin(t);
+    const D=1.5, H=1.2;
+    return [bPt[0]+radX*D, bPt[1]+radY*D, bPt[2]+H];
+  }
+
+  function initOrbitFromEye(eye) {
+    // Convert eye position to spherical coords around origin
+    const x=eye[0], y=eye[1], z=eye[2];
+    orbDist  = Math.sqrt(x*x+y*y+z*z);
+    orbTheta = Math.atan2(y, x);
+    orbPhi   = Math.asin(Math.max(-1, Math.min(1, z/orbDist)));
+  }
+
+  canvas.addEventListener('mousedown', e=>{
+    if (playing) return;
+    dragging=true; dragLX=e.clientX; dragLY=e.clientY;
+  });
+  window.addEventListener('mousemove', e=>{
+    if (!dragging) return;
+    orbTheta -= (e.clientX-dragLX)*0.013; dragLX=e.clientX;
+    orbPhi   += (e.clientY-dragLY)*0.013; dragLY=e.clientY;
+    orbPhi    = Math.max(-Math.PI/2+0.05, Math.min(Math.PI/2-0.05, orbPhi));
+  });
+  window.addEventListener('mouseup', ()=>dragging=false);
+  canvas.addEventListener('touchstart', e=>{
+    if (playing) return;
+    dragging=true; dragLX=e.touches[0].clientX; dragLY=e.touches[0].clientY;
+    e.preventDefault();
+  }, {passive:false});
+  canvas.addEventListener('touchmove', e=>{
+    if (!dragging) return;
+    orbTheta -= (e.touches[0].clientX-dragLX)*0.013; dragLX=e.touches[0].clientX;
+    orbPhi   += (e.touches[0].clientY-dragLY)*0.013; dragLY=e.touches[0].clientY;
+    orbPhi    = Math.max(-Math.PI/2+0.05, Math.min(Math.PI/2-0.05, orbPhi));
+    e.preventDefault();
+  }, {passive:false});
+  canvas.addEventListener('touchend', ()=>dragging=false);
+
   playBtn.addEventListener('click', () => {
-    if (tParam >= 2*Math.PI) tParam = 0; // restart
+    if (tParam >= 2*Math.PI) { tParam = 0; dragMode = false; } // restart
     playing = !playing;
     playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
     if (playing) lastTS = performance.now();
@@ -837,32 +885,38 @@ We made a small animation to see this; after the animation plays, you can drag t
     gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
     gl.enable(gl.DEPTH_TEST);
 
-    // Camera: fixed distance above and behind the current basepoint.
-    // The basepoint travels around a circle of radius R in the XY plane at height z≈0.
-    // We place the eye at a fixed offset in the outward radial + upward direction,
-    // always looking at the current basepoint.
-    // Camera: sit above the basepoint along the *outward normal* direction
-    // (so the arrow always points roughly toward the camera), plus a small
-    // radial offset so some of the strip is visible for context.
-    const bPt = mPt(tParam, 0);
-    const radX = Math.cos(tParam), radY = Math.sin(tParam);
-    // Eye sits at fixed radial distance + fixed Z height above basepoint.
-    // Distance is always constant = sqrt(D^2 + H^2), no zoom.
-    const D = 1.5, H = 1.2;
-    const eye = [
-      bPt[0] + radX*D,
-      bPt[1] + radY*D,
-      bPt[2] + H
-    ];
-    const target = [bPt[0], bPt[1], bPt[2]];
-    // Up vector: use world Z. But to avoid gimbal flip when view dir approaches Z,
-    // blend in the outward radial so up is always well-defined.
-    const up = [-radX*0.3, -radY*0.3, 1.0]; // inward radial + Z, never parallel to view
-    const VIEW = lookAt(eye, target, up);
-    const MVP  = mul4(PROJ, mul4(VIEW, MODEL));
-    const NM   = NM_STATIC;
+    let VIEW, MVP, NM;
+    const animDone = tParam >= 2*Math.PI - 0.001;
 
-    /* ── Strip ── */
+    if (!animDone) {
+      // Tracking camera follows the basepoint
+      const eye = eyeFromTracking(tParam);
+      const bPt = mPt(tParam, 0);
+      const radX = Math.cos(tParam), radY = Math.sin(tParam);
+      const up = [-radX*0.3, -radY*0.3, 1.0];
+      VIEW = lookAt(eye, [bPt[0],bPt[1],bPt[2]], up);
+      MVP  = mul4(PROJ, mul4(VIEW, MODEL));
+      NM   = NM_STATIC;
+    } else {
+      // On first entry to drag mode, seed the orbit from the tracking camera's final position
+      if (!dragMode) {
+        initOrbitFromEye(eyeFromTracking(2*Math.PI));
+        dragMode = true;
+      }
+      // Spherical orbit around world origin
+      const ex = orbDist * Math.cos(orbPhi) * Math.cos(orbTheta);
+      const ey = orbDist * Math.cos(orbPhi) * Math.sin(orbTheta);
+      const ez = orbDist * Math.sin(orbPhi);
+      const up = [0, 0, 1];
+      VIEW = lookAt([ex,ey,ez], [0,0,0], up);
+      MVP  = mul4(PROJ, mul4(VIEW, MODEL));
+      NM   = NM_STATIC;
+    }
+
+    /* ── Strip (semi-transparent) ── */
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.depthMask(false); // don't write depth for transparent surface
     gl.useProgram(stripProg);
     gl.uniformMatrix4fv(sL.mvp, false, MVP);
     gl.uniformMatrix3fv(sL.nm,  false, NM);
@@ -878,11 +932,11 @@ We made a small animation to see this; after the animation plays, you can drag t
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
     gl.drawElements(gl.TRIANGLES, idxArr.length, idxType, 0);
 
-    /* ── Overlays ── */
+    /* ── Overlays (opaque) ── */
+    gl.depthMask(true);
     gl.useProgram(flatProg);
     gl.uniformMatrix4fv(fL.mvp, false, MVP);
 
-    const flipped = tParam > Math.PI; // second half of loop = flipped normal
     const tFrac   = tParam / (2*Math.PI); // 0..1
 
     /* Traversed path */
@@ -891,9 +945,7 @@ We made a small animation to see this; after the animation plays, you can drag t
       if (nT > 1) {
         const verts=[];
         for (let i=0; i<nT; i++) verts.push(...pathPts[i], ...pathPts[i+1]);
-        // First half: green; second half: red
-        const col = flipped ? [0.75, 0.18, 0.12] : [0.40, 0.78, 0.55];
-        uploadAndDraw(verts, gl.LINES, nT*2, col, 2.5);
+        uploadAndDraw(verts, gl.LINES, nT*2, [0.40, 0.78, 0.55], 2.5);
       }
     }
 
@@ -902,23 +954,20 @@ We made a small animation to see this; after the animation plays, you can drag t
     for (let p=1; p<=numPins; p++) {
       const u = p * PIN_STEP;
       const pt=mPt(u,0), nr=mNrm(u,0);
-      const dn = [-nr[0],-nr[1],-nr[2]]; // draw along -normal
+      const dn = [-nr[0],-nr[1],-nr[2]];
       const base=[pt[0]+dn[0]*NRM_OFF, pt[1]+dn[1]*NRM_OFF, pt[2]+dn[2]*NRM_OFF];
-      const wasFlipped = u > Math.PI;
-      const col = wasFlipped ? [0.30, 0.10, 0.10] : [0.18, 0.32, 0.30];
-      uploadAndDraw(buildArrow(base, dn, 0.18), gl.LINES, 6, col, 1.5);
+      uploadAndDraw(buildArrow(base, dn, 0.18), gl.LINES, 6, [0.18, 0.32, 0.30], 1.5);
     }
 
     /* Current arrow */
     {
       const u = tParam;
       const pt=mPt(u,0), nr=mNrm(u,0);
-      const dn = [-nr[0],-nr[1],-nr[2]]; // draw along -normal
+      const dn = [-nr[0],-nr[1],-nr[2]];
       const base=[pt[0]+dn[0]*NRM_OFF, pt[1]+dn[1]*NRM_OFF, pt[2]+dn[2]*NRM_OFF];
-      const col = flipped ? [0.80, 0.20, 0.15] : [0.27, 0.50, 0.45];
-      uploadAndDraw(buildArrow(base, dn, 0.22), gl.LINES, 6, col, 2.5);
+      uploadAndDraw(buildArrow(base, dn, 0.22), gl.LINES, 6, [0.27, 0.50, 0.45], 2.5);
 
-      /* Dot as cross — no gl.POINTS */
+      /* Dot as cross */
       const [bx,by,bz] = base;
       const ds=0.018;
       uploadAndDraw([bx-ds,by,bz, bx+ds,by,bz, bx,by-ds,bz, bx,by+ds,bz],
@@ -926,17 +975,11 @@ We made a small animation to see this; after the animation plays, you can drag t
     }
 
     if (tParam >= 2*Math.PI) {
-        label.style.color = '#fb4934';
-        label.textContent = `Full loop done — vector has flipped! ↺ press play to replay`;
+      label.style.color = '#b8bb26';
+      label.textContent = `Full loop complete ↺ press play to replay`;
     } else if (playing || tParam > 0) {
-      const tFrac = tParam / (2*Math.PI);
-      if (!flipped) {
-        label.style.color = '#83a598';
-        label.textContent = `${Math.round(tFrac*100)}% around — normal orientation`;
-      } else {
-        label.style.color = '#fb4934';
-        label.textContent = `${Math.round(tFrac*100)}% around — vector has flipped!`;
-      }
+      label.style.color = '#83a598';
+      label.textContent = `${Math.round(tFrac*100)}% around the strip`;
     }
 
     requestAnimationFrame(draw);
@@ -953,6 +996,15 @@ This is why we cannot define a notion of up or down on the Mobius strip; while i
 
 <p>
 With the Mobius strip introduced, let's turn to a problem of calculus.
+</p>
+
+<p>
+The great mathematician Riemann was interested in solving differential equations over the complex numbers. As an example, consider the equation
+\[\frac{df}{dz} = \frac{1}{2z}f(z).\]
+</p>
+
+<p>
+Riemann was interested in finding <em>complex</em> solutions to this differential equation. He noticed something interesting: 
 </p>
 
 </body>
