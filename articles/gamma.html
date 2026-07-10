@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What is the factorial of 3.7?</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>What is the factorial of 3.5?</h1>
+<p class="meta">July 10, 2026</p>
+
+<p>
+How many ways are there for Alice (A), Bob (B), and Charlie (C) to line up in a line? Any 3 of them could be first in line, but then only 2 of them remain to be second in line and only 1 remains to be third in line. 
+So there are 6 possibilities total: ABC, ACB, BAC, BCA, CAB, and CBA.
+</p>
+
+<p>
+  If Alice had more friends, and her friend group had \(n\) people, there would be \(n\times(n-1)\times\cdots\times2\times1\) ways for all of them to line up. We denote this number by \(n!\), the <em>factorial</em> of \(n\), and this function grows rapidly. 
+  In a friend group with 10 people, there would be
+  \[
+  10!=10\times9\times8\times7\times6\times5\times4\times3\times2\times1=3628800
+  \]
+  ways to line up. That's over 3 million possibilities!
+</p>
+
+<p>
+  So far, we only know how to evaluate the function \(n!\) for integer values of \(n\). But wouldn't it be wonderful if we were able to fill in the graph, and tell you what \(3.7!\) means?
+</p>
+
+
+<div class="graph-toggle" style="text-align:center; margin: 2rem 0;">
+  <img id="graph-image" src="factorial.svg" alt="Graph of n factorial at integer points" style="max-width:100%; height:auto;">
+  <div style="margin-top: 0.75rem;">
+    <button id="graph-toggle-btn" type="button" onclick="toggleGraph()">fill in the points</button>
+  </div>
+</div>
+ 
+<script>
+  function toggleGraph() {
+    var img = document.getElementById('graph-image');
+    var btn = document.getElementById('graph-toggle-btn');
+    if (img.src.indexOf('factorial.svg') !== -1) {
+      img.src = 'gamma.svg';
+      img.alt = 'Graph of the Gamma function, Gamma(x+1), on the interval from 1 to 4';
+      btn.textContent = 'factorial';
+    } else {
+      img.src = 'factorial.svg';
+      img.alt = 'Graph of n factorial at integer points';
+      btn.textContent = 'fill in the points';
+    }
+  }
+</script>
+
+<p>
+  We want some way of filling in the graph which retains the fundamental property of factorial, that 
+  \(x!=x\cdot(x-1)!\)
+  But this property alone doesn't tell you how to evaluate \(3.5!\). We see that
+  \[
+  3.5!=3.5\times2.5\times1.5!,
+  \]
+  but we don't know what \(1.5!\) should be. Certainly we want it to be somewhere in-between \(1!=1\) and \(2!=2\), but which value?
+</p>
+
+<p>
+  For this, let us take a slight detour and think about binomial coefficients which we previously discussed in <a href="articles/dirichlet.html">xxx</a>. If Alice had \(n\) apples and wanted to eat \(k\) of them, she will have
+  \[
+  {n\choose k}=\frac{n(n-1)\cdots(n-k)}{k!}
+  \]
+  ways to do so. When we make \(n\) much larger than \(k\), the numbers on the numerator \(n,n-1,\dots,n-k\) are all going to be around \(n\). 
+  That means Alice will have approximately \(n^k/k!\) ways to choose her \(k\) apples.
+</p>
+
+<p>
+  That means if we don't know what \(k!\) is, we <em>could</em> define it to be the limit of
+  \[
+  \frac{n^k}{{n\choose k}}
+  \]
+  as \(n\) grows infinitely large. 
+  This is a very convoluted way to calculate \(k!\), but Euler realized this is the approach that lets us extend the factorial to arbitrary values.
+</p>
+
+<p>
+  In other words, we could image defining \(x!\) for an arbitrary value of \(x\) to be the limit
+  \[
+  \lim_{n\to\infty}\frac{n^x}{{n\choose x}}.
+  \]
+  However, although we know what the numerator \(n^x\) means, we don't know what \({n\choose x}\) means. 
+  That's because the definition of \({n\choose x}\) involved a denominator of \(x!\), and that was what we were trying to do in the first place! So how does this help?
+</p>
+
+<p>
+Here let's go back to the binomial coefficient. Choosing \(k\) apples from \(n\) is the same as choosing \(n-k\) apples from \(n\) apples.
+Instead of choosing which apples to eat, choose those you don't want to eat! In formulas, this means
+\[
+{n\choose k}={n\choose n-k}.
+\]
+So we can instead think about what
+\[
+\lim_{n\to\infty}\frac{n^x}{{n\choose n-x}}\]
+means. Of course this still doesn't make sense since \(n-x\) is not an integer. But by changing variables from \(n\) to \(n+x\) we can re-write the formula as
+\[
+\lim_{n\to\infty}\frac{(n+x)^x}{{n+x\choose n}}.
+\]
+This is now a valid formula since
+\[
+{n+x\choose n}=\frac{(n+x)(n-1+x)\cdots(1+x)}{n!}
+\]
+makes perfect sense. Again observe that replacing the numerator \((n+x)^x\) of the formula with \(n^x\) doesn't change anything since for large \(n\) they have basically the same size.
+</p>
+
+<p>
+  This gives Euler's formula for the factorial for general values of \(x\),
+  \[
+  x!=\lim_{n\to\infty}\frac{n^x}{{n+x\choose x}}=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}.
+  \]
+  The formula works not only for all real values of \(x\), but for any complex number as well! So we now know what \(3.5!\) is, but also \((-0.7)!\) and \((2-0.3i)!\).
+  </p>
+
+  <p>
+    Euler observed that there's a relation between \(x!\) and \((-x)!\). Indeed,
+    \[
+    x!\cdot(-x)!=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(x+1)}\cdot\frac{n^{-x}\cdot n!}{(n-x)(n-1-x)\cdots(1-x)}.
+    \]
+This simplifies as
+\[
+x!\cdot(-x)!=\lim_{n\to\infty}\frac{n!^2}{(n^2-x^2)((n-1)^2-x^2)\cdots(1-x^2)}.
+\]
+The product can be re-grouped as \(\frac{1^2}{1^2-x^2}\cdots\frac{n^2}{n^2-x^2}\), so the limit equals the infinite product
+\[
+x!\cdot(-x)!=\frac1{1-\frac{x^2}{1^2}}\cdot\frac1{1-\frac{x^2}{2^2}}\cdot \frac1{1-\frac{x^2}{3^2}}\cdots.
+\]
+On the other hand, from <a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> we saw that \(\sin(x)\) factors as
+\[
+\sin(x)=x\bigg(1-\frac{x^2}{\pi^2}\bigg)\bigg(1-\frac{x^2}{2^2\pi^2}\bigg)\bigg(1-\frac{x^2}{3^2\pi^2}\bigg)\cdots.
+\]
+The basic reason is that \(\sin(x)\) has zeroes \(0,\pm\pi,\pm2\pi,\cdots\). Substitutitng into the previous equation tells us
+\[
+x!\cdot(-x)!=\frac{\pi x}{\sin(\pi x)},
+\]
+which is known as the reflection formula.
+  </p>
+
+  <h2>An example</h2>
+
+  <p>
+    Let's now use Euler's reflection formula to compute \(3.5!\). By substituting \(x!=x\cdot(x-1)!\) we can re-write the formula as 
+    \[
+    (x-1)!\cdot(-x)!=\frac{\pi}{\sin(\pi x)}.
+    \]
+    At \(x=0.5\) we conclude
+    \[
+    (-0.5)!\cdot(-0.5)!=\frac{\pi}{\sin(0.5\pi)}=\pi,
+    \]
+    so
+    \[
+    (-0.5)!=\sqrt{\pi}.\]
+  Somehow \(\pi\) appears in the formula for the factorial! Now
+  \[
+  3.5!=3.5\cdot2.5\cdot1.5\cdot0.5\cdot(-0.5)!=\frac{105}{16}\sqrt{\pi}.\]
+  This is around 11.63, which is indeed between \(3!=6\) and \(4!=24\).
+  </p>
+
+</body>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+</html>
