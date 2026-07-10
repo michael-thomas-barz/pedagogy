@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>What is the factorial of 3.7?</title>
+  <title>What is the factorial of 3.5?</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -64,7 +64,7 @@ So there are 6 possibilities total: ABC, ACB, BAC, BCA, CAB, and CBA.
 
 <p>
   We want some way of filling in the graph which retains the fundamental property of factorial, that 
-  \(x!=x\cdot(x-1)!\)
+  \(x!=x\cdot(x-1)!\).
   But this property alone doesn't tell you how to evaluate \(3.5!\). We see that
   \[
   3.5!=3.5\times2.5\times1.5!,
@@ -87,11 +87,11 @@ So there are 6 possibilities total: ABC, ACB, BAC, BCA, CAB, and CBA.
   \frac{n^k}{{n\choose k}}
   \]
   as \(n\) grows infinitely large. 
-  This is a very convoluted way to calculate \(k!\), but Euler realized this is the approach that lets us extend the factorial to arbitrary values.
+  This is a very convoluted way to calculate \(k!\), but Euler realized this approach lets us extend the factorial to arbitrary values.
 </p>
 
 <p>
-  In other words, we could imagine defining \(x!\) for an arbitrary value of \(x\) to be the limit
+  In other words, Euler imagines defining \(x!\) for an arbitrary value of \(x\) to be the limit
   \[
   \lim_{n\to\infty}\frac{n^x}{{n\choose x}}.
   \]
@@ -116,11 +116,11 @@ This is now a valid formula since
 \[
 {n+x\choose n}=\frac{(n+x)(n-1+x)\cdots(1+x)}{n!}
 \]
-makes perfect sense. Again observe that replacing the numerator \((n+x)^x\) of the formula with \(n^x\) doesn't change anything since for large \(n\) they have basically the same size.
+makes perfect sense. 
 </p>
 
 <p>
-  This gives Euler's formula for the factorial for general values of \(x\),
+  Again observe that replacing the numerator \((n+x)^x\) of the formula with \(n^x\) doesn't change anything since for large \(n\) they have basically the same size. This gives Euler's formula for the factorial for general values of \(x\),
   \[
   x!=\lim_{n\to\infty}\frac{n^x}{{n+x\choose x}}=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}.
   \]
@@ -140,15 +140,15 @@ The product can be re-grouped as \(\frac{1^2}{1^2-x^2}\cdots\frac{n^2}{n^2-x^2}\
 \[
 x!\cdot(-x)!=\frac1{1-\frac{x^2}{1^2}}\cdot\frac1{1-\frac{x^2}{2^2}}\cdot \frac1{1-\frac{x^2}{3^2}}\cdots.
 \]
-On the other hand, from <a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> we saw that \(\sin(x)\) factors as
+On the other hand, in <a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> we saw that \(\sin(x)\) factors as
 \[
 \sin(x)=x\bigg(1-\frac{x^2}{\pi^2}\bigg)\bigg(1-\frac{x^2}{2^2\pi^2}\bigg)\bigg(1-\frac{x^2}{3^2\pi^2}\bigg)\cdots.
 \]
-The basic reason is that \(\sin(x)\) has zeroes \(0,\pm\pi,\pm2\pi,\cdots\). Substitutitng into the previous equation tells us
+The basic reason is that \(\sin(x)\) has zeroes at \(0,\pm\pi,\pm2\pi,\cdots\). Substitutitng into the previous equation tells us
 \[
 x!\cdot(-x)!=\frac{\pi x}{\sin(\pi x)},
 \]
-which is known as the reflection formula.
+which is known as Euler's reflection formula.
   </p>
 
   <h2>An example</h2>
@@ -170,6 +170,44 @@ which is known as the reflection formula.
   3.5!=3.5\cdot2.5\cdot1.5\cdot0.5\cdot(-0.5)!=\frac{105}{16}\sqrt{\pi}.\]
   This is around 11.63, which is indeed between \(3!=6\) and \(4!=24\).
   </p>
+
+  <h2>Volumes of balls in high dimensions</h2>
+  You may ask: it's cool you can extend the factorial, but why is it useful? One of the many places it appears is in the volume of balls in arbitrary dimensions.
+
+  <p>
+  We all know and love that the circle in 2 dimensions with radius \(r\) has area \(\pi r^2\). The volume of a ball in 3 dimensions has a similar-looking formula, \(\frac43\pi r^3\). 
+  But what happens in dimensions 4, 5, etc?
+  </p>
+
+  <p>
+    It turns out there is a general formula, that in dimension \(n\) the volume of a ball of radius \(n\) circle is
+    \[
+    \frac{\pi^{n/2}}{(\frac n2)!}r^n.
+    \]
+    When \(n=2\), the case of a circle, we recover
+    \[
+    \frac{\pi^1}{1!}r^2=\pi r^2.
+    \]
+    When \(n=3\), we again recover
+    \[
+    \frac{\pi^{3/2}}{(3/2)!}r^3=\frac{\pi^{3/2}}{\frac32\cdot\frac12\cdot\sqrt\pi}r^3=\frac43\pi r^3.
+    \]
+    In higher dimensions, the volumes become:
+    \[
+    \frac12\pi^2r^4,\frac8{15}\pi^2r^5,\frac16\pi^3r^6,\frac{16}{105}\pi^3r^7,\cdots.
+    \]
+    Notice that the last volume comes from our computation of \(3.5!\) above.
+  </p>
+
+  <p>
+    A funny consequence of our formula is that balls occupy less and less space as the dimension increases. A ball of radius \(r\) always sits in a box of width \(2r\) which has \((2r)^n\).
+    That means the proportion of the box occupied by the ball is
+    \[
+    \frac{\pi^{n/2}}{2^n(\frac n2)!}.
+    \]
+    Since factorials rapidly increase, this rapidly decreases. For example in dimension 8 the ball only occupies 1.5% of the box, and in dimension 24 the sphere only occupies 0.00000001% of the box.
+    It is remarkable that nevertheless the optimal sphere packing in these dimensions occupy 25.3% and 0.19% of space, respectively. Although those numbers seem small, look at how much they improve upon the naive packing!
+    </p>
 
 </body>
 <!-- MailerLite Universal -->
