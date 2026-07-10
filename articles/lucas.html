@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fractals patterns hidden in Pascal's triangle</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>Fractals patterns hidden Pascal's triangle</h1>
+<p class="meta">February 22, 2026</p>
+
+<p>
+Pascal's triangle is a wonderful pattern, with lots of applications in combinatorics. It looks like this: 
+</p>
+
+<figure style="overflow-x:auto; margin: 1.5em 0;">
+  <svg width="100%" viewBox="0 0 680 420" role="img" xmlns="http://www.w3.org/2000/svg"
+       style="font-family: monospace; max-width: 680px; display: block; margin: 0 auto;">
+    <title>Pascal's triangle, rows 0 through 8</title>
+<style>
+  .cell rect { fill: #665c54; stroke: #504945; stroke-width: 0.75; }
+  .cell text { font-size: 13px; text-anchor: middle; dominant-baseline: central; fill: #e0e0e0; }
+  .cell.edge rect { fill: #2a2a2a; }
+  .cell.edge text { fill: #ebdbb2; }
+  .row-label { font-size: 11px; fill: #ebdbb2; text-anchor: end; dominant-baseline: central; }
+  figcaption { color: #666; font-family: monospace; font-size: 11px; text-align: center; margin-top: 0.5em; }
+</style>
+
+    <!-- Row labels -->
+    <text class="row-label" x="44" y="30">n=0</text>
+    <text class="row-label" x="44" y="70">n=1</text>
+    <text class="row-label" x="44" y="110">n=2</text>
+    <text class="row-label" x="44" y="150">n=3</text>
+    <text class="row-label" x="44" y="190">n=4</text>
+    <text class="row-label" x="44" y="230">n=5</text>
+    <text class="row-label" x="44" y="270">n=6</text>
+    <text class="row-label" x="44" y="310">n=7</text>
+    <text class="row-label" x="44" y="350">n=8</text>
+
+    <!-- Row 0 -->
+    <g class="cell"><rect x="322" y="14" width="36" height="32" rx="6"/><text x="340" y="30">1</text></g>
+
+    <!-- Row 1 -->
+    <g class="cell"><rect x="302" y="54" width="36" height="32" rx="6"/><text x="320" y="70">1</text></g>
+    <g class="cell"><rect x="342" y="54" width="36" height="32" rx="6"/><text x="360" y="70">1</text></g>
+
+    <!-- Row 2 -->
+    <g class="cell"><rect x="282" y="94" width="36" height="32" rx="6"/><text x="300" y="110">1</text></g>
+    <g class="cell"><rect x="322" y="94" width="36" height="32" rx="6"/><text x="340" y="110">2</text></g>
+    <g class="cell"><rect x="362" y="94" width="36" height="32" rx="6"/><text x="380" y="110">1</text></g>
+
+    <!-- Row 3 -->
+    <g class="cell"><rect x="262" y="134" width="36" height="32" rx="6"/><text x="280" y="150">1</text></g>
+    <g class="cell"><rect x="302" y="134" width="36" height="32" rx="6"/><text x="320" y="150">3</text></g>
+    <g class="cell"><rect x="342" y="134" width="36" height="32" rx="6"/><text x="360" y="150">3</text></g>
+    <g class="cell"><rect x="382" y="134" width="36" height="32" rx="6"/><text x="400" y="150">1</text></g>
+
+    <!-- Row 4 -->
+    <g class="cell"><rect x="242" y="174" width="36" height="32" rx="6"/><text x="260" y="190">1</text></g>
+    <g class="cell"><rect x="282" y="174" width="36" height="32" rx="6"/><text x="300" y="190">4</text></g>
+    <g class="cell"><rect x="322" y="174" width="36" height="32" rx="6"/><text x="340" y="190">6</text></g>
+    <g class="cell"><rect x="362" y="174" width="36" height="32" rx="6"/><text x="380" y="190">4</text></g>
+    <g class="cell"><rect x="402" y="174" width="36" height="32" rx="6"/><text x="420" y="190">1</text></g>
+
+    <!-- Row 5 -->
+    <g class="cell"><rect x="222" y="214" width="36" height="32" rx="6"/><text x="240" y="230">1</text></g>
+    <g class="cell"><rect x="262" y="214" width="36" height="32" rx="6"/><text x="280" y="230">5</text></g>
+    <g class="cell"><rect x="302" y="214" width="36" height="32" rx="6"/><text x="320" y="230">10</text></g>
+    <g class="cell"><rect x="342" y="214" width="36" height="32" rx="6"/><text x="360" y="230">10</text></g>
+    <g class="cell"><rect x="382" y="214" width="36" height="32" rx="6"/><text x="400" y="230">5</text></g>
+    <g class="cell"><rect x="422" y="214" width="36" height="32" rx="6"/><text x="440" y="230">1</text></g>
+
+    <!-- Row 6 -->
+    <g class="cell"><rect x="202" y="254" width="36" height="32" rx="6"/><text x="220" y="270">1</text></g>
+    <g class="cell"><rect x="242" y="254" width="36" height="32" rx="6"/><text x="260" y="270">6</text></g>
+    <g class="cell"><rect x="282" y="254" width="36" height="32" rx="6"/><text x="300" y="270">15</text></g>
+    <g class="cell"><rect x="322" y="254" width="36" height="32" rx="6"/><text x="340" y="270">20</text></g>
+    <g class="cell"><rect x="362" y="254" width="36" height="32" rx="6"/><text x="380" y="270">15</text></g>
+    <g class="cell"><rect x="402" y="254" width="36" height="32" rx="6"/><text x="420" y="270">6</text></g>
+    <g class="cell"><rect x="442" y="254" width="36" height="32" rx="6"/><text x="460" y="270">1</text></g>
+
+    <!-- Row 7 -->
+    <g class="cell"><rect x="182" y="294" width="36" height="32" rx="6"/><text x="200" y="310">1</text></g>
+    <g class="cell"><rect x="222" y="294" width="36" height="32" rx="6"/><text x="240" y="310">7</text></g>
+    <g class="cell"><rect x="262" y="294" width="36" height="32" rx="6"/><text x="280" y="310">21</text></g>
+    <g class="cell"><rect x="302" y="294" width="36" height="32" rx="6"/><text x="320" y="310">35</text></g>
+    <g class="cell"><rect x="342" y="294" width="36" height="32" rx="6"/><text x="360" y="310">35</text></g>
+    <g class="cell"><rect x="382" y="294" width="36" height="32" rx="6"/><text x="400" y="310">21</text></g>
+    <g class="cell"><rect x="422" y="294" width="36" height="32" rx="6"/><text x="440" y="310">7</text></g>
+    <g class="cell"><rect x="462" y="294" width="36" height="32" rx="6"/><text x="480" y="310">1</text></g>
+
+    <!-- Row 8 -->
+    <g class="cell"><rect x="162" y="334" width="36" height="32" rx="6"/><text x="180" y="350">1</text></g>
+    <g class="cell"><rect x="202" y="334" width="36" height="32" rx="6"/><text x="220" y="350">8</text></g>
+    <g class="cell"><rect x="242" y="334" width="36" height="32" rx="6"/><text x="260" y="350">28</text></g>
+    <g class="cell"><rect x="282" y="334" width="36" height="32" rx="6"/><text x="300" y="350">56</text></g>
+    <g class="cell"><rect x="322" y="334" width="36" height="32" rx="6"/><text x="340" y="350">70</text></g>
+    <g class="cell"><rect x="362" y="334" width="36" height="32" rx="6"/><text x="380" y="350">56</text></g>
+    <g class="cell"><rect x="402" y="334" width="36" height="32" rx="6"/><text x="420" y="350">28</text></g>
+    <g class="cell"><rect x="442" y="334" width="36" height="32" rx="6"/><text x="460" y="350">8</text></g>
+    <g class="cell"><rect x="482" y="334" width="36" height="32" rx="6"/><text x="500" y="350">1</text></g>
+
+    <text font-size="11px" fill="#aaa" text-anchor="middle" x="340" y="398">
+    </text>
+  </svg>
+</figure>
+
+<p>
+To see the pattern, let's step through the construction of a new row.
+</p>
+
+<style>
+  #pt-stepper { font-family: var(--font-mono); padding: 1rem 0; }
+  .pt-instruction { font-size: 14px; color: var(--color-text-primary); text-align: center; min-height: 44px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-family: var(--font-sans); line-height: 1.5; }
+  .pt-svg-wrap { width: 100%; }
+  .pt-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; }
+  .pt-btn { background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 7px 20px; font-size: 13px; color: var(--color-text-primary); cursor: pointer; }
+  .pt-btn:hover { background: var(--color-background-secondary); }
+  .pt-btn:disabled { opacity: 0.35; cursor: default; }
+  .pt-dots { display: flex; gap: 6px; align-items: center; }
+  .pt-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-border-secondary); transition: background 0.2s; }
+  .pt-dot.active { background: var(--color-text-primary); }
+</style>
+
+<div id="pt-stepper">
+  <div class="pt-instruction" id="pt-instr"></div>
+  <div class="pt-svg-wrap">
+    <svg id="pt-svg" width="100%" viewBox="0 0 680 340"></svg>
+  </div>
+  <div class="pt-controls">
+    <button class="pt-btn" id="pt-prev" onclick="ptStep(-1)">← Back</button>
+    <div class="pt-dots" id="pt-dots"></div>
+    <button class="pt-btn" id="pt-next" onclick="ptStep(1)">Next →</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const CW = 44, CH = 32, GAP = 4;
+  const VW = 680;
+
+  const rows = [
+    [1],
+    [1,1],
+    [1,2,1],
+    [1,3,3,1],
+    [1,4,6,4,1],
+    [1,5,10,10,5,1],
+    [1,6,15,20,15,6,1],
+    [1,7,21,35,35,21,7,1]
+  ];
+  const ROW8 = [1,8,28,56,70,56,28,8,1];
+  const N8 = ROW8.length;
+
+  const ROW_H = CH + 8;
+
+  function cellX(numInRow, i) {
+    const total = numInRow * CW + (numInRow - 1) * GAP;
+    return (VW - total) / 2 + i * (CW + GAP);
+  }
+
+  function cellCX(numInRow, i) {
+    return cellX(numInRow, i) + CW / 2;
+  }
+
+  function makeCell(x, y, val, state) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x', x); r.setAttribute('y', y);
+    r.setAttribute('width', CW); r.setAttribute('height', CH);
+    r.setAttribute('rx', 6); r.setAttribute('stroke-width', '0.75');
+
+    let fill, stroke, textFill;
+    if (state === 'highlight') {
+      fill = '#FAEEDA'; stroke = '#854F0B'; textFill = '#633806';
+    } else if (state === 'sum') {
+      fill = '#E1F5EE'; stroke = '#0F6E56'; textFill = '#085041';
+    } else if (state === 'edge') {
+      fill = '#665c54'; stroke = 'var(--color-border-secondary)'; textFill = '#ebdbb2';
+    } else if (state === 'blank') {
+      fill = '#665c54'; stroke = 'var(--color-border-secondary)'; textFill = '#ebdbb2';
+    } else {
+      fill = '#665c54'; stroke = 'var(--color-border-secondary)'; textFill = '#ebdbb2';
+    }
+
+    r.setAttribute('fill', fill);
+    r.setAttribute('stroke', stroke);
+    g.appendChild(r);
+
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', x + CW/2); t.setAttribute('y', y + CH/2);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','central');
+    t.setAttribute('font-size','13'); t.setAttribute('fill', textFill);
+    t.setAttribute('font-family','var(--font-mono)');
+    t.textContent = val;
+    g.appendChild(t);
+    return g;
+  }
+
+  function addArrow(svg, x1, y1, x2, y2) {
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', '#854F0B');
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('stroke-linecap','round');
+    svg.appendChild(line);
+  }
+
+  function render(stepIdx) {
+    const svg = document.getElementById('pt-svg');
+    svg.innerHTML = '';
+
+    const totalSteps = 2 + (N8 - 2);
+    const highlight = stepIdx >= 2 ? stepIdx - 2 + 1 : -1;
+
+    for (let r = 0; r < rows.length; r++) {
+      const row = rows[r];
+      const y = r * ROW_H + 10;
+      for (let i = 0; i < row.length; i++) {
+        const x = cellX(row.length, i);
+        const isEdge = (i === 0 || i === row.length - 1);
+        let state = isEdge ? 'edge' : 'normal';
+        if (r === 7 && stepIdx >= 2) {
+          if (i === highlight - 1 || i === highlight) state = 'highlight';
+        }
+        svg.appendChild(makeCell(x, y, row[i], state));
+      }
+    }
+
+    const yNew = rows.length * ROW_H + 10;
+    const yRow7 = (rows.length - 1) * ROW_H + 10;
+
+    for (let i = 0; i < N8; i++) {
+      const x = cellX(N8, i);
+      const isEdge = (i === 0 || i === N8 - 1);
+      let state, label;
+      if (isEdge) {
+        state = 'edge'; label = '1';
+      } else if (stepIdx === 0) {
+        state = 'blank'; label = '?';
+      } else if (stepIdx === 1) {
+        state = 'blank'; label = '?';
+      } else {
+        if (i < highlight) {
+          state = 'sum'; label = String(ROW8[i]);
+        } else if (i === highlight) {
+          state = 'sum'; label = String(ROW8[i]);
+        } else {
+          state = 'blank'; label = '?';
+        }
+      }
+      svg.appendChild(makeCell(x, yNew, label, state));
+    }
+
+    if (stepIdx >= 2 && highlight >= 1 && highlight <= N8 - 2) {
+      const row7len = rows[7].length;
+      const leftCX  = cellCX(row7len, highlight - 1);
+      const rightCX = cellCX(row7len, highlight);
+      const targetCX = cellCX(N8, highlight);
+      const arrowY1 = yRow7 + CH;
+      const arrowY2 = yNew;
+      addArrow(svg, leftCX,  arrowY1, targetCX, arrowY2);
+      addArrow(svg, rightCX, arrowY1, targetCX, arrowY2);
+    }
+
+    const viewH = yNew + CH + 20;
+    svg.setAttribute('viewBox', `0 0 680 ${viewH}`);
+
+    const row7 = rows[7];
+    const interiorSteps = Array.from({length: N8 - 2}, (_, i) => {
+      const li = i, ri = i + 1;
+      return `${row7[li]} + ${row7[ri]} = ${ROW8[i+1]}`;
+    });
+
+    const instructions = [
+      'First, add 1\'s on the outside — every row of Pascal\'s triangle starts and ends with 1.',
+            'To fill in the question marks in the middle, we add the two numbers above the question mark. Click next to see!',
+      ...interiorSteps
+    ];
+
+    document.getElementById('pt-instr').textContent = instructions[stepIdx];
+    document.getElementById('pt-prev').disabled = stepIdx === 0;
+    document.getElementById('pt-next').disabled = stepIdx === totalSteps - 1;
+
+    const dotsEl = document.getElementById('pt-dots');
+    dotsEl.innerHTML = '';
+    for (let i = 0; i < totalSteps; i++) {
+      const d = document.createElement('div');
+      d.className = 'pt-dot' + (i === stepIdx ? ' active' : '');
+      dotsEl.appendChild(d);
+    }
+  }
+
+  let current = 0;
+  window.ptStep = function(dir) {
+    const totalSteps = 2 + (N8 - 2);
+    current = Math.max(0, Math.min(totalSteps - 1, current + dir));
+    render(current);
+  };
+
+  render(0);
+})();
+</script>
+
+<p>
+You can continue Pascal's triangle indefinitely by using this summation pattern. Pascal's triangle has great importance in mathematics (it's entries are called <em>binomial coefficients</em>, and appear in expansions of binomials, in combinatorics, and in many other parts of math). 
+</p>
+
+<p>
+However, in today's article, we won't be exploring those uses of Pascal's triangle. Instead, we wanted to showcase a very pretty pattern. 
+</p>
+
+<p>
+Let's highlight each entry of the triangle according to its <strong>parity</strong> — whether it's odd or even:
+</p>
+ 
+<figure style="overflow-x:auto; margin: 1.5em 0;">
+  <svg width="100%" viewBox="0 0 1220 702" role="img" xmlns="http://www.w3.org/2000/svg"
+       style="font-family: monospace; max-width: 1220px; display: block; margin: 0 auto;">
+    <title>Pascal's triangle, rows 0 through 25, colored by parity</title>
+        <g class="pcell"><rect x="587.0" y="10" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="610.0" y="21.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="563.0" y="36" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="586.0" y="47.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="611.0" y="36" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="634.0" y="47.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="539.0" y="62" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="562.0" y="73.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="587.0" y="62" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="73.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2</text></g>
+        <g class="pcell"><rect x="635.0" y="62" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="658.0" y="73.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="515.0" y="88" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="538.0" y="99.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="563.0" y="88" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="586.0" y="99.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">3</text></g>
+        <g class="pcell"><rect x="611.0" y="88" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="634.0" y="99.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">3</text></g>
+        <g class="pcell"><rect x="659.0" y="88" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="682.0" y="99.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="491.0" y="114" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="514.0" y="125.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="539.0" y="114" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="125.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">4</text></g>
+        <g class="pcell"><rect x="587.0" y="114" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="125.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">6</text></g>
+        <g class="pcell"><rect x="635.0" y="114" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><anchor="middle" dominant-baseline="central" fill="#6b6b6b">4</text></g>
+        <g class="pcell"><rect x="683.0" y="114" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="706.0" y="125.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="467.0" y="140" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="490.0" y="151.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="515.0" y="140" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="538.0" y="151.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">5</text></g>
+        <g class="pcell"><rect x="563.0" y="140" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="151.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">10</text></g>
+        <g class="pcell"><rect x="611.0" y="140" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="151.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">10</text></g>
+        <g class="pcell"><rect x="659.0" y="140" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="682.0" y="151.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">5</text></g>
+        <g class="pcell"><rect x="707.0" y="140" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="730.0" y="151.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="443.0" y="166" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="466.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="491.0" y="166" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">6</text></g>
+        <g class="pcell"><rect x="539.0" y="166" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="562.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">15</text></g>
+        <g class="pcell"><rect x="587.0" y="166" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">20</text></g>
+        <g class="pcell"><rect x="635.0" y="166" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="658.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">15</text></g>
+        <g class="pcell"><rect x="683.0" y="166" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">6</text></g>
+        <g class="pcell"><rect x="731.0" y="166" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="754.0" y="177.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="419.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="442.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="467.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="490.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">7</text></g>
+        <g class="pcell"><rect x="515.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="538.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">21</text></g>
+        <g class="pcell"><rect x="563.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="586.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">35</text></g>
+        <g class="pcell"><rect x="611.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="634.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">35</text></g>
+        <g class="pcell"><rect x="659.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="682.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">21</text></g>
+        <g class="pcell"><rect x="707.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="730.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">7</text></g>
+        <g class="pcell"><rect x="755.0" y="192" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="778.0" y="203.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="395.0" y="218" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="418.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="443.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">8</text></g>
+        <g class="pcell"><rect x="491.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">28</text></g>
+        <g class="pcell"><rect x="539.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">56</text></g>
+        <g class="pcell"><rect x="587.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">70</text></g>
+        <g class="pcell"><rect x="635.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">56</text></g>
+        <g class="pcell"><rect x="683.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">28</text></g>
+        <g class="pcell"><rect x="731.0" y="218" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">8</text></g>
+        <g class="pcell"><rect x="779.0" y="218" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="802.0" y="229.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="371.0" y="244" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="394.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="419.0" y="244" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="442.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">9</text></g>
+        <g class="pcell"><rect x="467.0" y="244" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="490.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">36</text></g>
+        <g class="pcell"><rect x="515.0" y="244" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">84</text></g>
+        <g class="pcell"><rect x="563.0" y="244" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">126</text></g>
+        <g class="pcell"><rect x="611.0" y="244" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">126</text></g>
+        <g class="pcell"><rect x="659.0" y="244" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">84</text></g>
+        <g class="pcell"><rect x="707.0" y="244" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="730.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">36</text></g>
+        <g class="pcell"><rect x="755.0" y="244" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="778.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">9</text></g>
+        <g class="pcell"><rect x="803.0" y="244" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="826.0" y="255.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="347.0" y="270" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="370.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="395.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">10</text></g>
+        <g class="pcell"><rect x="443.0" y="270" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="466.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">45</text></g>
+        <g class="pcell"><rect x="491.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">120</text></g>
+        <g class="pcell"><rect x="539.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">210</text></g>
+        <g class="pcell"><rect x="587.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">252</text></g>
+        <g class="pcell"><rect x="635.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">210</text></g>
+        <g class="pcell"><rect x="683.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">120</text></g>
+        <g class="pcell"><rect x="731.0" y="270" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="754.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">45</text></g>
+        <g class="pcell"><rect x="779.0" y="270" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">10</text></g>
+        <g class="pcell"><rect x="827.0" y="270" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="850.0" y="281.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="323.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="346.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="371.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="394.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">11</text></g>
+        <g class="pcell"><rect x="419.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="442.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">55</text></g>
+        <g class="pcell"><rect x="467.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="490.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">165</text></g>
+        <g class="pcell"><rect x="515.0" y="296" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">330</text></g>
+        <g class="pcell"><rect x="563.0" y="296" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">462</text></g>
+        <g class="pcell"><rect x="611.0" y="296" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">462</text></g>
+        <g class="pcell"><rect x="659.0" y="296" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">330</text></g>
+        <g class="pcell"><rect x="707.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="730.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">165</text></g>
+        <g class="pcell"><rect x="755.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="778.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">55</text></g>
+        <g class="pcell"><rect x="803.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="826.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">11</text></g>
+        <g class="pcell"><rect x="851.0" y="296" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="874.0" y="307.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="299.0" y="322" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="322.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="347.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="370.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12</text></g>
+        <g class="pcell"><rect x="395.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">66</text></g>
+        <g class="pcell"><rect x="443.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">220</text></g>
+        <g class="pcell"><rect x="491.0" y="322" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="514.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">495</text></g>
+        <g class="pcell"><rect x="539.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">792</text></g>
+        <g class="pcell"><rect x="587.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">924</text></g>
+        <g class="pcell"><rect x="635.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">792</text></g>
+        <g class="pcell"><rect x="683.0" y="322" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="706.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">495</text></g>
+        <g class="pcell"><rect x="731.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">220</text></g>
+        <g class="pcell"><rect x="779.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">66</text></g>
+        <g class="pcell"><rect x="827.0" y="322" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="850.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12</text></g>
+        <g class="pcell"><rect x="875.0" y="322" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="898.0" y="333.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="275.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="298.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="323.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="346.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">13</text></g>
+        <g class="pcell"><rect x="371.0" y="348" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="394.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">78</text></g>
+        <g class="pcell"><rect x="419.0" y="348" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="442.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">286</text></g>
+        <g class="pcell"><rect x="467.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="490.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">715</text></g>
+        <g class="pcell"><rect x="515.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="538.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1287</text></g>
+        <g class="pcell"><rect x="563.0" y="348" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1716</text></g>
+        <g class="pcell"><rect x="611.0" y="348" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1716</text></g>
+        <g class="pcell"><rect x="659.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="682.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1287</text></g>
+        <g class="pcell"><rect x="707.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="730.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">715</text></g>
+        <g class="pcell"><rect x="755.0" y="348" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="778.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">286</text></g>
+        <g class="pcell"><rect x="803.0" y="348" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="826.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">78</text></g>
+        <g class="pcell"><rect x="851.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="874.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">13</text></g>
+        <g class="pcell"><rect x="899.0" y="348" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="922.0" y="359.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="251.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="274.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="299.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="322.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">14</text></g>
+        <g class="pcell"><rect x="347.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="370.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">91</text></g>
+        <g class="pcell"><rect x="395.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">364</text></g>
+        <g class="pcell"><rect x="443.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="466.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1001</text></g>
+        <g class="pcell"><rect x="491.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2002</text></g>
+        <g class="pcell"><rect x="539.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="562.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">3003</text></g>
+        <g class="pcell"><rect x="587.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3432</text></g>
+        <g class="pcell"><rect x="635.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="658.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">3003</text></g>
+        <g class="pcell"><rect x="683.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2002</text></g>
+        <g class="pcell"><rect x="731.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="754.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1001</text></g>
+        <g class="pcell"><rect x="779.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">364</text></g>
+        <g class="pcell"><rect x="827.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="850.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">91</text></g>
+        <g class="pcell"><rect x="875.0" y="374" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="898.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">14</text></g>
+        <g class="pcell"><rect x="923.0" y="374" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="946.0" y="385.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="227.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="250.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="275.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="298.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">15</text></g>
+        <g class="pcell"><rect x="323.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="346.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">105</text></g>
+        <g class="pcell"><rect x="371.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="394.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">455</text></g>
+        <g class="pcell"><rect x="419.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="442.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1365</text></g>
+        <g class="pcell"><rect x="467.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="490.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">3003</text></g>
+        <g class="pcell"><rect x="515.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="538.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">5005</text></g>
+        <g class="pcell"><rect x="563.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="586.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">6435</text></g>
+        <g class="pcell"><rect x="611.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="634.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">6435</text></g>
+        <g class="pcell"><rect x="659.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="682.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">5005</text></g>
+        <g class="pcell"><rect x="707.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="730.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">3003</text></g>
+        <g class="pcell"><rect x="755.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="778.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1365</text></g>
+        <g class="pcell"><rect x="803.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="826.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">455</text></g>
+        <g class="pcell"><rect x="851.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="874.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">105</text></g>
+        <g class="pcell"><rect x="899.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="922.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">15</text></g>
+        <g class="pcell"><rect x="947.0" y="400" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="970.0" y="411.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="203.0" y="426" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="226.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="251.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="274.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">16</text></g>
+        <g class="pcell"><rect x="299.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="322.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">120</text></g>
+        <g class="pcell"><rect x="347.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="370.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">560</text></g>
+        <g class="pcell"><rect x="395.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1820</text></g>
+        <g class="pcell"><rect x="443.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">4368</text></g>
+        <g class="pcell"><rect x="491.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">8008</text></g>
+        <g class="pcell"><rect x="539.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">11440</text></g>
+        <g class="pcell"><rect x="587.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12870</text></g>
+        <g class="pcell"><rect x="635.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">11440</text></g>
+        <g class="pcell"><rect x="683.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">8008</text></g>
+        <g class="pcell"><rect x="731.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">4368</text></g>
+        <g class="pcell"><rect x="779.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1820</text></g>
+        <g class="pcell"><rect x="827.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="850.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">560</text></g>
+        <g class="pcell"><rect x="875.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="898.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">120</text></g>
+        <g class="pcell"><rect x="923.0" y="426" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="946.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">16</text></g>
+        <g class="pcell"><rect x="971.0" y="426" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="994.0" y="437.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="179.0" y="452" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="202.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="227.0" y="452" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="250.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">17</text></g>
+        <g class="pcell"><rect x="275.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="298.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">136</text></g>
+        <g class="pcell"><rect x="323.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="346.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">680</text></g>
+        <g class="pcell"><rect x="371.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="394.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2380</text></g>
+        <g class="pcell"><rect x="419.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="442.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">6188</text></g>
+        <g class="pcell"><rect x="467.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="490.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12376</text></g>
+        <g class="pcell"><rect x="515.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">19448</text></g>
+        <g class="pcell"><rect x="563.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">24310</text></g>
+        <g class="pcell"><rect x="611.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">24310</text></g>
+        <g class="pcell"><rect x="659.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">19448</text></g>
+        <g class="pcell"><rect x="707.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="730.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12376</text></g>
+        <g class="pcell"><rect x="755.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="778.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">6188</text></g>
+        <g class="pcell"><rect x="803.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="826.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2380</text></g>
+        <g class="pcell"><rect x="851.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="874.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">680</text></g>
+        <g class="pcell"><rect x="899.0" y="452" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="922.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">136</text></g>
+        <g class="pcell"><rect x="947.0" y="452" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="970.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">17</text></g>
+        <g class="pcell"><rect x="995.0" y="452" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1018.0" y="463.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="155.0" y="478" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="178.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="203.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="226.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">18</text></g>
+        <g class="pcell"><rect x="251.0" y="478" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="274.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">153</text></g>
+        <g class="pcell"><rect x="299.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="322.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">816</text></g>
+        <g class="pcell"><rect x="347.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="370.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3060</text></g>
+        <g class="pcell"><rect x="395.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">8568</text></g>
+        <g class="pcell"><rect x="443.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">18564</text></g>
+        <g class="pcell"><rect x="491.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">31824</text></g>
+        <g class="pcell"><rect x="539.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">43758</text></g>
+        <g class="pcell"><rect x="587.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">48620</text></g>
+        <g class="pcell"><rect x="635.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">43758</text></g>
+        <g class="pcell"><rect x="683.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">31824</text></g>
+        <g class="pcell"><rect x="731.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">18564</text></g>
+        <g class="pcell"><rect x="779.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">8568</text></g>
+        <g class="pcell"><rect x="827.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="850.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3060</text></g>
+        <g class="pcell"><rect x="875.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="898.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">816</text></g>
+        <g class="pcell"><rect x="923.0" y="478" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="946.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">153</text></g>
+        <g class="pcell"><rect x="971.0" y="478" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="994.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">18</text></g>
+        <g class="pcell"><rect x="1019.0" y="478" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1042.0" y="489.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="131.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="154.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="179.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="202.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">19</text></g>
+        <g class="pcell"><rect x="227.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="250.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">171</text></g>
+        <g class="pcell"><rect x="275.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="298.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">969</text></g>
+        <g class="pcell"><rect x="323.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="346.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3876</text></g>
+        <g class="pcell"><rect x="371.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="394.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">11628</text></g>
+        <g class="pcell"><rect x="419.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="442.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">27132</text></g>
+        <g class="pcell"><rect x="467.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="490.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">50388</text></g>
+        <g class="pcell"><rect x="515.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">75582</text></g>
+        <g class="pcell"><rect x="563.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">92378</text></g>
+        <g class="pcell"><rect x="611.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">92378</text></g>
+        <g class="pcell"><rect x="659.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">75582</text></g>
+        <g class="pcell"><rect x="707.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="730.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">50388</text></g>
+        <g class="pcell"><rect x="755.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="778.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">27132</text></g>
+        <g class="pcell"><rect x="803.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="826.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">11628</text></g>
+        <g class="pcell"><rect x="851.0" y="504" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="874.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3876</text></g>
+        <g class="pcell"><rect x="899.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="922.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">969</text></g>
+        <g class="pcell"><rect x="947.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="970.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">171</text></g>
+        <g class="pcell"><rect x="995.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1018.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">19</text></g>
+        <g class="pcell"><rect x="1043.0" y="504" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1066.0" y="515.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="107.0" y="530" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="130.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="155.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="178.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">20</text></g>
+        <g class="pcell"><rect x="203.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="226.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">190</text></g>
+        <g class="pcell"><rect x="251.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="274.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1140</text></g>
+        <g class="pcell"><rect x="299.0" y="530" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="322.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">4845</text></g>
+        <g class="pcell"><rect x="347.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="370.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">15504</text></g>
+        <g class="pcell"><rect x="395.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">38760</text></g>
+        <g class="pcell"><rect x="443.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">77520</text></g>
+        <g class="pcell"><rect x="491.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">125970</text></g>
+        <g class="pcell"><rect x="539.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">167960</text></g>
+        <g class="pcell"><rect x="587.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">184756</text></g>
+        <g class="pcell"><rect x="635.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">167960</text></g>
+        <g class="pcell"><rect x="683.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">125970</text></g>
+        <g class="pcell"><rect x="731.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">77520</text></g>
+        <g class="pcell"><rect x="779.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">38760</text></g>
+        <g class="pcell"><rect x="827.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="850.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">15504</text></g>
+        <g class="pcell"><rect x="875.0" y="530" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="898.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">4845</text></g>
+        <g class="pcell"><rect x="923.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="946.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1140</text></g>
+        <g class="pcell"><rect x="971.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="994.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">190</text></g>
+        <g class="pcell"><rect x="1019.0" y="530" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1042.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">20</text></g>
+        <g class="pcell"><rect x="1067.0" y="530" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1090.0" y="541.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="83.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="106.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="131.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="154.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">21</text></g>
+        <g class="pcell"><rect x="179.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="202.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">210</text></g>
+        <g class="pcell"><rect x="227.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="250.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1330</text></g>
+        <g class="pcell"><rect x="275.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="298.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">5985</text></g>
+        <g class="pcell"><rect x="323.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="346.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">20349</text></g>
+        <g class="pcell"><rect x="371.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="394.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">54264</text></g>
+        <g class="pcell"><rect x="419.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="442.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">116280</text></g>
+        <g class="pcell"><rect x="467.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="490.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">203490</text></g>
+        <g class="pcell"><rect x="515.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">293930</text></g>
+        <g class="pcell"><rect x="563.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">352716</text></g>
+        <g class="pcell"><rect x="611.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">352716</text></g>
+        <g class="pcell"><rect x="659.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">293930</text></g>
+        <g class="pcell"><rect x="707.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="730.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">203490</text></g>
+        <g class="pcell"><rect x="755.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="778.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">116280</text></g>
+        <g class="pcell"><rect x="803.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="826.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">54264</text></g>
+        <g class="pcell"><rect x="851.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="874.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">20349</text></g>
+        <g class="pcell"><rect x="899.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="922.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">5985</text></g>
+        <g class="pcell"><rect x="947.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="970.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1330</text></g>
+        <g class="pcell"><rect x="995.0" y="556" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1018.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">210</text></g>
+        <g class="pcell"><rect x="1043.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1066.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">21</text></g>
+        <g class="pcell"><rect x="1091.0" y="556" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1114.0" y="567.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="59.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="82.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="107.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="130.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">22</text></g>
+        <g class="pcell"><rect x="155.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="178.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">231</text></g>
+        <g class="pcell"><rect x="203.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="226.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1540</text></g>
+        <g class="pcell"><rect x="251.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="274.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">7315</text></g>
+        <g class="pcell"><rect x="299.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="322.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">26334</text></g>
+        <g class="pcell"><rect x="347.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="370.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">74613</text></g>
+        <g class="pcell"><rect x="395.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="418.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">170544</text></g>
+        <g class="pcell"><rect x="443.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">319770</text></g>
+        <g class="pcell"><rect x="491.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">497420</text></g>
+        <g class="pcell"><rect x="539.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">646646</text></g>
+        <g class="pcell"><rect x="587.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">705432</text></g>
+        <g class="pcell"><rect x="635.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">646646</text></g>
+        <g class="pcell"><rect x="683.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">497420</text></g>
+        <g class="pcell"><rect x="731.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">319770</text></g>
+        <g class="pcell"><rect x="779.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="802.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">170544</text></g>
+        <g class="pcell"><rect x="827.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="850.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">74613</text></g>
+        <g class="pcell"><rect x="875.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="898.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">26334</text></g>
+        <g class="pcell"><rect x="923.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="946.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">7315</text></g>
+        <g class="pcell"><rect x="971.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="994.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1540</text></g>
+        <g class="pcell"><rect x="1019.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1042.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">231</text></g>
+        <g class="pcell"><rect x="1067.0" y="582" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1090.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">22</text></g>
+        <g class="pcell"><rect x="1115.0" y="582" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1138.0" y="593.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="35.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="58.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="83.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="106.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">23</text></g>
+        <g class="pcell"><rect x="131.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="154.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">253</text></g>
+        <g class="pcell"><rect x="179.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="202.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1771</text></g>
+        <g class="pcell"><rect x="227.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="250.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">8855</text></g>
+        <g class="pcell"><rect x="275.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="298.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">33649</text></g>
+        <g class="pcell"><rect x="323.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="346.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">100947</text></g>
+        <g class="pcell"><rect x="371.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="394.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">245157</text></g>
+        <g class="pcell"><rect x="419.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="442.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">490314</text></g>
+        <g class="pcell"><rect x="467.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="490.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">817190</text></g>
+        <g class="pcell"><rect x="515.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1144066</text></g>
+        <g class="pcell"><rect x="563.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1352078</text></g>
+        <g class="pcell"><rect x="611.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1352078</text></g>
+        <g class="pcell"><rect x="659.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1144066</text></g>
+        <g class="pcell"><rect x="707.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="730.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">817190</text></g>
+        <g class="pcell"><rect x="755.0" y="608" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="778.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">490314</text></g>
+        <g class="pcell"><rect x="803.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="826.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">245157</text></g>
+        <g class="pcell"><rect x="851.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="874.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">100947</text></g>
+        <g class="pcell"><rect x="899.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="922.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">33649</text></g>
+        <g class="pcell"><rect x="947.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="970.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">8855</text></g>
+        <g class="pcell"><rect x="995.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1018.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1771</text></g>
+        <g class="pcell"><rect x="1043.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1066.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">253</text></g>
+        <g class="pcell"><rect x="1091.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1114.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">23</text></g>
+        <g class="pcell"><rect x="1139.0" y="608" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1162.0" y="619.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="11.0" y="634" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="34.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="59.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="82.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">24</text></g>
+        <g class="pcell"><rect x="107.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="130.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">276</text></g>
+        <g class="pcell"><rect x="155.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="178.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2024</text></g>
+        <g class="pcell"><rect x="203.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="226.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">10626</text></g>
+        <g class="pcell"><rect x="251.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="274.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">42504</text></g>
+        <g class="pcell"><rect x="299.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="322.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">134596</text></g>
+        <g class="pcell"><rect x="347.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="370.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">346104</text></g>
+        <g class="pcell"><rect x="395.0" y="634" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="418.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">735471</text></g>
+        <g class="pcell"><rect x="443.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="466.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1307504</text></g>
+        <g class="pcell"><rect x="491.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="514.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1961256</text></g>
+        <g class="pcell"><rect x="539.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="562.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2496144</text></g>
+        <g class="pcell"><rect x="587.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="610.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2704156</text></g>
+        <g class="pcell"><rect x="635.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="658.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2496144</text></g>
+        <g class="pcell"><rect x="683.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="706.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1961256</text></g>
+        <g class="pcell"><rect x="731.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="754.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">1307504</text></g>
+        <g class="pcell"><rect x="779.0" y="634" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="802.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">735471</text></g>
+        <g class="pcell"><rect x="827.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="850.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">346104</text></g>
+        <g class="pcell"><rect x="875.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="898.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">134596</text></g>
+        <g class="pcell"><rect x="923.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="946.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">42504</text></g>
+        <g class="pcell"><rect x="971.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="994.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">10626</text></g>
+        <g class="pcell"><rect x="1019.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1042.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2024</text></g>
+        <g class="pcell"><rect x="1067.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1090.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">276</text></g>
+        <g class="pcell"><rect x="1115.0" y="634" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1138.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">24</text></g>
+        <g class="pcell"><rect x="1163.0" y="634" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1186.0" y="645.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="-13.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="10.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+        <g class="pcell"><rect x="35.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="58.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">25</text></g>
+        <g class="pcell"><rect x="83.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="106.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">300</text></g>
+        <g class="pcell"><rect x="131.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="154.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2300</text></g>
+        <g class="pcell"><rect x="179.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="202.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12650</text></g>
+        <g class="pcell"><rect x="227.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="250.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">53130</text></g>
+        <g class="pcell"><rect x="275.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="298.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">177100</text></g>
+        <g class="pcell"><rect x="323.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="346.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">480700</text></g>
+        <g class="pcell"><rect x="371.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="394.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1081575</text></g>
+        <g class="pcell"><rect x="419.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="442.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">2042975</text></g>
+        <g class="pcell"><rect x="467.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="490.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3268760</text></g>
+        <g class="pcell"><rect x="515.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="538.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">4457400</text></g>
+        <g class="pcell"><rect x="563.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="586.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">5200300</text></g>
+        <g class="pcell"><rect x="611.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="634.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">5200300</text></g>
+        <g class="pcell"><rect x="659.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="682.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">4457400</text></g>
+        <g class="pcell"><rect x="707.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="730.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">3268760</text></g>
+        <g class="pcell"><rect x="755.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="778.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">2042975</text></g>
+        <g class="pcell"><rect x="803.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="826.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1081575</text></g>
+        <g class="pcell"><rect x="851.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="874.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">480700</text></g>
+        <g class="pcell"><rect x="899.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="922.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">177100</text></g>
+        <g class="pcell"><rect x="947.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="970.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">53130</text></g>
+        <g class="pcell"><rect x="995.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1018.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">12650</text></g>
+        <g class="pcell"><rect x="1043.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1066.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">2300</text></g>
+        <g class="pcell"><rect x="1091.0" y="660" width="46" height="22" rx="4" fill="#2a2a2a" stroke="#504945" stroke-width="0.6"/><text x="1114.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#6b6b6b">300</text></g>
+        <g class="pcell"><rect x="1139.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1162.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">25</text></g>
+        <g class="pcell"><rect x="1187.0" y="660" width="46" height="22" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/><text x="1210.0" y="671.0" font-size="7.5" text-anchor="middle" dominant-baseline="central" fill="#633806">1</text></g>
+  </svg>
+  <figcaption>
+    <span style="color:#854F0B;">■</span> odd &nbsp;&nbsp;
+    <span style="color:#6b6b6b;">■</span> even
+  </figcaption>
+</figure>
+
+<p>
+Notice how the shadings seem to form a pattern, similar to the fractal Sierpinski triangle. 
+</p>
+
+<p>
+Why do the digits make this pattern? What can we say about it? For that, we need <em>Lucas' theorem</em>. But before we get to Lucas' theorem, we need to say something about Pascal's triangle.
+</p>
+
+<h2>Binomial coefficients</h2>
+
+<p>The numbers in Pascal's triangle are called <em>binomial coefficients</em>. They arise very often, because of two crucial applications.</p>
+
+<p>
+People typically write \(\binom{n}{k}\) (pronounced "\(n\) choose \(k\)") to denote the \(k^{\text{th}}\) entry on the \(n^{\text{th}}\) row of Pascal's triangle. For example, below we recreated the first figure of Pascal's triangle, but labelling each cell with \(\binom{n}{k}\), instead of with the actual value; compare this to the figure at the start of the page. 
+</p>
+
+<figure style="overflow-x:auto; margin: 1.5em 0;">
+  <svg id="pascal-binom" width="100%" viewBox="0 0 680 420"
+       role="img" xmlns="http://www.w3.org/2000/svg"
+       style="font-family: monospace; max-width: 680px; display:block; margin:0 auto;">
+
+    <title>Pascal's triangle in binomial coefficient notation</title>
+
+    <style>
+      .cell rect {
+        fill: #665c54;
+        stroke: #504945;
+        stroke-width: 0.75;
+      }
+      .cell text {
+        fill: #e0e0e0;
+        text-anchor: middle;
+      }
+      .row-label {
+        font-size: 11px;
+        fill: #ebdbb2;
+        text-anchor: end;
+        dominant-baseline: central;
+      }
+      .paren {
+        font-size: 22px;
+      }
+      .num {
+        font-size: 10px;
+      }
+    </style>
+
+    <text class="row-label" x="44" y="30">n=0</text>
+    <text class="row-label" x="44" y="70">n=1</text>
+    <text class="row-label" x="44" y="110">n=2</text>
+    <text class="row-label" x="44" y="150">n=3</text>
+    <text class="row-label" x="44" y="190">n=4</text>
+    <text class="row-label" x="44" y="230">n=5</text>
+    <text class="row-label" x="44" y="270">n=6</text>
+    <text class="row-label" x="44" y="310">n=7</text>
+    <text class="row-label" x="44" y="350">n=8</text>
+
+  </svg>
+</figure>
+
+<script>
+const svg = document.getElementById("pascal-binom");
+
+function addBinom(n, k, x, y) {
+  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  g.setAttribute("class", "cell");
+
+  g.innerHTML = `
+    <rect x="${x-18}" y="${y-16}" width="36" height="32" rx="6"/>
+    <text x="${x}" y="${y}">
+      <tspan class="paren" x="${x-5}" y="${y+7}">(</tspan>
+      <tspan class="num" x="${x+3}" y="${y-4}">${n}</tspan>
+      <tspan class="num" x="${x+3}" y="${y+8}">${k}</tspan>
+      <tspan class="paren" x="${x+8}" y="${y+7}">)</tspan>
+    </text>
+  `;
+
+  svg.appendChild(g);
+}
+
+for (let n = 0; n <= 8; n++) {
+  const y = 30 + 40*n;
+  const start = 340 - 20*n;
+
+  for (let k = 0; k <= n; k++) {
+    addBinom(n, k, start + 40*k, y);
+  }
+}
+</script>
+
+<p>
+The quantity \(\binom{n}{k}\) appearing in Pascal's triangle is equal to the number of ways to choose \(k\) items from a group of \(n\) items. For example, we can see from Pascal's triangle (look at the figure from the start of the article) that \(\binom{4}{2} = 6.\) And we can interpret that as follows.
+</p>
+
+<p>
+I have four neighbors: Sophie, Kenta, Ines, and Xiaoyu. I want to choose two of them to ask for help moving into my new apartment. How many ways are there to do this? 
+
+If you enumerate all the possible pairings, there are <em>six</em> different groups of two I can form from four people:</p>
+<table border="1" cellpadding="8" cellspacing="0">
+  <tr>
+    <td>Sophie and Kenta</td>
+    <td>Sophie and Ines</td>
+    <td>Sophie and Xiaoyu</td>
+  </tr>
+  <tr>
+    <td>Ines and Kenta</td>
+    <td>Xiaoyu and Ines</td>
+    <td>Kenta and Xiaoyu</td>
+  </tr>
+</table>
+
+<p>
+This is why \(\binom{4}{2} = 6\): if you have a group of four entities, and want to choose two of them, then there are six ways to do so. This is <em>also</em> why \(\binom{4}{2}\) is pronounced as "four choose two": it counts the number of ways to choose two things from a group of four. 
+</p>
+
+<p>
+The numbers in Pascal's triangle have a separate interpretation, which is why they are called <em>binomial coefficients</em>. Recall that
+\[(x+y)^2 = x^2 + 2xy + y^2.\]
+We can rewrite this as
+\[(x+y)^2 = \binom{2}{0}x^2 + \binom{2}{1}xy + \binom{2}{2}y^2.\]
+
+Similarly,
+\[(x+y)^3 = \binom{3}{0}x^3 + \binom{3}{1}x^2y + \binom{3}{2}xy^2 + \binom{3}{3}y^3,\]
+and 
+\[(x+y)^{5} = \binom{5}{0}x^{5} + \binom{5}{1}x^4y + \binom{5}{2}x^3y^2 + \binom{5}{3}x^2y^3 + \binom{5}{4}xy^4 + \binom{5}{5}y^5.\]
+
+This holds for any exponent you want: to raise a sum of two variables to a large power, you can always use Pascal's triangle.
+</p>
+
+<p>
+We'll remark here that, while we defined the binomial coefficients via a certain recursive procedure (where you generate Psacal's triangle one row at a time), there is a <em>closed form</em> for binomial coefficients, in terms of factorials:
+\[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]
+This way, you don't need to generate rows \(1, 2, ..., n\) of Pascal's triangle just to compute row \((n+1)\) -- you can use this closed form instead.
+</p>
+
+<h2>Lucas' theorem</h2>
+
+<p>
+Édouard Lucas was a ninteenth century French mathematician, who was very interested in number theory. As the binomial coefficients \(\binom{n}{k}\) -- that is, the entries of Pascal's triangle -- arise so often, Lucas was interested in exploring their number theoretic properties. One of the most basic number theoretic properties of binomial coefficients is asking when \(\binom{n}{k}\) is even, and when it is odd. 
+</p>
+
+<p>
+Lucas observed that this depended only on the <em>binary expansions</em> of \(n\) and \(k.\) Let's look at a few examples.
+</p>
+
+
+<style>
+  #bp-widget {
+    font-family: var(--font-mono);
+    padding: 1rem 0;
+    --gb-bg: #282828;
+    --gb-bg1: #3c3836;
+    --gb-bg2: #504945;
+    --gb-bg3: #665c54;
+    --gb-fg: #ebdbb2;
+    --gb-fg-dim: #a89984;
+    --gb-orange: #fe8019;
+    --gb-orange-dim: #d65d0e;
+    --gb-green: #b8bb26;
+    --gb-green-dim: #98971a;
+  }
+  .bp-slide-title { font-size: 15px; color: var(--gb-fg); text-align: center; font-family: var(--font-sans); font-weight: 600; margin-bottom: 4px; }
+  .bp-eq { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 22px; color: var(--gb-fg); margin: 14px 0 22px; }
+  .bp-binom { display: inline-flex; align-items: center; }
+  .bp-binom-paren { font-size: 40px; font-weight: 300; color: var(--gb-fg-dim); line-height: 1; transform: scaleY(1.3); }
+  .bp-binom-stack { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 5px; line-height: 1.3; font-size: 19px; }
+  .bp-eq-rest { color: var(--gb-fg-dim); }
+  .bp-eq-value { color: var(--gb-fg); }
+  .bp-bits-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
+  .bp-bits-table { border-collapse: separate; border-spacing: 4px; }
+  .bp-bits-table td { width: 30px; height: 30px; text-align: center; vertical-align: middle; border-radius: 6px; font-size: 14px; border: 0.75px solid var(--gb-bg2); background: var(--gb-bg3); color: var(--gb-fg); }
+  .bp-bits-table td.bp-label { border: none; background: none; color: var(--gb-fg); font-size: 12px; text-align: right; padding-right: 6px; width: auto; opacity: 0.7; }
+  .bp-bits-table td.bp-ok { background: var(--gb-bg1); border-color: var(--gb-green-dim); color: var(--gb-green); }
+  .bp-bits-table td.bp-bad { background: var(--gb-bg1); border-color: var(--gb-orange-dim); color: var(--gb-orange); }
+  .bp-conclusion { text-align: center; font-family: var(--font-sans); }
+  .bp-word { font-size: 30px; font-weight: 700; letter-spacing: 0.02em; }
+  .bp-word-odd { color: var(--gb-orange); }
+  .bp-word-even { color: var(--gb-green); }
+  .bp-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px; }
+  .bp-btn { background: transparent; border: 0.5px solid var(--gb-bg3); border-radius: var(--border-radius-md); padding: 7px 20px; font-size: 13px; color: var(--gb-fg); cursor: pointer; font-family: var(--font-sans); }
+  .bp-btn:hover { background: var(--gb-bg1); }
+  .bp-btn:disabled { opacity: 0.35; cursor: default; }
+  .bp-dots { display: flex; gap: 6px; align-items: center; }
+  .bp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gb-bg3); transition: background 0.2s; }
+  .bp-dot.active { background: var(--gb-fg); }
+  .bp-inputs { display: flex; justify-content: center; gap: 20px; margin-bottom: 18px; font-family: var(--font-sans); }
+  .bp-input-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bp-input-group label { font-size: 12px; opacity: 0.7; color: var(--gb-fg); }
+  .bp-input-group input { width: 64px; text-align: center; font-family: var(--font-mono); font-size: 15px; padding: 5px 4px; border-radius: var(--border-radius-md); border: 0.5px solid var(--gb-bg3); background: var(--gb-bg1); color: var(--gb-fg); }
+  .bp-error { text-align: center; font-size: 13px; color: var(--gb-orange); font-family: var(--font-sans); }
+</style>
+ 
+<div id="bp-widget">
+  <div class="bp-slide-title" id="bp-title"></div>
+  <div id="bp-inputs-wrap"></div>
+  <div class="bp-eq" id="bp-eq"></div>
+  <div class="bp-bits-wrap" id="bp-bits"></div>
+  <div class="bp-conclusion" id="bp-conclusion"></div>
+  <div class="bp-controls">
+    <button class="bp-btn" id="bp-prev" onclick="bpStep(-1)">← Back</button>
+    <div class="bp-dots" id="bp-dots"></div>
+    <button class="bp-btn" id="bp-next" onclick="bpStep(1)">Next →</button>
+  </div>
+</div>
+ 
+<script>
+(function() {
+  const examples = [
+    { n: 4, k: 2, title: 'Example 1' },
+    { n: 5, k: 4, title: 'Example 2' },
+    { n: 11, k: 3, title: 'Example 3' }
+  ];
+  let custom = { n: 6, k: 2 };
+  const totalSlides = 4;
+  let current = 0;
+ 
+  function nCk(n, k) {
+    if (k < 0 || k > n) return 0n;
+    k = Math.min(k, n - k);
+    let res = 1n;
+    for (let i = 0; i < k; i++) {
+      res = res * BigInt(n - i) / BigInt(i + 1);
+    }
+    return res;
+  }
+ 
+  function bitsOf(x, len) {
+    return x.toString(2).padStart(len, '0').split('').map(Number);
+  }
+ 
+  function binomHTML(n, k) {
+    return `<span class="bp-binom"><span class="bp-binom-paren">(</span><span class="bp-binom-stack"><span>${n}</span><span>${k}</span></span><span class="bp-binom-paren">)</span></span>`;
+  }
+ 
+  function renderPair(n, k) {
+    const eqEl = document.getElementById('bp-eq');
+    const bitsEl = document.getElementById('bp-bits');
+    const conclEl = document.getElementById('bp-conclusion');
+ 
+    if (!Number.isInteger(n) || !Number.isInteger(k) || n < 0 || k < 0) {
+      eqEl.textContent = '';
+      bitsEl.innerHTML = '';
+      conclEl.innerHTML = '<span class="bp-error">Please enter non-negative whole numbers.</span>';
+      return;
+    }
+    if (k > n) {
+      eqEl.innerHTML = `${binomHTML(n, k)}<span class="bp-eq-rest">=</span><span class="bp-eq-value">0</span>`;
+      bitsEl.innerHTML = '';
+      conclEl.innerHTML = '<span class="bp-word bp-word-even">even</span>';
+      return;
+    }
+ 
+    const value = nCk(n, k);
+    const len = Math.max(n.toString(2).length, k.toString(2).length);
+    const nBits = bitsOf(n, len);
+    const kBits = bitsOf(k, len);
+ 
+    eqEl.innerHTML = `${binomHTML(n, k)}<span class="bp-eq-rest">=</span><span class="bp-eq-value">${value.toString()}</span>`;
+ 
+    let badCol = -1;
+    for (let i = 0; i < len; i++) {
+      if (kBits[i] > nBits[i]) { badCol = i; break; }
+    }
+    const isEven = badCol !== -1;
+ 
+    let html = '<table class="bp-bits-table"><tr><td class="bp-label">n = ' + n + '</td>';
+    for (let i = 0; i < len; i++) {
+      const cls = i === badCol ? 'bp-bad' : (badCol === -1 ? 'bp-ok' : '');
+      html += `<td class="${cls}">${nBits[i]}</td>`;
+    }
+    html += '</tr><tr><td class="bp-label">k = ' + k + '</td>';
+    for (let i = 0; i < len; i++) {
+      const cls = i === badCol ? 'bp-bad' : (badCol === -1 ? 'bp-ok' : '');
+      html += `<td class="${cls}">${kBits[i]}</td>`;
+    }
+    html += '</tr></table>';
+    bitsEl.innerHTML = html;
+ 
+    conclEl.innerHTML = isEven
+      ? '<span class="bp-word bp-word-even">even</span>'
+      : '<span class="bp-word bp-word-odd">odd</span>';
+  }
+ 
+  function render(idx) {
+    const titleEl = document.getElementById('bp-title');
+    const inputsWrap = document.getElementById('bp-inputs-wrap');
+ 
+    if (idx < 3) {
+      const ex = examples[idx];
+      titleEl.textContent = ex.title;
+      inputsWrap.innerHTML = '';
+      renderPair(ex.n, ex.k);
+    } else {
+      titleEl.textContent = 'Try your own';
+      inputsWrap.innerHTML = `
+        <div class="bp-inputs">
+          <div class="bp-input-group">
+            <label for="bp-n-input">n</label>
+            <input type="number" id="bp-n-input" min="0" max="60" value="${custom.n}">
+          </div>
+          <div class="bp-input-group">
+            <label for="bp-k-input">k</label>
+            <input type="number" id="bp-k-input" min="0" max="60" value="${custom.k}">
+          </div>
+        </div>`;
+      const nInput = document.getElementById('bp-n-input');
+      const kInput = document.getElementById('bp-k-input');
+      const update = () => {
+        const n = parseInt(nInput.value, 10);
+        const k = parseInt(kInput.value, 10);
+        custom = { n: isNaN(n) ? 0 : n, k: isNaN(k) ? 0 : k };
+        if (!isNaN(n) && n > 60) { nInput.value = 60; custom.n = 60; }
+        if (!isNaN(k) && k > 60) { kInput.value = 60; custom.k = 60; }
+        renderPair(custom.n, custom.k);
+      };
+      nInput.addEventListener('input', update);
+      kInput.addEventListener('input', update);
+      renderPair(custom.n, custom.k);
+    }
+ 
+    document.getElementById('bp-prev').disabled = idx === 0;
+    document.getElementById('bp-next').disabled = idx === totalSlides - 1;
+ 
+    const dotsEl = document.getElementById('bp-dots');
+    dotsEl.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+      const d = document.createElement('div');
+      d.className = 'bp-dot' + (i === idx ? ' active' : '');
+      dotsEl.appendChild(d);
+    }
+  }
+ 
+  window.bpStep = function(dir) {
+    current = Math.max(0, Math.min(totalSlides - 1, current + dir));
+    render(current);
+  };
+ 
+  render(0);
+})();
+</script>
+
+<p>
+Lucas observed a pattern: \(\binom{n}{k}\) is <em>even</em> exactly when there is some spot where the binary expansion of \(n\) has a 0, but the binary expansion of \(k\) has a zero. The activity above highlights the bits where this happens; try playing with it to see the pattern for yourself!
+</p>
+
+<h2>The fractal pattern</h2>
+
+<p>
+Using Lucas' theorem, let's attempt to understand the pattern in Pascal's triangle colored according to parity, as we saw above. 
+</p>
+
+<p>
+In binary, powers of 2 are very simple: the binary expansion of \(2\) is \(10,\) the binary expansion of \(4\) is \(100,\) the binary expansion of \(8\) is \(1000,\) the binary expansion of \(16\) is \(10000,\) etc.
+</p>
+
+<p>
+Let's look at our colored Pascal's triangle again, but this time with the cells labelled differently. Instead of writing the numerical value of \(\binom{n}{k},\) like we did before, we will fill each cell with the binary expansions of \(n\) and \(k.\) 
+</p>
+
+</body>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+
+</html>
