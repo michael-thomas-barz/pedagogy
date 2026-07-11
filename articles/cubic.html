@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>How to solve cubic and quartic equations</title>
+  <title>How to solve cubic and quartic equations II: cubics</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -17,163 +17,12 @@
 
 <a href="../index.html">← back</a>
 
-<h1>How to solve cubic and quartic equations</h1>
+<h1>How to solve cubic and quartic equations II: cubics</h1>
 <p class="meta">July 10, 2026</p>
 
 <p>
-We all learned the quadratic formula in school. It says that the solution to \(ax^2+bx+c=0\) is 
-\[
-x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}.
-\]
-How do you prove this? This can be done by several reduction steps. First of all, by dividing the equation out by \(a\) we arrive at
-\[
-x^2+\frac bax+\frac ca=0,
-\]
-so we might as well have assumed \(a=1\) from the beginning. Next, in the equation \(x^2+bx+c=0\) we hope to get rid of the linear term. 
-This is accomplished by the change of variables \(x=y-b/2\), which gives us
-\[
-\bigg(y-\frac b2\bigg)^2+b\bigg(y-\frac b2\bigg)+c=0.
-\]
-When we expand out 
-\[
-\bigg(y-\frac b2\bigg)^2=y^2-by+\frac{b^2}4,
-\]
-we see the term \(-by\) exactly cancels out the linear term. Thus at the end our equation becomes
-\[
-\bigg(y^2-by+\frac{b^2}4\bigg)+\bigg(by-\frac{b^2}2\bigg)+c=y^2+\bigg(c-\frac{b^2}4\bigg)=0.
-\]
-This tells us
-\[
-y=\sqrt{\frac{b^2}4-c}=\frac{\sqrt{b^2-4c}}2.\]
-Remembering that \(x=y-b/2\) we recover the quadratic formula!
+  Use Legendre's solution, discrete Fourier transform
 </p>
-
-<p>
-  By the way, what does it mean to solve the quadratic equation \(x^2+bx+c=0\)?
-  If we call the two solutions \(\alpha\) and \(\beta\), we want to factor our polynomial as
-  \[
-  x^2+bx+c=(x-\alpha)(x-\beta).
-  \]
-  By expanding and comparing coefficients, we see that we are looking for numbers \(\alpha\) and \(\beta\) which satisfy
-  \[
-  \alpha+\beta=-b,\ \alpha\beta=c.
-  \]
-  This perspective will help us later when we try to solve the cubic equation.
-  </p>
-
-<h2>Cubic equations</h2>
-Now, let's try to solve the cubic equation \(ax^3+bx^2+cx+d=0\). By the same trick as in the quadratic case, we may assume \(a=1\). 
-Furthermore by substituting \(x=y-b/3\) we can get rid of the quadratic term, since
-\[
-\bigg(y-\frac b3\bigg)^3=y^3-by^2+\frac{b^2}3y-\frac{b^3}{27}.
-\]
-So, let's just think about the cubic \[x^3+px+q=0.\] 
-This is known as the <em>depressed</em> cubic, and people were stuck here for a while. But in the late 15th century, del Ferro and Tartaglia discovered a way to proceed.
-This is doubly impressive since they didn't even know about negative numbers at this time!
-Although they were the first to solve the cubic, since Cardano published it, the following is known as Cardano's formula.
-
-<p>
-  They decided to substitute \(x=u+v\), which increases the number of variables. This is highly counter-intuitive: why would increasing the number of variables help you solve an equation?
-</p>
-
-<p>
-  But let's believe in del Ferro and Tartaglia and proceed. Expanding
-\[
-(u+v)^3+p(u+v)+q=0
-\]
-tells us
-\[
-u^3+v^3+(3uv+p)(u+v)+q=0.
-\]
-The middle term looks the most difficult so let's get rid of it by assuming \(3uv=p\). This tells us
-\[
-u^3+v^3+q=0.\]
-In other words, we want to find numbers \(u\) and \(v\) such that \(uv=p/3\) and \(u^3+v^3=-q\). Notice that this is very similar to the relationos that the solutions to the quadratic equation satisfied. If we cube the first equation we see
-\[
-u^3v^3=\frac{p^3}{27},\ u^3+v^3=-q.\]
-Then \(u^3\) and \(v^3\) are the solutions to the quadratic equation \(w^3+qw+p^3/27=0\) which we know how to solve! We conclude
-\[
-u^3=-\frac q2+\sqrt{\frac{q^2}4+\frac{p^3}{27}},\ v^3=-\frac q2-\sqrt{\frac{q^2}4+\frac{p^3}{27}}
-\]
-so we see that the solutions to the depressed cubic looks like
-\[
-u+v=\sqrt[3]{-\frac q2+\sqrt{\frac{q^2}4+\frac{p^3}{27}}}+\sqrt[3]{-\frac q2-\sqrt{\frac{q^2}4+\frac{p^3}{27}}}.
-\]
-This gives three solutions total, since there are three cube roots of a number.
-</p>
-
-<h2>Quartic equations</h2>
-Now, let's try to solve the quartic equation. Just as the cubic was solved by reducing to the quadratic, the quartic equation is solved by reducing to the cubic. 
-This reduction was discovered by Ferrari in 1540. Let us solve the quartic
-\[
-x^4+ax^3+bx^2+cx+d=0.
-\]
-Let's denote the solutions as \(\alpha,\beta,\gamma,\delta\). Then each of the coefficients \(a,b,c,d\) are expressible as symmetric polynomials of \(\alpha,\beta,\gamma,\delta\):
-\[
-a=-(\alpha+\beta+\gamma+\delta),\ b=\alpha\beta+\alpha\gamma+\alpha\delta+\beta\gamma+\beta\delta+\gamma\delta,\cdots.
-\]
-Here, by symmetric we mean the polynomial doesn't change if we permute the letters \(\alpha,\beta,\gamma,\delta\). 
-For example the polynomial \(\alpha^2+\beta^2\) is not symmetric since if we exchange \(\beta\) and \(\gamma\) the polynomial changes to \(\alpha^2+\gamma^2\).
-
-<p>
-  In fact, if a polynomial of \(\alpha,\beta,\gamma,\delta\) is symmetric, it is also a polynomial of \(a,b,c,d\). For example \(\alpha^2+\beta^2+\gamma^2+\delta^2\) is symmetric, and indeed
-\[
-\alpha^2+\beta^2+\gamma^2+\delta^2=a^2-2b.
-\]
-This means that we know the quantity \(\alpha^2+\beta^2+\gamma^2+\delta^2\), even though we don't yet know what each individul number \(\alpha,\beta,\gamma,\delta\) is. This is true generally, that we know the value of any symmetric polynomial in \(\alpha,\beta,\gamma,\delta\).
-</p>
-
-<p>
-  How do we leverage this to reduce our problem to a cubic equation? First let's look at the polynomials
-  \[
-  \alpha\beta+\gamma\delta,\ \alpha\gamma+\beta\delta,\ \alpha\delta+\beta\gamma.
-  \]
-  Even though each individual polynomial is not symmetric, permuting the \(\alpha,\beta,\gamma,\delta\) only permutes the three polynomials amongst itselves.
-  That means the coefficients of the polynomial
-  \[
-  \big(x-(\alpha\beta+\gamma\delta)\big)\big(x-(\alpha\gamma+\beta\delta)\big)\big(x-(\alpha\delta+\beta\gamma)\big)
-  \]
-  are symmetric. That means we know the coefficients of this polynomial in terms of the original coefficients \(a,b,c,d\), and we call it the <em>resolvent cubic</em>.
-</p>
-
-<p>
-By solving the resolvent cubic using Cardano's method we know the numbers \(p=\alpha\beta+\gamma\delta\), \(q=\alpha\gamma+\beta\delta\), and \(r=\alpha\delta+\beta\gamma\).
-The explicit formula is terribly complicated so we won't write it down here, but nevertheless we can in principle!
-  </p>
-
-  <p>
-Now, how do we write \(\alpha,\beta,\gamma,\delta\) in terms of the numbers \(p,q,r\)? Well, we know
-  \[
-  p=\alpha\beta+\gamma\delta,\ d=\alpha\beta\gamma\delta.
-  \]
-  By solving the relevant quadratic equation, we deduce \(\alpha\beta\) and \(\gamma\delta\). 
-  By repeating the same trick for \(q\) we deduce \(\alpha\gamma\) and \(\beta\delta\), and by repeating the trick for \(r\) we deduce \(\alpha\delta\) and \(\beta\gamma\).
-  </p>
-
-  <p>
-Next, observe that
-\[
-p+q=\alpha\beta+\gamma\delta+\alpha\gamma+\beta\delta=(\alpha+\delta)(\beta+\gamma).
-\]
-We also know 
-\[
-(\alpha+\delta)+(\beta+\gamma)=-a,
-\]
-so by solving the relevant quadratic equation again we deduce \(\alpha+\delta\) and \(\beta+\gamma\). Since we already knew \(\alpha\delta\) and \(\beta\gamma\), we again solve the relevant quadratic equations to deduce all four solutions \(\alpha,\beta,\gamma,\delta\).
-    </p>
-    This lets us solve quartic equations to our heart's desire, but writing out the full formula in terms of the variables \(a,b,c,d\) will take ages!
-  
-<h2>Quintics and beyond</h2>
-For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations.
-In the 19th century Galois proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
-
-<p>
-  Notice that the solution to the quartic equation involved analyzing the symmetries of the solutions. 
-  Galois systematically studied the symmetries to the solutions of an equation, and created the field we now know as Galois theory.
-  </p>
-
-  <p>  Galois's insight was that the symmetries of the solutions to the quintic equation was too complicated in a very precise sense. In fact so complicated that there couldn't exist a formula for the solutions!</p>
-
 </body>
 <!-- MailerLite Universal -->
 <script>
