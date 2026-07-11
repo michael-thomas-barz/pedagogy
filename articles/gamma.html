@@ -277,9 +277,12 @@ So, Euler <em>defined</em> \(x!\) to be the limit of
     \[
     x!\cdot(-x)!=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}\cdot\frac{n^{-x}\cdot n!}{(n-x)(n-1-x)\cdots(1-x)},
     \]
-    the terms \(n^x\) and \(n^{-x}\) cancel, becoming \(n^0 = 1.\) Thus
+    the terms \(n^x\) and \(n^{-x}\) cancel, becoming \(n^0 = 1.\) We can also simplify the denominator a bit: because \((a-b)(a+b) = a^2-b^2,\) we have
+    \[(n+x)(n-x) = n^2 - x^2,\]
+    \[(n-1+x)(n-1-x) = (n-1)^2 - x^2,\] 
+    etc., so that
 \[
-x!\cdot(-x)!=\lim_{n\to\infty}\frac{(n!)^2}{(n^2-x^2)((n-1)^2-x^2)\cdots(1-x^2)}.
+x!\cdot(-x)!=\lim_{n\to\infty}\frac{(n!)^2}{(n^2-x^2)((n-1)^2-x^2)\cdots(1^2-x^2)}.
 \]
 The product can be re-grouped as \(\frac{1^2}{1^2-x^2}\cdots\frac{n^2}{n^2-x^2}\), so the limit equals the infinite product
 \[
