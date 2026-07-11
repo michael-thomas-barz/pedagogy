@@ -265,7 +265,7 @@ So, Euler <em>defined</em> \(x!\) to be the limit of
 <p>
   Observe that replacing the numerator \((n+x)^x\) of the formula with \(n^x\) doesn't change anything: for large \(n,\) the numbers \(n^x\) and \((n+x)^x\) are basically the same. This gives the final form of Euler's formula for the factorial:
   \[
-  x!=\lim_{n\to\infty}\frac{n^x}{{n+x\choose x}}=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}.
+  x!=\lim_{n\to\infty}\frac{n^x}{{n+x\choose n}}=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}.
   \]
   The formula works not only for all real numbers \(x\), but for any complex number as well! So we now know what \(3.5!\) is, but also \((-0.7)!\) and \((2-0.3i)!\). Unfortunately, it's still pretty tricky to compute this limit! So, how do we?
   </p>
