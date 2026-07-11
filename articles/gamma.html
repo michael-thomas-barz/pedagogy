@@ -75,10 +75,10 @@ So there are 6 possibilities total: ABC, ACB, BAC, BCA, CAB, and CBA.
 <p>
   For this, let us take a slight detour and think about binomial coefficients which we previously discussed in <a href="lucas.html">Fractal patterns hidden in Pascal's triangle</a>. If Alice had \(n\) apples and wanted to eat \(k\) of them, she will have
   \[
-  {n\choose k}=\frac{n(n-1)\cdots(n-k)}{k!}
+  {n\choose k}=\frac{n(n-1)\cdots(n-k+1)}{k!}
   \]
-  ways to do so. When we make \(n\) much larger than \(k\), the numbers on the numerator \(n,n-1,\dots,n-k\) are all going to be around \(n\). 
-  That means Alice will have approximately \(n^k/k!\) ways to choose her \(k\) apples.
+  ways to do so. When we make \(n\) much larger than \(k\), the numbers on the numerator \(n,n-1,\dots,n-k+1\) are all going to be around \(n\).
+  That means to approximate \({n\choose k}\) we might as well replace each factor with \(n\). So Alice will have approximately \(n^k/k!\) ways to choose her \(k\) apples.
 </p>
 
 <p>
