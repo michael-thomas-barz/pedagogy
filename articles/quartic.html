@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to solve cubic and quartic equations I: quartics</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>How to solve cubic and quartic equations I: quartics</h1>
+<p class="meta">July 10, 2026</p>
+
+<p>
+We all know and love the quadratic formula. It says that the solution to \(ax^2+bx+c=0\) is 
+\[
+x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}.
+\]
+How do you prove this? This can be done by several reduction steps. First of all, by dividing the equation out by \(a\) we arrive at
+\[
+x^2+\frac bax+\frac ca=0,
+\]
+so we might as well have assumed \(a=1\) from the beginning. Next, in the equation \(x^2+bx+c=0\) we hope to get rid of the linear term. 
+This is accomplished by the change of variables \(x=y-b/2\), which gives us
+\[
+\bigg(y-\frac b2\bigg)^2+b\bigg(y-\frac b2\bigg)+c=0.
+\]
+When we expand out 
+\[
+\bigg(y-\frac b2\bigg)^2=y^2-by+\frac{b^2}4,
+\]
+we see the term \(-by\) exactly cancels out the linear term. Thus at the end our equation becomes
+\[
+\bigg(y^2-by+\frac{b^2}4\bigg)+\bigg(by-\frac{b^2}2\bigg)+c=y^2+\bigg(c-\frac{b^2}4\bigg)=0.
+\]
+This tells us
+\[
+y=\sqrt{\frac{b^2}4-c}=\frac{\sqrt{b^2-4c}}2.\]
+Remembering that \(x=y-b/2\) we recover the quadratic formula!
+</p>
+
+<h2>Vieta's formulas and symmetric polynomials</h2>
+
+<p>
+  By the way, what does it mean to solve the quadratic equation \(x^2+bx+c=0\)?
+  If we call the two solutions \(\alpha\) and \(\beta\), we want to factor our polynomial as
+  \[
+  x^2+bx+c=(x-\alpha)(x-\beta).
+  \]
+  By expanding and comparing coefficients, we see that we are looking for numbers \(\alpha\) and \(\beta\) which satisfy
+  \[
+  \alpha+\beta=-b,\ \alpha\beta=c.
+  \]
+These are known as Vieta's formulas, which relates the "unknown" quantities \(\alpha\) and \(\beta\) to our "known" quantities \(b\) and \(c\). 
+Even though we don't know each individual value of  \(\alpha\) and \(\beta\), we somehow know their sum and product. 
+Is it possible that we secretly also know the values of other expressions involving \(\alpha\) and \(\beta\)? 
+  </p>
+
+<p>
+  For example, we secretly know the value of \(\alpha^2+\beta^2\), since
+  \[
+  \alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta=b^2-2c.
+  \]
+  But what about \(\alpha+2\beta\), or \(\alpha-3\beta^2\)? Is there any chance they are also polynomials of \(b\) and \(c\) secretly?
+    </p>
+
+<p>Notice that all of the expressions \(\alpha+\beta\), \(\alpha\beta\), and \(\alpha^2+\beta^2\) are symmetric: they don't change when we swap the value of \(\alpha\) and \(\beta\). 
+That \(\alpha+\beta\) and \(\alpha\beta\) are symmetric shouldn't come as a surprise, since the expression \((x-\alpha)(x-\beta)\) is already symmetric in \(\alpha\) and \(\beta\).
+Since \(\alpha^2+\beta^2\) is a polynomial of \(b\) and \(c\), it must also be symmetric in \(\alpha\) and \(\beta\).
+</p>
+
+<p>In fact any polynomial in \(b\) and \(c\) are symmetric polynomials of \(\alpha\) and \(\beta\). For example, \(b^3-2bc+c\) can be written as
+  \[
+  b^3-2bc+c=(-\alpha-\beta)^3-2(-\alpha-\beta)\alpha\beta+\alpha\beta=-\alpha^3-\alpha^2\beta+\alpha\beta-\alpha\beta^2-\beta^3
+  \]
+  which stays the same when you swap \(\alpha\) and \(\beta\).
+   In fact, the converse holds: any symmetric polynomial of  \(\alpha\) and \(\beta\) can be expressed in terms of \(b\) and \(c\)!
+  For example, \(\alpha^3+\beta^3\) is symmetric, and indeed
+  \[
+  \alpha^3+\beta^3=(\alpha+\beta)^3-3(\alpha+\beta)\alpha\beta=-b^3+3bc.
+  \]
+</p>
+
+<p>
+  How is all of this useful in solving equations? To solve for \(\alpha\) and \(\beta\), we eventually need to <em>break</em> the symmetry! 
+  But since we understand symmetric polynomials so well, let's think about which polynomials are "close" to being symmetric.
+  Notice that \(\alpha-\beta\) is not symmetric, but swapping \(\alpha\) and \(\beta\) doesn't change it very much; it just multiplies by \(-1\). 
+  That means if we consider the square
+  \[
+  (\alpha-\beta)^2
+  \]
+  this will really be symmetric! And indeed, we can express it as a polynomial of \(b\) and \(c\):
+  \[
+  (\alpha-\beta)^2=(\alpha+\beta)^2-4\alpha\beta=b^2-4c.
+  \]
+  This tells us
+  \[
+  \alpha-\beta=\pm\sqrt{b^2-4c}.\]
+Combining with \(\alpha+\beta=-b\), we can solve for \(\alpha\) and \(\beta\):
+\[
+\alpha,\beta=\frac{-b\pm\sqrt{b^2-4c}}2.
+\]
+</p>
+
+<h2>Vieta's formula: beyond quadratic equations</h2>
+In fact, our analysis above applies to higher degree equations. For example let's take a cubic equation
+\[
+x^3+ax+bx+c=0,
+\]
+and let's call the solutions \(x=\alpha,\beta,\gamma\). [TO COMPLETE]
+
+
+<h2>Quartic equations</h2>
+Now, let's try to solve the quartic equation. The quartic equation is solved by reducing it to the cubic, which was discovered by Ferrari in 1540. We will explain how to solve cubic equations in our next article <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>. 
+Let us solve the quartic
+\[
+x^4+ax^3+bx^2+cx+d=0.
+\]
+Let's denote the solutions as \(\alpha,\beta,\gamma,\delta\). Then each of the coefficients \(a,b,c,d\) are expressible as symmetric polynomials of \(\alpha,\beta,\gamma,\delta\):
+\[
+a=-(\alpha+\beta+\gamma+\delta),\ b=\alpha\beta+\alpha\gamma+\alpha\delta+\beta\gamma+\beta\delta+\gamma\delta,\cdots.
+\]
+Here, by symmetric we mean the polynomial doesn't change if we permute the letters \(\alpha,\beta,\gamma,\delta\). 
+For example the polynomial \(\alpha^2+\beta^2\) is not symmetric since if we exchange \(\beta\) and \(\gamma\) the polynomial changes to \(\alpha^2+\gamma^2\).
+
+<p>
+  In fact, if a polynomial of \(\alpha,\beta,\gamma,\delta\) is symmetric, it is also a polynomial of \(a,b,c,d\). For example \(\alpha^2+\beta^2+\gamma^2+\delta^2\) is symmetric, and indeed
+\[
+\alpha^2+\beta^2+\gamma^2+\delta^2=a^2-2b.
+\]
+This means that we know the quantity \(\alpha^2+\beta^2+\gamma^2+\delta^2\), even though we don't yet know what each individul number \(\alpha,\beta,\gamma,\delta\) is. This is true generally, that we know the value of any symmetric polynomial in \(\alpha,\beta,\gamma,\delta\).
+</p>
+
+<p>
+  How do we leverage this to reduce our problem to a cubic equation? First let's look at the polynomials
+  \[
+  \alpha\beta+\gamma\delta,\ \alpha\gamma+\beta\delta,\ \alpha\delta+\beta\gamma.
+  \]
+  Even though each individual polynomial is not symmetric, permuting the \(\alpha,\beta,\gamma,\delta\) only permutes the three polynomials amongst itselves.
+  That means the coefficients of the polynomial
+  \[
+  \big(x-(\alpha\beta+\gamma\delta)\big)\big(x-(\alpha\gamma+\beta\delta)\big)\big(x-(\alpha\delta+\beta\gamma)\big)
+  \]
+  are symmetric. That means we know the coefficients of this polynomial in terms of the original coefficients \(a,b,c,d\), and we call it the <em>resolvent cubic</em>.
+</p>
+
+<p>
+If we knew how to solve the cubic (see <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>) we know the numbers \(p=\alpha\beta+\gamma\delta\), \(q=\alpha\gamma+\beta\delta\), and \(r=\alpha\delta+\beta\gamma\).
+The explicit formula is terribly complicated so we won't write it down here, but nevertheless we can in principle!
+  </p>
+
+  <p>
+Now, how do we write \(\alpha,\beta,\gamma,\delta\) in terms of the numbers \(p,q,r\)? Well, we know
+  \[
+  p=\alpha\beta+\gamma\delta,\ d=\alpha\beta\gamma\delta.
+  \]
+  By solving the relevant quadratic equation, we deduce \(\alpha\beta\) and \(\gamma\delta\). 
+  By repeating the same trick for \(q\) we deduce \(\alpha\gamma\) and \(\beta\delta\), and by repeating the trick for \(r\) we deduce \(\alpha\delta\) and \(\beta\gamma\).
+  </p>
+
+  <p>
+Next, observe that
+\[
+p+q=\alpha\beta+\gamma\delta+\alpha\gamma+\beta\delta=(\alpha+\delta)(\beta+\gamma).
+\]
+We also know 
+\[
+(\alpha+\delta)+(\beta+\gamma)=-a,
+\]
+so by solving the relevant quadratic equation again we deduce \(\alpha+\delta\) and \(\beta+\gamma\). Since we already knew \(\alpha\delta\) and \(\beta\gamma\), we again solve the relevant quadratic equations to deduce all four solutions \(\alpha,\beta,\gamma,\delta\).
+    </p>
+    This lets us solve quartic equations to our heart's desire, but writing out the full formula in terms of the variables \(a,b,c,d\) will take ages!
+  
+<h2>Quintics and beyond</h2>
+For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations. The problem remained unsolved for over 300 years, but
+in the 19th century Galois proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
+
+<p>
+  Notice that the solution to the quartic equation involved analyzing the symmetries of the solutions. 
+  Galois systematically studied the symmetries to the solutions of an equation, and created the field we now know as Galois theory.
+  </p>
+
+  <p>  Galois's insight was that the symmetries of the solutions to the quintic equation was too complicated in a very precise sense. In fact so complicated that there couldn't exist a formula for the solutions!</p>
+
+</body>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+</html>
