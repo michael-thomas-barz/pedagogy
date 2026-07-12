@@ -60,7 +60,7 @@ Remembering that \(x=y-b/2\) we recover the quadratic formula!
   \[
   \alpha+\beta=-b,\ \alpha\beta=c.
   \]
-These are known as Vieta's formulas, which relates the "unknown" quantities \(\alpha\) and \(beta\) to our "known" quantities \(b\) and \(c\). 
+These are known as Vieta's formulas, which relates the "unknown" quantities \(\alpha\) and \(\beta\) to our "known" quantities \(b\) and \(c\). 
 Even though we don't know each individual value of  \(\alpha\) and \(\beta\), we somehow know their sum and product. 
 Is it possible that we secretly also know the values of other expressions involving \(\alpha\) and \(\beta\)? 
   </p>
@@ -78,15 +78,50 @@ That \(\alpha+\beta\) and \(\alpha\beta\) are symmetric shouldn't come as a surp
 Since \(\alpha^2+\beta^2\) is a polynomial of \(b\) and \(c\), it must also be symmetric in \(\alpha\) and \(\beta\).
 </p>
 
-<p>We therefore conclude that any polynomial in \(b\) and \(c\) are symmetric polynomials of \(\alpha\) and \(\beta\). In fact, the converse holds: any symmetric polynomial of  \(\alpha\) and \(\beta\) can be expressed in terms of \(b\) and \(c\)!
-  For example...
+<p>In fact any polynomial in \(b\) and \(c\) are symmetric polynomials of \(\alpha\) and \(\beta\). For example, \(b^3-2bc+c\) can be written as
+  \[
+  b^3-2bc+c=(-\alpha-\beta)^3-2(-\alpha-\beta)\alpha\beta+\alpha\beta=-\alpha^3-\alpha^2\beta+\alpha\beta-\alpha\beta^2-\beta^3
+  \]
+  which stays the same when you swap \(\alpha\) and \(\beta\).
+   In fact, the converse holds: any symmetric polynomial of  \(\alpha\) and \(\beta\) can be expressed in terms of \(b\) and \(c\)!
+  For example, \(\alpha^3+\beta^3\) is symmetric, and indeed
+  \[
+  \alpha^3+\beta^3=(\alpha+\beta)^3-3(\alpha+\beta)\alpha\beta=-b^3+3bc.
+  \]
 </p>
 
-<p>[To-do: use this to express \((\alpha-\beta)^2\) in terms of b and c, then use this to solve the quadratic.] This perspective will help us later when we try to solve higher degree equations.</p>
+<p>
+  How is all of this useful in solving equations? To solve for \(\alpha\) and \(\beta\), we eventually need to <em>break</em> the symmetry! 
+  But since we understand symmetric polynomials so well, let's think about which polynomials are "close" to being symmetric.
+  Notice that \(\alpha-\beta\) is not symmetric, but swapping \(\alpha\) and \(\beta\) doesn't change it very much; it just multiplies by \(-1\). 
+  That means if we consider the square
+  \[
+  (\alpha-\beta)^2
+  \]
+  this will really be symmetric! And indeed, we can express it as a polynomial of \(b\) and \(c\):
+  \[
+  (\alpha-\beta)^2=(\alpha+\beta)^2-4\alpha\beta=b^2-4c.
+  \]
+  This tells us
+  \[
+  \alpha-\beta=\pm\sqrt{b^2-4c}.\]
+Combining with \(\alpha+\beta=-b\), we can solve for \(\alpha\) and \(\beta\):
+\[
+\alpha,\beta=\frac{-b\pm\sqrt{b^2-4c}}2.
+\]
+</p>
+
+<h2>Vieta's formula: beyond quadratic equations</h2>
+In fact, our analysis above applies to higher degree equations. For example let's take a cubic equation
+\[
+x^3+ax+bx+c=0,
+\]
+and let's call the solutions \(x=\alpha,\beta,\gamma\). [TO COMPLETE]
+
 
 <h2>Quartic equations</h2>
-Now, let's try to solve the quartic equation. We will explain how to solve cubic equations in <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>. quartic equation is solved by reducing to the cubic. 
-This reduction was discovered by Ferrari in 1540. Let us solve the quartic
+Now, let's try to solve the quartic equation. The quartic equation is solved by reducing it to the cubic, which was discovered by Ferrari in 1540. We will explain how to solve cubic equations in our next article <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>. 
+Let us solve the quartic
 \[
 x^4+ax^3+bx^2+cx+d=0.
 \]
@@ -119,7 +154,7 @@ This means that we know the quantity \(\alpha^2+\beta^2+\gamma^2+\delta^2\), eve
 </p>
 
 <p>
-By solving the resolvent cubic using Cardano's method we know the numbers \(p=\alpha\beta+\gamma\delta\), \(q=\alpha\gamma+\beta\delta\), and \(r=\alpha\delta+\beta\gamma\).
+If we knew how to solve the cubic (see <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>) we know the numbers \(p=\alpha\beta+\gamma\delta\), \(q=\alpha\gamma+\beta\delta\), and \(r=\alpha\delta+\beta\gamma\).
 The explicit formula is terribly complicated so we won't write it down here, but nevertheless we can in principle!
   </p>
 
@@ -146,8 +181,8 @@ so by solving the relevant quadratic equation again we deduce \(\alpha+\delta\) 
     This lets us solve quartic equations to our heart's desire, but writing out the full formula in terms of the variables \(a,b,c,d\) will take ages!
   
 <h2>Quintics and beyond</h2>
-For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations.
-In the 19th century Galois proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
+For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations. The problem remained unsolved for over 300 years, but
+in the 19th century Galois proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
 
 <p>
   Notice that the solution to the quartic equation involved analyzing the symmetries of the solutions. 
