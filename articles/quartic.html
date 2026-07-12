@@ -116,32 +116,36 @@ In fact, our analysis above applies to higher degree equations. For example let'
 \[
 x^3+ax+bx+c=0,
 \]
-and let's call the solutions \(x=\alpha,\beta,\gamma\). [TO COMPLETE]
+and let's call the solutions \(x=\alpha,\beta,\gamma\). Then each of the coefficients \(a,b,c\) are expressible as symmetric polynomials of \(\alpha,\beta,\gamma\):
+\[
+a=-(\alpha+\beta+\gamma),\ b=\alpha\beta+\alpha\gamma+\beta\gamma,\ c=-\alpha\beta\gamma.
+\]
+That is, any permutation of the \(\alpha,\beta,\gamma\) does not change any of these polynomials.
+
+<p>
+  Moreover, if a polynomial of \(\alpha,\beta,\gamma\) is symmetric, it is also a polynomial of \(a,b,c\). For example \(\alpha^2+\beta^2+\gamma^2\) is symmetric, and indeed
+\[
+\alpha^2+\beta^2+\gamma^2=a^2-2b.
+\]
+This means that we know the quantity \(\alpha^2+\beta^2+\gamma^2\), even though we don't yet know what each individul number \(\alpha,\beta,\gamma\) is. 
+This is true generally, that we know the value of any symmetric polynomial in \(\alpha,\beta,\gamma\). To solve the equation, just as for quadratic equations, we want to "softly" break the symmetry.
+</p>
 
 
 <h2>Quartic equations</h2>
-Now, let's try to solve the quartic equation. The quartic equation is solved by reducing it to the cubic, which was discovered by Ferrari in 1540. We will explain how to solve cubic equations in our next article <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>. 
-Let us solve the quartic
-\[
-x^4+ax^3+bx^2+cx+d=0.
-\]
-Let's denote the solutions as \(\alpha,\beta,\gamma,\delta\). Then each of the coefficients \(a,b,c,d\) are expressible as symmetric polynomials of \(\alpha,\beta,\gamma,\delta\):
-\[
-a=-(\alpha+\beta+\gamma+\delta),\ b=\alpha\beta+\alpha\gamma+\alpha\delta+\beta\gamma+\beta\delta+\gamma\delta,\cdots.
-\]
-Here, by symmetric we mean the polynomial doesn't change if we permute the letters \(\alpha,\beta,\gamma,\delta\). 
-For example the polynomial \(\alpha^2+\beta^2\) is not symmetric since if we exchange \(\beta\) and \(\gamma\) the polynomial changes to \(\alpha^2+\gamma^2\).
+Now, let's try to solve the quartic equation. The quartic equation is solved by reducing it to the cubic, which was discovered by Ferrari in 1540. Ferrari himself actually didn't know how to solve the cubic equation at this time! 
+But don't worry, we will explain how to solve cubic equations in our next article <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>. 
 
-<p>
-  In fact, if a polynomial of \(\alpha,\beta,\gamma,\delta\) is symmetric, it is also a polynomial of \(a,b,c,d\). For example \(\alpha^2+\beta^2+\gamma^2+\delta^2\) is symmetric, and indeed
+<p>Let's think about the quartic
 \[
-\alpha^2+\beta^2+\gamma^2+\delta^2=a^2-2b.
+x^4+ax^3+bx^2+cx+d=0,
 \]
-This means that we know the quantity \(\alpha^2+\beta^2+\gamma^2+\delta^2\), even though we don't yet know what each individul number \(\alpha,\beta,\gamma,\delta\) is. This is true generally, that we know the value of any symmetric polynomial in \(\alpha,\beta,\gamma,\delta\).
+and denote the solutions as \(\alpha,\beta,\gamma,\delta\). Our hope is to levarage the symmetry of the solutions to reduce to a cubic equation.
 </p>
 
+
 <p>
-  How do we leverage this to reduce our problem to a cubic equation? First let's look at the polynomials
+  First let's look at the polynomials
   \[
   \alpha\beta+\gamma\delta,\ \alpha\gamma+\beta\delta,\ \alpha\delta+\beta\gamma.
   \]
