@@ -21,84 +21,155 @@
 <p class="meta">July 10, 2026</p>
 
 <p>
-We all know and love the quadratic formula. It says that the solution to \(ax^2+bx+c=0\) is 
+We all know and love the quadratic formula. It says that the solutions to \(ax^2+bx+c=0\) are
 \[
 x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}.
 \]
-How do you prove this? This can be done by several reduction steps. First of all, by dividing the equation out by \(a\) we arrive at
-\[
-x^2+\frac bax+\frac ca=0,
-\]
-so we might as well have assumed \(a=1\) from the beginning. Next, in the equation \(x^2+bx+c=0\) we hope to get rid of the linear term. 
-This is accomplished by the change of variables \(x=y-b/2\), which gives us
-\[
-\bigg(y-\frac b2\bigg)^2+b\bigg(y-\frac b2\bigg)+c=0.
-\]
-When we expand out 
-\[
-\bigg(y-\frac b2\bigg)^2=y^2-by+\frac{b^2}4,
-\]
-we see the term \(-by\) exactly cancels out the linear term. Thus at the end our equation becomes
-\[
-\bigg(y^2-by+\frac{b^2}4\bigg)+\bigg(by-\frac{b^2}2\bigg)+c=y^2+\bigg(c-\frac{b^2}4\bigg)=0.
-\]
-This tells us
-\[
-y=\sqrt{\frac{b^2}4-c}=\frac{\sqrt{b^2-4c}}2.\]
-Remembering that \(x=y-b/2\) we recover the quadratic formula!
 </p>
 
-<h2>Vieta's formulas and symmetric polynomials</h2>
+<p>
+However, high school algebra classes usually stop here. They do not, for instance, explain how one would solve an equation like
+\[x^3 + x + 1 = 0\]
+or
+\[x^4 - 6x^3 + 7x^2 + 8x = 9.\]
+</p>
 
 <p>
-  By the way, what does it mean to solve the quadratic equation \(x^2+bx+c=0\)?
-  If we call the two solutions \(\alpha\) and \(\beta\), we want to factor our polynomial as
-  \[
-  x^2+bx+c=(x-\alpha)(x-\beta).
-  \]
-  By expanding and comparing coefficients, we see that we are looking for numbers \(\alpha\) and \(\beta\) which satisfy
-  \[
-  \alpha+\beta=-b,\ \alpha\beta=c.
-  \]
-These are known as Vieta's formulas, which relates the "unknown" quantities \(\alpha\) and \(\beta\) to our "known" quantities \(b\) and \(c\). 
-Even though we don't know each individual value of  \(\alpha\) and \(\beta\), we somehow know their sum and product. 
-Is it possible that we secretly also know the values of other expressions involving \(\alpha\) and \(\beta\)? 
-  </p>
+The goal of this series of two articles is to explain how to solve <em>cubics</em> (equations of the form \(ax^3 + bx^2 + cx + d = 0\)) and <em>quartics</em> (equations of the form \(ax^4 + bx^3 + cx^2 + dx + e = 0\)), like the ones above. 
+</p>
+
+<p>
+Though, really, these two articles have a different goal: we want to introduce ideas of <em>Galois theory</em> to the reader. Galois theory, invented by Évariste Galois, is an incredible branch of mathematics, which systematically studies the symmetry of solutions to equations. For example, the fact that the quadratic formula involves the funny \(\pm\) (plus or minus) symbol is related to a certain symmetry of quadratic equations. By thinking about the symmetries that cubics and quartics have, one is led to the formula for solving them.
+</p>
+
+<p>
+Historically, Galois was born long after the cubic and quartic had been solved. He was interested in using symmetry to prove that you can go no further: there is <em>no formula</em> you can write down which solves equations of the form
+\[ax^5 + bx^4 + cx^3 + dx^2 + ex + f = 0\]
+using only radicals (things like \(\sqrt{5}, \sqrt[3]{2}, \sqrt[4]{7},\) etc.), addition, multiplication, division, and subtraction. Galois proved this by thinking about the kinds of symmetries that the solutions to a quintic have, and then showing no formula could ever have that same type of symmetry.
+</p>
+
+<p>
+But enough with the preamble; let's get into solving some equations! 
+</p>
+
+<h2>Thinking about the quadratic formula</h2>
+
+<p>
+If we want to find a solution to the cubic or the quartic, it's useful to first ask how one might go about <em>inventing</em> the quadratic formula. And before we do that, it's worth asking: what does the quadratic formula even do, really? 
+</p>
+
+<p>
+The simplest sort of quadratic equation is something like \(x^2 = 17,\) where the solution is given by \(x = \pm\sqrt{17}\) (where, recall, the \(\pm\) means `plus or minus,' because both \(\sqrt{17} \approx 4.123\) and \(-\sqrt{17} \approx -4.123\) solve the equation \(x^2 = 17\)). 
+</p>
+
+<p>
+But something was hidden when we wrote \(\sqrt{17} \approx 4.123.\) The symbol \(\sqrt{17}\) just means "the (positive) number which squares to \(17.\)" So, when you ask someone for a solution to \(x^2 = 17,\) and they answer back "it's \(\pm\sqrt{17}\)", in some sense they've done nothing for you. The only reason we consider \(\sqrt{17}\) as being a valid answer to \(x^2 = 17\) is because the square root function comes up very often, and so humanity has developed many tools for quickly calculating it -- for example, your calculator probably has a button for it. People thus consider \(\sqrt{17}\) to be a valid expression to use in equations, and leave the task of numerically evaluating it to the reader of their solution. 
+</p>
+
+<p>
+Similarly, when one writes that
+\[ax^2 + bx + c = 0\]
+has solutions
+\[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a},\]
+one is essentially saying that <em>if</em> you know how to solve the equation
+\[y^2 = b^2 - 4ac,\]
+<em>then</em> you can solve \(ax^2 + bx + c = 0\) as well. 
+</p>
+
+<p>
+So, the quadratic formula is secretly a tool for <em>turning one quadratic into a simpler quadratic</em>. This reduction is more useful than it might seem, though: there are tons of algorithms for computing square roots (your calculator knows one, your computer knows one, and you could even learn one to execute with pen-and-paper for yourself!). So, the quadratic formula reduces an arbitrary quadratic equation to one for which <em>we already have a solution</em>. 
+</p>
+
+<p>
+People often joke that mathematicians are lazy, because this is incredibly common in mathematics: if you have some problem you cannot solve, like \(-x^2 - 2x + 1 = 0,\) then reduce it to some problem you <em>can</em> solve, like \(y^2 = 8.\) The quadratic formula is just a reduction of this type. Human science and engineering is built on the work of giants: if the people before you have already discovered something, it is a good idea to try and reframe your problem in a way that their past discoveries are applicable. 
+</p>
+
+
+<h2>Vieta's formulas</h2>
+
+<p>
+We now have some understanding of what the quadratic formula <em>is</em>: it's a tool for turning quadratic equations into square root problems. But how does one actually <em>invent</em> the quadratic formula? For this, we turn to an idea of Vieta.
+</p>
+
+<p>
+Suppose the quadratic equation
+\[x^2 + bx + c = 0\]
+has the two solutions \(x=\alpha\) and \(x=\beta.\) This means we can factor the quadratic as
+\[x^2 + bx + c = (x-\alpha)(x-\beta).\] 
+</p>
+
+<p>
+The French mathematician Vieta noticed something amusing. If we expand out \((x-\alpha)(x-\beta),\) we get
+\[(x-\alpha)(x-\beta) = x^2 - (\alpha + \beta)x + \alpha\beta.\]
+Thus, if 
+\[x^2 + bx + c = (x-\alpha)(x-\beta),\]
+then
+\[\alpha + \beta = -b\]
+and
+\[\alpha\beta = c.\] 
+</p>
+
+<p>
+These are known as Vieta's formulas, which relates the solutions \(\alpha\) and \(\beta\) of the quadratic to its coefficients \(b\) and \(c\). 
+</p>
+
+<p>
+Vieta's formulas mean that, even if you haven't yet solved your quadratic equation, you can deduce certain things about the solutions. For example, just by looking at the equation
+\[x^2 + bx + c = 0,\]
+I can tell that the two solutions multiply to get \(c,\) even without solving the equation. 
+</p>
+
+<p>
+If you're a bit more clever, you can also figure out more information about the solutions \(\alpha\) and \(\beta\) to the above equation without actually solving it. 
+</p>
 
 <p>
   For example, we secretly know the value of \(\alpha^2+\beta^2\), since
   \[
-  \alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta=b^2-2c.
-  \]
-  But what about \(\alpha+2\beta\), or \(\alpha-3\beta^2\)? Is there any chance they are also polynomials of \(b\) and \(c\) secretly?
-    </p>
-
-<p>Notice that all of the expressions \(\alpha+\beta\), \(\alpha\beta\), and \(\alpha^2+\beta^2\) are symmetric: they don't change when we swap the value of \(\alpha\) and \(\beta\). 
-That \(\alpha+\beta\) and \(\alpha\beta\) are symmetric shouldn't come as a surprise, since the expression \((x-\alpha)(x-\beta)\) is already symmetric in \(\alpha\) and \(\beta\).
-Since \(\alpha^2+\beta^2\) is a polynomial of \(b\) and \(c\), it must also be symmetric in \(\alpha\) and \(\beta\).
-</p>
-
-<p>In fact any polynomial in \(b\) and \(c\) are symmetric polynomials of \(\alpha\) and \(\beta\). For example, \(b^3-2bc+c\) can be written as
-  \[
-  b^3-2bc+c=(-\alpha-\beta)^3-2(-\alpha-\beta)\alpha\beta+\alpha\beta=-\alpha^3-\alpha^2\beta+\alpha\beta-\alpha\beta^2-\beta^3
-  \]
-  which stays the same when you swap \(\alpha\) and \(\beta\).
-   In fact, the converse holds: any symmetric polynomial of  \(\alpha\) and \(\beta\) can be expressed in terms of \(b\) and \(c\)!
-  For example, \(\alpha^3+\beta^3\) is symmetric, and indeed
-  \[
-  \alpha^3+\beta^3=(\alpha+\beta)^3-3(\alpha+\beta)\alpha\beta=-b^3+3bc.
+  \alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta= (-b)^2 - 2 \cdot c = b^2 - 2c
   \]
 </p>
 
 <p>
-  How is all of this useful in solving equations? To solve for \(\alpha\) and \(\beta\), we eventually need to <em>break</em> the symmetry! 
-  But since we understand symmetric polynomials so well, let's think about which polynomials are "close" to being symmetric.
-  Notice that \(\alpha-\beta\) is not symmetric, but swapping \(\alpha\) and \(\beta\) doesn't change it very much; it just multiplies by \(-1\). 
-  That means if we consider the square
+  But what about \(\alpha+2\beta\), or \(\alpha-3\beta^2\)? Is there any chance that we could secretly evaluate them without actually solving our equation?
+    </p>
+
+    <p>Notice that the expressions \(\alpha+\beta\), \(\alpha\beta\), and \(\alpha^2+\beta^2\) are all <em>symmetric</em>: they don't change when we swap the value of \(\alpha\) and \(\beta\). 
+That \(\alpha+\beta\) and \(\alpha\beta\) are symmetric shouldn't come as a surprise, since the expression \((x-\alpha)(x-\beta)\) is already symmetric in \(\alpha\) and \(\beta\).
+</p>
+
+<p>
+In fact, any <em>symmetric</em> polynomial expression of \(\alpha\) and \(\beta\) can be rewritten as a polynomial in terms of \(b\) and \(c.\) For example, \(\alpha^3 + \beta^3\) is symmetric in \(\alpha\) and \(\beta,\) and we can write
+\[\alpha^3 + \beta^3 = (\alpha + \beta)^3 - 3(\alpha+\beta)\alpha\beta = -b^3 + 3bc.
+</p>
+
+<p>
+  How is all of this useful in finding the quadratic formula? The key insight is that, to solve for \(\alpha\) and \(\beta\), we eventually need to <em>break</em> the symmetry.
+</p>
+
+<p>
+As soon as you find <em>one</em> quantity which is not symmetric, you can use it to solve for \(\alpha\) and \(\beta\) separately. For example, suppose you were trying to solve
+\[x^2 + x -6 = 0,\]
+and I told you that the solutions \(\alpha, \beta\) obeyed \(\alpha - \beta = 5.\) Then you could solve this quadratic without much work, because you can deduce just by looking at its coefficients that \(\alpha + \beta = -b = -1,\) and so 
+\[\alpha + \beta = -1,\]
+\[\alpha - \beta = 5.\]
+This is a system of equations which you can easily solve to get \(\alpha = 2, \beta = -3.\) 
+</p>
+
+<p>
+The quantity \(\alpha - \beta\) is <em>not</em> symmetric in \(\alpha\) and \(\beta\); if you switch the values of \(\alpha\) and \(\beta,\) then \(\alpha-\beta\) gets multiplied by \(-1.\) This is why being told the value of \(\alpha-\beta\) it makes it so easy to solve the quadratic: as soon as you can break the symmetry, you can solve the quadratic.
+</p>
+
+<p>
+So, how we can determine \(\alpha-\beta\)? Notice that it's very very close to being symmetric. In fact, its square
   \[
   (\alpha-\beta)^2
   \]
-  this will really be symmetric! And indeed, we can express it as a polynomial of \(b\) and \(c\):
+  will really be symmetric: swapping \(\alpha\) and \(\beta\) multiplies the value of \(\alpha-\beta\) by \(-1,\) but \((-1)^2 = 1,\) so swapping \(\alpha\) and \(\beta\) won't change \((\alpha-\beta)^2\) at all! 
+</p>
+
+<P>
+  And indeed, we can express \((\alpha-\beta)^2\) as a polynomial of \(b\) and \(c\):
   \[
   (\alpha-\beta)^2=(\alpha+\beta)^2-4\alpha\beta=b^2-4c.
   \]
@@ -111,89 +182,163 @@ Combining with \(\alpha+\beta=-b\), we can solve for \(\alpha\) and \(\beta\):
 \]
 </p>
 
-<h2>Vieta's formula: beyond quadratic equations</h2>
-In fact, our analysis above applies to higher degree equations. For example let's take a cubic equation
-\[
-x^3+ax+bx+c=0,
-\]
-and let's call the solutions \(x=\alpha,\beta,\gamma\). Then each of the coefficients \(a,b,c\) are expressible as symmetric polynomials of \(\alpha,\beta,\gamma\):
-\[
-a=-(\alpha+\beta+\gamma),\ b=\alpha\beta+\alpha\gamma+\beta\gamma,\ c=-\alpha\beta\gamma.
-\]
-That is, any permutation of the \(\alpha,\beta,\gamma\) does not change any of these polynomials.
+<p>
+This is the familiar quadratic formula! You can derive the full formula by replacing
+\[ax^2 + bx + c = 0\]
+by the equation
+\[x^2 + \frac{b}{a}x + \frac{c}{a} = 0.\]
+</p>
+
+<h2>Vieta's formulas beyond quadratic equations</h2>
 
 <p>
-  Moreover, if a polynomial of \(\alpha,\beta,\gamma\) is symmetric, it is also a polynomial of \(a,b,c\). For example \(\alpha^2+\beta^2+\gamma^2\) is symmetric, and indeed
+What happens if we try solving more complicated equations with Vieta's formulas? To see, let's start with a cubic equation
+\[
+x^3+ax+bx+c=0.
+\]
+</p>
+
+<p>
+Label the solutions \(x=\alpha,\beta,\gamma\). If we expand out the expression
+\[x^3 + ax + bx + c = (x-\alpha)(x-\beta)(x-\gamma),\]
+then we can find that
+\[
+a=-(\alpha+\beta+\gamma),
+\]
+\[b=\alpha\beta+\alpha\gamma+\beta\gamma,\]
+and
+\[c=-\alpha\beta\gamma.
+\]
+</p>
+
+<p>
+Notice how the quantities \(a, b,\) and \(c\) are all <em>symmetric</em> functions of \(\alpha,\beta,\) and \(\gamma.\) And, conversely, if we have a polynomial symmetric in \(\alpha,\beta,\gamma,\) we can always rewrite it in terms of \(a,b,c.\) For example, For example \(\alpha^2+\beta^2+\gamma^2\) is symmetric, and indeed you can check
 \[
 \alpha^2+\beta^2+\gamma^2=a^2-2b.
 \]
-This means that we know the quantity \(\alpha^2+\beta^2+\gamma^2\), even though we don't yet know what each individul number \(\alpha,\beta,\gamma\) is. 
-This is true generally, that we know the value of any symmetric polynomial in \(\alpha,\beta,\gamma\). To solve the equation, just as for quadratic equations, we want to "softly" break the symmetry.
+This means that, just by looking at our cubic equation, we can deduce the value of \(\alpha^2 + \beta^2 + \gamma^2,\) without needing to solve for the numbers \(\alpha,\beta,\gamma\) individually.
 </p>
 
+<p>
+To solve the cubic equation, we need to break the symmetry somehow, just as we did for the quadratic equation. This is a bit trickier than breaking the symmetry for the quadratic equation; next week, we'll explain a more systematic way of looking at the symmetries of \(\alpha,\beta,\) and \(\gamma,\) which will help us solve the cubic. But for now, we're going to explain how to solve <em>quartic</em> equations, assuming we already know how to solve cubics.
+</p>
 
 <h2>Quartic equations</h2>
-Now, let's try to solve the quartic equation. The quartic equation is solved by reducing it to the cubic, which was discovered by Ferrari in 1540. Ferrari himself actually didn't know how to solve the cubic equation at this time! 
-But don't worry, we will explain how to solve cubic equations in our next article <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>. 
 
-<p>Let's think about the quartic
+<p>
+In 1540, the Italian mathematician Lodovico de Ferrari discovered something remarkable: just as one can use the quadratic formula to reduce solving equations
+\[ax^2 + bx + c = 0\]
+to solving the simpler equations
+\[y^2 = d,\]
+one can similarly use a certain clever algebra trick to reduce solving <em>quartic</em> equations
+\[ax^4 + bx^3 + cx^2 + dx + e = 0\]
+to <em>cubic</em> equations
+\[fy^3 + gy^2 + hy + i = 0.\]
+</p>
+
+<p>
+At the moment, this reduction won't be super helpful to us, because we haven't solved the cubic yet -- that will wait for next week. But actually, we're following the history quite well, because when Ferrari first discovered this trick, he also didn't know how to solve the cubic equation! Ferrari's teacher, the Italian mathematician Gerolamo Cardano, later devised a method for solving cubic equations, so that Ferrari's trick allowed one to solve quartics as well.
+</p>
+
+<p>
+Now, onwards to Ferrari's idea. Let's think about the quartic equation
 \[
 x^4+ax^3+bx^2+cx+d=0,
 \]
-and denote the solutions as \(\alpha,\beta,\gamma,\delta\). Our hope is to levarage the symmetry of the solutions to reduce to a cubic equation.
+and denote the solutions as \(\alpha,\beta,\gamma,\delta\). Our hope is to levarage the symmetry of the solutions to reduce this to a cubic equation.
 </p>
 
+<p>
+A cubic polynomial has three solutions. Our goal, then, is to write down some simple cubic polynomial
+\[(x-r)(x-s)(x-t)\]
+which has the following two properties: the coefficients of \((x-r)(x-s)(x-t)\) should be expressible in terms of \(a,b,c,\) and \(d\) -- equivalently, the coefficients should be <em>symmetric</em> functions of \(\alpha,\beta,\gamma,\) and \(\delta\); and \(r, s,\) and \(t\) some non-symmetric functions of \(\alpha,\beta,\gamma,\delta,\) so that if we learn the values of \(r, s, t\), then we can break the symmetry and solve the quartic. 
+</p>
 
 <p>
-  First let's look at the polynomials
+These two goals are somewhat at odds with each other: we want the coefficients of \((x-r)(x-s)(x-t)\) to be symmetric in the roots, but we want the roots \(r,s,t\) to each, individually, be <em>non-symmetric</em> in \(\alpha,\beta,\gamma,\delta.\) 
+</p>
+
+<p>
+Ferrari observed that we could take
   \[
-  \alpha\beta+\gamma\delta,\ \alpha\gamma+\beta\delta,\ \alpha\delta+\beta\gamma.
+  r = \alpha\beta+\gamma\delta,\] \[s =  \alpha\gamma+\beta\delta,\] and \[t= \alpha\delta+\beta\gamma.
   \]
-  Even though each individual polynomial is not symmetric, permuting the \(\alpha,\beta,\gamma,\delta\) only permutes the three polynomials amongst itselves.
+</p>
+
+<p>
+Individually, \(r, s, t\) are not symmetric in \(\alpha,\beta,\gamma,\delta.\) But together, they have a common symmetry; for example, if we swap the values of \(\alpha\) and \(\beta,\) then \(r\) stays the same (because \(\alpha\beta\) becomes \(\beta\alpha\), which is unchanged), but \(s\) and \(t\) get <em>swapped</em>. Similarly, if we swap \(\alpha\) and \(\gamma,\) then \(s\) stays the same, but \(r\) and \(t\) get swapped. Generally, permuting the values of \(\alpha,\beta,\gamma,\delta\) just permutes the quantities \(r,s,t.\) 
+</p>
+
+<p>
   That means the coefficients of the polynomial
   \[
   \big(x-(\alpha\beta+\gamma\delta)\big)\big(x-(\alpha\gamma+\beta\delta)\big)\big(x-(\alpha\delta+\beta\gamma)\big)
   \]
-  are symmetric. That means we know the coefficients of this polynomial in terms of the original coefficients \(a,b,c,d\), and we call it the <em>resolvent cubic</em>.
+  <em>are</em> symmetric functions of \(\alpha,\beta,\gamma,\) and \(\delta.\) For example, this cubic equation has \(x^2\) coefficient
+  \[-r-s-t = -\alpha\beta - \gamma\delta - \alpha\gamma - \beta\delta - \alpha\delta - \beta\gamma,\]
+  which is symmetric.
+</p>
+<p>
+  That means we know the coefficients of this cubic \((x-r)(x-s)(x-t)\) in terms of the original coefficients \(a,b,c,d.\) We call the result the <em>resolvent cubic</em>, and with some tedious but doable algebra, one can work out that
+  \[(x-r)(x-s)(x-t) = x^3 - bx^2 + (ac -  4d)x + (4bd - c^2 - a^2d).\]
 </p>
 
 <p>
-If we knew how to solve the cubic (see <a href="cubic.html">How to solve cubic and quadratic equations II: cubics</a>) we know the numbers \(p=\alpha\beta+\gamma\delta\), \(q=\alpha\gamma+\beta\delta\), and \(r=\alpha\delta+\beta\gamma\).
-The explicit formula is terribly complicated so we won't write it down here, but nevertheless we can in principle!
+If we knew how to solve the cubic (which we will next week!), then we'd be able to solve it to figure out the values of \(r=\alpha\beta+\gamma\delta\), \(s=\alpha\gamma+\beta\delta\), and \(t=\alpha\delta+\beta\gamma\).
   </p>
 
   <p>
-Now, how do we write \(\alpha,\beta,\gamma,\delta\) in terms of the numbers \(p,q,r\)? Well, we know
-  \[
-  p=\alpha\beta+\gamma\delta,\ d=\alpha\beta\gamma\delta.
-  \]
-  By solving the relevant quadratic equation, we deduce \(\alpha\beta\) and \(\gamma\delta\). 
-  By repeating the same trick for \(q\) we deduce \(\alpha\gamma\) and \(\beta\delta\), and by repeating the trick for \(r\) we deduce \(\alpha\delta\) and \(\beta\gamma\).
+Now, how do we write \(\alpha,\beta,\gamma,\delta\) in terms of the numbers \(r,s,t\)?
+
+To start, observe that
+\[r = (\alpha\beta) + (\gamma\delta),\]
+and \(d = (\alpha\beta)(\gamma\delta)\) (where \(d\) was the constant term of our quartic). Thus, we have two numbers \(\alpha\beta\) and \(\gamma\delta,\) and we know their sum \(r\) and their product \(d.\) As we saw when looking at Vieta's formulas for quadratics, figuring out two numbers given their sum and their product is equivalent to solving a quadratic equation -- and in particular, we can use the quadratic formula to solve for \(\alpha\beta\) and \(\gamma\delta\). 
   </p>
 
   <p>
+Similarly, we can use the same trick with \(s\) and \(t\) to compute the values of \(\alpha\gamma, \alpha\delta, \beta\gamma,\) and \(\beta\delta.\) 
+  </p>
+
 Next, observe that
 \[
-p+q=\alpha\beta+\gamma\delta+\alpha\gamma+\beta\delta=(\alpha+\delta)(\beta+\gamma).
+r+s=\alpha\beta+\gamma\delta+\alpha\gamma+\beta\delta=(\alpha+\delta)(\beta+\gamma).
 \]
 We also know 
 \[
 (\alpha+\delta)+(\beta+\gamma)=-a,
 \]
-so by solving the relevant quadratic equation again we deduce \(\alpha+\delta\) and \(\beta+\gamma\). Since we already knew \(\alpha\delta\) and \(\beta\gamma\), we again solve the relevant quadratic equations to deduce all four solutions \(\alpha,\beta,\gamma,\delta\).
+so by solving the relevant quadratic equation again we can compute \(\alpha+\delta\) and \(\beta+\gamma\). As above we computed \(\alpha\delta\) and \(\beta\gamma\), we again solve the relevant quadratic equations to compute all four solutions \(\alpha,\beta,\gamma,\delta\).
     </p>
-    This lets us solve quartic equations to our heart's desire, but writing out the full formula in terms of the variables \(a,b,c,d\) will take ages!
+
+    <p>
+    This lets us solve quartic equations to our heart's desire (or at least it will, once we find the cubic formula...), but writing out the full formula in terms of the variables \(a,b,c,d\) will take ages! The formula is incredibly long; you can view it <a href="https://commons.wikimedia.org/wiki/File:Quartic_Formula.svg">on Wikipedia</a> if you so desire. 
+    </p>
+
+    <p>
+We end this section with a remark for experts in group theory: secretly, the 'exceptional homomorphism' \(S_4 \to S_3\) of symmetric groups was responsible for the resolvent cubic. Can you see why?
+    </p>
   
 <h2>Quintics and beyond</h2>
-For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations. The problem remained unsolved for over 300 years, but
-in the 19th century Galois proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
 
 <p>
-  Notice that the solution to the quartic equation involved analyzing the symmetries of the solutions. 
-  Galois systematically studied the symmetries to the solutions of an equation, and created the field we now know as Galois theory.
-  </p>
+For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations. The problem remained unsolved for over 300 years, but in the 19th century Galois (our friend from the introduction!) proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
+</p>
 
-  <p>  Galois's insight was that the symmetries of the solutions to the quintic equation was too complicated in a very precise sense. In fact so complicated that there couldn't exist a formula for the solutions!</p>
+<p>
+As we remarked in the introduction, Galois proved this by considering the symmetries of quintics, and showing that no formula could have the right symmetries to give quintics. We hope that today's article with Vieta's formulas, and next week's article with the cubic formula, will help you understand what it means for solutions of an equation to have symmetry.
+</p>
+
+<p>
+As a historical fact, we remark that Galois had a quite interesting life. He invented Galois theory as a teenager (and went quite far with it!), but was rejected from university (apparently, at an oral exam given to determine who would be admitted, he tried to explain Galois theory to the examiner instead of answering their questions). 
+</p>
+
+<p>
+Galois tragically died at the age of 20, after being shot and killed in a duel. His work might have been forgotten, had he not spent the night before the duel finalizing a manuscript on his ideas and arranging for it to be sent to another mathematician. 
+</p>
+
+<p>
+While it took around a decade, eventually the mathematical world realized how important Galois' work was. The famous mathematician Hermann Weyl wrote that "[Galois'] letter, if judged by the novelty and profundity of ideas it contains, is perhaps the most substantial piece of writing in the whole literature of mankind." 
+</p>
 
 </body>
 <!-- MailerLite Universal -->

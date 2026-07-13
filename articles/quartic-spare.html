@@ -1,0 +1,42 @@
+<h2>Deriving the quadratic formula</h2>
+
+<p>
+To start, notice that you can eliminate the variable \(a,\) by dividing both sides of 
+\[ax^2 + bx + c = 0\]
+by \(a.\) This gives you
+\[
+x^2+\frac bax+\frac ca=0,
+\]
+so we might as well substitute \(b' = b/a, c'=c/a,\) so that our equation becomes 
+\[x^2+b'x+c'=0.\]
+This looks a little simpler, since there is one fewer variable name popping around.
+</p>
+
+<p>
+However, square root problems like \(y^2 = N\) and our equation \(x^2 + b'x + c' = 0\) still have one big difference: our equation has this pesky \(b'x\) term, whereas a square root problem only has a \(y^2\) and a constant!
+</p>
+
+<p>
+To get rid of the \(b'x\) term, we do a clever substitution: if we define \(y := x+b'/2,\) then \(x=y-b'/2\), so that
+\[x^2 + b'x + c' = 0\]
+can be rewritten as
+\[
+\bigg(y-\frac{b'}{2}\bigg)^2+b\bigg(y-\frac{b'}2\bigg)+c'=0.
+\]
+When we expand out 
+\[
+\bigg(y-\frac{b'}2\bigg)^2=y^2-b'y+\frac{(b')^2}4,
+\]
+we see the term \(-b'y\) exactly cancels out the linear term. Thus at the end our equation becomes
+\[
+\bigg(y^2-b'y+\frac{(b')^2}4\bigg)+\bigg(b'y-\frac{(b')^2}2\bigg)+c'=y^2+\bigg(c'-\frac{(b')^2}4\bigg)=0.
+\]
+This tells us
+\[
+y=\pm\sqrt{\frac{(b')^2}4-c'}=\frac{\pm\sqrt{(b')^2-4c'}}2.
+\]
+Remembering that \(x = y-b'/2,\) we get
+\[x = \frac{b'}{2} \pm \frac{\sqrt{(b')^2 - 4c'}}{2},\]
+and if we use \(b'=b/a, c'=c/a,\) we get the familiar quadratic formula
+\[x = \frac{b \pm \sqrt{b^2 - 4ac}}{2a}.\]
+</p>
