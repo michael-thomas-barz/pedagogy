@@ -29,13 +29,41 @@ x^3-7x^2+5x-20=0?
 \]
 Our approach will be to build an analogy with the solution to the quadratic equation. 
 For this, let us again re-frame our solution to the qudratic equation
+</p>
 
 <h2>Quadratic equations: yet again</h2>
+
+<p>
 Let's start with a quadratic equation
 \[
 x^2+bx+c=0
 \]
-with two solutions \(\alpha\) and \(\beta\). Last week we calculated \(\alpha+\beta\) and \(\alpha-\beta\) and used this to deduce \(\alpha\) and \(\beta\). This is done by the formulas
+with two solutions \(\alpha\) and \(\beta.\) Recall how we derived the quadratic formula: Vieta's formulas tell us 
+\[\alpha + \beta = -b,\]
+\[\alpha\beta = c,\]
+and we could use these to find evaluate any <em>symmetric</em> polynomial of \(\alpha\) and \(\beta\) (so computing \(\alpha^2 + \beta^2\) in terms of \(b\) and \(c\) is easy, for example). 
+</p>
+
+<p>
+To solve for \(\alpha, \beta,\) we needed to evaluate some quantity which broke the symmetry. The quantity we chose was \(\alpha - \beta.\) This was not symmetric in \(\alpha\) and \(\beta\) -- because swapping the two roots negates this expression -- but \((\alpha-\beta)^2\) <em>was</em> symmetric. This meant that we could write \((\alpha-\beta)^2\) in terms of \(b, c\), as
+\[(\alpha-\beta)^2 = b^2 - 4c,\]
+and then taking a square root gives us the asymmetric quantity \(\alpha - \beta.\)
+</p>
+
+<p>
+But how did we know to use \(\alpha - \beta\)? One way of thinking about it is that this quantity has the <em>same symmetry as the square root function.</em> What do we mean by this?
+</p>
+
+<p>
+Well, the quadratic formula is going to have to involve the square root function. And square roots always come in positive/negative pairs: the equation \(y^2 = 4\) has solutions \(y = 2\) and \(y = -2.\) 
+</p>
+
+<p>
+So, we should imagine that some part of our quadratic formula is going to be a square root, and that part of our formula should somehow TODO: finish this
+</p>
+
+<p>
+Last week we calculated \(\alpha+\beta\) and \(\alpha-\beta\) and used this to deduce \(\alpha\) and \(\beta\). This is done by the formulas
 \[
 \alpha=\frac{(\alpha+\beta)+(\alpha-\beta)}2
 \]
