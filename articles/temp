@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What is the factorial of 3.5?</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>What is the factorial of 3.5?</h1>
+<p class="meta">July 10, 2026</p>
+
+<p>
+How many ways are there for Alice (A), Bob (B), and Charlie (C) to line up in a line? Any 3 of them could be first in line, but then only 2 of them remain to be second in line and only 1 remains to be third in line. 
+So there are 6 possibilities total: ABC, ACB, BAC, BCA, CAB, and CBA.
+</p>
+
+<p>
+  If Alice had more friends -- let's say her friend group had \(n\) people in total -- there would be \[n\times(n-1)\times\cdots\times2\times1\] ways for all of them to line up. We denote this product by \(n!\), the <em>factorial</em> of \(n.\) The factorial grows very rapidly; for example, in a group of 10 people, there are 
+  \[
+  10!=10\times9\times8\times7\times6\times5\times4\times3\times2\times1=3,628,800
+  \]
+  ways to line up. That's over 3 million possibilities!
+</p>
+
+<p>
+Observe that
+\[n! = n \cdot (n-1)!.\]
+This is an incredibly useful property of the factorial function.
+</p>
+
+<h2>The factorial of 3.5</h2>
+
+<p>
+  So far, we only know how to evaluate the function \(n!\) for integer values of \(n\). But wouldn't it be wonderful if we were able to fill in the graph, and find out what \(3.5!\) means?
+</p>
+
+
+<div class="graph-toggle" style="text-align:center; margin: 2rem 0;">
+  <img id="graph-image" src="factorial.svg" alt="Graph of n factorial at integer points" style="max-width:100%; height:auto;">
+  <div style="margin-top: 0.75rem;">
+    <button id="graph-toggle-btn" type="button" onclick="toggleGraph()">fill in the points</button>
+  </div>
+</div>
+ 
+<script>
+  function toggleGraph() {
+    var img = document.getElementById('graph-image');
+    var btn = document.getElementById('graph-toggle-btn');
+    if (img.src.indexOf('factorial.svg') !== -1) {
+      img.src = 'gamma.svg';
+      img.alt = 'Graph of the Gamma function, Gamma(x+1), on the interval from 1 to 4';
+      btn.textContent = 'factorial';
+    } else {
+      img.src = 'factorial.svg';
+      img.alt = 'Graph of n factorial at integer points';
+      btn.textContent = 'fill in the points';
+    }
+  }
+</script>
+
+<p>
+  We want some way of filling in the graph which retains the fundamental property of factorial, that 
+  \(x!=x\cdot(x-1)!\).
+  But this property alone doesn't tell you how to evaluate \(3.5!\). We see that
+  \[
+  3.5!=3.5\times2.5\times1.5!,
+  \]
+  but we still don't know what \(1.5!\) should be! Certainly we want it to be somewhere in-between \(1!=1\) and \(2!=2\), but which value specifically?
+</p>
+
+<p>
+For this, let us take a slight detour and think about <em>binomial coefficients</em>.
+</p>
+
+<h2>More complicated counting</h2>
+<p>
+I have four neighbors: Sophie, Kenta, Ines, and Xiaoyu. I want to choose two of them to ask for help moving into my new apartment. How many ways are there to do this? 
+
+If you enumerate all the possible pairings, there are <em>six</em> different groups of two I can form from four people:</p>
+<table border="1" cellpadding="8" cellspacing="0">
+  <tr>
+    <td>Sophie and Kenta</td>
+    <td>Sophie and Ines</td>
+    <td>Sophie and Xiaoyu</td>
+  </tr>
+  <tr>
+    <td>Ines and Kenta</td>
+    <td>Xiaoyu and Ines</td>
+    <td>Kenta and Xiaoyu</td>
+  </tr>
+</table>
+
+
+<p>
+
+</p>
+
+  <p>
+
+  which we previously discussed in <a href="lucas.html">Fractal patterns hidden in Pascal's triangle</a>. If Alice had \(n\) apples and wanted to eat \(k\) of them, she will have
+  \[
+  {n\choose k}=\frac{n(n-1)\cdots(n-k)}{k!}
+  \]
+  ways to do so. When we make \(n\) much larger than \(k\), the numbers on the numerator \(n,n-1,\dots,n-k\) are all going to be around \(n\). 
+  That means Alice will have approximately \(n^k/k!\) ways to choose her \(k\) apples.
+</p>
+
+<p>
+  That means if we don't know what \(k!\) is, we <em>could</em> define it to be the limit of
+  \[
+  \frac{n^k}{{n\choose k}}
+  \]
+  as \(n\) grows infinitely large. 
+  This is a very convoluted way to calculate \(k!\), but Euler realized this approach lets us extend the factorial to arbitrary values.
+</p>
+
+<p>
+  In other words, Euler imagines defining \(x!\) for an arbitrary value of \(x\) to be the limit
+  \[
+  \lim_{n\to\infty}\frac{n^x}{{n\choose x}}.
+  \]
+  However, although we know what the numerator \(n^x\) means, we don't know what \({n\choose x}\) means. 
+  That's because the definition of \({n\choose x}\) involved a denominator of \(x!\), and that was what we were trying to do in the first place! So how does this help?
+</p>
+
+<p>
+Here let's go back to the binomial coefficient. Choosing \(k\) apples from \(n\) is the same as choosing \(n-k\) apples from \(n\) apples.
+Instead of choosing which apples to eat, choose those you don't want to eat! In formulas, this means
+\[
+{n\choose k}={n\choose n-k}.
+\]
+So we can instead think about what
+\[
+\lim_{n\to\infty}\frac{n^x}{{n\choose n-x}}\]
+means. Of course this still doesn't make sense since \(n-x\) is not an integer. But by changing variables from \(n\) to \(n+x\) we can re-write the formula as
+\[
+\lim_{n\to\infty}\frac{(n+x)^x}{{n+x\choose n}}.
+\]
+This is now a valid formula since
+\[
+{n+x\choose n}=\frac{(n+x)(n-1+x)\cdots(1+x)}{n!}
+\]
+makes perfect sense. 
+</p>
+
+<p>
+  Again observe that replacing the numerator \((n+x)^x\) of the formula with \(n^x\) doesn't change anything since for large \(n\) they have basically the same size. This gives Euler's formula for the factorial for general values of \(x\),
+  \[
+  x!=\lim_{n\to\infty}\frac{n^x}{{n+x\choose x}}=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}.
+  \]
+  The formula works not only for all real values of \(x\), but for any complex number as well! So we now know what \(3.5!\) is, but also \((-0.7)!\) and \((2-0.3i)!\).
+  </p>
+
+  <p>
+    Euler observed that there's a relation between \(x!\) and \((-x)!\). Indeed,
+    \[
+    x!\cdot(-x)!=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(x+1)}\cdot\frac{n^{-x}\cdot n!}{(n-x)(n-1-x)\cdots(1-x)}.
+    \]
+This simplifies as
+\[
+x!\cdot(-x)!=\lim_{n\to\infty}\frac{n!^2}{(n^2-x^2)((n-1)^2-x^2)\cdots(1-x^2)}.
+\]
+The product can be re-grouped as \(\frac{1^2}{1^2-x^2}\cdots\frac{n^2}{n^2-x^2}\), so the limit equals the infinite product
+\[
+x!\cdot(-x)!=\frac1{1-\frac{x^2}{1^2}}\cdot\frac1{1-\frac{x^2}{2^2}}\cdot \frac1{1-\frac{x^2}{3^2}}\cdots.
+\]
+On the other hand, in <a href="rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> we saw that \(\sin(x)\) factors as
+\[
+\sin(x)=x\bigg(1-\frac{x^2}{\pi^2}\bigg)\bigg(1-\frac{x^2}{2^2\pi^2}\bigg)\bigg(1-\frac{x^2}{3^2\pi^2}\bigg)\cdots.
+\]
+The basic reason is that \(\sin(x)\) has zeroes at \(0,\pm\pi,\pm2\pi,\cdots\). Substitutitng into the previous equation tells us
+\[
+x!\cdot(-x)!=\frac{\pi x}{\sin(\pi x)},
+\]
+which is known as Euler's reflection formula.
+  </p>
+
+  <h2>An example</h2>
+
+  <p>
+    Let's now use Euler's reflection formula to compute \(3.5!\). By substituting \(x!=x\cdot(x-1)!\) we can re-write the formula as 
+    \[
+    (x-1)!\cdot(-x)!=\frac{\pi}{\sin(\pi x)}.
+    \]
+    At \(x=0.5\) we conclude
+    \[
+    (-0.5)!\cdot(-0.5)!=\frac{\pi}{\sin(0.5\pi)}=\pi,
+    \]
+    so
+    \[
+    (-0.5)!=\sqrt{\pi}.\]
+  Somehow \(\pi\) appears in the formula for the factorial! Now
+  \[
+  3.5!=3.5\cdot2.5\cdot1.5\cdot0.5\cdot(-0.5)!=\frac{105}{16}\sqrt{\pi}.\]
+  This is around 11.63, which is indeed between \(3!=6\) and \(4!=24\).
+  </p>
+
+  <h2>Volumes of balls in high dimensions</h2>
+  You may ask: it's cool you can extend the factorial, but why is it useful? One of the many places it appears is in the volume of balls in arbitrary dimensions.
+
+  <p>
+  We all know and love that the circle in 2 dimensions with radius \(r\) has area \(\pi r^2\). The volume of a ball in 3 dimensions has a similar-looking formula, \(\frac43\pi r^3\). 
+  But what happens in dimensions 4, 5, etc?
+  </p>
+
+  <p>
+    It turns out there is a general formula, that in dimension \(n\) the volume of a ball of radius \(n\) circle is
+    \[
+    \frac{\pi^{n/2}}{(\frac n2)!}r^n.
+    \]
+    When \(n=2\), the case of a circle, we recover
+    \[
+    \frac{\pi^1}{1!}r^2=\pi r^2.
+    \]
+    When \(n=3\), we again recover
+    \[
+    \frac{\pi^{3/2}}{(3/2)!}r^3=\frac{\pi^{3/2}}{\frac32\cdot\frac12\cdot\sqrt\pi}r^3=\frac43\pi r^3.
+    \]
+    In higher dimensions, the volumes become:
+    \[
+    \frac12\pi^2r^4,\frac8{15}\pi^2r^5,\frac16\pi^3r^6,\frac{16}{105}\pi^3r^7,\cdots.
+    \]
+    Notice that the last volume comes from our computation of \(3.5!\) above.
+  </p>
+
+  <p>
+    A funny consequence of our formula is that balls occupy less and less space as the dimension increases. A ball of radius \(r\) always sits in a box of width \(2r\) which has volume \((2r)^n\).
+    That means the proportion of the box occupied by the ball is
+    \[
+    \frac{\pi^{n/2}}{2^n(\frac n2)!}.
+    \]
+    Since factorials rapidly increase, this rapidly decreases. For example in dimension 8 the ball only occupies 1.5% of the box, and in dimension 24 the sphere only occupies 0.00000001% of the box.
+    It is remarkable that nevertheless the optimal sphere packing in these dimensions occupy 25.3% and 0.19% of space, respectively. Although those numbers seem small, look at how much they improve upon the naive packing!
+    </p>
+
+</body>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+</html>
