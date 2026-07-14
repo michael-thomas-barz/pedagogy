@@ -21,14 +21,193 @@
 <p class="meta">July 11, 2026</p>
 
 <p>
-  In <a href="quartic.html">How to solve cubic and quartic equations I: quartics</a> we saw how to reduce the quartic equation to the cubic equation.
-We did so by carefully analyzing the symmetries of the solutions. We will push this analysis further to solve the cubic equation
+Last week in <a href="quartic.html">How to solve cubic and quartic equations I: quartics</a> we saw how to reduce the quartic equation to the cubic equation.
+This was done by carefully analyzing the symmetries of the solutions to the equation.
+Today, our question is: how do we solve cubic equations--equations that look like
 \[
-ax^3+bx^2+cx+d=0.
+x^3-7x^2+5x-20=0?
 \]
+Our approach will be to build an analogy with the solution to the quadratic equation. 
+For this, let us again re-frame our solution to the qudratic equation
 
-  Use Lagrange's solution, discrete Fourier transform
+<h2>Quadratic equations: yet again</h2>
+Let's start with a quadratic equation
+\[
+x^2+bx+c=0
+\]
+with two solutions \(\alpha\) and \(\beta\). Last week we calculated \(\alpha+\beta\) and \(\alpha-\beta\) and used this to deduce \(\alpha\) and \(\beta\). This is done by the formulas
+\[
+\alpha=\frac{(\alpha+\beta)+(\alpha-\beta)}2
+\]
+and
+\[
+\beta=\frac{(\alpha+\beta)-(\alpha-\beta)}2.
+\]
+This week, let's try something different and take these two equations as our starting point. In other words, let's perform the change of variables
+\[
+\alpha=\frac{u+v}2\]
+and
+\[
+\beta=\frac{u-v}2
+\]
+for some unknown variables \(u\) and \(v\). Then Vieta's formulas tells us
+\[
+\alpha+\beta=-b
+\]
+which just says
+\[
+\frac{u+v}2+\frac{u-v}2=-b,
+\]
+which tells us \(u=-b\), and
+\[
+\alpha\beta=c
+\]
+which just says 
+\[
+\frac{u+v}2\cdot\frac{u-v}2=c,
+\]
+which tells us
+\[u^2-v^2=4c.\] 
+We already know that \(u=-b\) so substituting this tells us
+\[
+v^2=b^2-4c.\]
+In other words,
+\[
+v=\pm\sqrt{b^2-4c}.\]
+By substuting back into our fomula for \(\alpha\) tells us
+\[
+\alpha=\frac{u+v}2=\frac{-b\pm\sqrt{b^2-4c}}2
+\]
+which was exactly what we wanted!
+
+<h2>Discrete Fourier transform</h2>
+In solving the quadratic equation we performed a substitution
+\[
+\alpha=\frac{u+v}2
+\]
+and
+\[
+\beta=\frac{u-v}2.
+\]
+This may remind you of the discrete Fourier transform, which we discussed in <a href="dirichlet.html">Infinitely many primes end in a 7</a>.
+There, we decomposed a function \(f(x)\) into an even part \(E\) and an odd part \(O\) by
+\[
+f(x)=\frac{E+O}2
+\]
+and
+\[
+f(-x)=\frac{E-O}2.
+\]
+So perhaps we should think of \(u\) as the "even part" and \(v\) as the "odd part."
+<!-- </p> -->
+
+<p>
+  Can we do something similar if we had more than two variables? Yes!
+  </p>
+  <p>
+  For example, the discrete Fourier transform tells you that if you want to find four numbers \(A\), \(B\), \(C\), and \(D\), you could instead try to compute the four quantities
+  \[
+  x=A+B+C+D
+  \]
+  \[
+  y=A+iB-C-iD
+  \]
+  \[
+  z=A-B+C-D
+  \]
+  \[
+  w=A-iB-C+iD.
+  \]
+  From these numbers, the original numbers can be computed by
+  \[
+  A=\frac{x+y+z+w}4
+  \]
+  \[
+  B=\frac{x-iy-z+iw}4
+  \]
+  \[
+  C=\frac{x-y+z-w}4
+  \]
+  \[
+  D=\frac{x+iy-z-iw}4.
+  \]
+  These formulas are really nice, since the formulas to the translate from the \(A\)'s to the \(x\)'s almost looks the same as the formulas to translate from the \(x\)'s to \(A\)'s.
 </p>
+
+<p>
+  The reason why this substitution worked so well is because \(i\) is a root of unity: it is a number whose 4-th power is 1. 
+  So when we try to solve for the cubic equation, perhaps we should use a 3rd root of unity; a number \(\omega\) such that \(\omega^3=1\). 
+  Then, if we wanted to solve for three numbers \(A\), \(B\), and \(C\), we could instead solve for
+\[
+s=A+B+C
+\]
+\[
+t=A+\omega B+\omega^2C
+\]
+\[
+u=A+\omega^2B+\omega C.
+\]
+The original numbers are recovered by
+\[
+A=\frac{s+t+u}3
+\]
+\[
+B=\frac{s+\omega^2t+\omega u}3
+\]
+\[
+C=\frac{s+\omega t+\omega^2u}3.
+\]
+</p>
+
+<p>
+  By the way, what is this number \(\omega\)? We are trying to solve for \(\omega^3-1=0\), but the polynomial factors:
+  \[
+  \omega^3-1=(\omega-1)(\omega^2+\omega+1)=0.
+  \]
+  This means either \(\omega=1\) or \(\omega^2+\omega+1=0\). Since \(\omega=1\) is not very interesting, let's solve the second equation, to get
+  \[
+  \omega=\frac{-1\pm\sqrt{3}i}2.\]
+  By the way, you could have also solved for \(\omega\) by observing that \(\cos(120^\circ)+\sin(120^\circ)i\) corresponds to rotation by \(120^\circ\), and repeating that three times gets you back where you started!
+</p>
+
+<h2>Solving the cubic equation</h2>
+<p>
+Now, let's try to solve for the cubic equation
+\[
+x^3+ax^2+bx+c=0.
+\]
+To simplify our lives let's perform the change of variables \(y=x-\frac a3\). When you expand
+\[
+(y-\frac a3)^3+a(y-\frac a3)^2+b(y-\frac a3)+c=0,
+\]
+the coefficient of \(y^2\) becmes zero. This is because only the first two terms will contribute, and they exactly cancel out. 
+This is the same trick as in the completing-the-square proof for the quadratic formula. Therefore, we might as well assume \(a=0\).
+</p>
+
+<p>
+Let's call our solutions \(\alpha\), \(\beta\), and \(\gamma\), and let's perform the change of variables
+\[
+\alpha=\frac{s+t+u}3
+\]
+\[
+\beta=\frac{s+\omega^2t+\omega u}3
+\]
+\[
+\gamma=\frac{s+\omega t+\omega^2u}3.
+\]
+Now, let's think through what Vieta's formulas 
+\[
+\alpha+\beta+\gamma=-a=0
+\]
+\[
+\alpha\beta+\beta\gamma+\gamma\alpha=b
+\]
+\[
+\alpha\beta\gamma=-c
+\]
+tells us about \(s\), \(t\), and \(u\).
+</p>
+
 </body>
 <!-- MailerLite Universal -->
 <script>
