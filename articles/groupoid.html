@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>There are 2.718 finite sets</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>There are 2.718 finite sets</h1>
+<p class="meta">July 10, 2026</p>
+
+<p>
+  In math and physics we often levarage symmetry in our problems to simplify. Let's explore how we could levarage symmetry in counting problems.
+</p>
+
+<h2>Counting words</h2>
+
+<p>
+  How many three letter words are there in English? Here we count words in the dictionary such as FOX, FAR, and POP as well as slang as LOL, and many other words that don't exist such as KPL and MYQ.
+</p>
+
+<p>
+  There are 26 possibilities (A~Z) for each lette, so in total there are
+  \[
+  26^3=26\times26\times26=17576
+  \]
+  possible combinations.
+</p>
+
+<p>
+  But what about if we count two words as the same if they are anagrams. So for example ARE and EAR, ARC and CAR, ADD and DAD are considered the same.
+</p>
+
+<p>
+  Generally, any word has 6 anagrams: ABC, ACB, BAC, BCA, CAB, and CBA are all anagrams of each other. So we expect the number of words up to anagrams to be
+  \[
+  26^3/6=2929.333..
+  \]
+  But wait, this is not an integer, where did we go wrong..?
+  </p>
+
+  <p>
+    The issue is that some words have less than 6 anagrams. For example, ADD only has three anagrams: ADD, DAD, and DDA. And some words have even fewer anagrams; look at AAA!
+    It seems words with repeated letters cause us problems.
+  </p>
+
+  <p>
+    If you count carefully, there are \(26\times25\times24\) words with no repetition. Each of those words have 6 anagrams so they contribute a total of
+    \[
+    \frac{26\times25\times24}6=2600
+    \]
+    words. Similarly, there are \(3\times26\times25\) words with one repetition. Each of those words have 3 anagrams so they contribute a total of
+    \[
+    \frac{3\times26\times25}3=650
+    \]
+    words. Finally, there are just \(26\) words where all letters are the same. Each of those words only has 1 anagram (itself) so they contribute a total of
+    \[
+    \frac{26}1=26
+    \]
+    words. This gives a final count of
+    \[
+    2600+650+26=3276
+    \]
+    words up to anagrams.
+  </p>
+
+<h2>There are 2.718 finite sets</h2>
+
+</body>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+</html>
