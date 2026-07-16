@@ -27,7 +27,7 @@
 <h2>Counting words</h2>
 
 <p>
-  How many three letter words are there in English? Here we count words in the dictionary such as FOX, FAR, and POP as well as slang as LOL, and many other words that don't exist such as KPL and MYQ.
+  How many three letter words are there in English? Here we count words in the dictionary such as FOX, FAR, and POP as well as slang such as LOL, and many other words that don't exist such as KPL and MYQ.
 </p>
 
 <p>
@@ -39,11 +39,11 @@
 </p>
 
 <p>
-  But what about if we count two words as the same if they are anagrams. So for example ARE and EAR, ARC and CAR, ADD and DAD are considered the same.
+  But what about if we count two words as the same if they are anagrams? Let me call a word up to anagrams as a "dorw." So for example ARE and EAR, ARC and CAR, ADD and DAD are considered the same dorw, even though they aren't the same word.
 </p>
 
 <p>
-  Generally, any word has 6 anagrams: ABC, ACB, BAC, BCA, CAB, and CBA are all anagrams of each other. So we expect the number of words up to anagrams to be
+  Generally, any word has 6 anagrams: ABC, ACB, BAC, BCA, CAB, and CBA are all anagrams of each other. So we expect the number of dorws to be
   \[
   26^3/6=2929.333..
   \]
@@ -60,20 +60,47 @@
     \[
     \frac{26\times25\times24}6=2600
     \]
-    words. Similarly, there are \(3\times26\times25\) words with one repetition. Each of those words have 3 anagrams so they contribute a total of
+    dorws. Similarly, there are \(3\times26\times25\) words with one repetition. Each of those words have 3 anagrams so they contribute a total of
     \[
     \frac{3\times26\times25}3=650
     \]
-    words. Finally, there are just \(26\) words where all letters are the same. Each of those words only has 1 anagram (itself) so they contribute a total of
+    dorws. Finally, there are just \(26\) words where all letters are the same. Each of those words only has 1 anagram (itself) so they contribute a total of
     \[
     \frac{26}1=26
     \]
-    words. This gives a final count of
+    dorws. So there are a total of
     \[
     2600+650+26=3276
     \]
-    words up to anagrams.
+    dorws. 
   </p>
+
+  <p>
+    The casework was a little painful, so as a lazy mathematician, I wonder if there is a way to count dorws which gives our naive count \(2929.333\) rather than the "true" count \(3276\).
+The "true" count \(3276\) is a little bigger than \(2929.33\) because our naive formula of \(26^3/6\) under-counted dorws with repetition. But how exactly does \(26^3/6\) under-count?
+  </p>
+
+  <p>
+    In the naive count we pretended every word, including DAD, has 6 anagrams, rather than just 3. That means we counted DAD as \(\frac12\) a dorw. Similarly, in the naive count we pretended AAA has 6 anagrams, rather than just 1. This means we counted AAA as \(1/6\) as a dorw.
+    This tells us how to "fix" our count. Each of the \(2600\) dorws without repetition are just counted as \(1\), each of the \(650\) dorws with one repetition is counted as \(1/2\), and each of the \(26\) dorws with all the letters being the same is counted as \(1/6\).
+    This weighted count gives a total of
+    \[
+    \frac{2600}1+\frac{650}2+\frac{26}6=2929.333,
+    \]
+    which was indeed our naive count! We call this weighted count as the <strong>groupoid cardinality</strong>, and it is the precise sense in which there are \(2929.333\) words up to anagrams.
+  </p>
+
+  <h2>What is symmetry?</h2>
+  
+  <p>
+    By the way, why did we weigh each dorw as \(\frac11\), \(\frac12\), and \(\frac16\)? The point is that the more symmetry a dorw has, it is weighed less. For example, BAD has no symmetry, while DAD has the symmetry of swapping the first and third letter. And AAA has the most symmetry, since swapping any of the letters results in the same word.
+  </p>
+
+  <p>
+Let's try to formalize this. Note that there are 6 permutations of three numbers 123: 123, 132, 213, 231, 312, and 321. Each permutation tells you a way to create an anagram. The permutation 132
+  </p>
+
+  TO-DO: Compute the number of words in the English language up to anagrams. (which is \(e^26\))
 
 <h2>There are 2.718 finite sets</h2>
 
