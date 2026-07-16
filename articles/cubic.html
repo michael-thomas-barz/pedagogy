@@ -59,7 +59,61 @@ Well, the quadratic formula is going to have to involve the square root function
 </p>
 
 <p>
-So, we should imagine that some part of our quadratic formula is going to be a square root, and that part of our formula should somehow TODO: finish this
+In our final square root formula, we write
+\[\alpha - \beta = \sqrt{b^2 - 4c}.\]
+The \(\pm\) ambiguity in the square root on the right hand side is reflected in the \(\pm\) ambiguity in the expression \(\alpha-\beta\) on the left hand side: depending on which root we call \(\alpha\) and which we call \(\beta,\) the expression \(\alpha - \beta\) could take on two possible values, which are negatives of each other, just like how the square root can be either positive or negative. 
+</p>
+
+<h2>To the cubic</h2>
+
+<p>
+We now want to derive a <em>cubic</em> formula, to solve equations
+\[x^3 + ax^2 + bx + c = 0.\]
+</p>
+
+<p>
+Let's say the roots of our cubic are \(x = \alpha, \beta,\) and \(\gamma.\) Using Vieta's formulas (from last time), let's try to derive a cubic formula.
+</p>
+
+<p>
+The cubic formula will almost certainly involve the cube root function. So, let's ask ourselves: which quantity should we be taking the cube root of? 
+</p>
+
+<p>
+Well, let's take a step back. It is well known that square roots come in pairs. But how many solutions to \(y^3 = 1\) are there, say? 
+</p>
+
+<p>
+We can rewrite this equation as
+\[y^3 - 1 = 0,\]
+and then factor it as 
+\[(y-1)(y^2 + y + 1) = 0.\] 
+</p>
+
+<p>
+The quadratic equation \(y^2 + y + 1 = 0\) has solutions 
+\[y = \frac{-1 \pm \sqrt{-3}}{2}.\]
+</p>
+
+<p>
+People often use the symbol \(\omega\) (omega) to denote the number
+\[\omega = \frac{-1 + \sqrt{-3}}{2}.\]
+Notice that \(\omega\) is a <em>complex</em> number, because \(\sqrt{-3}\) is imaginary. For those who know Euler's formula, we remark that \(\omega = e^{2\pi i/3}.\) 
+</p>
+
+<p>
+The other root of \(y^2 + y + 1 = 0\) is simply \(\omega^2\) (check for yourself!). Thus \(y^3 = 1\) has <em>three</em> solutions: \(1, \omega,\) and \(\omega^2.\) This means that <em>every</em> cube root problem has three solutions. For instance, \(3^3 = 27,\) but \(27\) also has two more cube roots:
+\[(3\omega)^3 = 3^3 \cdot \omega^3 = 27 \cdot 1 = 27\]
+and
+\[(3\omega^2)^3 = 3^3 \cdot (\omega^2)^3 = 27 \cdot 1 = 27.\]
+</p>
+
+<p>
+So, while square roots come in pairs, <em>cube roots come in triples \(r, r\omega, r\omega^2\)</em>. 
+</p>
+
+<p>
+When solving the quadratic equation, we tried to find some quantity which had the same symmetry as the square root function. Now, we want to find some expression in terms of \(\alpha, \beta, \gamma\) (the roots of our cubic) which has the symmetry, that when you permute the roots, the expression is multiplied by \(\omega\) or \(\omega^2.\)
 </p>
 
 <p>
