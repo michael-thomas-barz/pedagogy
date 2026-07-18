@@ -275,66 +275,27 @@ Recall from Vieta's formulas (discussed last week) that
 </p>
 
 <p style="color: orange;">
-Recall that
-\[D^2 = (\alpha-\beta)^2(\beta-\gamma)^2(\gamma-\alpha)^2.\] 
-The name of the game is subtracting away polynomials in \(p\) and \(q\) from \(D^2\) until we get 0. 
+We know \(D^2=(\alpha-\beta)^2(\beta-\gamma)^2(\gamma-\alpha)^2\) is some polynomial \(P(p,q)\) of \(p\) and \(q\). Our task is to compute \(P(p,q)\).
 </p>
 
 <p style="color: orange;">
-When we expand this out, \(D^2\) will get a term of the form \(\alpha^2 \cdot \beta^2 \cdot (-\alpha)^2 = \alpha^4\beta^2.\) Let's try to kill that term. 
+Let's substitute \(\gamma=0\), which implies \(\beta=-\alpha\) and
+\[q=0,\ \ p=-\alpha^2.\]
+This gives
+\[
+P(p,0)=D^2=(2\alpha)^2(-\alpha)^2(-\alpha)^2=4\alpha^6=-4p^3.
+\]
+This means \(P(p,q)\) must contain a term \(-4p^3\).
 </p>
 
 <p style="color: orange;">
-This term \(\alpha^4\beta^2\) has symmetric partners: the expansion of \(D^2\) also contains terms \(\alpha^4\gamma^2, \beta^4\alpha^2, \beta^4\gamma^2, \gamma^4\alpha^2,\) and \(\gamma^4\beta^2.\) So, let's try to kill all of these terms at once; this amounts to rewriting
-\[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
-in terms of \(p\) and \(q.\)        
+Now, we may compute
+\[P(p,q)+4p^3=(\alpha-\beta)^2(\beta-\gamma)^2(\gamma-\alpha)^2+4(\alpha\beta+\beta\gamma+\gamma\alpha)^2=27\alpha^2\beta^2\gamma^2.\]
+The last equality can be checked for example by substituting \(\gamma=-\alpha-\beta\) to both sides to get rid of one variable.   
 </p>
 
-<p style="color: orange;">
-Observe first that
-\[0^2 = (\alpha + \beta + \gamma)^2 = (\alpha^2 + \beta^2 + \gamma^2) + 2(\alpha\beta + \beta\gamma + \gamma\alpha),\]
-so that
-\[\alpha^2 + \beta^2 + \gamma^2 = -2p.\] 
-</p>
-
-<p style="color: orange;">
-Thus
-\[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
-can be rewritten as
-\[\alpha^4(-2p - \alpha^2) + \beta^4(-2p - \beta^2) + \gamma^4(-2p - \gamma^2),\]
-which can further be rewritten as
-\[-2p(\alpha^4 + \beta^4 + \gamma^4) - (\alpha^6 + \beta^6 + \gamma^6).\]
-</p>
-
-<p style="color: orange;">
-As
-\[\alpha^2 + \beta^2 + \gamma^2 = -2p,\]
-we can square it to derive
-\[(\alpha^4 + \beta^4 + \gamma^4) + 2(\alpha^2\beta^2 + \beta^2\gamma^2 + \gamma^2\alpha^2) = 4p^2.\]
-
-Note
-\[(\alpha\beta + \beta\gamma + \gamma\alpha)^2 = (\alpha^2\beta^2 + \beta^2\gamma^2 + \gamma^2\alpha^2) + 2\alpha\beta\gamma(\alpha + \beta + \gamma),\]
-so that 
-\[\alpha^4 + \beta^4 + \gamma^4 = 4p^2 - 2p^2 = 2p^2.\]
-</p>
-
-<p style="color: orange;">
-Now, we just need to figure out \(\alpha^6 + \beta^6 + \gamma^6.\) Observe first that in
-\[0^3 = (\alpha + \beta + \gamma)^3\]
-we can expand the right hand side to get
-\[0 = (\alpha^3 + \beta^3 + \gamma^3) + (\alpha + \beta + \gamma)(\alpha^2 + \beta^2 + \gamma^2 -\alpha\beta - \beta\gamma - \gamma\alpha) - 3\alpha\beta\gamma,\]
-so that
-\[0 = (\alpha^3 + \beta^3 + \gamma^3) + 0 + 3q,\]
-or \(\alpha^3 + \beta^3 + \gamma^3 = -3q.\) 
-</p>
-
-<p style="color: orange;">
-Squaring this, we find
-\[(\alpha^6 + \beta^6 + \gamma^6) + 2(\alpha^3\beta^3 + \beta^3\gamma^3 + \gamma^3\alpha^3) = 9q^2.\]
-</p>
-
-<p style="color: orange;">
-TODO
+<p>
+  We conclude that \(P(p,q)=-4p^3-27q^2\).  
 </p>
 
 </details>
