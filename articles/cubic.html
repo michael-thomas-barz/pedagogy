@@ -72,27 +72,260 @@ We now want to derive a <em>cubic</em> formula, to solve equations
 </p>
 
 <p>
-Let's say the roots of our cubic are \(x = \alpha, \beta,\) and \(\gamma.\) Using Vieta's formulas (from last time), let's try to derive a cubic formula.
+The cubic formula will almost certainly involve the cube root function. However, it will also involve <em>square roots</em>. To see why, notice that we can turn any quadratic equation into a cubic equation: the equation \(x^2 - 2 = 0\) can be multiplied by \(x,\) transforming it into
+\[x^3 - 2x = 0.\]
 </p>
 
 <p>
-The cubic formula will almost certainly involve the cube root function. So, let's ask ourselves: which quantity should we be taking the cube root of? 
+The solutions to this cubic are \(x=0, x=\sqrt{2},\) and \(x=-\sqrt{2}.\) So, if we are going to have a general cubic formula, it will need to involve square roots.
 </p>
 
 <p>
-Well, let's take a step back. It is well known that square roots come in pairs. But how many solutions to \(y^3 = 1\) are there, say? 
+In the quadratic case, we figured out what quantity to take the square root of by trying to find some quantity which was multiplied by \(-1\) when we permuted the roots. Our game plan for the cubic will be to first figure out what quantity we should take the square root of, then figure out what we will take the cube root of. 
+</p>
+
+<p>
+But before doing that, we do one small step to make the algebra easier in our work below; this step isn't essential, but it makes everything quicker. In the cubic
+\[x^3  +ax^2 + bx + c = 0,\]
+we can make the substitution \(y = x + a/3.\) Then our equation becomes
+\[(y - a/3)^3 + a(y - a/3)^2 + b(y - a/3) + c = 0.\]
+</p>
+
+<p>
+At first, this doesn't seem any simpler, but observe that if we expand this out, we get
+\[(y-a/3)^3 = y^3 - ay^2 + \frac{a^2}{3}y - \frac{a^3}{27},\]
+\[a(y-a/3)^2 = ay^2 - \frac{2a^2}{3}y + \frac{a^3}{9},\]
+\[b(y - a/3) = by - \frac{ab}{3},\]
+\[c = c,\]
+so adding these together, we can rewrite
+\[(y-a/3)^3 + a(y - a/3)^2 + b(y-a/3) + c = 0\]
+as
+\[y^3 + \left(b- \frac{a^2}{3}\right)y + \left(\frac{2a^3}{27} - \frac{ab}{3} + c\right) = 0.\]
+</p>
+
+<p>
+If we set \(p = b - a^2/3, q = 2a^3/27 - ab/3 + c,\) then this becomes
+\[y^3 + py + q = 0.\]
+This cubic equation has no \(y^2\) term, and hence is a bit easier to manipulate. We will use it below. 
+</p>
+
+<p>
+So, take the cubic equation
+\[y^3 + py + q = 0.\]
+Label the roots \(y = \alpha, y = \beta,\) and \(y = \gamma.\)
+</p>
+
+<p>
+We will now find an equation for these roots. 
+</p>
+
+<h2>The quadratic part of the cubic formula</h2>
+
+<p>
+Recalling our plan from earlier, we start by figuring out what we should take the square root of. This means finding some quantity in terms of \(\alpha, \beta,\) and \(\gamma\) which isn't symmetric, but only in a mild way: relabelling the roots should at worst replace this quantity with its negative.
+</p>
+
+<p>
+Let's copy what we did for the quadratic and consider the quantity \(\alpha - \beta.\) When we swap the values of \(\alpha\) and \(\beta,\) this becomes \(\beta - \alpha,\) the negative of itself. Off to a good start!
+</p>
+
+<p>
+But now that we have three roots, we have <em>six</em> different ways to permute them. 
+</p>
+
+<p>
+For example, the cubic \(x^3 - 3x + 1 = 0\) has solutions \(x \approx -1.88, x \approx 0.35, x \approx 1.53.\) 
+
+Then, there are six ways of deciding how to call these roots \(\alpha,\beta,\) and \(\gamma.\)
+<table style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td style="border: 1px solid #d79921; padding: 10px;">
+      \( \alpha = -1.88,\\ \beta = 0.35,\\ \gamma = 1.53 \)
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      \( \alpha = -1.88,\\ \beta = 1.53,\\ \gamma = 0.35 \)
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      \( \alpha = 0.35,\\ \beta = -1.88,\\ \gamma = 1.53 \)
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      \( \alpha = 0.35,\\ \beta = 1.53,\\ \gamma = -1.88 \)
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      \( \alpha = 1.53,\\ \beta = -1.88,\\ \gamma = 0.35 \)
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      \( \alpha = 1.53,\\ \beta = 0.35,\\ \gamma = -1.88 \)
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+And while \(\alpha - \beta\) transforms well when we swap \(\alpha\) and \(\beta,\) if we had instead swapped \(\beta\) and \(\gamma\) then something bad would happen: \(\alpha - \beta\) would become \(\alpha - \gamma,\) which is completely unrelated to \(\alpha - \beta.\)
+</p>
+
+<p>
+Fortunately, there's a fix. Consider the <em>product</em>
+\[D = (\alpha - \beta)(\beta - \gamma)(\gamma - \alpha).\]
+</p>
+
+<p>
+If we swap \(\alpha\) and \(\beta,\) then this turns into
+\[(\beta - \alpha)(\alpha - \gamma)(\gamma - \beta).\]
+Notice that this new product is equal to \((-1)^3 \cdot D = -D,\) because if we negate each factor of this product, we get \(D.\) 
+</p>
+
+<p>
+Similarly, if we swap \(\alpha\) and \(\gamma\) or if we swap \(\beta\) and \(\gamma,\) then \(D\) becomes \(-D.\) We're off to a good start! 
+</p>
+
+<p>
+Those `root swaps' correspond to three different labellings of our roots; if we count the original \(\alpha,\beta,\gamma\) way, then that's four permutations accounted for. How about the last two? 
+</p>
+
+<p>
+We could also cycle the values; for example, going back to that cubic \(x^3 - 3x + 1 = 0\) from above, if we started with
+\[\alpha = -1.88, \beta = 0.35, \gamma = 1.53,\]
+then we could move each value forward one to relabel them as
+\[\alpha = 1.53, \beta = -1.88, \gamma = 0.35.\]
+
+Notice how the new value of \(\alpha\) is the old \(\gamma\); the new value of \(\beta\) is the old \(\alpha\); and the new \(\gamma\) is the old \(\beta.\) Thus, under this type of permutation, \(D = (\alpha-\beta)(\beta-\gamma)(\gamma-\alpha)\) becomes
+\[(\gamma - \alpha)(\alpha - \beta)(\beta - \gamma),\]4
+which is actually equal to \(D\) itself! 
+</p>
+
+<p>
+Similarly, we could cycle the values the other way, relabelling
+\[\alpha = -1.88, \beta = 0.35, \gamma = 1.53\]
+as
+\[\alpha = 0.35, \beta = 1.53, \gamma = -1.88.\]
+Under this relabelling, \(D\) also is unchanged!
+</p>
+
+<p>
+We now have this quantity \(D\) which has the property that, when we permute the values \(\alpha, \beta,\) and \(\gamma,\) the quantity \(D\) is either unchanged or multiplied by \(-1.\) 
+</p>
+
+<p>
+In particular, \(D^2\) is a symmetric function of \(\alpha,\beta,\) and \(\gamma\) -- if we relabel the values of \(\alpha,\beta,\gamma,\) then \(D^2\) always stays the same, because the relabelling can at worst change us from \(D^2\) to \((-D)^2,\) but \(D^2 = (-D)^2.\) 
+</p>
+
+<p>
+Thus, as we discussed last time, the symmetric function \(D^2\) can be written in terms of the coefficients \(p,q\) of our cubic equation
+\[y^3 + py + q = 0.\]
+
+As we show below, it turns out that
+\[D^2 = -4p^3 - 27q^2.\] 
+</p>
+
+<details>
+        <summary>If you click here, you can see the full derivation of the formula \(D^2 = -4p^3 - 27q^2,\) but its somewhat tedious algebra, so feel free to skip it if you desire.</summary>
+
+<p>
+Recall from Vieta's formulas (discussed last time) that 
+\[\alpha + \beta + \gamma = 0,\]
+\[\alpha\beta + \beta\gamma + \gamma\alpha = p,\]
+\[\alpha\beta\gamma = -q.\] 
+</p>
+
+<p>
+Recall that
+\[D^2 = (\alpha-\beta)^2(\beta-\gamma)^2(\gamma-\alpha)^2.\] 
+The name of the game is subtracting away polynomials in \(p\) and \(q\) from \(D^2\) until we get 0. 
+</p>
+
+<p>
+When we expand this out, \(D^2\) will get a term of the form \(\alpha^2 \cdot \beta^2 \cdot (-\alpha)^2 = \alpha^4\beta^2.\) Let's try to kill that term. 
+</p>
+
+<p>
+This term \(\alpha^4\beta^2\) has symmetric partners: the expansion of \(D^2\) also contains terms \(\alpha^4\gamma^2, \beta^4\alpha^2, \beta^4\gamma^2, \gamma^4\alpha^2,\) and \(\gamma^4\beta^2.\) So, let's try to kill all of these terms at once; this amounts to rewriting
+\[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
+in terms of \(p\) and \(q.\)        
+</p>
+
+<p>
+Observe first that
+\[0^2 = (\alpha + \beta + \gamma)^2 = (\alpha^2 + \beta^2 + \gamma^2) + 2(\alpha\beta + \beta\gamma + \gamma\alpha),\]
+so that
+\[\alpha^2 + \beta^2 + \gamma^2 = -2p.\] 
+</p>
+
+<p>
+Thus
+\[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
+can be rewritten as
+\[\alpha^4(-2p - \alpha^2) + \beta^4(-2p - \beta^2) + \gamma^4(-2p - \gamma^2),\]
+which can further be rewritten as
+\[-2p(\alpha^4 + \beta^4 + \gamma^4) - (\alpha^6 + \beta^6 + \gamma^6).\]
+</p>
+
+<p>
+As
+\[\alpha^2 + \beta^2 + \gamma^2 = -2p,\]
+we can square it to derive
+\[(\alpha^4 + \beta^4 + \gamma^4) + 2(\alpha^2\beta^2 + \beta^2\gamma^2 + \gamma^2\alpha^2) = 4p^2.\]
+
+Note
+\[(\alpha\beta + \beta\gamma + \gamma\alpha)^2 = (\alpha^2\beta^2 + \beta^2\gamma^2 + \gamma^2\alpha^2) + 2\alpha\beta\gamma(\alpha + \beta + \gamma),\]
+so that 
+\[\alpha^4 + \beta^4 + \gamma^4 = 4p^2 - 2p^2 = 2p^2.\]
+</p>
+
+<p>
+Now, we just need to figure out \(\alpha^6 + \beta^6 + \gamma^6.\) Observe first that in
+\[0^3 = (\alpha + \beta + \gamma)^3\]
+we can expand the right hand side to get
+\[0 = (\alpha^3 + \beta^3 + \gamma^3) + (\alpha + \beta + \gamma)(\alpha^2 + \beta^2 + \gamma^2 -\alpha\beta - \beta\gamma - \gamma\alpha) - 3\alpha\beta\gamma,\]
+so that
+\[0 = (\alpha^3 + \beta^3 + \gamma^3) + 0 + 3q,\]
+or \(\alpha^3 + \beta^3 + \gamma^3 = -3q.\) 
+
+TODO: finish this lol
+</p>
+
+</details>
+
+<p>
+The upshot to this is that we should expect the cubic formula will involve the quantity
+\[\sqrt{-4p^3 - 27q^2}.\]
+</p>
+
+<p>
+There are two possible choices of that square root; they correspond to the two possible values of \(D\) (this \(D\) has two values because, depending on how you label the roots \(\alpha, \beta,\) and \(\gamma,\) this \(D\) could take on two opposite values). 
+</p>
+
+<p>
+In particular, if we <em>choose one of the values of that square root, then we eliminate some symmetry</em>. This is just like what happened when we chose a square root when solving the quadratic case: if we choose a square root, and set \(D\) equal to that square root, then we can <em>no longer swap two roots</em>, because swapping two roots would negate our value of \(D,\) but now we've fixed \(D.\) Observe how <em>by choosing \(D,\) we've reduced the symmetry</em>. 
+</p>
+
+<p>
+However, we haven't gotten rid of all the symmetries: while the root swapping symmetries go away, above we saw that those two `cycle the roots' symmetries don't change \(D\) at all. Thus, we now have <em>three</em> valid permutations of \(\alpha, \beta, \gamma\) remaining.
+</p>
+
+<h2>The cube root in the cubic formula</h2>
+
+<p>
+The cubic formula also has to involve a cube root. So, let's ask ourselves: which quantity should we be taking the cube root of? 
+</p>
+
+<p>
+Well, let's take a step back. It is well known that square roots come in pairs. But how many solutions to \(z^3 = 1\) are there, say? 
 </p>
 
 <p>
 We can rewrite this equation as
-\[y^3 - 1 = 0,\]
+\[z^3 - 1 = 0,\]
 and then factor it as 
-\[(y-1)(y^2 + y + 1) = 0.\] 
+\[(z-1)(z^2 + z + 1) = 0.\] 
 </p>
 
 <p>
-The quadratic equation \(y^2 + y + 1 = 0\) has solutions 
-\[y = \frac{-1 \pm \sqrt{-3}}{2}.\]
+The quadratic equation \(z^2 + z + 1 = 0\) has solutions 
+\[z = \frac{-1 \pm \sqrt{-3}}{2}.\]
 </p>
 
 <p>
@@ -102,7 +335,7 @@ Notice that \(\omega\) is a <em>complex</em> number, because \(\sqrt{-3}\) is im
 </p>
 
 <p>
-The other root of \(y^2 + y + 1 = 0\) is simply \(\omega^2\) (check for yourself!). Thus \(y^3 = 1\) has <em>three</em> solutions: \(1, \omega,\) and \(\omega^2.\) This means that <em>every</em> cube root problem has three solutions. For instance, \(3^3 = 27,\) but \(27\) also has two more cube roots:
+The other root of \(z^2 + z + 1 = 0\) is simply \(\omega^2\) (check for yourself!). Thus \(z^3 = 1\) has <em>three</em> solutions: \(1, \omega,\) and \(\omega^2.\) This means that <em>every</em> cube root problem has three solutions. For instance, \(3^3 = 27,\) but \(27\) also has two more cube roots:
 \[(3\omega)^3 = 3^3 \cdot \omega^3 = 27 \cdot 1 = 27\]
 and
 \[(3\omega^2)^3 = 3^3 \cdot (\omega^2)^3 = 27 \cdot 1 = 27.\]
@@ -117,50 +350,181 @@ When solving the quadratic equation, we tried to find some quantity which had th
 </p>
 
 <p>
-Last week we calculated \(\alpha+\beta\) and \(\alpha-\beta\) and used this to deduce \(\alpha\) and \(\beta\). This is done by the formulas
-\[
-\alpha=\frac{(\alpha+\beta)+(\alpha-\beta)}2
-\]
+When we wanted an expression which was multiplied by \(-1\) when we swapped the roots, we used \(\alpha + (-1)\cdot \beta.\) This inspires us to use the following trick: consider
+\[A = \alpha + \omega \cdot \beta + \omega^2 \cdot \gamma.\] 
+</p>
+
+<p>
+Recall the two cycling symmetries from above, where we cycle all the values around either left or right; under these cycling symmetries, the quantity \(A\) above transforms to either
+\[\gamma + \omega \cdot \alpha + \omega^2 \cdot \beta\]
+or
+\[\beta + \omega \cdot \gamma + \gamma^2 \cdot \alpha,\]
+depending on which way you cycle the values.
+</p>
+
+<p>
+But recall that \(\omega^3 = 1,\) so that 
+\[\omega \cdot A = \gamma + \omega \cdot \alpha + \omega^2 \cdot \beta\]
 and
-\[
-\beta=\frac{(\alpha+\beta)-(\alpha-\beta)}2.
-\]
-This week, let's try something different and take these two equations as our starting point. In other words, let's perform the change of variables
-\[
-\alpha=\frac{u+v}2\]
+\[\omega^2 \cdot A = \beta + \omega \cdot \gamma + \gamma^2 \cdot \alpha.\] 
+</p>
+
+<p>
+This is great: it means that, under these cyclicing permutations, the quantity \(A\) gets multiplied by \(\omega\) or \(\omega^2\) -- this is exactly the way we'd hope a cube root gets changed!
+</p>
+
+<p>
+The swapping permutations (where we swap the value of \(\alpha\) and \(\beta\) and leave \(\gamma\) alone, for example) don't respect \(A\) at all. But remember: at the end of the last section, we chose a value of \(D,\) and so we no longer have to worry about these swapping permutations at all!
+</p>
+
+<p>
+We have this quantity \(A,\) and we know that when we cycle the roots around, while the value of \(A\) may change, the quantity \(A^3\) never changes. Let's now try rewriting \(A^3\) in terms of \(p, q,\) and \(D.\) Using \(p\) and \(q\) isn't new to us at all: last time we saw that any symmetric polynomial of \(\alpha,\beta,\gamma\) can be rewritten in terms of \(p, q.\) But \(A^3\) is not <em>fully</em> symmetric, since swapping two roots destroys its values. This is why we need the additional quantity \(D,\) which breaks the swapping root symmetries, to determine \(A^3.\) 
+</p>
+
+<p>
+Anyways, let's try computing. First, we can expand out \((\alpha + \omega\beta + \omega^2\gamma)^3\) to find the rather lengthy expression
+\[A^3 = (\alpha^3 + \beta^3 + \gamma^3) + 3\omega \cdot \alpha^2\beta + 3\omega^2 \cdot \alpha^2\gamma + 3\omega^2 \cdot \alpha\beta^2 + 3\omega \cdot \beta^2\gamma + 3\omega \cdot \alpha\gamma^2 + 3\omega^2 \cdot \beta\gamma^2 + 6\alpha\beta\gamma.\]
+</p>
+
+<p>
+This is rather complicated, so let's start by getting rid of the sum \(\alpha^3 + \beta^3 + \gamma^3\) at the start of \(A^3.\) This is symmetric, so we can rewrite it in terms of \(p\) and \(q.\) In fact, in our derivation of \(D^2\) (which we collapsed to save space...) we already computed 
+\[\alpha^3 + \beta^3 + \gamma^3 = -3q.\]
+
+The very last term of \(A^3\) was \(6\alpha\beta\gamma,\) which is just \(-6q,\) so we can rewrite 
+\[A^3 = -9q + 3\omega(\alpha^2\beta + \beta^2\gamma + \gamma^2\alpha) + 3\omega^2(\alpha^2\gamma + \gamma^2\beta + \beta^2\alpha).\] 
+</p>
+
+<p>
+Set
+\[u = \alpha^2\beta + \beta^2\gamma + \gamma^2\alpha,\]
+\[v = \alpha^2\gamma + \gamma^2\beta + \beta^2\alpha.\]
+If we can write \(u\) and \(v\) in terms of \(p, q,\) and \(D,\) then we can do the same for \(A^3.\) 
+</p>
+
+<p>
+As \(u, v\) are no longer symmetric, we will really need to use \(D\) to express them. So, let's think about
+\[D = (\alpha - \beta)(\beta - \gamma)(\gamma - \alpha)\]
+for a moment. If we expand it out, we get
+\[D = \alpha^2(\gamma - \beta) + \beta^2(\alpha - \gamma) + \gamma^2(\beta - \alpha),\]
+so that actually
+\[D = v - u.\]
+</p>
+
+<p>
+Observe also that
+\[u + v = \alpha^2(\beta + \gamma) + \beta^2(\alpha + \gamma) + \gamma^2(\alpha + \beta)\]
+<em>is</em> fully symmetric, so we can express it in terms of \(p\) and \(q.\) As \(\alpha + \beta + \gamma = 0,\) we can further rewrite \(u+v\) as
+\[u+v = -\alpha^3 - \beta^3 - \gamma^3.\]
+But a moment ago, we said \(\alpha^3 + \beta^3 + \gamma^3 = -3q,\) so that 
+\[u+v = 3q.\]
+Thus we have two variables \(u\) and \(v,\) and two linear equations: \(v - u = D, v + u = 3q.\) We can solve this system to find
+\[v = \frac{D + 3q}{2},\]
+\[u = \frac{3q - D}{2}.\] 
+</p>
+
+<p>
+Therefore 
+\[A^3 = -9q + \frac{3\omega}{2}(3q - D) + \frac{3\omega^2}{2}(3q + D),\]
+or even more simply
+\[A^3 = -\frac{27}{2}q - \frac{3i\sqrt{3}}{2}D.\] 
+</p>
+
+<p>
+In particular, if we choose a cube root root of 
+\[-\frac{27}{2}q - \frac{3i\sqrt{3}}{2}D,\]
+then we'll have a value for \(A.\) Thus, we now know the value of
+\[\alpha + \omega\beta + \omega^2\gamma.\]
+We also know that \(\alpha + \beta + \gamma = 0.\) We have three variables, and <em>two</em> linear equations. We can almost solve for \(\alpha,\beta,\gamma\) easily, but we need one more <em>linear</em> equation between them. Where can we get it? 
+</p>
+
+<p>
+Recall that
+\[A = \alpha + \omega\beta + \omega^2\gamma.\]
+We could also have taken
+\[B = \beta + \omega\alpha + \omega^2\gamma,\]
+which is obtained from \(A\) by swapping \(\alpha\) and \(\beta.\) As swapping \(\alpha\) and \(\beta\) replaces \(D\) with \(-D,\) our formula for \(A^3\) implies
+\[B^3 = -\frac{27}{2}q + \frac{3i\sqrt{3}}{2}D.\] 
+</p>
+
+<p>
+Thus we can choose a cube root of this quantity
+\[-\frac{27}{2}q + \frac{3i\sqrt{3}}{2}D\]
+to find the value of \(B.\) Then we will have <em>three</em> linear equations in three variables, and so we can solve them easily! 
+</p>
+
+<p>
+Explicitly, we know
+\[\alpha + \beta + \gamma = 0,\]
+\[\alpha + \omega\beta + \omega^2\gamma = A,\]
+\[\omega\alpha + \beta + \omega^2\gamma = B.\] 
+</p>
+
+<p>
+If we multiply the second equation by \(\omega^2,\) we get
+\[\alpha + \omega^2\beta + \omega\gamma = \omega^2 B.\]
+Using that \(1 + \omega + \omega^2 = 0,\) adding up our equations gives
+\[3\alpha + 0\beta + 0\gamma = 0 + A + \omega^2B.\]
+Thus
+\[\alpha = \frac{A + \omega^2B}{3}.\] 
+</p>
+
+<p>
+As swapping \(\alpha\) and \(\beta\) interchanges \(A\) and \(B,\) we deduce
+\[\beta = \frac{\omega^2A + B}{3},\]
+and therefore
+\[\gamma = \frac{\omega A + \omega B}{3}.\]
+</p>
+
+<p>
+These are the three solutions to our cubic! 
+TODO: mention discrete fourier transform. link dirichlet article
+</p>
+
+<h2>Using the cubic formula in practice</h2>
+
+<p>
+As our derivation of the cubic formula occupied many steps, let's use it on an explicit example now, just to make sure we understand what's going on. Consider the depressed cubic 
+\[x^3 - 3x + 1 = 0.\]
+Earlier, we saw it had approximate solutions \(x \approx -1.88, x \approx 0.35, x \approx 1.53.\) Let's use our cubic formula to compute these roots exactly!
+</p>
+
+<p>
+Here we have \(p = -3, q = 1.\) We start by needing to choose a square root of 
+\[D^2 = -4p^3 - 27q^2 = -4 \cdot (-27) - 27 = 81.\] 
+
+The number \(81\) has two square roots; let's go with the positive one, and choose \(D = 9\) for now.
+</p>
+
+<p>
+We next need to choose cube roots of 
+\[A^3 = -\frac{27}{2}q - \frac{3i\sqrt{3}}{2}D\]
 and
-\[
-\beta=\frac{u-v}2
-\]
-for some unknown variables \(u\) and \(v\). Then Vieta's formulas tells us
-\[
-\alpha+\beta=-b
-\]
-which just says
-\[
-\frac{u+v}2+\frac{u-v}2=-b,
-\]
-which tells us \(u=-b\), and
-\[
-\alpha\beta=c
-\]
-which just says 
-\[
-\frac{u+v}2\cdot\frac{u-v}2=c,
-\]
-which tells us
-\[u^2-v^2=4c.\] 
-We already know that \(u=-b\) so substituting this tells us
-\[
-v^2=b^2-4c.\]
-In other words,
-\[
-v=\pm\sqrt{b^2-4c}.\]
-By substuting back into our fomula for \(\alpha\) tells us
-\[
-\alpha=\frac{u+v}2=\frac{-b\pm\sqrt{b^2-4c}}2
-\]
-which was exactly what we wanted!
+\[B^3 = -\frac{27}{2}q + \frac{3i\sqrt{3}}{2}D.\] 
+</p>
+
+<p>
+Plugging in \(q = 1, D = 9,\) we find
+\[A^3 = \frac{-27 - 27i\sqrt{3}}{2} = 27\omega^2,\]
+\[B^3 = \frac{-27 + 27i\sqrt{3}}{2} = 27\omega.\]
+</p>
+
+<p>
+We now need to take the cube roots of \(A^3\) and \(B^3.\) It is easiest to do this by writing \(\omega\) in polar form as \(\omega = e^{2\pi i/3},\) from which we can deduce that one possible cube root of \(\omega\) is 
+\[e^{2\pi i/9} = \cos\left(\frac{2\pi}{9}\right) + i\sin\left(\frac{2\pi}{9}\right).\]
+</p>
+
+<p>
+So, we can choose 
+\[A = 3e^{4\pi i/9},\]
+\[B = 3e^{2\pi i/9}.\] 
+</p>
+
+<p>
+Plugging these values into our formulas, we find that the three solutions to our quadratic equation are
+\[e^{4\pi i/9} + e^{8\pi i/9}\]
+</p>
+
+TODO: tell them that Galois theory is a very fancy version of the fundamental theorem of symmetric polynomials
 
 <h2>Discrete Fourier transform</h2>
 In solving the quadratic equation we performed a substitution

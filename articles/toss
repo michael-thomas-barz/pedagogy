@@ -1,0 +1,30 @@
+
+<details>
+        <summary>However, if you're really interested in the dirty work, you can click here to see it.</summary>
+
+        <p>Note that
+        </p>
+
+        <p>
+        Vieta's formulas tell us that
+        \[a = -\alpha - \beta - \gamma,\]
+        \[b = \alpha\beta + \beta\gamma + \gamma\alpha,\]
+        \[c = -\alpha\beta\gamma.\] 
+        </p>
+
+        <p>
+        The name of the game is to subtract away polynomials in \(a,b,c\) from \(D^2\) until \(D^2\) becomes zero.
+        </p>
+
+        <p>
+        This term \(\alpha^4\beta^2\) has symmetric partners: the expansion of \(D^2\) also contains terms \(\alpha^4\gamma^2, \beta^4\alpha^2, \beta^4\gamma^2, \gamma^4\alpha^2,\) and \(\gamma^4\beta^2.\) So, let's try to kill all of these terms at once; this amounts to rewriting
+        \[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
+        in terms of \(a, b,\) and \(c.\)
+        </p>
+
+        <p>
+        
+        </p>
+</details>
+
+
