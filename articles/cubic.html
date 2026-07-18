@@ -438,24 +438,30 @@ We also know that \(\alpha + \beta + \gamma = 0.\) We have three variables, and 
 </p>
 
 <p>
-Recall that
-\[A = \alpha + \omega\beta + \omega^2\gamma.\]
-We could also have taken
-\[B = \beta + \omega\alpha + \omega^2\gamma,\]
-which is obtained from \(A\) by swapping \(\alpha\) and \(\beta.\) As swapping \(\alpha\) and \(\beta\) replaces \(D\) with \(-D,\) our formula for \(A^3\) implies
-\[B^3 = -\frac{27}{2}q + \frac{3i\sqrt{3}}{2}D.\] 
+The quantity \(A\) does not behave well when we swap the values of \(\alpha\) and \(\beta.\) Doing so leads us to the new value
+\[B = \beta + \omega\alpha + \omega^2\gamma.\]
+
+Note that, if we could determine the value of \(B\) (in terms of our known quantities \(p, q, D,\) and \(A\)), then we would get a <em>third</em> linear equation relating the varaibles \(\alpha,\beta,\) and \(\gamma.\) Three linear equations in three variables is easy to solve with linear algebra, so let's get going to determine \(B.\)
 </p>
 
 <p>
-Thus we can choose a cube root of this quantity
-\[-\frac{27}{2}q + \frac{3i\sqrt{3}}{2}D\]
-to find the value of \(B.\) Then we will have <em>three</em> linear equations in three variables, and so we can solve them easily! 
+Fortunately, while \(A\) and \(B\) alone are not symmetric, the product \(AB\) <em>is</em> symmetric in \(\alpha,\beta,\gamma.\) Indeed, one can expand out \(AB\) to find
+\[AB = -\omega(\alpha\beta + \beta\gamma + \gamma\alpha) + \omega(\alpha^2 + \beta^2 + \gamma^2).\]
+As
+\[\alpha^2 + \beta^2 + \gamma^2 = (\alpha+\beta+\gamma)^2 - 2(\alpha\beta + \beta\gamma + \gamma\alpha),\]
+we find
+\[AB = -\omega p + \omega \cdot (0^2 - 2p) = -3\omega p.\]
 </p>
 
 <p>
-Explicitly, we know
+So, we now know the value of \(B\): it is just \(-3\omega p/A.\) 
+</p>
+
+<p>
+Now, to find our roots! We have the three linear equations
 \[\alpha + \beta + \gamma = 0,\]
 \[\alpha + \omega\beta + \omega^2\gamma = A,\]
+and
 \[\omega\alpha + \beta + \omega^2\gamma = B.\] 
 </p>
 
@@ -476,8 +482,14 @@ and therefore
 </p>
 
 <p>
-These are the three solutions to our cubic! 
-TODO: mention discrete fourier transform. link dirichlet article
+These are the three solutions to our cubic! Rewritten to eliminate \(B,\) we get
+\[\alpha = \frac{A}{3} - \frac{p}{A},\]
+\[\beta = \frac{\omega^2 A}{3} - \frac{\omega p}{A},\]
+\[\gamma = \frac{\omega A}{3} - \frac{\omega^2 p}{A}.\]
+</p>
+
+<p>
+We remark that the system of equations we solved here may remind you of the discrete Fourier transform, which we discussed in <a href="dirichlet.html">Infinitely many primes end in a 7</a>. And indeed, secretly the reason that this system of equations was so easy to solve was because of its relation to this discrete Fourier transform.
 </p>
 
 <h2>Using the cubic formula in practice</h2>
@@ -496,162 +508,64 @@ The number \(81\) has two square roots; let's go with the positive one, and choo
 </p>
 
 <p>
-We next need to choose cube roots of 
+We next need to choose a cube roots
 \[A^3 = -\frac{27}{2}q - \frac{3i\sqrt{3}}{2}D\]
-and
-\[B^3 = -\frac{27}{2}q + \frac{3i\sqrt{3}}{2}D.\] 
 </p>
 
 <p>
 Plugging in \(q = 1, D = 9,\) we find
 \[A^3 = \frac{-27 - 27i\sqrt{3}}{2} = 27\omega^2,\]
-\[B^3 = \frac{-27 + 27i\sqrt{3}}{2} = 27\omega.\]
 </p>
 
 <p>
-We now need to take the cube roots of \(A^3\) and \(B^3.\) It is easiest to do this by writing \(\omega\) in polar form as \(\omega = e^{2\pi i/3},\) from which we can deduce that one possible cube root of \(\omega\) is 
-\[e^{2\pi i/9} = \cos\left(\frac{2\pi}{9}\right) + i\sin\left(\frac{2\pi}{9}\right).\]
+If we write \(\omega^2\) in polar form as \(\omega^2 = e^{4\pi i/3},\) we can deduce that one possible cube root of \(\omega\) is 
+\[e^{4\pi i/9} = \cos\left(\frac{4\pi}{9}\right) + i\sin\left(\frac{4\pi}{9}\right).\]
 </p>
 
 <p>
 So, we can choose 
-\[A = 3e^{4\pi i/9},\]
-\[B = 3e^{2\pi i/9}.\] 
+\[A = 3e^{4\pi i/9} = 3\cos\left(\frac{4\pi}{9}\right) + 3i\sin\left(\frac{4\pi}{9}\right).\]
 </p>
 
 <p>
-Plugging these values into our formulas, we find that the three solutions to our quadratic equation are
-\[e^{4\pi i/9} + e^{8\pi i/9}\]
-</p>
-
-TODO: tell them that Galois theory is a very fancy version of the fundamental theorem of symmetric polynomials
-
-<h2>Discrete Fourier transform</h2>
-In solving the quadratic equation we performed a substitution
-\[
-\alpha=\frac{u+v}2
-\]
-and
-\[
-\beta=\frac{u-v}2.
-\]
-This may remind you of the discrete Fourier transform, which we discussed in <a href="dirichlet.html">Infinitely many primes end in a 7</a>.
-There, we decomposed a function \(f(x)\) into an even part \(E\) and an odd part \(O\) by
-\[
-f(x)=\frac{E+O}2
-\]
-and
-\[
-f(-x)=\frac{E-O}2.
-\]
-So perhaps we should think of \(u\) as the "even part" and \(v\) as the "odd part."
-<!-- </p> -->
-
-<p>
-  Can we do something similar if we had more than two variables? Yes!
-  </p>
-  <p>
-  For example, the discrete Fourier transform tells you that if you want to find four numbers \(A\), \(B\), \(C\), and \(D\), you could instead try to compute the four quantities
-  \[
-  x=A+B+C+D
-  \]
-  \[
-  y=A+iB-C-iD
-  \]
-  \[
-  z=A-B+C-D
-  \]
-  \[
-  w=A-iB-C+iD.
-  \]
-  From these numbers, the original numbers can be computed by
-  \[
-  A=\frac{x+y+z+w}4
-  \]
-  \[
-  B=\frac{x-iy-z+iw}4
-  \]
-  \[
-  C=\frac{x-y+z-w}4
-  \]
-  \[
-  D=\frac{x+iy-z-iw}4.
-  \]
-  These formulas are really nice, since the formulas to the translate from the \(A\)'s to the \(x\)'s almost looks the same as the formulas to translate from the \(x\)'s to \(A\)'s.
+Plugging in these values into our cubic formula above, we get
+\[\alpha = e^{4\pi i/9} + e^{-4\pi i/9} = 2\cos\left(\frac{4\pi}{9}\right),\]
+\[\beta = e^{16\pi i/9} + e^{2\pi i/9} = 2\cos\left(\frac{2\pi}{9}\right),\]
+\[\gamma = e^{10\pi i/9} + e^{8\pi i/9} = 2\cos\left(\frac{8\pi}{9}\right).\] 
 </p>
 
 <p>
-  The reason why this substitution worked so well is because \(i\) is a root of unity: it is a number whose 4-th power is 1. 
-  So when we try to solve for the cubic equation, perhaps we should use a 3rd root of unity; a number \(\omega\) such that \(\omega^3=1\). 
-  Then, if we wanted to solve for three numbers \(A\), \(B\), and \(C\), we could instead solve for
-\[
-s=A+B+C
-\]
-\[
-t=A+\omega B+\omega^2C
-\]
-\[
-u=A+\omega^2B+\omega C.
-\]
-The original numbers are recovered by
-\[
-A=\frac{s+t+u}3
-\]
-\[
-B=\frac{s+\omega^2t+\omega u}3
-\]
-\[
-C=\frac{s+\omega t+\omega^2u}3.
-\]
+With a calculator, we can check that
+\[2\cos(4\pi/9) \approx 0.35...,\]
+\[2\cos(2\pi/9) \approx 1.53...,\]
+\[2\cos(8\pi/9) \approx -1.88...,\]
+in agreement with the approximate solutions we found before!
 </p>
 
 <p>
-  By the way, what is this number \(\omega\)? We are trying to solve for \(\omega^3-1=0\), but the polynomial factors:
-  \[
-  \omega^3-1=(\omega-1)(\omega^2+\omega+1)=0.
-  \]
-  This means either \(\omega=1\) or \(\omega^2+\omega+1=0\). Since \(\omega=1\) is not very interesting, let's solve the second equation, to get
-  \[
-  \omega=\frac{-1\pm\sqrt{3}i}2.\]
-  By the way, you could have also solved for \(\omega\) by observing that \(\cos(120^\circ)+\sin(120^\circ)i\) corresponds to rotation by \(120^\circ\), and repeating that three times gets you back where you started!
+We remark that there are, in general, two possible choices of \(D\) (the two different square roots) and three possible choices of \(A\) (the three different cube roots). This means there are \(2 \cdot 3 = 6\) possible choices we could have made; these choices correspond to the 6 different permutations of our roots. If we had chosen \(D = -9\) earlier, or if we had used a different cube root of \(27\omega^2,\) then we would have gotten the same roots, but we'd have assigned the labels \(\alpha,\beta,\) and \(\gamma\) differently.
 </p>
 
-<h2>Solving the cubic equation</h2>
+<h2>Closing remarks</h2>
+
 <p>
-Now, let's try to solve for the cubic equation
-\[
-x^3+ax^2+bx+c=0.
-\]
-To simplify our lives let's perform the change of variables \(y=x-\frac a3\). When you expand
-\[
-(y-\frac a3)^3+a(y-\frac a3)^2+b(y-\frac a3)+c=0,
-\]
-the coefficient of \(y^2\) becmes zero. This is because only the first two terms will contribute, and they exactly cancel out. 
-This is the same trick as in the completing-the-square proof for the quadratic formula. Therefore, we might as well assume \(a=0\).
+We have now derived the cubic formula, and checked that it worked on a concrete cubic polynomial. 
 </p>
 
 <p>
-Let's call our solutions \(\alpha\), \(\beta\), and \(\gamma\), and let's perform the change of variables
-\[
-\alpha=\frac{s+t+u}3
-\]
-\[
-\beta=\frac{s+\omega^2t+\omega u}3
-\]
-\[
-\gamma=\frac{s+\omega t+\omega^2u}3.
-\]
-Now, let's think through what Vieta's formulas 
-\[
-\alpha+\beta+\gamma=-a=0
-\]
-\[
-\alpha\beta+\beta\gamma+\gamma\alpha=b
-\]
-\[
-\alpha\beta\gamma=-c
-\]
-tells us about \(s\), \(t\), and \(u\).
+In our derivation, we used the <em>fundamental theorem of symmetric polynomials</em>: the fact that any symmetric polynomial in \(\alpha,\beta,\gamma\) can be rewritten as a polynomial in terms of the <em>elementary symmetric sums</em> \(\alpha+\beta+\gamma, \alpha\beta+\beta\gamma+\gamma\alpha,\) and \(\alpha\beta\gamma.\) 
+</p>
+
+<p>
+At some point in our derivation, we also had to rewrite the non-symmetric polynomial \(A^3\) in terms of \(p, q,\) and \(D.\) This is not quite the fundamental theorem of symmetric polynomials -- \(A^3\) is not symmetric, and \(D\) wasn't one of the elementary symmetric sums -- but it also isn't that far from it.
+</p>
+
+<p>
+Galois theory is a vast generalization of the fundamental theorem of symmetric polynomials; just as the fundamental theorem of symmetric polynomials allows you to rewrite any symmetric polynomial in terms of simpler polynomials, Galois theory allows one to understand certain almost-symmetric polynomials in terms of more basic operations.
+</p>
+
+<p>
+To develop Galois theory, one also needs to understand symmetries in a more tangible way. This leads to the concept of a <em>group</em>, a mathematical formalization of symmetry.
 </p>
 
 </body>
