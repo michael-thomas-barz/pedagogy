@@ -442,14 +442,24 @@ so that actually
 \[D = v - u.\]
 </p>
 
-<p>
-Observe also that
+<details>
+  <summary>Observe also that
 \[u + v = \alpha^2(\beta + \gamma) + \beta^2(\alpha + \gamma) + \gamma^2(\alpha + \beta)\]
-<em>is</em> fully symmetric, so we can express it in terms of \(p\) and \(q.\) As \(\alpha + \beta + \gamma = 0,\) we can further rewrite \(u+v\) as
-\[u+v = -\alpha^3 - \beta^3 - \gamma^3.\]
+<em>is</em> fully symmetric, so we can <span style="color: orange;">express it</span> in terms of \(p\) and \(q\):
+\[u+v=3q.\] </summary>
+
+<p style="color: orange;">
+As \(\alpha + \beta + \gamma = 0,\) we can further rewrite \(u+v\) as
+\[u+v = \alpha^2(-\alpha) + \beta^2(-\beta) + \gamma^2(-\gamma)=-\alpha^3 - \beta^3 - \gamma^3.\]
 But a moment ago, we said \(\alpha^3 + \beta^3 + \gamma^3 = -3q,\) so that 
-\[u+v = 3q.\]
-Thus we have two variables \(u\) and \(v,\) and two linear equations: \(v - u = D, v + u = 3q.\) We can solve this system to find
+\(u+v = 3q.\)
+</p>
+</details>
+
+
+
+<p>
+Thus we have two variables \(u\) and \(v,\) and two linear equations: \(v - u = D\) and \(v + u = 3q.\) We can solve this system to find
 \[v = \frac{D + 3q}{2},\]
 \[u = \frac{3q - D}{2}.\] 
 </p>
