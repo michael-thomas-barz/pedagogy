@@ -21,7 +21,7 @@
 <p class="meta">July 24, 2026</p>
 
 <p>
-Last week in <a href="quartic.html">How to solve cubic and quartic equations I: quartics</a> we saw how to reduce the quartic equation to the cubic equation.
+<a href="quartic.html">Last week</a> we saw how to reduce the quartic equation to the cubic equation.
 This was done by carefully analyzing the symmetries of the solutions to the equation.
 Today, our question is: how do we solve cubic equations--equations that look like
 \[
@@ -74,13 +74,12 @@ and by taking square roots you can solve for \(x\).
 </p>
 
 <h3>Exploiting symmetry</h3>
-Let's now review the approach we used in <a href="quartic.html">How to solve cubic and quartic equations I: quartics</a>.
-<p>
-Let's call the two solutions of the quadratic equation as \(\alpha\) and \(\beta.\) Then Vieta's formulas tell us 
+Let's now review the approach we used <a href="quartic.html">last week</a>.
+Let's call the two solutions of the quadratic equation \(x^2+bx+c=0\) as \(\alpha\) and \(\beta.\) Then Vieta's formulas tell us 
 \[\alpha + \beta = -b,\]
 \[\alpha\beta = c,\]
 and we could use these to find evaluate any <em>symmetric</em> polynomial of \(\alpha\) and \(\beta\) (so computing \(\alpha^2 + \beta^2\) in terms of \(b\) and \(c\) is easy, for example). 
-</p>
+
 
 <p>
 To solve for \(\alpha, \beta,\) we needed to evaluate some quantity which broke the symmetry. The quantity we chose was \(\alpha - \beta.\) This was not symmetric in \(\alpha\) and \(\beta\) -- because swapping the two roots negates this expression -- but \((\alpha-\beta)^2\) <em>was</em> symmetric. This meant that we could write \((\alpha-\beta)^2\) in terms of \(b\) and \(c\), as
@@ -257,7 +256,7 @@ In particular, \(D^2\) is a symmetric function of \(\alpha,\beta,\) and \(\gamma
 </p>
 
 <p>
-Thus, as we discussed last week, the symmetric function \(D^2\) can be written in terms of the coefficients \(p,q\) of our cubic equation
+Thus, as we discussed <a href="quartic.html">last week</a>, the symmetric function \(D^2\) can be written in terms of the coefficients \(p,q\) of our cubic equation
 \[y^3 + py + q = 0.\]
 </p>
 
@@ -367,7 +366,7 @@ When we wanted an expression which was multiplied by \(-1\) when we swapped the 
 Recall the two cycling symmetries from above, where we cycle all the values around either left or right; under these cycling symmetries, the quantity \(A\) above transforms to either
 \[\gamma + \omega \cdot \alpha + \omega^2 \cdot \beta\]
 or
-\[\beta + \omega \cdot \gamma + \gamma^2 \cdot \alpha,\]
+\[\beta + \omega \cdot \gamma + \omega^2 \cdot \alpha,\]
 depending on which way you cycle the values.
 </p>
 
@@ -375,7 +374,7 @@ depending on which way you cycle the values.
 But recall that \(\omega^3 = 1,\) so that 
 \[\omega \cdot A = \gamma + \omega \cdot \alpha + \omega^2 \cdot \beta\]
 and
-\[\omega^2 \cdot A = \beta + \omega \cdot \gamma + \gamma^2 \cdot \alpha.\] 
+\[\omega^2 \cdot A = \beta + \omega \cdot \gamma + \omega^2 \cdot \alpha.\] 
 </p>
 
 <p>
@@ -387,7 +386,7 @@ The swapping permutations (where we swap the value of \(\alpha\) and \(\beta\) a
 </p>
 
 <p>
-We have this quantity \(A,\) and we know that when we cycle the roots around, while the value of \(A\) may change, the quantity \(A^3\) never changes. Let's now try rewriting \(A^3\) in terms of \(p, q,\) and \(D.\) Using \(p\) and \(q\) isn't new to us at all: last week we saw that any symmetric polynomial of \(\alpha,\beta,\gamma\) can be rewritten in terms of \(p, q.\) But \(A^3\) is not <em>fully</em> symmetric, since swapping two roots destroys its values. This is why we need the additional quantity \(D,\) which breaks the swapping root symmetries, to determine \(A^3.\) 
+We have this quantity \(A,\) and we know that when we cycle the roots around, while the value of \(A\) may change, the quantity \(A^3\) never changes. Let's now try rewriting \(A^3\) in terms of \(p, q,\) and \(D.\) Using \(p\) and \(q\) isn't new to us at all: <a href="quartic.html">last week</a> we saw that any symmetric polynomial of \(\alpha,\beta,\gamma\) can be rewritten in terms of \(p, q.\) But \(A^3\) is not <em>fully</em> symmetric, since swapping two roots destroys its values. This is why we need the additional quantity \(D,\) which breaks the swapping root symmetries, to determine \(A^3.\) 
 </p>
 
 <p>
@@ -574,6 +573,10 @@ Plugging in these values into our cubic formula above, we get
 \[\alpha = e^{4\pi i/9} + e^{-4\pi i/9} = 2\cos\left(\frac{4\pi}{9}\right),\]
 \[\beta = e^{16\pi i/9} + e^{2\pi i/9} = 2\cos\left(\frac{2\pi}{9}\right),\]
 \[\gamma = e^{10\pi i/9} + e^{8\pi i/9} = 2\cos\left(\frac{8\pi}{9}\right).\] 
+In fact, the cubic equation \(x^3 - 3x + 1 = 0\) is simply the triple-angle formula of cosine
+\[
+\cos(3\theta)=4\cos^3(\theta)-3\cos(\theta).
+\]
 </p>
 
 <p>
