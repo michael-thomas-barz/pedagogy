@@ -18,7 +18,7 @@
 <a href="../index.html">← back</a>
 
 <h1>How to solve cubic and quartic equations II: cubics</h1>
-<p class="meta">July 11, 2026</p>
+<p class="meta">July 24, 2026</p>
 
 <p>
 Last week in <a href="quartic.html">How to solve cubic and quartic equations I: quartics</a> we saw how to reduce the quartic equation to the cubic equation.
@@ -28,24 +28,62 @@ Today, our question is: how do we solve cubic equations--equations that look lik
 x^3-7x^2+5x-20=0?
 \]
 Our approach will be to build an analogy with the solution to the quadratic equation. 
-For this, let us again re-frame our solution to the qudratic equation
+<!-- For this, let us again re-frame our solution to the qudratic equation. -->
 </p>
 
 <h2>Quadratic equations: yet again</h2>
+We will highlight two techniques we can use to solve the quadratic equation
+\[
+x^2+bx+c=0.
+\]
+Since the cubic equation is much more complicated, we will need to exploit both techniques.
+<h3>Completing the square</h3>
+One approach to the quadratic equation, <em>completing the square</em>,  observes
+\[
+\big(x+\frac b2\big)^2=x^2+bx+\frac{b^2}4
+\]
+looks suspiciously similar to the equation we want to solve. We could re-write our original equation as
+\[
+x^2+bx+c=\big(x^2+bx+\frac{b^2}4\big)+\big(c-\frac{b^2}4\big)=\big(x+\frac b2\big)^2+\big(c-\frac{b^2}4\big)=0.
+\]
+This tells us
+\[
+\big(x+\frac b2\big)^2=\frac{b^2}4-c,
+\]
+and by taking square roots you can solve for \(x\).
 
 <p>
-Let's start with a quadratic equation
-\[
-x^2+bx+c=0
-\]
-with two solutions \(\alpha\) and \(\beta.\) Recall how we derived the quadratic formula: Vieta's formulas tell us 
+  Another way to think about completing the square is that the substitution \(x=y-\frac b2\) simplifies the equation. The equation \(x^2+bx+c=0\) then becomes
+  \[
+  \big(y-\frac b2\big)^2+b\big(y-\frac b2\big)+c=0.
+  \]
+  If we expand each term:
+  \[
+  \big(y-\frac b2\big)^2=y^2-by+\frac{b^2}4
+  \]
+  \[
+  b\big(y-\frac b2\big)=by-\frac{b^2}2
+  \]
+  \[
+  c=c\]
+  and add everything up, we arrive at the quadratic equation
+  \[
+  y^2+\big(c-\frac{b^2}4\big)=0.
+  \]
+  So the main point is that by our change of variables we were able to get rid of the linear term in our equation!
+</p>
+
+<h3>Exploiting symmetry</h3>
+Let's now review the approach we used in <a href="quartic.html">How to solve cubic and quartic equations I: quartics</a>.
+<p>
+Let's call the two solutions of the quadratic equation as \(\alpha\) and \(\beta.\) Then Vieta's formulas tell us 
 \[\alpha + \beta = -b,\]
 \[\alpha\beta = c,\]
 and we could use these to find evaluate any <em>symmetric</em> polynomial of \(\alpha\) and \(\beta\) (so computing \(\alpha^2 + \beta^2\) in terms of \(b\) and \(c\) is easy, for example). 
 </p>
 
 <p>
-To solve for \(\alpha, \beta,\) we needed to evaluate some quantity which broke the symmetry. The quantity we chose was \(\alpha - \beta.\) This was not symmetric in \(\alpha\) and \(\beta\) -- because swapping the two roots negates this expression -- but \((\alpha-\beta)^2\) <em>was</em> symmetric. This meant that we could write \((\alpha-\beta)^2\) in terms of \(b, c\), as
+To solve for \(\alpha, \beta,\) we needed to evaluate some quantity which broke the symmetry. The quantity we chose was \(\alpha - \beta.\) This was not symmetric in \(\alpha\) and \(\beta\) -- because swapping the two roots negates this expression -- but \((\alpha-\beta)^2\) <em>was</em> symmetric. This meant that we could write \((\alpha-\beta)^2\) in terms of \(b\) and \(c\), as
 \[(\alpha-\beta)^2 = b^2 - 4c,\]
 and then taking a square root gives us the asymmetric quantity \(\alpha - \beta.\)
 </p>
@@ -77,7 +115,7 @@ The cubic formula will almost certainly involve the cube root function. However,
 </p>
 
 <p>
-The solutions to this cubic are \(x=0, x=\sqrt{2},\) and \(x=-\sqrt{2}.\) So, if we are going to have a general cubic formula, it will need to involve square roots.
+The solutions to this cubic are \(x=0\), \(x=\sqrt{2},\) and \(x=-\sqrt{2}.\) So, if we are going to have a general cubic formula, it will need to involve square roots.
 </p>
 
 <p>
@@ -85,38 +123,43 @@ In the quadratic case, we figured out what quantity to take the square root of b
 </p>
 
 <p>
-But before doing that, we do one small step to make the algebra easier in our work below; this step isn't essential, but it makes everything quicker. In the cubic
+But before doing that, we do one small step to make the algebra easier in our work below; this step isn't essential, but it makes everything quicker. 
+Similar to the completing-the-square trick for quadratic equations, if we substitute \(x=y-a/3\) in the cubic
 \[x^3  +ax^2 + bx + c = 0,\]
-we can make the substitution \(y = x + a/3.\) Then our equation becomes
-\[(y - a/3)^3 + a(y - a/3)^2 + b(y - a/3) + c = 0.\]
+we can get rid of the quadratic term to an equation of the form
+\[
+y^3+py+q=0.
+\]
 </p>
 
-<p>
+<details>
+  <summary>You can check out the full computation <span style="color: orange;">here</span>. </summary>
+  <p style="color: orange;">
+<!-- we can make the substitution \(x=y-a/3.\)  -->
+After substituting \(x=y-a/3\) our equation becomes
+\[(y -\frac a3)^3 + a(y -\frac a3)^2 + b(y -\frac a3) + c = 0.\]
 At first, this doesn't seem any simpler, but observe that if we expand this out, we get
-\[(y-a/3)^3 = y^3 - ay^2 + \frac{a^2}{3}y - \frac{a^3}{27},\]
-\[a(y-a/3)^2 = ay^2 - \frac{2a^2}{3}y + \frac{a^3}{9},\]
-\[b(y - a/3) = by - \frac{ab}{3},\]
+\[(y-\frac a3)^3 = y^3 - ay^2 + \frac{a^2}{3}y - \frac{a^3}{27},\]
+\[a(y-\frac a3)^2 = ay^2 - \frac{2a^2}{3}y + \frac{a^3}{9},\]
+\[b(y -\frac a3) = by - \frac{ab}{3},\]
 \[c = c,\]
 so adding these together, we can rewrite
-\[(y-a/3)^3 + a(y - a/3)^2 + b(y-a/3) + c = 0\]
+\[(y-\frac a3)^3 + a(y -\frac a3)^2 + b(y-\frac a3) + c = 0\]
 as
 \[y^3 + \left(b- \frac{a^2}{3}\right)y + \left(\frac{2a^3}{27} - \frac{ab}{3} + c\right) = 0.\]
 </p>
 
-<p>
-If we set \(p = b - a^2/3, q = 2a^3/27 - ab/3 + c,\) then this becomes
+<p style="color: orange;">
+If we set \(p = b - a^2/3\) and \(q = 2a^3/27 - ab/3 + c,\) then this becomes
 \[y^3 + py + q = 0.\]
 This cubic equation has no \(y^2\) term, and hence is a bit easier to manipulate. We will use it below. 
 </p>
+</details>
 
 <p>
 So, take the cubic equation
-\[y^3 + py + q = 0.\]
-Label the roots \(y = \alpha, y = \beta,\) and \(y = \gamma.\)
-</p>
-
-<p>
-We will now find an equation for these roots. 
+\[y^3 + py + q = 0\]
+and label its roots \(y = \alpha\), \(y = \beta,\) and \(y = \gamma.\) We will now find an equation for these roots. 
 </p>
 
 <h2>The quadratic part of the cubic formula</h2>
@@ -214,7 +257,7 @@ In particular, \(D^2\) is a symmetric function of \(\alpha,\beta,\) and \(\gamma
 </p>
 
 <p>
-Thus, as we discussed last time, the symmetric function \(D^2\) can be written in terms of the coefficients \(p,q\) of our cubic equation
+Thus, as we discussed last week, the symmetric function \(D^2\) can be written in terms of the coefficients \(p,q\) of our cubic equation
 \[y^3 + py + q = 0.\]
 
 As we show below, it turns out that
@@ -222,39 +265,39 @@ As we show below, it turns out that
 </p>
 
 <details>
-        <summary>If you click here, you can see the full derivation of the formula \(D^2 = -4p^3 - 27q^2,\) but its somewhat tedious algebra, so feel free to skip it if you desire.</summary>
+        <summary>If you click <span style="color: orange;">here</span>, you can see the full derivation of the formula \(D^2 = -4p^3 - 27q^2,\) but its somewhat tedious algebra, so feel free to skip it if you desire.</summary>
 
-<p>
-Recall from Vieta's formulas (discussed last time) that 
+<p style="color: orange;">
+Recall from Vieta's formulas (discussed last week) that 
 \[\alpha + \beta + \gamma = 0,\]
 \[\alpha\beta + \beta\gamma + \gamma\alpha = p,\]
 \[\alpha\beta\gamma = -q.\] 
 </p>
 
-<p>
+<p style="color: orange;">
 Recall that
 \[D^2 = (\alpha-\beta)^2(\beta-\gamma)^2(\gamma-\alpha)^2.\] 
 The name of the game is subtracting away polynomials in \(p\) and \(q\) from \(D^2\) until we get 0. 
 </p>
 
-<p>
+<p style="color: orange;">
 When we expand this out, \(D^2\) will get a term of the form \(\alpha^2 \cdot \beta^2 \cdot (-\alpha)^2 = \alpha^4\beta^2.\) Let's try to kill that term. 
 </p>
 
-<p>
+<p style="color: orange;">
 This term \(\alpha^4\beta^2\) has symmetric partners: the expansion of \(D^2\) also contains terms \(\alpha^4\gamma^2, \beta^4\alpha^2, \beta^4\gamma^2, \gamma^4\alpha^2,\) and \(\gamma^4\beta^2.\) So, let's try to kill all of these terms at once; this amounts to rewriting
 \[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
 in terms of \(p\) and \(q.\)        
 </p>
 
-<p>
+<p style="color: orange;">
 Observe first that
 \[0^2 = (\alpha + \beta + \gamma)^2 = (\alpha^2 + \beta^2 + \gamma^2) + 2(\alpha\beta + \beta\gamma + \gamma\alpha),\]
 so that
 \[\alpha^2 + \beta^2 + \gamma^2 = -2p.\] 
 </p>
 
-<p>
+<p style="color: orange;">
 Thus
 \[\alpha^4(\beta^2 + \gamma^2) + \beta^4(\alpha^2 + \gamma^2) + \gamma^4(\alpha^2 + \beta^2)\]
 can be rewritten as
@@ -263,7 +306,7 @@ which can further be rewritten as
 \[-2p(\alpha^4 + \beta^4 + \gamma^4) - (\alpha^6 + \beta^6 + \gamma^6).\]
 </p>
 
-<p>
+<p style="color: orange;">
 As
 \[\alpha^2 + \beta^2 + \gamma^2 = -2p,\]
 we can square it to derive
@@ -275,7 +318,7 @@ so that
 \[\alpha^4 + \beta^4 + \gamma^4 = 4p^2 - 2p^2 = 2p^2.\]
 </p>
 
-<p>
+<p style="color: orange;">
 Now, we just need to figure out \(\alpha^6 + \beta^6 + \gamma^6.\) Observe first that in
 \[0^3 = (\alpha + \beta + \gamma)^3\]
 we can expand the right hand side to get
@@ -285,12 +328,12 @@ so that
 or \(\alpha^3 + \beta^3 + \gamma^3 = -3q.\) 
 </p>
 
-<p>
+<p style="color: orange;">
 Squaring this, we find
 \[(\alpha^6 + \beta^6 + \gamma^6) + 2(\alpha^3\beta^3 + \beta^3\gamma^3 + \gamma^3\alpha^3) = 9q^2.\]
 </p>
 
-<p>
+<p style="color: orange;">
 TODO
 </p>
 
@@ -385,7 +428,7 @@ The swapping permutations (where we swap the value of \(\alpha\) and \(\beta\) a
 </p>
 
 <p>
-We have this quantity \(A,\) and we know that when we cycle the roots around, while the value of \(A\) may change, the quantity \(A^3\) never changes. Let's now try rewriting \(A^3\) in terms of \(p, q,\) and \(D.\) Using \(p\) and \(q\) isn't new to us at all: last time we saw that any symmetric polynomial of \(\alpha,\beta,\gamma\) can be rewritten in terms of \(p, q.\) But \(A^3\) is not <em>fully</em> symmetric, since swapping two roots destroys its values. This is why we need the additional quantity \(D,\) which breaks the swapping root symmetries, to determine \(A^3.\) 
+We have this quantity \(A,\) and we know that when we cycle the roots around, while the value of \(A\) may change, the quantity \(A^3\) never changes. Let's now try rewriting \(A^3\) in terms of \(p, q,\) and \(D.\) Using \(p\) and \(q\) isn't new to us at all: last week we saw that any symmetric polynomial of \(\alpha,\beta,\gamma\) can be rewritten in terms of \(p, q.\) But \(A^3\) is not <em>fully</em> symmetric, since swapping two roots destroys its values. This is why we need the additional quantity \(D,\) which breaks the swapping root symmetries, to determine \(A^3.\) 
 </p>
 
 <p>
