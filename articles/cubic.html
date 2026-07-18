@@ -391,17 +391,16 @@ We have this quantity \(A,\) and we know that when we cycle the roots around, wh
 
 <p>
 Anyways, let's try computing. First, we can expand out \((\alpha + \omega\beta + \omega^2\gamma)^3\) to find the rather lengthy expression
-\[A^3 = (\alpha^3 + \beta^3 + \gamma^3) + 3\omega \cdot \alpha^2\beta + 3\omega^2 \cdot \alpha^2\gamma + 3\omega^2 \cdot \alpha\beta^2 + 3\omega \cdot \beta^2\gamma + 3\omega \cdot \alpha\gamma^2 + 3\omega^2 \cdot \beta\gamma^2 + 6\alpha\beta\gamma.\]
-</p>
-
-<p>
-This is rather complicated, so let's start by getting rid of the sum \(\alpha^3 + \beta^3 + \gamma^3\) at the start of \(A^3.\) This is symmetric, so we can rewrite it in terms of \(p\) and \(q.\) 
+\[A^3 = (\alpha^3 + \beta^3 + \gamma^3+ 6\alpha\beta\gamma) + 3\omega(\alpha^2\beta + \beta^2\gamma + \gamma^2\alpha) + 3\omega^2(\alpha^2\gamma + \gamma^2\beta + \beta^2\alpha).\]
 </p>
 
 <details>
-  <summary>By a <span style="color: orange;">similar computation</span> as for \(D^2\) we can compute 
-\[\alpha^3 + \beta^3 + \gamma^3 = -3q.\]</summary>
+  <summary>This is rather complicated, so let's start by getting rid of the sum \(\alpha^3 + \beta^3 + \gamma^3+6\alpha\beta\gamma\) at the start of \(A^3.\) This is symmetric, so we can <span style="color: orange;">rewrite</span> it in terms of \(p\) and \(q\):
+\[
+\alpha^3 + \beta^3 + \gamma^3 +6\alpha\beta\gamma= -9q
+\] </summary>
 <p style="color: orange;">
+  Let's first compute \(\alpha^3 + \beta^3 + \gamma^3\).
   Since our cubic equation has no quadratic term we know \(\alpha+\beta+\gamma=0\). So let's substitute \(\gamma=-\alpha-\beta\). Then by the binomial formula
   \[
   \alpha^3 + \beta^3 + \gamma^3=\alpha^3+\beta^3+(-\alpha-\beta)^3=-3\alpha^2\beta-3\alpha\beta^2.
@@ -418,22 +417,24 @@ This is rather complicated, so let's start by getting rid of the sum \(\alpha^3 
   \[
   \alpha^3 + \beta^3 + \gamma^3 = -3q.
   \]
+  We can add \(6\alpha\beta\gamma=-6q\) to this to get
+  \[\alpha^3 + \beta^3 + \gamma^3 +6\alpha\beta\gamma= -9q.\]
 </p>
 </details>
-<p>
-The very last term of \(A^3\) was \(6\alpha\beta\gamma,\) which is just \(-6q\). By combining the two computations we can rewrite 
+<p>Therefore
 \[A^3 = -9q + 3\omega(\alpha^2\beta + \beta^2\gamma + \gamma^2\alpha) + 3\omega^2(\alpha^2\gamma + \gamma^2\beta + \beta^2\alpha).\] 
 </p>
 
 <p>
 Set
 \[u = \alpha^2\beta + \beta^2\gamma + \gamma^2\alpha,\]
-\[v = \alpha^2\gamma + \gamma^2\beta + \beta^2\alpha.\]
+\[v = \alpha^2\gamma + \gamma^2\beta + \beta^2\alpha\]
+so that \(A^3=-9q+3\omega u+3\omega^2v\).
 If we can write \(u\) and \(v\) in terms of \(p, q,\) and \(D,\) then we can do the same for \(A^3.\) 
 </p>
 
 <p>
-As \(u, v\) are no longer symmetric, we will really need to use \(D\) to express them. So, let's think about
+As \(u\) and \(v\) are no longer symmetric, we will really need to use \(D\) to express them. So, let's think about
 \[D = (\alpha - \beta)(\beta - \gamma)(\gamma - \alpha)\]
 for a moment. If we expand it out, we get
 \[D = \alpha^2(\gamma - \beta) + \beta^2(\alpha - \gamma) + \gamma^2(\beta - \alpha),\]
