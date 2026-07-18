@@ -398,9 +398,32 @@ Anyways, let's try computing. First, we can expand out \((\alpha + \omega\beta +
 </p>
 
 <p>
-This is rather complicated, so let's start by getting rid of the sum \(\alpha^3 + \beta^3 + \gamma^3\) at the start of \(A^3.\) This is symmetric, so we can rewrite it in terms of \(p\) and \(q.\) In fact, in our derivation of \(D^2\) (which we collapsed to save space...) we already computed 
-\[\alpha^3 + \beta^3 + \gamma^3 = -3q.\]
+This is rather complicated, so let's start by getting rid of the sum \(\alpha^3 + \beta^3 + \gamma^3\) at the start of \(A^3.\) This is symmetric, so we can rewrite it in terms of \(p\) and \(q.\) 
+</p>
 
+<details>
+  <summary>By a <span style="color: orange;">similar computation</span> as for \(D^2\) we can compute 
+\[\alpha^3 + \beta^3 + \gamma^3 = -3q.\]</summary>
+<p style="color: orange;">
+  Since our cubic equation has no quadratic term we know \(\alpha+\beta+\gamma=0\). So let's substitute \(\gamma=-\alpha-\beta\). Then by the binomial formula
+  \[
+  \alpha^3 + \beta^3 + \gamma^3=\alpha^3+\beta^3+(-\alpha-\beta)^3=-3\alpha^2\beta-3\alpha\beta^2.
+  \]
+  We can factor the polynomial as 
+  \[
+  -3\alpha^2\beta-3\alpha\beta^2=3\alpha\beta(-\alpha-\beta).
+  \]
+  We can again replace \(-\alpha-\beta\) by \(\gamma\), which means the equation equals
+  \[
+  3\alpha\beta\gamma.
+  \]
+  Finally by Vieta's formula we know \(q=-\alpha\beta\gamma\), which tells us
+  \[
+  \alpha^3 + \beta^3 + \gamma^3 = -3q.
+  \]
+</p>
+</details>
+<p>
 The very last term of \(A^3\) was \(6\alpha\beta\gamma,\) which is just \(-6q,\) so we can rewrite 
 \[A^3 = -9q + 3\omega(\alpha^2\beta + \beta^2\gamma + \gamma^2\alpha) + 3\omega^2(\alpha^2\gamma + \gamma^2\beta + \beta^2\alpha).\] 
 </p>
