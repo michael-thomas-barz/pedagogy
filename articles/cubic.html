@@ -25,7 +25,7 @@
 This was done by carefully analyzing the symmetries of the solutions to the equation.
 Today, our question is: how do we solve cubic equations--equations that look like
 \[
-x^3-7x^2+5x-20=0?
+x^3+6x^2+9x+3=0?
 \]
 Our approach will be to build an analogy with the solution to the quadratic equation. 
 <!-- For this, let us again re-frame our solution to the qudratic equation. -->
@@ -129,6 +129,7 @@ we can get rid of the quadratic term to an equation of the form
 \[
 y^3+py+q=0.
 \]
+We call this a <em>depressed</em> cubic.
 </p>
 
 <details>
@@ -151,12 +152,19 @@ as
 <p style="color: orange;">
 If we set \(p = b - a^2/3\) and \(q = 2a^3/27 - ab/3 + c,\) then this becomes
 \[y^3 + py + q = 0.\]
-This cubic equation has no \(y^2\) term, and hence is a bit easier to manipulate. We will use it below. 
+This cubic equation has no \(y^2\) term, and hence is a bit easier to manipulate.
 </p>
 </details>
+<p>For our example \(x^3+6x^2+9x+3=0\), the change of variables \(x=y-2\) converts the equation to
+\[
+(y-2)^3+6(y-2)^2+9(y-2)+3=0.
+\]
+By expanding, we obtain \(y^2-3y+1=0\).
+</p>
+
 
 <p>
-So, take the cubic equation
+So, take the depressed cubic
 \[y^3 + py + q = 0\]
 and label its roots \(y = \alpha\), \(y = \beta,\) and \(y = \gamma.\) We will now find an equation for these roots. 
 </p>
@@ -537,9 +545,11 @@ We remark that the system of equations we solved here may remind you of the disc
 <h2>Using the cubic formula in practice</h2>
 
 <p>
-As our derivation of the cubic formula occupied many steps, let's use it on an explicit example now, just to make sure we understand what's going on. Consider the depressed cubic 
-\[x^3 - 3x + 1 = 0.\]
-Earlier, we saw it had approximate solutions \(x \approx -1.88, x \approx 0.35, x \approx 1.53.\) Let's use our cubic formula to compute these roots exactly!
+As our derivation of the cubic formula occupied many steps, let's use it on an explicit example now, just to make sure we understand what's going on. Let's solve the cubic equation
+\[x^3+6x^2+9x+3=0\]
+from the beginning of the article. By the change of variables \(x=y-2\) we converted it to the depressed cubic
+\[y^3 - 3y + 1 = 0.\]
+Earlier, we saw it had approximate solutions \(y \approx -1.88, y \approx 0.35, y \approx 1.53.\) Let's use our cubic formula to compute these roots exactly!
 </p>
 
 <p>
@@ -574,7 +584,7 @@ Plugging in these values into our cubic formula above, we get
 \[\alpha = e^{4\pi i/9} + e^{-4\pi i/9} = 2\cos\left(\frac{4\pi}{9}\right),\]
 \[\beta = e^{16\pi i/9} + e^{2\pi i/9} = 2\cos\left(\frac{2\pi}{9}\right),\]
 \[\gamma = e^{10\pi i/9} + e^{8\pi i/9} = 2\cos\left(\frac{8\pi}{9}\right).\] 
-In fact, the cubic equation \(x^3 - 3x + 1 = 0\) is simply the triple-angle formula of cosine
+In fact, the cubic equation \(y^3 - 3y + 1 = 0\) is simply the triple-angle formula of cosine
 \[
 \cos(3\theta)=4\cos^3(\theta)-3\cos(\theta).
 \]
@@ -585,7 +595,11 @@ With a calculator, we can check that
 \[2\cos(4\pi/9) \approx 0.35...,\]
 \[2\cos(2\pi/9) \approx 1.53...,\]
 \[2\cos(8\pi/9) \approx -1.88...,\]
-in agreement with the approximate solutions we found before!
+in agreement with the approximate solutions we found before! 
+To go back to the equation \(x^3+6x^2+9x+3=0\) we recall we used the change of variables \(x=y-2\), so we just subtract 2 from each solution to get the solutions
+\[2\cos(4\pi/9)-2 \approx -1.65...,\]
+\[2\cos(2\pi/9)-2 \approx -0.47...,\]
+\[2\cos(8\pi/9)-2 \approx -3.88...,\]
 </p>
 
 <p>
