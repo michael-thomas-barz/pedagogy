@@ -35,20 +35,20 @@
 </p>
 
 <h2>Newton's approach to physics</h2>
-Let's imagine a particle with mass \(m\) at some positions \(\vec x=(x_1,x_2,x_3)\) and having some velocities \(\vec v=(v_1,v_2,v_3)\). We need to use vectors since we live in a 3-dimensional universe!
+Let's imagine 3 particle with some masses \(m_1,m_2,m_3\) at some positions \(\vec x_1,\vec x_2,\vec x_3\) and having some velocities \(\vec v_1,\vec v_2,\vec v_3\).
 
-<!-- <img src="particles.svg" alt="TikZ graph" style="display:block;
+<img src="particles.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             max-width:90%;
-            height:auto;"> -->
+            height:auto;">
 
 The fundamental equation in Newtonian mechanics is \(F=ma\). Let's say the entire system of particles experiences a force of \(\vec F\). That means
 \[
-\vec F=m\frac{d\vec v}{dt}.
+\vec F=m_1\frac{d\vec v_1}{dt}+m_2\frac{d\vec v_2}{dt}+m_3\frac{d\vec v_3}{dt}.
 \]
 Of course, we also know that
 \[
-\vec v_1=\frac{d\vec x_1}{dt}.
+\vec v_1=\frac{d\vec x_1}{dt},\ \ \vec v_2=\frac{d\vec x_2}{dt},\ \ \vec v_3=\frac{d\vec x_3}{dt}.
 \]
 Newton would solve these equations to figure out how each particle moves.
 
@@ -60,26 +60,26 @@ So he defined a function \(L\), called the <em>Lagrangian</em>, which keeps trac
 L=T-V\]
 where \(T\) is kinetic energy, and \(V\) is potential energy. The kinetic energy is
 \[
-T=\frac12mv^2,
+T=\frac12m_1v_1^2+\frac12m_2v_2^2+\frac12m_3v_3^2,
 \]
-where by \(v\) we mean the size of the vector \(\vec v\),
-\[
-v=\sqrt{v_1^2+v_2^2+v_3^2}.
-\] 
-The function \(V\) can change depending on the context. For example, if the particles experience gravity, the gravitational potential \(mgh\) would appear here.
+where by \(v_i\) we mean the size of the vector \(\vec v_i\). The function \(V\) can change depending on the context. For example, if the particles experience gravity, the gravitational potential \(mgh\) would appear here.
 
 <p>
-The important point is that \(L\) is some function of the position \(\vec x\) and the velocity \(\vec v\) of the particle, and time \(t\). We might write it as
+The important point is that \(L\) is some function of the positions \(\vec x_1,\vec x_2,\vec x_3\), their velocities \(\vec v_1,\vec v_2,\vec v_3\), and time \(t\). We might write it as
 \[
-L(\vec x,\vec v,t)=L(x_1,x_2,x_3,v_1,v_2,v_3,t).\]
+L(\vec x_1,\vec x_2,\vec x_3,\vec v_1,\vec v_2,\vec v_3,t).\]
 Our goal is to understand how the positions and velocities of the particles change over time.
 </p>
 
 <p>
-  Let's say the particles evolve as functions \(\vec x(t)=(x_1(t),x_2(t),x_3(t))\) and their velocities evolve as functions \(\vec v(t)=(v_1(t),v_2(t),v_3(t))\). 
+  Let's say the particles evolve as functions \(\vec x_1(t),\vec x_2(t),\vec x_3(t)\) and their velocities evolve as functions \(\vec v_1(t),\vec v_2(t),\vec v_3(t)\). 
   Since we specified the positions and velocities of the particles at the beginning, we want
   \[
-  \vec x(0)=\vec x,\ \ \vec v(0)=\vec v.
+  \vec x_1(0)=\vec x_1,\ \ \vec x_2(0)=\vec x_2,\ \ \vec x_3(0)=\vec x_3
+  \]
+  and
+  \[
+  \vec v_1(0)=\vec v_1,\ \ \vec v_2(0)=\vec v_2,\ \ \vec v_3(0)=\vec v_3.
   \]
   The total energy expended after evolving from time \(0\) to \(T\) with these functions is the integral, called the <em>action</em>,
   \[
@@ -91,15 +91,15 @@ Our goal is to understand how the positions and velocities of the particles chan
 <p>
   You might know how to minimize a function, say \(x^2-3x\). But notice that we are trying to solve a much crazier problem right now! 
   When we are trying to minimize \(x^2-3x\), we are allowed to vary \(x\) in any way: we could let it be \(1\), or \(-2\), or \(3\). 
-  But Lagrange is trying to minimize some function \(S\) which depends on <em>functions</em> like \(x_1(t)\). That means we are free to choose each of the values
+  But Lagrange is trying to minimize some function \(S\) which depends on <em>functions</em> like \(\vec x_1(t)\). That means we are free to choose each of the values
   \[
-  x_1(0.01),\ \ x_1(0.02),\ \ x_1(0.03)\]
+  \vec x_1(0.01),\ \ \vec x_1(0.02),\ \ \vec x_1(0.03)\]
   freely! You could let
   \[
-  x_1(0.01)=2.5,\ \ x_1(0.02)=-\pi,\ \ x_1(0.03)=20\]
+  \vec x_1(0.01)=2.5,\ \ \vec x_1(0.02)=-\pi,\ \ \vec x_1(0.03)=20\]
   or
   \[
-  x_1(0.01)=-0.7,\ \ x_1(0.02)=-5,\ \ x_1(0.03)=-2,\]
+  \vec x_1(0.01)=-0.7,\ \ \vec x_1(0.02)=-5,\ \ \vec x_1(0.03)=-2,\]
   or, or, or, ... It seems almost impossible to minimize a function over such a big space of possibilities!
 </p>
 
@@ -150,13 +150,9 @@ would be a little smaller than \(f(x_0)\), which again contradicts \(f(x_0)\) be
 <p>
   Remember that right now we are trying to minimize the action integral
   \[
-  S=\int_0^T L\big(x_1(t),x_2(t),x_3(t),v_1(t),v_2(t),v_3(t),t\big)dt.
+  S=\int_0^T L\big(\vec x_1(t),\vec x_2(t),\vec x_3(t),\vec v_1(t),\vec v_2(t),\vec v_3(t),t\big)dt.
   \]
-  Following the same strategy as for a usual function, let's try nudging each variable. What if we nudge \(x_1(t)\) to a different function \(x_1(t)+\epsilon(t)\), so \(v_1(t)\) also gets nudged to \(v_1(t)+\epsilon'(t)\), where \(\epsilon'(t)\) is the derivative of \(\epsilon(t)\).
-</p>
-
-<p>
-  [TO COMPLETE: derivation of Euler-Lagrange equation]
+  Following the same strategy as for a usual function, let's try nudging each variable.
 </p>
 
 </body>
