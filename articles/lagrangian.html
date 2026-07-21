@@ -65,14 +65,69 @@ T=\frac12m_1v_1^2+\frac12m_2v_2^2+\frac12m_3v_3^2,
 where by \(v_i\) we mean the size of the vector \(\vec v_i\). The function \(V\) can change depending on the context. For example, if the particles experience gravity, the gravitational potential \(mgh\) would appear here.
 
 <p>
-The important point is that \(L\) is some function of the positions \(x_1,x_2,x_3\), their velocities \(v_1,v_2,v_3\), and time \(t\). We might write it as
+The important point is that \(L\) is some function of the positions \(\vec x_1,\vec x_2,\vec x_3\), their velocities \(\vec v_1,\vec v_2,\vec v_3\), and time \(t\). We might write it as
 \[
-L(x_1,x_2,x_3,v_1,v_2,v_3,t).\]
+L(\vec x_1,\vec x_2,\vec x_3,\vec v_1,\vec v_2,\vec v_3,t).\]
 Our goal is to understand how the positions and velocities of the particles change over time.
 </p>
 
+<p>
+  Let's say the particles evolve as functions \(\vec x_1(t),\vec x_2(t),\vec x_3(t)\) and their velocities evolve as functions \(\vec v_1(t),\vec v_2(t),\vec v_3(t)\). 
+  Since we specified the positions and velocities of the particles at the beginning, we want
+  \[
+  \vec x_1(0)=\vec x_1,\ \ \vec x_2(0)=\vec x_2,\ \ \vec x_3(0)=\vec x_3
+  \]
+  and
+  \[
+  \vec v_1(0)=\vec v_1,\ \ \vec v_2(0)=\vec v_2,\ \ \vec v_3(0)=\vec v_3.
+  \]
+  The total energy expended after evolving from time \(0\) to \(T\) with these functions is the integral, called the <em>action</em>,
+  \[
+  S=\int_0^T L\big(\vec x_1(t),\vec x_2(t),\vec x_3(t),\vec v_1(t),\vec v_2(t),\vec v_3(t),t\big)dt.
+  \]
+  Therfore, a lazy universe would try to minimize the value of \(S\). How do we go about solving this? 
+</p>
+
+<p>
+  You might know how to minimize a function, say \(x^2-3x\). But notice that we are trying to solve a much crazier problem right now! 
+  When we are trying to minimize \(x^2-3x\), we are allowed to vary \(x\) in any way: we could let it be \(1\), or \(-2\), or \(3\). 
+  But Lagrange is trying to minimize some function \(S\) which depends on <em>functions</em> like \(\vec x_1(t)\). That means we are free to choose each of the values
+  \[
+  \vec x_1(0.01),\ \ \vec x_1(0.02),\ \ \vec x_1(0.03)\]
+  freely! You could let
+  \[
+  \vec x_1(0.01)=2.5,\ \ \vec x_1(0.02)=-\pi,\ \ \vec x_1(0.03)=20\]
+  or
+  \[
+  \vec x_1(0.01)=-0.7,\ \ \vec x_1(0.02)=-5,\ \ \vec x_1(0.03)=-2,\]
+  or, or, or, ... It seems almost impossible to minimize a function over such a big space of possibilities!
+</p>
+
+<p>
+  Before trying to minimize the action, let's review how we minimize usual functions.
+</p>
 
 
+<h2>How to minimize a function</h2>
+How do you minimize a function? Let's say we're trying to minimize the function \(f(x)=x^3-x^3-x+2\).
+
+<img src="minimum.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+Suppose \(f(x)\) achieved a minimum at some number \(x_0\), and let's try nudging it a little. Then
+\[
+f(x_0+\epsilon)\approx f(x_0)+f'(x_0)\epsilon.
+\]
+If the derivative \(f'(x_0)\) were negative, then
+\[
+f(x_0+\epsilon)\approx f(x_0)+f'(x_0)\epsilon
+\]
+would be a little smaller than \(f(x_0)\), which contradicts \(f(x_0)\) being the minimum. Similarly, if \(f'(x_0)\) were
+\[
+f(x_0-\epsilon)\approx f(x_0)-f'(x_0)\epsilon
+\]
+would be a little smaller than \(f(x_0)\), which again contradicts \(f(x_0)\) being the minimum. That means for \(f\) to achieve a minimum at \(x_0\) we need \(f'(x_0)=0\).
 
 </body>
 <!-- MailerLite Universal -->
