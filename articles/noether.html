@@ -89,7 +89,68 @@ For a particle with momentum \(\vec p\) and position vector \(\vec r\), the angu
   </p>
 
 <h2>What is continuous symmetry?</h2>
-A square has several symmetries. [PICTURE of 4-sided windmill] For example, rotation by \(90^\circ\), \(180^\circ\), or \(270^\circ\) doesn't change the picture.
+A windmill as below has symmetries.
+
+<img src="windmill.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+
+For example, rotating the picture by \(90^\circ\) doesn't change the picture. Neither does rotation by \(180^\circ\) or \(270^\circ\). Of course rotating by \(0^\circ\), which does nothing, also doesn't change the shape! 
+However, if you rotate by, say, \(30^\circ\), the blades will be at a different position. So we would say the windmill has 4 symmetries: rotation by \(0^\circ\), \(90^\circ\), \(180^\circ\), and \(270^\circ\).
+
+<p>On the other hand, consider a circle. </p>
+
+<img src="circle.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+Then, rotating by any angle \(\theta\) doesn't change the shape. That means the circle has infinitely many symmetries! That's why we would say a circle has a <em>continuous</em> set of symmetries, while the windmill only has a <em>discrete</em> set of symmetries.
+
+
+<p>
+  Our world has three types of continuous symmertries:
+  <ul>
+  <li>Time symmetry: our universe will have the same physical laws 10 seconds from now.</li>
+  <li>Translation symmetry: the laws of physics on my block is the same as the laws of physics 3 blocks down.</li>
+  <li>Rotational symmetry: if I turn left, the laws of physics don't change.</li>
+</ul>
+Noether tells us that each of these symmetries corresponds to a conserved quantity.</p>
+<table style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td style="border: 1px solid #d79921; padding: 10px; font-weight: bold;">
+      symmetries
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px; font-weight: bold;">
+      conserved quantities
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+     time
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      energy
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+     translation
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      momentum
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+     rotation
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      angular momentum
+    </td>
+  </tr>
+</table>
+
 
 <h2>Why momentum is conserved</h2>  
 <p>
