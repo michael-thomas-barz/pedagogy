@@ -193,41 +193,41 @@ S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt+\int_0^T\dot\ep
 <p>
   The expression we end up with has both \(\epsilon(t)\) and \(\dot\epsilon(t)\). This looks hard to work with, so let's integrate by parts to get rid of \(\dot\epsilon(t)\). We compute:
   \[
-  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=\bigg[\epsilon(t)\frac{\partial L}{\partial v_1}\bigg]_0^T-\int_0^T\epsilon(t)\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt
+  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=\bigg[\epsilon(t)\frac{\partial L}{\partial v_1}\bigg]_0^T-\int_0^T\epsilon(t)\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt
   \]
   Since we assumed \(\epsilon(0)=\epsilon(T)=0\), the first term disappears and we end up with
   \[
-  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=-\int_0^T\epsilon(t)\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
+  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=-\int_0^T\epsilon(t)\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
   \]
 </p>
 
 <p>
   By substituting back into our expression for \(S'\), we see
   \[
-  S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt-\int_0^T\epsilon(t)\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
+  S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt-\int_0^T\epsilon(t)\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
   \]
   We could re-group the expression, so
   \[
-  S'\approx S+\int_0^T\epsilon(t)\bigg(\frac{\partial L}{\partial x_1}-\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)\bigg)dt.
+  S'\approx S+\int_0^T\epsilon(t)\bigg(\frac{\partial L}{\partial x_1}-\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)\bigg)dt.
   \]
 </p>
 
 <p>
    If \(\vec x(t)\) were an optimal path from \(\vec x\) to \(\vec y\), we would want the first-order error term above to vanish. The easiest way to make the first-order error term vanish is to just let 
     \[
-    \frac{\partial L}{\partial x_1}-\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)=0,
+    \frac{\partial L}{\partial x_1}-\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)=0,
     \]
     or in other words,
     \[
-    \frac{\partial L}{\partial x_1}=\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg).
+    \frac{\partial L}{\partial x_1}=\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg).
     \]
     This is the fundamental equation in Lagrange's formulation of mechanics, knonw as the <em>Euler-Lagrange equation</em>. By repeating the same argument by nudging the \(x_2\)-coordinate, we get
      \[
-    \frac{\partial L}{\partial x_2}=\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_2}\bigg),
+    \frac{\partial L}{\partial x_2}=\frac d{dt}\bigg(\frac{\partial L}{\partial v_2}\bigg),
     \]
     and by nudging the \(x_3\)-coordinate we get
     \[
-    \frac{\partial L}{\partial x_3}=\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_3}\bigg).
+    \frac{\partial L}{\partial x_3}=\frac d{dt}\bigg(\frac{\partial L}{\partial v_3}\bigg).
     \]
 </p>
 
@@ -254,7 +254,7 @@ Since we worked very abstractly so far, let's work out an explicit example. Let'
   \]
   equals
   \[
-  \frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)=\frac\partial{\partial t}(mv_1)=m\frac{dv_1}{dt}.
+  \frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)=\frac d{dt}(mv_1)=m\frac{dv_1}{dt}.
   \]
   So the Euler-Lagrange equations know that the ball shouldn't accelerate in the \(x_1\)-direction! This matches our physical intuition, since gravity is only acting in the vertical direction; the velocity of the object in horizontal directions shouldn't change.
   The Euler-Lagrange equation for the second coordinate also tells us
@@ -271,7 +271,7 @@ Since we worked very abstractly so far, let's work out an explicit example. Let'
   \]
   equals
   \[
-  \frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_3}\bigg)=\frac\partial{\partial t}(mv_3)=m\frac{dv_3}{dt}.
+  \frac d{dt}\bigg(\frac{\partial L}{\partial v_3}\bigg)=\frac d{dt}(mv_3)=m\frac{dv_3}{dt}.
   \]
   In other words, 
   \[
