@@ -281,6 +281,62 @@ Since we worked very abstractly so far, let's work out an explicit example. Let'
   This is just saying the ball accelerates downwards by \(g\), which is also exactly what we expect!
 </p>
 
+<h2>The pendulum</h2>
+Now, let's try to work out a slightly less simple example. Let's imagine a pendulum with a string of length \(\ell\) and an object of mass \(m\) attached to the end.
+<img src="pendulum.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+Another advantage of Lagrange's approach is that you can choose any coordinate system you want. So let's parametrize our physical sysetem by the angle \(\theta\).
+The angle changes at rate \(\frac{d\theta}{dt}\), so the velocity is
+\[
+v=\ell\frac{d\theta}{dt}
+\]
+and the kinetic energy is
+\[
+\frac12mv^2=\frac12m(\ell\dot\theta)^2.
+\]
+Moreover, the height is \(-\ell\sin\theta\), so the fravitational potential is \(-mg\ell\cos\theta\). Therefore, the Lagrangian is
+\[
+L(\theta,\dot\theta,t)=\frac12m(\ell\dot\theta)^2-(-mg\ell\cos\theta)=\frac12m\ell^2\dot\theta^2+mg\ell\cos\theta.
+\]
+Now, the Euler-Lagrange equation tells us
+\[
+\frac{\partial L}{\partial\theta}=\frac d{dt}\bigg(\frac{\partial L}{\partial\dot\theta}\bigg).
+\]
+The derivative of the Lagrangian with respect to \(\theta\) is
+\[
+\frac{\partial L}{\partial\theta}=-mg\ell\sin\theta.
+\]
+On the other hand, the derivative of Lagrangian with respect to \(\dot\theta\) is
+\[
+\frac{\partial L}{\partial\dot\theta}=m\ell^2\dot\theta,
+\]
+so
+\[
+\frac d{dt}\bigg(\frac{\partial L}{\partial\dot\theta}\bigg)=m\ell^2\ddot\theta.
+\]
+That means the Euler-Lagrange equation tells us
+\[
+m\ell^2\ddot\theta=-mg\ell\sin\theta,
+\]
+i.e.,
+\[
+\frac{d^2\theta}{dt^2}+\frac{g}\ell\sin\theta=0.
+\]
+This is the usual equation for the pendulum! For example, when the angle \(\theta\) is small you can use the small angle approximation \(\sin\theta\approx\theta\) and calculate
+\[
+\frac{d^2\theta}{dt^2}+\frac{g}\ell\theta=0.
+\]
+Slightly surprisingly, there is no dependence on the mass \(m\)! Solving the differential equation, we see that
+\[
+\theta=C_1\cos\bigg(\sqrt{\frac g\ell}t\bigg)+C_2\sin\bigg(\sqrt{\frac g\ell}t\bigg).
+\]
+Since sine and cosine have period \(2\pi\), the pendulum itself will have period
+\[
+2\pi\sqrt{\frac\ell g}.
+\]
+
 </body>
 <!-- MailerLite Universal -->
 <script>
