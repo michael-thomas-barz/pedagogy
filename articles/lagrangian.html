@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Why is momentum conserved?</title>
+  <title>Mechanics I: nature is lazy</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -17,7 +17,7 @@
 
 <a href="../index.html">← back</a>
 
-<h1>Why is momentum conserved?</h1>
+<h1>Mechanics I: nature is lazy</h1>
 <p class="meta">July 10, 2026</p>
 
 <p>
@@ -31,7 +31,9 @@
 </p>
 
 <p>
-  Since Newton's approach to physics already works so well, you may ask why we care about Lagrange's approach. One reason is Emmy Noether's discovery that conservation laws (conservation of energy, momentum, and angular momentum) fall out naturally from Lagrange's approach to mechanics!
+  Since Newton's approach to physics already works so well, you may ask why we care about Lagrange's approach. 
+  One reason is Emmy Noether's discovery that conservation laws (conservation of energy, momentum, and angular momentum) fall out naturally from Lagrange's approach to mechanics!
+  We will explore Noether's idea more next week.
 </p>
 
 <h2>Newton's approach to physics</h2>
@@ -48,7 +50,7 @@ The fundamental equation in Newtonian mechanics is \(F=ma\). Let's say the entir
 \]
 Of course, we also know that
 \[
-\vec v_1=\frac{d\vec x_1}{dt}.
+\vec v=\frac{d\vec x}{dt}.
 \]
 Newton would solve these equations to figure out how each particle moves.
 
@@ -76,11 +78,15 @@ Our goal is to understand how the positions and velocities of the particles chan
 </p>
 
 <p>
-  Let's say the particles evolve as functions \(\vec x(t)=(x_1(t),x_2(t),x_3(t))\) and their velocities evolve as functions \(\vec v(t)=(v_1(t),v_2(t),v_3(t))\). 
-  Since we specified the positions and velocities of the particles at the beginning, we want
+  Let's say we know at time \(t=0\) the particle is at position \(\vec x\), and at time \(t=T\) the particle is at position \(\vec y\). Which path could the particle have taken to get from \(\vec x\) to \(\vec y\)?
+Let's say the particles evolve as functions \(\vec x(t)=(x_1(t),x_2(t),x_3(t))\) and their velocities evolve as the derivative, \(\vec v(t)=(v_1(t),v_2(t),v_3(t))\). 
+  Since we specified the positions of the particles at the beginning and end, we require
   \[
-  \vec x(0)=\vec x,\ \ \vec v(0)=\vec v.
+  \vec x(0)=\vec x,\ \ \vec x(T)=\vec y.
   \]
+</p>
+
+<p>
   The total energy expended after evolving from time \(0\) to \(T\) with these functions is the integral, called the <em>action</em>,
   \[
   S=\int_0^T L\big(\vec x_1(t),\vec x_2(t),\vec x_3(t),\vec v_1(t),\vec v_2(t),\vec v_3(t),t\big)dt.
@@ -146,17 +152,134 @@ would be a little smaller than \(f(x_0)\), which again contradicts \(f(x_0)\) be
   Although these are all valid concerns, for now let's pretend these issues don't exist, and that minimizing \(f\) is the same as \(f'(x)=0\). This already gives us interesting constraints on our physical system.
 </p>
 
+<h2>Minimizing action</h2>
 
 <p>
   Remember that right now we are trying to minimize the action integral
   \[
   S=\int_0^T L\big(x_1(t),x_2(t),x_3(t),v_1(t),v_2(t),v_3(t),t\big)dt.
   \]
-  Following the same strategy as for a usual function, let's try nudging each variable. What if we nudge \(x_1(t)\) to a different function \(x_1(t)+\epsilon(t)\), so \(v_1(t)\) also gets nudged to \(v_1(t)+\epsilon'(t)\), where \(\epsilon'(t)\) is the derivative of \(\epsilon(t)\).
+Although we don't really know what the derivative of \(S\) means, it still makes sense to nudge the variables of \(S\) a little bit. So let's try nudging \(x_1(t)\) to a different function \(x_1(t)+\epsilon(t)\), so \(v_1(t)\) also gets nudged to \(v_1(t)+\dot\epsilon(t)\), where \(\dot\epsilon(t)\) is the derivative of \(\epsilon(t)\).
+In analogy with the function case, we want to make sure the first-order error term vanishes.
+Since we were nudging our functions so that the start and endpoint of the particle is fixed at \(\vec x\) and \(\vec y\), we assume
+  \[\epsilon(0)=\epsilon(T)=0.\]
 </p>
 
 <p>
-  [TO COMPLETE: derivation of Euler-Lagrange equation]
+  We need to compare \(S\) with the nudged value
+  \[
+  S'=\int_0^T L\big(x_1(t)+\epsilon(t),x_2(t),x_3(t),v_1(t)+\dot\epsilon(t),v_2(t),v_3(t),t\big)dt.
+  \]
+  What is the integrand? The way the function \(L\) changes when you nudge the variables is exactly what the partial derivatives tells you! That means
+\[
+L\big(x_1(t)+\epsilon(t),x_2(t),x_3(t),v_1(t)+\dot\epsilon(t),v_2(t),v_3(t),t\big)\approx L+\epsilon(t)\frac{\partial L}{\partial x_1}+\dot\epsilon(t)\frac{\partial L}{\partial v_1},
+\]
+where \(L\) is short-hand for \(L(x_1(t),x_2(t),x_3(t),v_1(t),v_2(t),v_3(t),t)\). Substituting into our equation, we see that
+\[
+S'\approx\int_0^T\bigg(L+\epsilon(t)\frac{\partial L}{\partial x_1}dt+\dot\epsilon(t)\frac{\partial L}{\partial v_1}\bigg)dt.
+\]
+By definition
+\[
+S=\int_0^TLdt,
+\]
+so
+\[
+S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt+\int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt.
+\]
+</p>
+
+<p>
+  The expression we end up with has both \(\epsilon(t)\) and \(\dot\epsilon(t)\). This looks hard to work with, so let's use integration by parts to get rid of \(\dot\epsilon(t)\). We compute:
+  \[
+  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=\bigg[\epsilon(t)\frac{\partial L}{\partial v_1}\bigg]_0^T-\int_0^T\epsilon(t)\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt
+  \]
+  Since we assumed \(\epsilon(0)=\epsilon(T)\), the first term disappears and we end up with
+  \[
+  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=-\int_0^T\epsilon(t)\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
+  \]
+</p>
+
+<p>
+  By substituting back into our expression for \(S'\), we see
+  \[
+  S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt-\int_0^T\epsilon(t)\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
+  \]
+  We could re-group the expression, so
+  \[
+  S'\approx S+\int_0^T\epsilon(t)\bigg(\frac{\partial L}{\partial x_1}-\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)\bigg)dt.
+  \]
+</p>
+
+<p>
+   If \(\vec x(t)\) were an optimal path from \(\vec x\) to \(\vec y\), we would want the first-order error term above to vanish. The easiest way to make the first-order error term vanish is to just let 
+    \[
+    \frac{\partial L}{\partial x_1}-\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)=0,
+    \]
+    or in other words,
+    \[
+    \frac{\partial L}{\partial x_1}=\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg).
+    \]
+    This is the fundamental equation in Lagrange's formulation of mechanics, knonw as the <em>Euler-Lagrange equation</em>. By repeating the same argument by nudging the \(x_2\)-coordinate, we get
+     \[
+    \frac{\partial L}{\partial x_2}=\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_2}\bigg),
+    \]
+    and by nudging the \(x_3\)-coordinate we get
+    \[
+    \frac{\partial L}{\partial x_3}=\frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_3}\bigg).
+    \]
+</p>
+
+<p>
+  The same caveats as before apply here: the solution to the Euler-Lagrange equations aren't necessarily truly a minimum for the action integral \(S\). 
+  Oftentimes \(S\) is minimized, but not always.
+  Nevertheless, Lagrange still postulates the equations as the axioms of his physics.
+</p>
+
+<h2>A simple example</h2>
+Since we computed a bunch of abstract examples, let's try to compute an example. Let's say we have a ball of mass \(m\) at coordinate \(\vec x=(x_1,x_2,x_3)\) and moving at velocity \(\vec v=(v_1,v_2,v_3)\), and we want to describe how it falls according to gravity.
+
+<p>
+  Let's imagine the ground is at \(x_3=0\), so the height of the ball is \(x_3\). That means the gravitational potential of the ball is \(mgx_3\), and our Lagrangian is
+  \[
+  L=T-V=\frac12mv^2-mgx_3=\frac12m(v_1^2+v_2^2+v_3^2)-mgx_3.
+  \]
+</p>
+
+<p>
+  The Euler-Lagrange equation for the first coordinate tells us
+  \[
+  \frac{\partial L}{\partial x_1}=0
+  \]
+  equals
+  \[
+  \frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_1}\bigg)=\frac\partial{\partial t}(mv_1)=m\frac{dv_1}{dt}.
+  \]
+  So the Euler-Lagrange equations know that the ball shouldn't accelerate in the \(x_1\)-direction! This matches our physical intuition, since gravity is only acting in the vertical direction; the velocity of the object in horizontal directions shouldn't change.
+  The Euler-Lagrange equation for the second coordinate also tells us
+  \[
+  m\frac{dv_2}{dt}=0,
+  \]
+  which makes sense from the same physical intuition.
+</p>
+
+<p>
+  Finally, the Euler-Lagrange equation for the third coordinate tells us
+  \[
+  \frac{\partial L}{\partial x_3}=-mg
+  \]
+  equals
+  \[
+  \frac\partial{\partial t}\bigg(\frac{\partial L}{\partial v_3}\bigg)=\frac\partial{\partial t}(mv_3)=m\frac{dv_3}{dt}.
+  \]
+  In other words, 
+  \[
+  m\frac{dv_3}{dt}=-mg,
+  \]
+  which tells us
+  \[
+  \frac{dv_3}{dt}=-g.
+  \]
+  This is just saying the ball accelerates downwards by \(g\), which is also exactly what we expect!
 </p>
 
 </body>
