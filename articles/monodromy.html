@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Using the Mobius strip to solve a differential equation</title>
+  <title>Mobius strips and differential equations</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -17,7 +17,7 @@
 
 <a href="../index.html">← back</a>
 
-<h1>Using the Mobius strip to solve a differential equation</h1>
+<h1>Mobius strips and differential equations</h1>
 <p class="meta">February 13, 2026</p>
 
 <p>
@@ -25,11 +25,11 @@ Algebraic topology is a field of mathematics which is usually presented as the s
 </p>
 
 <p>
-Humans tend to be best at solving geometry problems, as they allow us to leverage our visual intuition. So, in many kinds of math, one often tries to turn a problem into a geometry problem. This can lead to some quite strange shapes, which you might not come up with on your own if you had just set out to create shapes; algebraic topology gives us ways to study these strange shapes.
+To give the reader a taste of this importance, in today's post we will start by exploring a funny property of the Mobius strip, and then show how the same funny phenomenon creeps up when you try to solve certain differential equations.
 </p>
 
 <p>
-To try and illustrate this perspective, today we're going to explain one of history's first applications of an algebraic topology concept (the <em>fundamental group</em>), by explaining how it relates to the theory of differential equations. We will assume the reader is familiar with basic calculus (in particular, how to differentiate polynomials), but we will not assume you have seen any differential equations before.
+So, what is the Mobius strip, and what funny property does it have?
 </p>
 
 <h2>The Mobius strip</h2>
@@ -2264,10 +2264,1238 @@ What's happening? To understand this, let's first try understanding why our two 
 <h2>Revisiting uniqueness</h2>
 
 <p>
-TODO
+Ordinary differential equations have a strong <em>local uniqueness</em> theorem: any two solutions of an equation like
+\[\frac{df}{dz} = \frac{1}{2z} \cdot f(z)\]
+which agree at one point <em>automatically agree in a small neighborhood of that point</em>. Let's explore what this means, why this is true, and how it helps us understand what was happening above.
 </p>
 
-<h2></h2>
+<p>
+To be a bit more concrete, imagine that \(f_0\) and \(f_1\) are two functions which both obey
+\[f_0'(z) = \frac{1}{2z}f_0(z),\]
+\[f_1'(z) = \frac{1}{2z}f_1(z),\]
+and suppose we know that \(f_0(1) = f_1(1).\) Then we claim that in fact \(f_0(z) = f_1(z)\) for all values of \(z\) which are close to 1. 
+</p>
+
+<p>
+Why is that the case? It's actually for the exact same reason we saw before: power series expansions. More precisely, for values of \(z\) close enough to 1, the functions \(f_0(z)\) and \(f_1(z)\) are both given by power series expansions
+\[f_0(z) = f_0(1) + f_0'(1) \cdot (z-1) + \frac{f_0''(1)}{2} \cdot (z-1)^2 + \cdots,\]
+\[f_1(z) = f_1(1) + f_1'(1) \cdot (z-1) + \frac{f_1''(1)}{2} \cdot (z-1)^2 + \cdots.\]
+</p>
+
+<p>
+Set \(A := f_0(1).\) As \(f_1(1) = f_0(1),\) we have \(f_1(1) = A\) as well. 
+</p>
+
+<p>
+From our differential equation, we find that
+\[f_0'(1) = f_0(1)/2 = A/2,\]
+and similarly \(f_1'(1) = A/2.\) And differentiating
+\[f'(z) = \frac{f(z)}{2z},\]
+we find
+\[f''(z) = \frac{f'(z)}{2z} - \frac{f(z)}{2z^2},\]
+so that
+\[f''_0(1) = \frac{A}{4} - \frac{A}{2} = -\frac{A}{4},\]
+and similarly \(f''_1(1) = -A/4.\) 
+
+Thus all the Taylor coefficients of \(f_0\) and \(f_1\) coincide, and so they must agree in some small disk around \(z=1\) (this disk being the disk on which the Taylor series converges). 
+</p>
+
+<p>
+How does this matter for our blue and purple circle? The point is that we have two solutions to the differential equation which agree at \(0.6 + 0.8i,\) and hence they agree in whatever region has the following two properties: (i) both solutions make sense there, and (ii) the formal power series solution at \(0.6 + 0.8i\) converges there. But that region is exactly the overlap of the purple and blue circles, hence why the two different formulas give the same answer there. You can step through this slideshow to see more.
+</p>
+
+<style>
+.psw4 * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+.psw4 {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17px;
+  color: #ebdbb2;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+ 
+.psw4-pairline {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #928374;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.psw4-pairline .dot { display:inline-block; width:9px; height:9px; border-radius:50%; }
+ 
+.psw4-caption {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  padding: 1rem 1.3rem;
+  background: #32302f;
+  font-size: 1rem;
+  line-height: 1.55;
+  min-height: 2.6rem;
+}
+.psw4-caption b { color: #fbf1c7; }
+ 
+.psw4-canvas-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+.psw4-canvas {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  background: #32302f;
+  display: block;
+  width: 420px;
+  height: 420px;
+}
+ 
+.psw4-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.psw4-btn {
+  background: #458588;
+  color: #ebdbb2;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 18px;
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+}
+.psw4-btn:disabled { background: #3c3836; color: #665c54; cursor: default; }
+.psw4-counter {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: #928374;
+  min-width: 70px;
+  text-align: center;
+}
+ 
+@media (max-width: 540px) {
+  .psw4 { font-size: 15px; }
+  .psw4-canvas { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+}
+</style>
+ 
+<div class="psw4">
+ 
+  <div class="psw4-pairline" id="psw4-pairline"></div>
+ 
+  <div class="psw4-caption" id="psw4-caption"></div>
+ 
+  <div class="psw4-canvas-wrap">
+    <canvas class="psw4-canvas" id="psw4-canvas" width="420" height="420"></canvas>
+  </div>
+ 
+  <div class="psw4-controls">
+    <button class="psw4-btn" id="psw4-prev">&larr; Prev</button>
+    <span class="psw4-counter" id="psw4-counter"></span>
+    <button class="psw4-btn" id="psw4-next">Next &rarr;</button>
+  </div>
+ 
+</div>
+ 
+<script>
+(function() {
+ 
+// ── Complex arithmetic ────────────────────────────────────────────────────
+function cadd(a,b){return {r:a.r+b.r,i:a.i+b.i};}
+function csub(a,b){return {r:a.r-b.r,i:a.i-b.i};}
+function cmul(a,b){return {r:a.r*b.r-a.i*b.i,i:a.r*b.i+a.i*b.r};}
+function cabs(a){return Math.sqrt(a.r*a.r+a.i*a.i);}
+function fmt(x, d) { return (+x.toFixed(d===undefined?4:d)).toString(); }
+function fmtC(z, d) {
+  if (d === undefined) d = 4;
+  var rv = +z.r.toFixed(d), iv = +z.i.toFixed(d);
+  if (Math.abs(iv) < 5e-5) return fmt(rv, d);
+  if (Math.abs(rv) < 5e-5) return fmt(iv, d) + 'i';
+  return fmt(rv, d) + (iv < 0 ? ' - ' : ' + ') + fmt(Math.abs(iv), d) + 'i';
+}
+ 
+// ── Same chain of seven centers as the monodromy widget ───────────────────
+var STEP = {r: 0.6, i: 0.8};
+var N = 7;
+var centers = [{r:1, i:0}];
+for (var k = 1; k < N; k++) centers.push(cmul(centers[k-1], STEP));
+ 
+var COLORS = ['#83a598', '#d3869b', '#b8bb26', '#fabd2f', '#fe8019', '#8ec07c', '#fb4934'];
+var NAMES  = ['blue', 'purple', 'green', 'yellow', 'orange', 'aqua', 'red'];
+ 
+// ── Build the slide list: for each adjacent pair (k, k+1), two slides.
+//    Stops after the aqua/red pair — deliberately never reaches red & blue,
+//    which would close the loop and reveal the sign flip. ──────────────────
+var slides = [];
+for (var k = 0; k < N - 1; k++) {
+  var agreePt = centers[k+1];
+  slides.push({
+    pairA: k, pairB: k+1, shade: false,
+    caption: 'The two solutions agree at <b>a&nbsp;=&nbsp;' + fmtC(agreePt, 3)
+  });
+  slides.push({
+    pairA: k, pairB: k+1, shade: true,
+    caption: 'So, they also agree on this entire overlap.'
+  });
+}
+ 
+var slideIdx = 0;
+ 
+// ── Canvas ────────────────────────────────────────────────────────────────
+var canvas = document.getElementById('psw4-canvas');
+var ctx    = canvas.getContext('2d');
+var CSIZE  = 420;
+var WORLD  = 2.5;
+function toC(wx, wy) { return [(wx/WORLD+1)*CSIZE/2, (1-wy/WORLD)*CSIZE/2]; }
+function hexToRgba(hex, a) {
+  var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+}
+ 
+function drawSlide() {
+  var s = slides[slideIdx];
+  var rpx = 1/WORLD * CSIZE/2;
+ 
+  ctx.clearRect(0, 0, CSIZE, CSIZE);
+ 
+  // Grid
+  ctx.strokeStyle = '#504945'; ctx.lineWidth = 1;
+  for (var v = -2; v <= 2; v++) {
+    var x = (v/WORLD+1)*CSIZE/2;
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CSIZE); ctx.stroke();
+    var y = (1-v/WORLD)*CSIZE/2;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CSIZE,y); ctx.stroke();
+  }
+  // Axes
+  var ox = CSIZE/2, oy = CSIZE/2;
+  ctx.strokeStyle = '#665c54'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(ox,0); ctx.lineTo(ox,CSIZE); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,oy); ctx.lineTo(CSIZE,oy); ctx.stroke();
+ 
+  // All seven disks, faint, for context
+  for (var idx = 0; idx < N; idx++) {
+    var c = toC(centers[idx].r, centers[idx].i);
+    ctx.beginPath(); ctx.arc(c[0], c[1], rpx, 0, 2*Math.PI);
+    ctx.strokeStyle = 'rgba(146,131,116,0.25)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.arc(c[0], c[1], 3, 0, 2*Math.PI);
+    ctx.fillStyle = 'rgba(146,131,116,0.5)'; ctx.fill();
+  }
+ 
+  // Branch point — unlabeled
+  var op = toC(0, 0);
+  ctx.beginPath(); ctx.arc(op[0], op[1], 4, 0, 2*Math.PI);
+  ctx.fillStyle = '#b16286'; ctx.fill();
+ 
+  // The two active disks, bold
+  var cA = centers[s.pairA], cB = centers[s.pairB];
+  var pA = toC(cA.r, cA.i), pB = toC(cB.r, cB.i);
+  var colA = COLORS[s.pairA], colB = COLORS[s.pairB];
+ 
+  ctx.beginPath(); ctx.arc(pA[0], pA[1], rpx, 0, 2*Math.PI);
+  ctx.fillStyle = hexToRgba(colA, 0.08); ctx.fill();
+  ctx.beginPath(); ctx.arc(pA[0], pA[1], rpx, 0, 2*Math.PI);
+  ctx.strokeStyle = colA; ctx.lineWidth = 2.2; ctx.stroke();
+ 
+  ctx.beginPath(); ctx.arc(pB[0], pB[1], rpx, 0, 2*Math.PI);
+  ctx.fillStyle = hexToRgba(colB, 0.08); ctx.fill();
+  ctx.beginPath(); ctx.arc(pB[0], pB[1], rpx, 0, 2*Math.PI);
+  ctx.strokeStyle = colB; ctx.lineWidth = 2.2; ctx.stroke();
+ 
+  // Shade the intersection lens (slide 2 of the pair): clip to disk A, fill disk B
+  if (s.shade) {
+    ctx.save();
+    ctx.beginPath(); ctx.arc(pA[0], pA[1], rpx, 0, 2*Math.PI); ctx.clip();
+    ctx.beginPath(); ctx.arc(pB[0], pB[1], rpx, 0, 2*Math.PI);
+    ctx.fillStyle = 'rgba(251,241,199,0.38)';
+    ctx.fill();
+    ctx.restore();
+    // outline the lens edge lightly by re-stroking both circles on top
+    ctx.beginPath(); ctx.arc(pA[0], pA[1], rpx, 0, 2*Math.PI); ctx.strokeStyle = colA; ctx.lineWidth = 2.2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(pB[0], pB[1], rpx, 0, 2*Math.PI); ctx.strokeStyle = colB; ctx.lineWidth = 2.2; ctx.stroke();
+  }
+ 
+  // Center dots + labels for the two active centers
+  [[cA,colA],[cB,colB]].forEach(function(pair) {
+    var c = pair[0], col = pair[1];
+    var pc = toC(c.r, c.i);
+    ctx.beginPath(); ctx.arc(pc[0], pc[1], 5, 0, 2*Math.PI);
+    ctx.fillStyle = col; ctx.fill();
+    var nx = c.r, ny = c.i, nl = Math.sqrt(nx*nx+ny*ny) || 1;
+    nx /= nl; ny /= nl;
+    var lx = pc[0] + nx*16, ly = pc[1] - ny*16;
+    ctx.fillStyle = col; ctx.font = '11px monospace';
+    ctx.textAlign = (nx < -0.3) ? 'right' : (nx > 0.3 ? 'left' : 'center');
+    ctx.fillText('a=' + fmtC(c, 3), lx, ly);
+    ctx.textAlign = 'left';
+  });
+ 
+  // On slide 1 of the pair, ring the agreement point (= center B) to draw the eye to it
+  if (!s.shade) {
+    ctx.beginPath(); ctx.arc(pB[0], pB[1], 9, 0, 2*Math.PI);
+    ctx.strokeStyle = '#fbf1c7'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+}
+ 
+function updateUI() {
+  var s = slides[slideIdx];
+  document.getElementById('psw4-caption').innerHTML = s.caption;
+  document.getElementById('psw4-pairline').innerHTML =
+    '<span class="dot" style="background:' + COLORS[s.pairA] + '"></span>disk ' + (s.pairA+1) + ' (' + NAMES[s.pairA] + ')'
+    + '&nbsp;&amp;&nbsp;'
+    + '<span class="dot" style="background:' + COLORS[s.pairB] + '"></span>disk ' + (s.pairB+1) + ' (' + NAMES[s.pairB] + ')';
+  document.getElementById('psw4-counter').textContent = (slideIdx+1) + ' / ' + slides.length;
+  document.getElementById('psw4-prev').disabled = (slideIdx === 0);
+  document.getElementById('psw4-next').disabled = (slideIdx === slides.length - 1);
+  drawSlide();
+}
+ 
+document.getElementById('psw4-prev').addEventListener('click', function() {
+  if (slideIdx > 0) { slideIdx--; updateUI(); }
+});
+document.getElementById('psw4-next').addEventListener('click', function() {
+  if (slideIdx < slides.length - 1) { slideIdx++; updateUI(); }
+});
+ 
+updateUI();
+ 
+})(); // end IIFE — no globals leaked
+</script>
+
+<p>
+At the end of the slide show, we compare the solutions on the red and aqua circles. But what happens if we want to go back around, and compare the solutions on the red disk and the original blue disk? 
+</p>
+
+<p>
+Here, we run into a problem: we have no common initial condition! The solution on the red disk was defined using the red point \(0.752 - 0.659i,\) which was located at the edge of the aqua disk. And so, while the red and blue disks overlap, there is no reason for them to have a common value at any point; and indeed, as we saw in the previous section, they don't! 
+</p>
+
+<p>
+The trouble here is that the local uniqueness theorem for differential equations requires you to know one common value in order to conclude that the two solutions coincide -- but there's no common value we can use for the red and blue disks.
+</p>
+
+<h2>Return of the Mobius strip</h2>
+
+<p>
+Recall that, at the start of this article, we highlighted a funny property of the Mobius strip: while you could always <em>locally</em> orient the Mobius strip, globally you cannot label one side as up and one side as down: if you try to label one side as up, and then you move continuously around the Mobius strip, you'll end up labelling that same side as down! 
+</p>
+
+<p>
+This is very similar to what happened with our differential equation: we tried to find a solution, and while we could always do this <em>locally</em>, on small patches of the complex plane, we found that if we went in a circle around the origin, our solution got negated -- instead of \(f(1) = 1,\) if we continue around the origin, we found a solution with \(f(1) = -1.\) This \(+1\) switching to a \(-1\) is just like how, if you go around a Mobius strip, up becomes down. 
+</p>
+
+<p>
+This analogy has a surprising amount of substance to it. In complex analysis, and other advanced parts of mathematics, it is very useful to visualize the space of solutions to a linear differential equation like
+\[\frac{df}{dz} = \frac{1}{2z}f(z)\]
+as a <em>vector bundle</em>, a certain type of geometric object. What do we mean by this? How do we view the set of all solutions to a differential equation as a geometric object?
+</p>
+
+<p>
+Note that, for any <em>nonzero</em> complex number \(a,\) we can use the power series method from before to find a formal power series solution to \(df/dz = f(z)/2z\) centered at \(z=a,\) with any initial condition we want; that is, \(f(a)\) can take on any value we please. (The trouble with \(a=0\) is that the expression \(1/2z\) doesn't make sense at \(0,\) which means the power series method won't work.)
+</p> 
+
+<p>
+Thus, at least near any individual complex number \(a,\) there is a complex plane worth of solutions to \(df/dz = f(z)/2z,\) because every complex number \(\zeta\) gives us a different possible initial condition \(f(a) = \zeta,\) and hence a different solution. 
+</p>
+
+<p>
+We can then create a shape by taking each point of the complex plane and attaching the space of initial conditions to our ODE to it. The final shape is surprisingly complicated; to understand it, we're going to focus on what it looks like above the <em>unit circle</em> in the complex plane: that is, we're going to attach, to each complex number \(z\) with \(|z| = 1,\) the 2-dimensional space of initial conditions for the ODE at that point. 
+</p>
+
+<p>
+At first, you might think that if you attach a 2-dimensional plane (the space of initial conditions) to each point of a circle, the final space you'd get would look something like this: 
+</p>
+<style>
+    .lede {
+      max-width: 760px;
+      color: var(--muted);
+    }
+
+    .figure-card {
+      margin: 2.5rem 0;
+      padding: 18px;
+      border: 2px solid var(--border);
+      border-radius: 7px;
+      background: var(--panel);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+    }
+
+    .figure-kicker {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .figure-title {
+      margin: 0 0 13px;
+      color: var(--text);
+      font-size: 1.35rem;
+      font-weight: 500;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin: 0 0 10px;
+      color: var(--faint);
+      font-size: 11px;
+      font-style: italic;
+    }
+    .legend span { white-space: nowrap; }
+    .swatch {
+      display: inline-block;
+      width: 14px;
+      height: 2px;
+      margin-right: 6px;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+    .swatch.base { background: var(--green); }
+    .swatch.square { background: var(--aqua); }
+
+    .canvas-wrap {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #3c3836;
+      border-radius: 5px;
+      background: var(--bg);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg);
+      cursor: grab;
+      touch-action: none;
+    }
+    canvas:active { cursor: grabbing; }
+
+    .figure-controls {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-top: 12px;
+      min-height: 34px;
+    }
+
+    .status {
+      color: var(--faint);
+      font-size: 12px;
+      font-style: italic;
+    }
+
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .formula {
+      display: inline-block;
+      margin: 0.35rem 0;
+      padding: 0.25rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--panel-soft);
+      color: var(--text);
+      font-family: "Courier New", monospace;
+      font-size: 0.86em;
+    }
+
+    .note {
+      margin-top: 2.6rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--gold);
+      background: rgba(50, 48, 47, 0.72);
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 620px) {
+      body { padding: 28px 14px 52px; font-size: 16px; }
+      .figure-card { padding: 12px; }
+      .figure-controls { flex-direction: column; align-items: flex-start; gap: 7px; }
+    }
+  </style>
+</head>
+<body>
+
+<figure class="figure-card">
+  <div class="legend">
+    <span><i class="swatch base"></i>unit circle</span>
+    <span><i class="swatch square"></i></span>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="bundle-square" width="800" height="500" aria-label="Interactive drawing of a circle with a unit square attached at each point"></canvas>
+  </div>
+  <div class="figure-controls">
+    <span class="status" id="status">drag to rotate</span>
+  </div>
+</figure>
+
+<script>
+(function () {
+  const TAU = 2 * Math.PI;
+  const COLORS = {
+    bg: '#1d2021',
+    panel: '#282828',
+    border: '#504945',
+    gold: '#d79921',
+    goldLight: '#fabd2f',
+    red: '#cc241d',
+    aqua: '#83a598',
+    aquaDark: '#458588',
+    green: '#b8bb26',
+    text: '#ebdbb2',
+    muted: '#a89984',
+    faint: '#665c54'
+  };
+
+  const canvas = document.getElementById('bundle-square');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('status');
+  const W = canvas.width;
+  const H = canvas.height;
+
+  const R = 1.6;
+  const HALF = 0.36;
+  const N = 24;
+
+  let yaw = -0.62;
+  let pitch = 0.92;
+  let dragging = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function clamp(x, lo, hi) {
+    return Math.max(lo, Math.min(hi, x));
+  }
+
+  function rgba(hex, alpha) {
+    const h = hex.replace('#', '');
+    const r = parseInt(h.slice(0, 2), 16);
+    const g = parseInt(h.slice(2, 4), 16);
+    const b = parseInt(h.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  function center(t) {
+    return { x: R * Math.cos(t), y: R * Math.sin(t), z: 0 };
+  }
+
+  function radial(t) {
+    return { x: Math.cos(t), y: Math.sin(t), z: 0 };
+  }
+
+  function vertical() {
+    return { x: 0, y: 0, z: 1 };
+  }
+
+  function add(a, b) {
+    return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z };
+  }
+
+  function scale(v, s) {
+    return { x: v.x * s, y: v.y * s, z: v.z * s };
+  }
+
+  function squareCorners(t) {
+    const c = center(t);
+    const e1 = scale(radial(t), HALF);
+    const e2 = scale(vertical(), HALF);
+    return [
+      add(add(c, e1), e2),
+      add(add(c, scale(e1, -1)), e2),
+      add(add(c, scale(e1, -1)), scale(e2, -1)),
+      add(add(c, e1), scale(e2, -1))
+    ];
+  }
+
+  function rotate(p) {
+    const cy = Math.cos(yaw), sy = Math.sin(yaw);
+    const x1 = cy * p.x - sy * p.y;
+    const y1 = sy * p.x + cy * p.y;
+    const z1 = p.z;
+
+    const cp = Math.cos(pitch), sp = Math.sin(pitch);
+    return {
+      x: x1,
+      y: cp * y1 - sp * z1,
+      z: sp * y1 + cp * z1
+    };
+  }
+
+  function project(p) {
+    const q = rotate(p);
+    const camera = 5.8;
+    const perspective = camera / (camera - q.z);
+    const scale = 126;
+    return {
+      x: W * 0.5 + q.x * scale * perspective,
+      y: H * 0.54 - q.y * scale * perspective,
+      z: q.z,
+      s: perspective
+    };
+  }
+
+  function clear() {
+    ctx.clearRect(0, 0, W, H);
+    const gradient = ctx.createLinearGradient(0, 0, 0, H);
+    gradient.addColorStop(0, '#1f2223');
+    gradient.addColorStop(1, '#17191a');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function drawPolyline(points, color, width, alpha = 1, dash = []) {
+    if (points.length < 2) return;
+    ctx.save();
+    ctx.beginPath();
+    const p0 = project(points[0]);
+    ctx.moveTo(p0.x, p0.y);
+    for (let i = 1; i < points.length; i++) {
+      const p = project(points[i]);
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.strokeStyle = rgba(color, alpha);
+    ctx.lineWidth = width;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function fillPolygon(points, fill, alpha) {
+    const pts = points.map(project);
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.closePath();
+    ctx.fillStyle = rgba(fill, alpha);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawDot(p3, radius, fill, stroke = null) {
+    const p = project(p3);
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, radius * p.s, 0, TAU);
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawFigure() {
+    clear();
+
+    const loop = [];
+    for (let i = 0; i <= 180; i++) loop.push(center(TAU * i / 180));
+
+    const sampleSquares = [];
+    for (let i = 0; i < N; i++) {
+      const t = TAU * i / N;
+      const sq = squareCorners(t);
+      sampleSquares.push({ t, sq, depth: sq.map(project).reduce((s, p) => s + p.z, 0) / 4 });
+    }
+
+    sampleSquares.sort((a, b) => a.depth - b.depth);
+    for (const item of sampleSquares) {
+      fillPolygon(item.sq, COLORS.aqua, 0.08);
+      const closed = item.sq.concat([item.sq[0]]);
+      drawPolyline(closed, COLORS.aqua, 1.25, 0.58);
+    }
+
+    drawPolyline(loop, COLORS.green, 2.4, 0.95);
+
+    const t0 = Math.PI / 5;
+    const sq0 = squareCorners(t0);
+    fillPolygon(sq0, COLORS.aqua, 0.17);
+    drawPolyline(sq0.concat([sq0[0]]), COLORS.aqua, 2.2, 0.96);
+    drawDot(center(t0), 5.1, COLORS.green, COLORS.bg);
+
+    ctx.save();
+    ctx.font = '12px Georgia';
+    ctx.fillStyle = COLORS.faint;
+    ctx.textAlign = 'right';
+    ctx.fillText('base circle with square fibers', W - 18, 24);
+    ctx.restore();
+  }
+
+  canvas.addEventListener('mousedown', function (e) {
+    dragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+
+  window.addEventListener('mousemove', function (e) {
+    if (!dragging) return;
+    yaw += (e.clientX - lastX) * 0.013;
+    pitch += (e.clientY - lastY) * 0.013;
+    pitch = clamp(pitch, -1.35, 1.35);
+    lastX = e.clientX;
+    lastY = e.clientY;
+    drawFigure();
+  });
+
+  window.addEventListener('mouseup', function () {
+    dragging = false;
+  });
+
+  canvas.addEventListener('touchstart', function (e) {
+    dragging = true;
+    lastX = e.touches[0].clientX;
+    lastY = e.touches[0].clientY;
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', function (e) {
+    if (!dragging) return;
+    yaw += (e.touches[0].clientX - lastX) * 0.013;
+    pitch += (e.touches[0].clientY - lastY) * 0.013;
+    pitch = clamp(pitch, -1.35, 1.35);
+    lastX = e.touches[0].clientX;
+    lastY = e.touches[0].clientY;
+    drawFigure();
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', function () {
+    dragging = false;
+  });
+
+  status.textContent = 'drag to rotate';
+  drawFigure();
+})();
+</script>
+<p>
+However, this is not quite what the true space of solutions looks like! Remember: when we move around the circle, the solution with \(f(1) = 1\) turns into the solution with \(f(1) = -1.\) This means that the planes we attach at each point need to <em>twist around</em> as we attach them -- this way, when you loop around the circle, the initial condition \(+1\) becomes the initial condition \(-1.\)
+</p>
+
+<p>
+This twisting is quite hard to visualize in 3-dimensions. To get a sense of what it looks like, let's pretend instead of having a 2-dimensional space of initial conditions, we only had a 1-dimensional space. Then, instead of planes rotating and twisting around in space, we'd have a <em>line</em> rotating and twisting around in space. If we think about the shape such a line would trace out, it is just a Mobius strip! You can see for yourself in the animation below: 
+</p>
+<style>
+    .figure-card {
+      margin: 2.5rem 0;
+      padding: 18px;
+      border: 2px solid var(--border);
+      border-radius: 7px;
+      background: var(--panel);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+    }
+
+    .figure-kicker {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .figure-title {
+      margin: 0 0 13px;
+      color: var(--text);
+      font-size: 1.35rem;
+      font-weight: 500;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin: 0 0 10px;
+      color: var(--faint);
+      font-size: 11px;
+      font-style: italic;
+    }
+    .legend span { white-space: nowrap; }
+    .swatch {
+      display: inline-block;
+      width: 14px;
+      height: 2px;
+      margin-right: 6px;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+    .swatch.base { background: var(--green); }
+    .swatch.surface { background: var(--gold); }
+    .swatch.line { background: var(--aqua); }
+    .swatch.tip { background: var(--gold-light); }
+
+    .canvas-wrap {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #3c3836;
+      border-radius: 5px;
+      background: var(--bg);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg);
+      cursor: grab;
+      touch-action: none;
+    }
+    canvas:active { cursor: grabbing; }
+
+    .figure-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 13px;
+      margin-top: 12px;
+      min-height: 34px;
+    }
+
+    button {
+      flex: 0 0 auto;
+      padding: 7px 17px;
+      border: 0;
+      border-radius: 4px;
+      background: var(--aqua-dark);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 13px;
+      letter-spacing: 0.045em;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.08); }
+
+    .status {
+      color: var(--faint);
+      font-size: 12px;
+      font-style: italic;
+    }
+
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .formula {
+      display: inline-block;
+      margin: 0.35rem 0;
+      padding: 0.25rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--panel-soft);
+      color: var(--text);
+      font-family: "Courier New", monospace;
+      font-size: 0.86em;
+    }
+
+    .note {
+      margin-top: 2.6rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--gold);
+      background: rgba(50, 48, 47, 0.72);
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 620px) {
+      body { padding: 28px 14px 52px; font-size: 16px; }
+      .figure-card { padding: 12px; }
+      .figure-controls { align-items: flex-start; flex-direction: column; gap: 7px; }
+    }
+  </style>
+</head>
+<body>
+
+<figure class="figure-card">
+  <div class="canvas-wrap">
+    <canvas id="mobius-canvas" width="800" height="500" aria-label="Interactive animation of a line rotating and tracing out a Möbius strip"></canvas>
+  </div>
+  <div class="figure-controls">
+    <button id="play-btn">▶ Play</button>
+    <button id="reset-btn">↺ Reset</button>
+    <span class="status" id="status">drag to rotate</span>
+  </div>
+</figure>
+
+<script>
+(function () {
+  const TAU = 2 * Math.PI;
+  const COLORS = {
+    bg: '#1d2021',
+    panel: '#282828',
+    border: '#504945',
+    gold: '#d79921',
+    goldLight: '#fabd2f',
+    red: '#cc241d',
+    aqua: '#83a598',
+    aquaDark: '#458588',
+    green: '#b8bb26',
+    text: '#ebdbb2',
+    muted: '#a89984',
+    faint: '#665c54'
+  };
+
+  const canvas = document.getElementById('mobius-canvas');
+  const ctx = canvas.getContext('2d');
+  const playBtn = document.getElementById('play-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const status = document.getElementById('status');
+
+  const W = canvas.width;
+  const H = canvas.height;
+  const R = 1.6;
+  const HALF_WIDTH = 0.58;
+  const NU = 120;
+  const NV = 24;
+
+  let yaw = -0.58;
+  let pitch = 0.92;
+  let dragging = false;
+  let lastX = 0;
+  let lastY = 0;
+  let playing = false;
+  let progress = 0;
+  let lastTime = performance.now();
+
+  function clamp(x, lo, hi) {
+    return Math.max(lo, Math.min(hi, x));
+  }
+
+  function rgba(hex, alpha) {
+    const h = hex.replace('#', '');
+    const r = parseInt(h.slice(0, 2), 16);
+    const g = parseInt(h.slice(2, 4), 16);
+    const b = parseInt(h.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  function mobius(u, v) {
+    const cu = Math.cos(u), su = Math.sin(u);
+    const c2 = Math.cos(u / 2), s2 = Math.sin(u / 2);
+    return {
+      x: (R + HALF_WIDTH * v * c2) * cu,
+      y: (R + HALF_WIDTH * v * c2) * su,
+      z: HALF_WIDTH * v * s2
+    };
+  }
+
+  function center(u) {
+    return mobius(u, 0);
+  }
+
+  function rotate(p) {
+    const cy = Math.cos(yaw), sy = Math.sin(yaw);
+    const x1 = cy * p.x - sy * p.y;
+    const y1 = sy * p.x + cy * p.y;
+    const z1 = p.z;
+
+    const cp = Math.cos(pitch), sp = Math.sin(pitch);
+    return {
+      x: x1,
+      y: cp * y1 - sp * z1,
+      z: sp * y1 + cp * z1
+    };
+  }
+
+  function project(p) {
+    const q = rotate(p);
+    const camera = 5.8;
+    const perspective = camera / (camera - q.z);
+    const scale = 126;
+    return {
+      x: W * 0.5 + q.x * scale * perspective,
+      y: H * 0.54 - q.y * scale * perspective,
+      z: q.z,
+      s: perspective
+    };
+  }
+
+  function clear() {
+    ctx.clearRect(0, 0, W, H);
+    const gradient = ctx.createLinearGradient(0, 0, 0, H);
+    gradient.addColorStop(0, '#1f2223');
+    gradient.addColorStop(1, '#17191a');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function drawPolyline(points, color, width, alpha = 1, dash = []) {
+    if (points.length < 2) return;
+    ctx.save();
+    ctx.beginPath();
+    const p0 = project(points[0]);
+    ctx.moveTo(p0.x, p0.y);
+    for (let i = 1; i < points.length; i++) {
+      const p = project(points[i]);
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.strokeStyle = rgba(color, alpha);
+    ctx.lineWidth = width;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawDot(p3, radius, fill, stroke = null) {
+    const p = project(p3);
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, radius * p.s, 0, TAU);
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawArrow(a3, b3, color, width, alpha = 1) {
+    const a = project(a3);
+    const b = project(b3);
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len, uy = dy / len;
+    const ah = 8 + width;
+    const aw = 4 + width * 0.55;
+
+    ctx.save();
+    ctx.strokeStyle = rgba(color, alpha);
+    ctx.fillStyle = rgba(color, alpha);
+    ctx.lineWidth = width;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(b.x - ah * ux + aw * uy, b.y - ah * uy - aw * ux);
+    ctx.lineTo(b.x - ah * ux - aw * uy, b.y - ah * uy + aw * ux);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSurface(tMax) {
+    if (tMax <= 0.001) return;
+    const cells = [];
+    const uCount = Math.max(1, Math.floor(NU * tMax));
+    for (let i = 0; i < uCount; i++) {
+      const u0 = TAU * i / NU;
+      const u1 = TAU * Math.min(i + 1, NU * tMax) / NU;
+      for (let j = 0; j < NV; j++) {
+        const v0 = -1 + 2 * j / NV;
+        const v1 = -1 + 2 * (j + 1) / NV;
+        const pts3 = [mobius(u0, v0), mobius(u1, v0), mobius(u1, v1), mobius(u0, v1)];
+        const pts2 = pts3.map(project);
+        const depth = pts2.reduce((s, p) => s + p.z, 0) / 4;
+        const shade = clamp(0.44 + 0.18 * Math.cos((v0 + v1) * 1.6) + 0.10 * depth, 0.18, 0.75);
+        cells.push({ pts2, depth, shade });
+      }
+    }
+
+    cells.sort((a, b) => a.depth - b.depth);
+    for (const cell of cells) {
+      ctx.beginPath();
+      ctx.moveTo(cell.pts2[0].x, cell.pts2[0].y);
+      for (let i = 1; i < 4; i++) ctx.lineTo(cell.pts2[i].x, cell.pts2[i].y);
+      ctx.closePath();
+      ctx.fillStyle = rgba(COLORS.gold, 0.07 + 0.08 * cell.shade);
+      ctx.fill();
+    }
+
+    const wireCount = Math.max(2, Math.floor(14 * tMax));
+    for (let j = 0; j < 9; j++) {
+      const v = -1 + 2 * j / 8;
+      const pts = [];
+      for (let i = 0; i <= wireCount * 8; i++) {
+        const u = TAU * tMax * i / (wireCount * 8);
+        pts.push(mobius(u, v));
+      }
+      drawPolyline(pts, COLORS.gold, 0.8, 0.24);
+    }
+  }
+
+  function drawBaseCircle() {
+    const pts = [];
+    for (let i = 0; i <= 180; i++) pts.push(center(TAU * i / 180));
+    drawPolyline(pts, COLORS.green, 2.3, 0.92);
+  }
+
+  function drawGeneratorGhosts(tMax) {
+    const count = Math.floor(12 * tMax);
+    for (let k = 0; k < count; k++) {
+      const u = TAU * k / 12;
+      const a = mobius(u, -1);
+      const b = mobius(u, 1);
+      drawPolyline([a, b], COLORS.aqua, 1.0, 0.16);
+    }
+  }
+
+  function drawCurrentGenerator(u) {
+    const a = mobius(u, -1);
+    const c = center(u);
+    const b = mobius(u, 1);
+
+    drawPolyline([a, b], COLORS.aqua, 3.4, 0.98);
+    drawDot(a, 5.8, COLORS.goldLight, COLORS.bg);
+    drawDot(b, 5.8, COLORS.goldLight, COLORS.bg);
+    drawDot(c, 4.8, COLORS.green, COLORS.bg);
+
+    const tangentLead = center(Math.min(u + 0.12, TAU));
+    drawArrow(c, tangentLead, COLORS.faint, 1.2, 0.64);
+  }
+
+  function drawStartFrame() {
+    const a = mobius(0, -1);
+    const b = mobius(0, 1);
+    drawPolyline([a, b], COLORS.red, 2.0, 0.62, [6, 5]);
+  }
+
+  function drawOverlayText() {
+    ctx.save();
+    ctx.font = '12px Georgia';
+    ctx.fillStyle = COLORS.faint;
+    ctx.textAlign = 'right';
+    ctx.restore();
+  }
+
+  function updateStatus() {
+    const pct = Math.round(progress * 100);
+    const angle = Math.round(progress * 180);
+    if (progress >= 0.999) {
+      status.textContent = 'full sweep complete — the line has flipped by 180°';
+      status.style.color = COLORS.green;
+    } else if (playing || progress > 0) {
+      status.textContent = `${pct}% traced — line rotated ${angle}°`;
+      status.style.color = COLORS.aqua;
+    } else {
+      status.textContent = 'drag to rotate';
+      status.style.color = COLORS.faint;
+    }
+  }
+
+  function drawFrame() {
+    clear();
+    drawSurface(progress);
+    drawBaseCircle();
+    drawGeneratorGhosts(progress);
+    drawStartFrame();
+    drawCurrentGenerator(TAU * progress);
+    drawOverlayText();
+    updateStatus();
+  }
+
+  function tick(ts) {
+    const dt = Math.min((ts - lastTime) / 1000, 0.05);
+    lastTime = ts;
+
+    if (playing) {
+      progress += dt / 8.8;
+      if (progress >= 1) {
+        progress = 1;
+        playing = false;
+        playBtn.textContent = '▶ Replay sweep';
+      }
+    }
+
+    drawFrame();
+    requestAnimationFrame(tick);
+  }
+
+  playBtn.addEventListener('click', function () {
+    if (progress >= 0.999) progress = 0;
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pause' : (progress > 0 ? '▶ Resume sweep' : '▶ Play sweep');
+    lastTime = performance.now();
+  });
+
+  resetBtn.addEventListener('click', function () {
+    progress = 0;
+    playing = false;
+    playBtn.textContent = '▶ Play sweep';
+    updateStatus();
+    drawFrame();
+  });
+
+  canvas.addEventListener('mousedown', function (e) {
+    dragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+
+  window.addEventListener('mousemove', function (e) {
+    if (!dragging) return;
+    yaw += (e.clientX - lastX) * 0.013;
+    pitch += (e.clientY - lastY) * 0.013;
+    pitch = clamp(pitch, -1.35, 1.35);
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+
+  window.addEventListener('mouseup', function () {
+    dragging = false;
+  });
+
+  canvas.addEventListener('touchstart', function (e) {
+    dragging = true;
+    lastX = e.touches[0].clientX;
+    lastY = e.touches[0].clientY;
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', function (e) {
+    if (!dragging) return;
+    yaw += (e.touches[0].clientX - lastX) * 0.013;
+    pitch += (e.touches[0].clientY - lastY) * 0.013;
+    pitch = clamp(pitch, -1.35, 1.35);
+    lastX = e.touches[0].clientX;
+    lastY = e.touches[0].clientY;
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', function () {
+    dragging = false;
+  });
+
+  updateStatus();
+  drawFrame();
+  requestAnimationFrame(tick);
+})();
+</script>
+
+<p>
+So, the Mobius strip is literally <em>part of the vector bundle of solutions to our differential equation!</em> The full vector bundle would be obtained by rotating a plane instead of a line, but this is harder to draw in 3-dimensional space. 
+</p>
+
+<p>
+The punchline to all this, though, is that the strange Mobius strip arises in this very concrete way when thinking about the solutions to differential equations! 
+</p>
+
+<p>
+This geometric approach to differential equations -- that is, thinking about the vector bundle of all solutions to a linear ODE -- is incredibly helpful in modern complex analysis, as it allows the tools of algebraic geometry and algebraic topology to say things about differential equations. In this example, the non-orientability of the Mobius strip is essentially equivalent to the fact that our differential equation had no global solution (for experts, both of these facts are just us asserting that the vector bundle of solutions to our ODE is the complex line bundle on \(S^1\) corresponding to the group homomorphism \(\pi_1(S^1) \to \mathbb{C}^{\times}\) which sends a single loop to \(-1\)).
+</p>
+
+<p>
+The Mobius strip, and related wacky shapes, were not just invented for amusement (though amusing they are): they have helpful mathematical purposes.
+</p>
 
 </body>
 
@@ -2281,6 +3509,7 @@ TODO
 </script>
 <!-- End MailerLite Universal -->
 <footer>
+<a href="../index.html">← back to home page</a>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
 
