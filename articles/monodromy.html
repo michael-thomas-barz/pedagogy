@@ -25,7 +25,7 @@ Algebraic topology is a field of mathematics which is usually presented as the s
 </p>
 
 <p>
-It turns out that a huge number of mathematical problems can be profitably turned into geometry problems; however, when you take a random problem and convert it into a geometry problem, you might get some crazy shapes as the output! Algebraic topology gives us a simple way to understand the geometric phenomena underlying this shapes.
+Humans tend to be best at solving geometry problems, as they allow us to leverage our visual intuition. So, in many kinds of math, one often tries to turn a problem into a geometry problem. This can lead to some quite strange shapes, which you might not come up with on your own if you had just set out to create shapes; algebraic topology gives us ways to study these strange shapes.
 </p>
 
 <p>
@@ -35,7 +35,7 @@ To try and illustrate this perspective, today we're going to explain one of hist
 <h2>The Mobius strip</h2>
 
 <p>
-We mentioned in the introducing that turning math problems into geometry problems sometimes leaves you with very strange shapes. It turns out that the shape relevant to our problem will be the Mobius strip! So, before getting into our differential equation, we want to take some time to explain the Mobius strip, and point out a strange geometric property of it. 
+Turning math problems into geometry problems sometimes leaves you with very strange shapes. It turns out that the shape relevant to our problem will be the Mobius strip! So, before getting into our differential equation, we want to take some time to explain the Mobius strip, and point out a strange geometric property of it. 
 </p>
 
 <p>
@@ -1261,12 +1261,12 @@ function fracHTML(f) {
     var c = coeffs[n];
     var neg = c.n < 0;
 
-    if (n > 0) html += '<span class="psw-op">' + (neg ? '&minus;' : '+') + '</span>';
+    if (n > 0) html += '<span class="psw-op">' + (neg ? '-' : '+') + '</span>';
 
     html += fracHTML(c);
 
-    if (n === 1) html += '<span class="psw-var">(z&minus;1)</span>';
-    else if (n >= 2) html += '<span class="psw-var">(z&minus;1)<sup>' + n + '</sup></span>';
+    if (n === 1) html += '<span class="psw-var">(z-1)</span>';
+    else if (n >= 2) html += '<span class="psw-var">(z-1)<sup>' + n + '</sup></span>';
   }
 
   html += '<span class="psw-op">+</span><span class="psw-ell">&hellip;</span>';
@@ -1287,7 +1287,7 @@ function fmtC(z, d) {
   var rv = +z.r.toFixed(d), iv = +z.i.toFixed(d);
   if (Math.abs(iv) < 5e-5) return fmt(rv, d);
   if (Math.abs(rv) < 5e-5) return fmt(iv, d) + 'i';
-  return fmt(rv, d) + (iv < 0 ? ' &minus; ' : ' + ') + fmt(Math.abs(iv), d) + 'i';
+  return fmt(rv, d) + (iv < 0 ? ' - ' : ' + ') + fmt(Math.abs(iv), d) + 'i';
 }
 
 // ── Show evaluation result ────────────────────────────────────────────────
@@ -1321,10 +1321,10 @@ function showResult(z) {
       part = cStr; // just "1"
     } else if (n === 1) {
       var dzStr = fmtC(dz, 3);
-      part = (neg ? '&minus;' : '') + absCStr + '&middot;(' + dzStr + ')';
+      part = (neg ? '-' : '') + absCStr + '&middot;(' + dzStr + ')';
     } else {
       var dznStr = fmtC(dzn, 3);
-      part = (neg ? '&minus;' : '') + absCStr + '&middot;(' + dznStr + ')';
+      part = (neg ? '-' : '') + absCStr + '&middot;(' + dznStr + ')';
     }
 
     termParts.push(part);
@@ -1335,14 +1335,8 @@ function showResult(z) {
   var zStr   = fmtC(z, 3);
 
   // Assemble: f([z]) ≈ [term0] + [term1] + [term2] = [value]
-  var html = 'f(' + zStr + ')&nbsp;&asymp;&nbsp;'
-    + termParts[0];
-  for (var i = 1; i < termParts.length; i++) {
-    // sign already embedded in termParts for n>=1 negative terms
-    var isNeg = coeffs[i].n < 0;
-    html += '&nbsp;' + (isNeg ? '' : '+') + '&nbsp;' + termParts[i];
-  }
-  html += '&nbsp;=&nbsp;<strong>' + sumStr + '</strong>';
+  var html = 'f(' + zStr + ')&nbsp;&asymp;&nbsp;';
+  html += '&nbsp;&nbsp;<strong>' + sumStr + '</strong>';
 
   el.innerHTML = html;
 }
@@ -1408,7 +1402,6 @@ function drawCanvas() {
   ctx.beginPath(); ctx.arc(op[0], op[1], 4, 0, 2*Math.PI);
   ctx.fillStyle = '#b16286'; ctx.fill();
   ctx.fillStyle = '#b16286'; ctx.font = '12px serif';
-  ctx.fillText('0 (branch pt)', op[0]+6, op[1]-6);
 
   // Clicked point
   if (clickedPoint) {
@@ -1469,15 +1462,812 @@ drawCanvas();
 <!-- ── End Power Series Widget ──────────────────────────────────────────── -->
 
 <p>
-At the point \(z=0,\) where our differential equation makes no sense, the power series does something interesting: it diverges! It turns out that the power series solution we found is given by 
-\[f(z) = \sum_{n=0}^{\infty} \frac{(1 - 2)(1 - 4)\cdots (1 - 2(n-1))}{n! \cdot 2^n}(z-1)^n.\]
-I'll remark that some people write the coefficients of this sum as the binomial coefficient \(\binom{1/2}{n},\) but if you don't know what that means you can ignore it.
+Unfortunately, for values of \(z\) outside of the highlighted blue circle, the formal power series solution we just found will <em>not always converge</em>. With complex analysis, one can prove that \(f(z)\) has <em>radius of convergence one</em>: this means that whenever \(z\) is inside of that blue circle above, the series \(f(z)\) will converge, but for values of \(z\) outside of that circle, sometimes the infinite sum \(f(z)\) will not make sense.
 </p>
 
 <p>
-When we plug in \(z=0,\) this infinite sum becomes
-\[f(1) = \sum_{n=0}^{\infty} \frac{(1-2)(1-4)\cdots (1-2(n-1))}{}
+As an example, it turns out the general term of our sum looks like
+\[f(z) = \sum_{n=0}^{\infty} \binom{1/2}{n} \cdot (z-1)^n,\]
+where \(\binom{1/2}{n},\) pronounced "one-half choose \(n,\)" is the number
+\[\binom{1/2}{n} := \frac{\frac{1}{2} \cdot \left(\frac{1}{2} - 1\right) \cdots \left(\frac{1}{2} - (n-1)\right)}{n!}.\]
 </p>
+
+<p>
+If we plug in \(z = -1\) to the above expression, we get
+\[f(-1) = \sum_{n=0}^{\infty} \binom{1/2}{n} \cdot (-2)^n.\]
+The first few terms of this sum look like
+\[1 - 1 - \frac{1}{2} - \frac{1}{2} - \frac{5}{8} - \frac{7}{8} - \frac{21}{16} - \cdots.\]
+Observe how, after the initial \(1-1,\) the terms just get more and more negative; it turns out that this continues to happen, and so
+\[f(-1) = -\infty,\]
+as we keep subtracting larger and larger numbers.
+</p>
+
+<p>
+This is annoying! We would love to solve our differential equation on the entire complex plane, but so far we can only solve it in a tiny disk.
+</p>
+
+<p>
+However, note that we found this power series by doing term-by-term expansion centered around the point \(z=1.\) There's no reason we couldn't just do term-by-term expansion centered around a <em>different point</em>. 
+</p>
+
+<p>
+For example, let's take a point \(\alpha = 0.6 + 0.8i,\) which is near the edge of our blue circle. Using our first power series solution, we find that \(f(\alpha) \approx 0.8944 + 0.4472i.\) Using this as the initial condition, we can use the recurrence method from before to find a formal power series solution to
+\[\frac{df}{dz} = \frac{1}{2z}f(z)\]
+centered at \(\alpha.\) In the widget below, you can click on points to plug in values.
+</p>
+
+<style>
+.psw2 * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+.psw2 {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17px;
+  color: #ebdbb2;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+ 
+.psw2-box {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  padding: 1.1rem 1.4rem;
+  background: #32302f;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.88rem;
+  color: #ebdbb2;
+  line-height: 2.4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 0;
+}
+ 
+.psw2-box .psw2-lhs { margin-right: 0.4rem; white-space: nowrap; }
+.psw2-box .psw2-label {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #928374;
+  width: 100%;
+  margin-bottom: 0.3rem;
+}
+ 
+.psw2-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  font-size: 0.78rem;
+  line-height: 1.15;
+  margin: 0 1px;
+}
+.psw2-frac-n { border-bottom: 1px solid #ebdbb2; padding: 0 3px; }
+.psw2-frac-d { padding: 0 3px; }
+ 
+.psw2-op   { padding: 0 0.35rem; color: #928374; }
+.psw2-var  { }
+.psw2-ell  { color: #928374; }
+.psw2-const { color: #d3869b; }
+ 
+.psw2-note {
+  font-size: 0.85rem;
+  color: #928374;
+  line-height: 1.5;
+}
+.psw2-note b { color: #bdae93; font-weight: 600; }
+ 
+.psw2-eval {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  padding: 1.1rem 1.4rem;
+  background: #32302f;
+  min-height: 3.5rem;
+}
+.psw2-eval-placeholder { font-style: italic; color: #928374; font-size: 0.9rem; }
+.psw2-eval-result {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 2.1;
+  color: #ebdbb2;
+  display: none;
+}
+.psw2-eval-result .psw2-r1tag { color: #83a598; }
+.psw2-eval-result .psw2-r2tag { color: #d3869b; }
+.psw2-eval-result .psw2-agree { color: #b8bb26; font-style: italic; font-size: 0.8rem; }
+ 
+.psw2-canvas-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+.psw2-canvas-label {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #928374;
+}
+.psw2-canvas {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  background: #32302f;
+  cursor: crosshair;
+  display: block;
+  width: 380px;
+  height: 380px;
+  touch-action: none;
+}
+.psw2-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: #928374;
+}
+.psw2-legend span.sw {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+ 
+@media (max-width: 540px) {
+  .psw2 { font-size: 15px; }
+  .psw2-box { font-size: 0.76rem; }
+  .psw2-canvas { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+  .psw2-eval-result { font-size: 0.75rem; }
+}
+</style>
+ 
+<div class="psw2">
+ 
+  <div class="psw2-box" id="psw2-series1">
+    <div class="psw2-label">expansion around 1 (same one as above)</div>
+    <!-- filled by JS -->
+  </div>
+ 
+  <div class="psw2-box" id="psw2-series2">
+    <div class="psw2-label">expansion around a = 0.6 + 0.8i</div>
+    <!-- filled by JS -->
+  </div>
+ 
+  <div class="psw2-eval" id="psw2-eval">
+    <div class="psw2-eval-placeholder" id="psw2-placeholder">
+    </div>
+    <div class="psw2-eval-result" id="psw2-result"></div>
+  </div>
+ 
+  <div class="psw2-canvas-wrap">
+    <div class="psw2-canvas-label">z &mdash; plane</div>
+    <canvas class="psw2-canvas" id="psw2-canvas" width="380" height="380"></canvas>
+    <div class="psw2-legend">
+      <span><span class="sw" style="background:#83a598;"></span>disk around a = 1</span>
+      <span><span class="sw" style="background:#d3869b;"></span>disk around a; = 0.6+0.8i</span>
+    </div>
+  </div>
+ 
+</div>
+ 
+<script>
+(function() {
+ 
+// ── Rational arithmetic (for displaying exact coefficients) ────────────────
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t=b; b=a%b; a=t; } return a; }
+function frac(n, d) {
+  if (d === 0) return {n:0, d:1};
+  if (d < 0)  { n=-n; d=-d; }
+  var g = gcd(Math.abs(n), d) || 1;
+  return {n: n/g, d: d/g};
+}
+function fracVal(f) { return f.n / f.d; }
+ 
+function binomFrac(n) {
+  var r = frac(1, 1);
+  for (var k = 0; k < n; k++) r = frac(r.n * (1 - 2*k), r.d * 2*(k+1));
+  return r;
+}
+ 
+var NTERMS_DISPLAY = 5;   // terms shown in the written-out formula
+var NTERMS_COMPUTE  = 9;  // terms actually summed when evaluating (more accurate)
+ 
+var coeffsDisplay = [];
+for (var n = 0; n < NTERMS_DISPLAY; n++) coeffsDisplay.push(binomFrac(n));
+var coeffsCompute = [];
+for (var n = 0; n < NTERMS_COMPUTE; n++) coeffsCompute.push(binomFrac(n));
+ 
+function fracHTML(f) {
+  var absn = Math.abs(f.n);
+  if (f.d === 1) return String(absn);
+  return '<span class="psw2-frac">'
+    + '<span class="psw2-frac-n">' + absn + '</span>'
+    + '<span class="psw2-frac-d">' + f.d + '</span>'
+    + '</span>';
+}
+ 
+function seriesTermsHTML(coeffsArr, varLabel) {
+  var html = '';
+  for (var n = 0; n < coeffsArr.length; n++) {
+    var c = coeffsArr[n];
+    var neg = c.n < 0;
+    if (n > 0) html += '<span class="psw2-op">' + (neg ? '-' : '+') + '</span>';
+    html += fracHTML(c);
+    if (n === 1) html += '<span class="psw2-var">' + varLabel + '</span>';
+    else if (n >= 2) html += '<span class="psw2-var">' + varLabel + '<sup>' + n + '</sup></span>';
+  }
+  html += '<span class="psw2-op">+</span><span class="psw2-ell">&hellip;</span>';
+  return html;
+}
+ 
+// ── Complex arithmetic ────────────────────────────────────────────────────
+function cadd(a,b){return {r:a.r+b.r,i:a.i+b.i};}
+function csub(a,b){return {r:a.r-b.r,i:a.i-b.i};}
+function cmul(a,b){return {r:a.r*b.r-a.i*b.i,i:a.r*b.i+a.i*b.r};}
+function cdiv(a,b){var d=b.r*b.r+b.i*b.i; return {r:(a.r*b.r+a.i*b.i)/d, i:(a.i*b.r-a.r*b.i)/d};}
+function cabs(a){return Math.sqrt(a.r*a.r+a.i*a.i);}
+function csqrt(a){var r=cabs(a),t=Math.atan2(a.i,a.r),sr=Math.sqrt(r);return{r:sr*Math.cos(t/2),i:sr*Math.sin(t/2)};}
+ 
+function fmt(x, d) { return (+x.toFixed(d===undefined?4:d)).toString(); }
+function fmtC(z, d) {
+  if (d === undefined) d = 4;
+  var rv = +z.r.toFixed(d), iv = +z.i.toFixed(d);
+  if (Math.abs(iv) < 5e-5) return fmt(rv, d);
+  if (Math.abs(rv) < 5e-5) return fmt(iv, d) + 'i';
+  return fmt(rv, d) + (iv < 0 ? ' - ' : ' + ') + fmt(Math.abs(iv), d) + 'i';
+}
+ 
+// ── The two centers ──────────────────────────────────────────────────────
+var A  = {r: 1,   i: 0};      // center of the original series (from the post)
+var Z0 = {r: 0.6, i: 0.8};    // our new center: |Z0| = 1, |Z0 - 1| ≈ 0.894
+var sqrtZ0 = csqrt(Z0);       // = (2+i)/√5 exactly
+ 
+// ── Build the two formula boxes ─────────────────────────────────────────
+(function buildBoxes() {
+  var el1 = document.getElementById('psw2-series1');
+  el1.innerHTML += '<span class="psw2-lhs">f(z) =</span>' + seriesTermsHTML(coeffsDisplay, '(z-1)');
+ 
+  var el2 = document.getElementById('psw2-series2');
+  el2.innerHTML += '<span class="psw2-lhs">f(z) =</span>'
+    + '<span class="psw2-const">(' + fmtC(sqrtZ0, 4) + ')</span>'
+    + '<span class="psw2-op">&middot;</span>[ '
+    + seriesTermsHTML(coeffsDisplay, '(z-0.6-0.8i)');
+})();
+ 
+// ── Series evaluation (uses more terms than are displayed, for accuracy) ──
+function series1Value(z) {
+  var dz = csub(z, A);
+  var sum = {r:0,i:0}, dzn = {r:1,i:0};
+  for (var n = 0; n < NTERMS_COMPUTE; n++) {
+    sum = cadd(sum, cmul({r: fracVal(coeffsCompute[n]), i:0}, dzn));
+    dzn = cmul(dzn, dz);
+  }
+  return sum;
+}
+function series2Value(z) {
+  var w = cdiv(csub(z, Z0), Z0);
+  var inner = {r:0,i:0}, wn = {r:1,i:0};
+  for (var n = 0; n < NTERMS_COMPUTE; n++) {
+    inner = cadd(inner, cmul({r: fracVal(coeffsCompute[n]), i:0}, wn));
+    wn = cmul(wn, w);
+  }
+  return cmul(sqrtZ0, inner);
+}
+ 
+// ── Show evaluation result ──────────────────────────────────────────────
+function showResult(z, d1, d2) {
+  document.getElementById('psw2-placeholder').style.display = 'none';
+  var el = document.getElementById('psw2-result');
+  el.style.display = 'block';
+ 
+  var zStr = fmtC(z, 3);
+  var inA  = d1 < 1;
+  var inZ0 = d2 < 1;
+  var html = '';
+ 
+  if (inA)  { var v1 = series1Value(z); }
+  if (inZ0) { var v2 = series2Value(z); }
+ 
+  if (inA && inZ0) {
+    html += '<span class="psw2-r1tag">series @ a&nbsp;=&nbsp;1</span>&nbsp;&nbsp;f(' + zStr + ')&nbsp;&asymp;&nbsp;<strong>' + fmtC(v1,4) + '</strong><br>';
+    html += '<span class="psw2-r2tag">series @ a = 0.6+0.8i;</span>&nbsp;&nbsp;&nbsp;&nbsp;f(' + zStr + ')&nbsp;&asymp;&nbsp;<strong>' + fmtC(v2,4) + '</strong><br>';
+  } else if (inA) {
+    html += '<span class="psw2-r1tag">series @ a&nbsp;=&nbsp;1</span>&nbsp;&nbsp;f(' + zStr + ')&nbsp;&asymp;&nbsp;<strong>' + fmtC(v1,4) + '</strong>';
+  } else if (inZ0) {
+    html += '<span class="psw2-r2tag">series @ a = 0.6+0.8i;</span>&nbsp;&nbsp;&nbsp;&nbsp;f(' + zStr + ')&nbsp;&asymp;&nbsp;<strong>' + fmtC(v2,4) + '</strong>';
+  }
+ 
+  el.innerHTML = html;
+}
+ 
+// ── Canvas ────────────────────────────────────────────────────────────────
+var canvas = document.getElementById('psw2-canvas');
+var ctx    = canvas.getContext('2d');
+var CSIZE  = 380;
+var WORLD  = 2.6;
+ 
+function toC(wx, wy) {
+  return [(wx/WORLD+1)*CSIZE/2, (1-wy/WORLD)*CSIZE/2];
+}
+ 
+var clickedPoint = null;
+var missPoint = null;
+ 
+function drawCanvas() {
+  ctx.clearRect(0, 0, CSIZE, CSIZE);
+ 
+  // Grid
+  ctx.strokeStyle = '#504945'; ctx.lineWidth = 1;
+  for (var v = -2; v <= 2; v++) {
+    var x = (v/WORLD+1)*CSIZE/2;
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CSIZE); ctx.stroke();
+    var y = (1-v/WORLD)*CSIZE/2;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CSIZE,y); ctx.stroke();
+  }
+ 
+  // Axes
+  var ox = CSIZE/2, oy = CSIZE/2;
+  ctx.strokeStyle = '#665c54'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(ox,0); ctx.lineTo(ox,CSIZE); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,oy); ctx.lineTo(CSIZE,oy); ctx.stroke();
+ 
+  // Axis labels
+  ctx.fillStyle = '#928374'; ctx.font = '11px monospace';
+  for (var v = -2; v <= 2; v++) {
+    if (v === 0) continue;
+    var x = (v/WORLD+1)*CSIZE/2;
+    ctx.fillText(String(v), x-4, oy+15);
+    var y = (1-v/WORLD)*CSIZE/2;
+    ctx.fillText(v+'i', ox+4, y+4);
+  }
+ 
+  // Disk around a = 1 (blue, matches original widget)
+  var cA = toC(A.r, A.i);
+  var rpx = 1/WORLD * CSIZE/2;
+  ctx.beginPath(); ctx.arc(cA[0], cA[1], rpx, 0, 2*Math.PI);
+  ctx.fillStyle = 'rgba(131,165,152,0.10)'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cA[0], cA[1], rpx, 0, 2*Math.PI);
+  ctx.strokeStyle = '#83a598'; ctx.lineWidth = 2; ctx.stroke();
+ 
+  // Disk around z0 (pink)
+  var cZ0 = toC(Z0.r, Z0.i);
+  ctx.beginPath(); ctx.arc(cZ0[0], cZ0[1], rpx, 0, 2*Math.PI);
+  ctx.fillStyle = 'rgba(211,134,155,0.10)'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cZ0[0], cZ0[1], rpx, 0, 2*Math.PI);
+  ctx.strokeStyle = '#d3869b'; ctx.lineWidth = 2; ctx.stroke();
+ 
+  // Center dot a = 1
+  ctx.beginPath(); ctx.arc(cA[0], cA[1], 5, 0, 2*Math.PI);
+  ctx.fillStyle = '#d79921'; ctx.fill();
+  ctx.fillStyle = '#d79921'; ctx.font = '13px serif';
+  ctx.fillText('a = 1', cA[0]+9, cA[1]-8);
+ 
+  // Center dot z0
+  ctx.beginPath(); ctx.arc(cZ0[0], cZ0[1], 5, 0, 2*Math.PI);
+  ctx.fillStyle = '#d3869b'; ctx.fill();
+  ctx.fillStyle = '#d3869b'; ctx.font = '13px serif';
+  ctx.fillText('z\u2080', cZ0[0]+9, cZ0[1]-8);
+ 
+  // Branch point
+  var op = toC(0, 0);
+  ctx.beginPath(); ctx.arc(op[0], op[1], 4, 0, 2*Math.PI);
+  ctx.fillStyle = '#b16286'; ctx.fill();
+  ctx.fillStyle = '#b16286'; ctx.font = '12px serif';
+ 
+  // Clicked point
+  if (clickedPoint) {
+    var cp = toC(clickedPoint.r, clickedPoint.i);
+    ctx.beginPath(); ctx.arc(cp[0], cp[1], 6, 0, 2*Math.PI);
+    ctx.fillStyle = '#fbf1c7'; ctx.fill();
+    ctx.strokeStyle = 'rgba(29,32,33,0.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+ 
+  // Miss flash
+  if (missPoint) {
+    var mp = toC(missPoint.r, missPoint.i);
+    ctx.beginPath(); ctx.arc(mp[0], mp[1], 12, 0, 2*Math.PI);
+    ctx.fillStyle = 'rgba(251,73,52,0.25)'; ctx.fill();
+  }
+}
+ 
+// ── Input ─────────────────────────────────────────────────────────────────
+function handleTap(cssX, cssY) {
+  var rect = canvas.getBoundingClientRect();
+  var ix = (cssX - rect.left) * (CSIZE / rect.width);
+  var iy = (cssY - rect.top)  * (CSIZE / rect.height);
+  var wx =  ix/CSIZE * 2*WORLD - WORLD;
+  var wy = -(iy/CSIZE * 2*WORLD - WORLD);
+  var z  = {r: wx, i: wy};
+ 
+  var d1 = cabs(csub(z, A));
+  var d2 = cabs(csub(z, Z0));
+ 
+  if (d1 >= 1 && d2 >= 1) {
+    missPoint = z; clickedPoint = null;
+    drawCanvas();
+    setTimeout(function(){ missPoint = null; drawCanvas(); }, 350);
+    return;
+  }
+ 
+  missPoint = null;
+  clickedPoint = z;
+  drawCanvas();
+  showResult(z, d1, d2);
+}
+ 
+canvas.addEventListener('click', function(e) { handleTap(e.clientX, e.clientY); });
+canvas.addEventListener('touchend', function(e) {
+  e.preventDefault();
+  handleTap(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+}, {passive: false});
+ 
+drawCanvas();
+ 
+})(); // end IIFE — no globals leaked
+</script>
+
+<p>
+In the widget, we display two different formal power series solutions to our ODE, each centered around different points. The first one is the same one from before, and converges inside the blue circle; the second one is new, and converges inside the purple circle.
+</p>
+
+<p>
+If you click on a point \(z\) in the blue circle, your computer will use the formal power series to calculate \(f(z)\) using our power series from before; and if you click on a point \(z\) in the purple circle, your computer will use the new power series to calculate \(f(z).\)
+</p>
+
+<p>
+Click on different points of the <em>intersection</em> of the two circles, and compare the values of the two different power series. You should find that they are <em>exactly the same</em>, up to rounding errors (these are infinite sums, but your computer can only do finitely many terms!). 
+</p>
+
+<p>
+So now we have a solution to
+\[\frac{df}{dz} = \frac{1}{2z}f(z)\]
+which obeys \(f(1) = 1,\) and makes sense in the <em>union</em> of the blue and purple circles: in the purple circle use the new formula, in the blue circle use the old formula, and on the overlap the two formulas give the same answer, so it doesn't matter which you use!
+</p>
+
+<h2>Monodromy</h2>
+
+<p>
+Let's recap what just happened: we found a solution to 
+\[\frac{df}{dz} = \frac{1}{2z}f(z)\]
+inside a small blue circle, by expanding 
+\[f(z) = a_0 + a_1(z-1) + a_2(z-1)^2 + \cdots\]
+as a formal power series around \(z=1\); the differential equation became a recurrence on the coefficients \(a_n,\) and the initial condition \(f(1) = 1\) just became the initial condition \(a_0 = 1\) of our recurrence.
+
+The resulting power series only made sense on a small blue disk, but we wanted a solution over the entire complex plane -- so, we repeated our recurrence procedure, but starting with the different center value \(0.6 + 0.8i\) instead. The differential equation again turns into a recurrence relation, and we can get the initial condition of our recurrence using the original formula to calcualte \(f(0.6 + 0.8i).\)
+</p>
+
+<p>
+This extended our solution from the blue circle to the union of the blue circle and the purple circle. Since this worked so well, let's go further: pick a point near the edge of the purple circle, and find a power series solution centered at that point! And then do this again and again and again, until we've covered the entire complex plane with circles! 
+</p>
+
+<p>
+Unfortunately, while this plan works great in theory, something very peculiar happens when we try implementing it. To see why, consider the following widget. In it, we did the same 'pick a point near the boundary and solve the differential equation centered there' repeatedly, giving us a total of seven different formulas for \(f(z),\) each of which makes sense on a different circle. If you click a point in any of the circles, your computer will calculate the value of the value of \(f(z)\) using any of the formulas which make sense (so, if your point is in exactly one circle, it will use that circle's formula, but if your point is in two circles, it will show you the answers you get using the formulas associated to both circles). 
+</p>
+
+<p>
+There are a <em>lot</em> of circles on screen, so try not get overwhelmed -- just click a few points and see the values! 
+</p>
+
+<style>
+.psw3 * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+.psw3 {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17px;
+  color: #ebdbb2;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+ 
+.psw3-note {
+  font-size: 0.88rem;
+  color: #928374;
+  line-height: 1.55;
+}
+.psw3-note b { color: #bdae93; font-weight: 600; }
+ 
+.psw3-eval {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  padding: 1.1rem 1.4rem;
+  background: #32302f;
+  min-height: 3.5rem;
+}
+.psw3-eval-placeholder { font-style: italic; color: #928374; font-size: 0.9rem; }
+.psw3-eval-result {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 2.15;
+  color: #ebdbb2;
+  display: none;
+}
+.psw3-dot {
+  display: inline-block;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  margin-right: 7px;
+}
+.psw3-agree   { color: #b8bb26; font-style: italic; font-size: 0.8rem; }
+.psw3-clash   { color: #fb4934; font-style: italic; font-size: 0.8rem; }
+ 
+.psw3-canvas-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+.psw3-canvas-label {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #928374;
+}
+.psw3-canvas {
+  border: 1px solid #504945;
+  border-radius: 5px;
+  background: #32302f;
+  cursor: crosshair;
+  display: block;
+  width: 420px;
+  height: 420px;
+  touch-action: none;
+}
+ 
+@media (max-width: 540px) {
+  .psw3 { font-size: 15px; }
+  .psw3-canvas { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+  .psw3-eval-result { font-size: 0.76rem; }
+}
+</style>
+ 
+<div class="psw3">
+ 
+  <div class="psw3-eval" id="psw3-eval">
+    <div class="psw3-eval-placeholder" id="psw3-placeholder">
+    </div>
+    <div class="psw3-eval-result" id="psw3-result"></div>
+  </div>
+ 
+  <div class="psw3-canvas-wrap">
+    <div class="psw3-canvas-label">z &mdash; plane</div>
+    <canvas class="psw3-canvas" id="psw3-canvas" width="420" height="420"></canvas>
+  </div>
+ 
+</div>
+ 
+<script>
+(function() {
+ 
+// ── Rational arithmetic (only used internally to get exact binomial coeffs) ─
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t=b; b=a%b; a=t; } return a; }
+function frac(n, d) {
+  if (d === 0) return {n:0, d:1};
+  if (d < 0)  { n=-n; d=-d; }
+  var g = gcd(Math.abs(n), d) || 1;
+  return {n: n/g, d: d/g};
+}
+function fracVal(f) { return f.n / f.d; }
+function binomFrac(n) {
+  var r = frac(1, 1);
+  for (var k = 0; k < n; k++) r = frac(r.n * (1 - 2*k), r.d * 2*(k+1));
+  return r;
+}
+var NTERMS = 14; // internal precision (not displayed — no formula boxes this time)
+var coeffs = [];
+for (var n = 0; n < NTERMS; n++) coeffs.push(binomFrac(n));
+ 
+// ── Complex arithmetic ────────────────────────────────────────────────────
+function cadd(a,b){return {r:a.r+b.r,i:a.i+b.i};}
+function csub(a,b){return {r:a.r-b.r,i:a.i-b.i};}
+function cmul(a,b){return {r:a.r*b.r-a.i*b.i,i:a.r*b.i+a.i*b.r};}
+function cdiv(a,b){var d=b.r*b.r+b.i*b.i; return {r:(a.r*b.r+a.i*b.i)/d, i:(a.i*b.r-a.r*b.i)/d};}
+function cabs(a){return Math.sqrt(a.r*a.r+a.i*a.i);}
+ 
+function fmt(x, d) { return (+x.toFixed(d===undefined?4:d)).toString(); }
+function fmtC(z, d) {
+  if (d === undefined) d = 4;
+  var rv = +z.r.toFixed(d), iv = +z.i.toFixed(d);
+  if (Math.abs(iv) < 5e-5) return fmt(rv, d);
+  if (Math.abs(rv) < 5e-5) return fmt(iv, d) + 'i';
+  return fmt(rv, d) + (iv < 0 ? ' - ' : ' + ') + fmt(Math.abs(iv), d) + 'i';
+}
+ 
+// ── Chain of centers: a_k = step^k, where step = 0.6+0.8i (unit modulus) ──
+// Multiplying by a unit complex number is a rotation, so all a_k sit on the
+// unit circle, each disk (radius 1, since that's the distance to the branch
+// point at 0) equally spaced from its neighbor by |step - 1| ≈ 0.894.
+var STEP = {r: 0.6, i: 0.8};
+var N = 7; // a_0 ... a_6
+var centers = [{r:1, i:0}];
+for (var k = 1; k < N; k++) centers.push(cmul(centers[k-1], STEP));
+ 
+// ── Seed values: F_0 = 1 (our chosen sqrt(1) = +1), then continue disk to disk ──
+function evalDisk(k, z, seeds) {
+  var ak = centers[k], Fk = seeds[k];
+  var w = cdiv(csub(z, ak), ak);
+  var sum = {r:0,i:0}, wn = {r:1,i:0};
+  for (var n = 0; n < NTERMS; n++) {
+    sum = cadd(sum, cmul({r: fracVal(coeffs[n]), i:0}, wn));
+    wn = cmul(wn, w);
+  }
+  return cmul(Fk, sum);
+}
+var F = [{r:1, i:0}];
+for (var k = 0; k < N - 1; k++) F.push(evalDisk(k, centers[k+1], F));
+ 
+// ── Colors, one per disk ───────────────────────────────────────────────────
+var COLORS = ['#83a598', '#d3869b', '#b8bb26', '#fabd2f', '#fe8019', '#8ec07c', '#fb4934'];
+ 
+// ── Canvas ────────────────────────────────────────────────────────────────
+var canvas = document.getElementById('psw3-canvas');
+var ctx    = canvas.getContext('2d');
+var CSIZE  = 420;
+var WORLD  = 2.5;
+ 
+function toC(wx, wy) { return [(wx/WORLD+1)*CSIZE/2, (1-wy/WORLD)*CSIZE/2]; }
+ 
+var clickedPoint = null;
+var missPoint = null;
+ 
+function drawCanvas() {
+  ctx.clearRect(0, 0, CSIZE, CSIZE);
+ 
+  // Grid
+  ctx.strokeStyle = '#504945'; ctx.lineWidth = 1;
+  for (var v = -2; v <= 2; v++) {
+    var x = (v/WORLD+1)*CSIZE/2;
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CSIZE); ctx.stroke();
+    var y = (1-v/WORLD)*CSIZE/2;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CSIZE,y); ctx.stroke();
+  }
+  // Axes
+  var ox = CSIZE/2, oy = CSIZE/2;
+  ctx.strokeStyle = '#665c54'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(ox,0); ctx.lineTo(ox,CSIZE); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,oy); ctx.lineTo(CSIZE,oy); ctx.stroke();
+  ctx.fillStyle = '#928374'; ctx.font = '11px monospace';
+  for (var v = -2; v <= 2; v++) {
+    if (v === 0) continue;
+    var x = (v/WORLD+1)*CSIZE/2;
+    ctx.fillText(String(v), x-4, oy+15);
+    var y = (1-v/WORLD)*CSIZE/2;
+    ctx.fillText(v+'i', ox+4, y+4);
+  }
+ 
+  var rpx = 1/WORLD * CSIZE/2;
+ 
+  // The seven disks
+  for (var k = 0; k < N; k++) {
+    var c = toC(centers[k].r, centers[k].i);
+    var col = COLORS[k];
+    ctx.beginPath(); ctx.arc(c[0], c[1], rpx, 0, 2*Math.PI);
+    ctx.fillStyle = hexToRgba(col, 0.06); ctx.fill();
+    ctx.beginPath(); ctx.arc(c[0], c[1], rpx, 0, 2*Math.PI);
+    ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.stroke();
+  }
+ 
+  // Center dots + "a = ..." labels, offset radially outward
+  for (var k = 0; k < N; k++) {
+    var c = toC(centers[k].r, centers[k].i);
+    var col = COLORS[k];
+    ctx.beginPath(); ctx.arc(c[0], c[1], 4.5, 0, 2*Math.PI);
+    ctx.fillStyle = col; ctx.fill();
+ 
+    // outward direction ≈ direction of the center itself, since all centers lie on the unit circle
+    var nx = centers[k].r, ny = centers[k].i;
+    var nl = Math.sqrt(nx*nx+ny*ny) || 1;
+    nx /= nl; ny /= nl;
+    var lx = c[0] + nx*16, ly = c[1] - ny*16;
+ 
+    ctx.fillStyle = col; ctx.font = '11px monospace';
+    ctx.textAlign = (nx < -0.3) ? 'right' : (nx > 0.3 ? 'left' : 'center');
+    ctx.fillText('a=' + fmtC(centers[k], 3), lx, ly);
+    ctx.textAlign = 'left';
+  }
+ 
+  // Branch point — deliberately unlabeled this time
+  var op = toC(0, 0);
+  ctx.beginPath(); ctx.arc(op[0], op[1], 4, 0, 2*Math.PI);
+  ctx.fillStyle = '#b16286'; ctx.fill();
+ 
+  // Clicked point
+  if (clickedPoint) {
+    var cp = toC(clickedPoint.r, clickedPoint.i);
+    ctx.beginPath(); ctx.arc(cp[0], cp[1], 6, 0, 2*Math.PI);
+    ctx.fillStyle = '#fbf1c7'; ctx.fill();
+    ctx.strokeStyle = 'rgba(29,32,33,0.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+  // Miss flash
+  if (missPoint) {
+    var mp = toC(missPoint.r, missPoint.i);
+    ctx.beginPath(); ctx.arc(mp[0], mp[1], 12, 0, 2*Math.PI);
+    ctx.fillStyle = 'rgba(251,73,52,0.25)'; ctx.fill();
+  }
+}
+ 
+function hexToRgba(hex, a) {
+  var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+}
+ 
+// ── Result window ─────────────────────────────────────────────────────────
+function showResult(z, matches) {
+  document.getElementById('psw3-placeholder').style.display = 'none';
+  var el = document.getElementById('psw3-result');
+  el.style.display = 'block';
+ 
+  var zStr = fmtC(z, 3);
+  var html = '';
+  matches.forEach(function(m) {
+    html += '<span class="psw3-dot" style="background:' + COLORS[m.k] + '"></span>';
+    html += 'disk ' + (m.k+1) + '&nbsp; f(' + zStr + ')&nbsp;&asymp;&nbsp;<strong>' + fmtC(m.value, 4) + '</strong><br>';
+  });
+ 
+  if (matches.length > 1) {
+    var maxDiff = 0;
+    for (var i = 0; i < matches.length; i++)
+      for (var j = i+1; j < matches.length; j++)
+        maxDiff = Math.max(maxDiff, cabs(csub(matches[i].value, matches[j].value)));
+    if (maxDiff > 0.3) {
+    } else {
+    }
+  }
+ 
+  el.innerHTML = html;
+}
+ 
+// ── Input ─────────────────────────────────────────────────────────────────
+function handleTap(cssX, cssY) {
+  var rect = canvas.getBoundingClientRect();
+  var ix = (cssX - rect.left) * (CSIZE / rect.width);
+  var iy = (cssY - rect.top)  * (CSIZE / rect.height);
+  var wx =  ix/CSIZE * 2*WORLD - WORLD;
+  var wy = -(iy/CSIZE * 2*WORLD - WORLD);
+  var z  = {r: wx, i: wy};
+ 
+  var matches = [];
+  for (var k = 0; k < N; k++) {
+    if (cabs(csub(z, centers[k])) < 1) matches.push({k: k, value: evalDisk(k, z, F)});
+  }
+ 
+  if (matches.length === 0) {
+    missPoint = z; clickedPoint = null;
+    drawCanvas();
+    setTimeout(function(){ missPoint = null; drawCanvas(); }, 350);
+    return;
+  }
+ 
+  missPoint = null;
+  clickedPoint = z;
+  drawCanvas();
+  showResult(z, matches);
+}
+ 
+canvas.addEventListener('click', function(e) { handleTap(e.clientX, e.clientY); });
+canvas.addEventListener('touchend', function(e) {
+  e.preventDefault();
+  handleTap(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+}, {passive: false});
+ 
+drawCanvas();
+ 
+})(); // end IIFE — no globals leaked
+</script>
+
+<p>
+Most of time, if you pick a point in two circles, you'll get approximately the same answer with each formula -- and any discrepancy is only because the computer is only adding a handful of terms of these infinitely long sums, and isn't using high precision arithmetic (which matters a lot when adding decimals on a computer).
+</p>
+
+<p>
+But if you click on a point in the overlap of the <em>red</em> and <em>blue</em> circles -- that is, a point just below \(z = 1\) -- then something strange will happen: the blue formula will give you a value which is close to \(+1,\) and the red formula will give a value close to \(-1.\) This is a <em>big</em> gap -- much too big to be explained away by your computer truncating the sum, or by precision loss in floating-point arithmetic.
+</p>
+
+<p>
+What's happening? To understand this, let's first try understanding why our two different formulas on the purple and blue circle agreed in the first place.
+</p>
+
+<h2>Revisiting uniqueness</h2>
+
+<p>
+TODO
+</p>
+
+<h2></h2>
 
 </body>
 
