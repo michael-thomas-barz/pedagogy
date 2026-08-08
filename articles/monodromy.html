@@ -21,11 +21,11 @@
 <p class="meta">February 13, 2026</p>
 
 <p>
-Algebraic topology is a field of mathematics which is usually presented as the study of certain amusing shapes, like the Klein bottle or Mobius strip. But this presentation perhaps fails to convey just how vital algebraic topology is to almost all areas of modern mathematics. 
+Algebraic topology is a field of mathematics which is usually presented as the study of certain amusing shapes, like the Klein bottle or Möbius strip. But this presentation perhaps fails to convey just how vital algebraic topology is to almost all areas of modern mathematics. 
 </p>
 
 <p>
-To give the reader a taste of this importance, in today's post we will start by exploring a funny property of the Mobius strip, and then show how the same funny phenomenon creeps up when you try to solve certain differential equations.
+To give the reader a taste of this importance, in today's post we will start by exploring a funny property of the Möbius strip, and then show how the same funny phenomenon creeps up when you try to solve certain differential equations.
 </p>
 
 <p>
@@ -34,12 +34,13 @@ So, what is the Möbius strip, and what funny property does it have?
 
 <h2>The Möbius strip</h2>
 
-<p>
-Turning math problems into geometry problems sometimes leaves you with very strange shapes. It turns out that the shape relevant to our problem will be the Möbius strip! So, before getting into our differential equation, we want to take some time to explain the Möbius strip, and point out a strange geometric property of it. 
-</p>
+<!-- <p>
+Turning math problems into geometry problems sometimes leaves you with very strange shapes. It turns out that the shape relevant to our problem will be the Möbius strip! So, before getting into our differential equation, let's take some time to explore the Möbius strip. 
+</p> -->
 
 <p>
-Take a sheet of paper. If you tape two opposite edges together, then you will produce a cylinder, a nice shape. The Möbius strip is produced in a similar way; if you want to make it out of paper, it's easier if, instead of taking a sheet of paper, you cut out a strip of paper which is much longer than it is wide. Then, taking the two short edges of the strip, curve them towards each other, and then <em>twist</em> one of the edges upside down. After this twist, <em>then</em> tape them together.
+Take a sheet of paper. If you tape two opposite edges together, then you will produce a cylinder. If you instead <em>twist</em> one of the edges before gluing, you get a Möbius strip.
+<!-- The Möbius strip is produced in a similar way; if you want to make it out of paper, it's easier if, instead of taking a sheet of paper, you cut out a strip of paper which is much longer than it is wide. Then, taking the two short edges of the strip, curve them towards each other, and then <em>twist</em> one of the edges upside down. After this twist, <em>then</em> tape them together. -->
 </p>
 <div "mobius-static-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
   <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Möbius Strip</p>
@@ -267,7 +268,14 @@ The Möbius strip doesn't seem so different from a cylinder at first, but there 
 </p>
 
 <p>
-Let's break down what people mean when they say that. On a surface like a cylinder, at each point you can decide on which way is `up' and which way is `down.' These decisions need to be locally consistent: nearby points should agree on which way is up and which is down. This suggests it should be pretty easy to find two sides of any surface: pick one point to start with, and arbitrarily label one side `up' and one side `down.' Then just move around, copying your meaning of up. Here's a little animation of this; we start with a notion of up at one point (illustrated by an upwards pointing vector), and then move the vector around to nearby points, to give them a consistent notion of up.
+But what does that mean, exactly? Specifying a side of the Möbius strip is the same as deciding which side of the paper is `up' and which side is `down.' These decisions need to be <em>locally</em> consistent: nearby points should agree on which way is up and which is down. 
+In other words, if I'm an ant on one side of the Möbius strip, if I walk a couple steps I should still be on the same side.</p>
+<p>
+This suggests it should be pretty easy to find two sides of any surface: pick one point to start with, and arbitrarily label one side `up' and one side `down.' Then just move around, copying your meaning of up. 
+</p>
+
+<p>
+Here's a little animation of this; we start with a notion of up at one point (illustrated by an upwards pointing vector), and then move the vector around to nearby points, to give them a consistent notion of up.
 </p>
 <!-- Möbius Strip Local Orientability Widget — Gruvbox Theme -->
 <div id="mobius-local-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
@@ -584,9 +592,10 @@ Let's break down what people mean when they say that. On a surface like a cylind
 })();
 </script>
 <p>
-Unfortunately, this procedure has a small hiccup when you do it to the Mobius strip. If we take a long journey, in a loop going around the entire Möbius strip, <em>the notion of up flips when we get back to where we started!</em> 
+Unfortunately, this procedure has a small hiccup. If we take a long journey, in a loop going around the entire Möbius strip, <em>the notion of up flips when we get back to where we started!</em> 
 
-We made a small animation to see this; after the animation plays, you can drag the Mobius strip to rotate it around, to better see the full path. In this animation, the Möbius strip is translucent.
+We made a small animation to see this; after the animation plays, you can drag the Möbius strip to rotate it around, to better see the full path. 
+<!-- In this animation, the Möbius strip is translucent. -->
 </p>
 
 <!-- Möbius Strip Non-Orientability Widget — Gruvbox Theme -->
@@ -1462,21 +1471,19 @@ drawCanvas();
 <!-- ── End Power Series Widget ──────────────────────────────────────────── -->
 
 <p>
-Unfortunately, for values of \(z\) outside of the highlighted blue circle, the formal power series solution we just found will <em>not always converge</em>. With complex analysis, one can prove that \(f(z)\) has <em>radius of convergence one</em>: this means that whenever \(z\) is inside of that blue circle above, the series \(f(z)\) will converge, but for values of \(z\) outside of that circle, sometimes the infinite sum \(f(z)\) will not make sense.
+Unfortunately, for values of \(z\) outside of the highlighted blue circle, the formal power series solution we just found will <em>not always converge</em>. 
+<!-- With complex analysis, one can prove that \(f(z)\) has <em>radius of convergence one</em>: this means that whenever \(z\) is inside of that blue circle above, the series \(f(z)\) will converge, but for values of \(z\) outside of that circle, sometimes the infinite sum \(f(z)\) will not make sense. -->
 </p>
 
 <p>
-As an example, it turns out the general term of our sum looks like
-\[f(z) = \sum_{n=0}^{\infty} \binom{1/2}{n} \cdot (z-1)^n,\]
+As an example,
+<!-- \[f(z) = \sum_{n=0}^{\infty} \binom{1/2}{n} \cdot (z-1)^n,\]
 where \(\binom{1/2}{n},\) pronounced "one-half choose \(n,\)" is the number
 \[\binom{1/2}{n} := \frac{\frac{1}{2} \cdot \left(\frac{1}{2} - 1\right) \cdots \left(\frac{1}{2} - (n-1)\right)}{n!}.\]
 </p>
-
-<p>
-If we plug in \(z = -1\) to the above expression, we get
-\[f(-1) = \sum_{n=0}^{\infty} \binom{1/2}{n} \cdot (-2)^n.\]
-The first few terms of this sum look like
-\[1 - 1 - \frac{1}{2} - \frac{1}{2} - \frac{5}{8} - \frac{7}{8} - \frac{21}{16} - \cdots.\]
+<p> -->
+if we plug in \(z = -1\) to our series we get
+\[f(-1)=1 - 1 - \frac{1}{2} - \frac{1}{2} - \frac{5}{8} - \frac{7}{8} - \frac{21}{16} - \cdots.\]
 Observe how, after the initial \(1-1,\) the terms just get more and more negative; it turns out that this continues to happen, and so
 \[f(-1) = -\infty,\]
 as we keep subtracting larger and larger numbers.
@@ -1938,7 +1945,8 @@ This extended our solution from the blue circle to the union of the blue circle 
 </p>
 
 <p>
-Unfortunately, while this plan works great in theory, something very peculiar happens when we try implementing it. To see why, consider the following widget. In it, we did the same 'pick a point near the boundary and solve the differential equation centered there' repeatedly, giving us a total of seven different formulas for \(f(z),\) each of which makes sense on a different circle. If you click a point in any of the circles, your computer will calculate the value of the value of \(f(z)\) using any of the formulas which make sense (so, if your point is in exactly one circle, it will use that circle's formula, but if your point is in two circles, it will show you the answers you get using the formulas associated to both circles). 
+Unfortunately, while this plan works great in theory, something peculiar happens when we implement it. 
+To see why, consider the following widget. In it, we  repeated our procedure `pick a point near the boundary and solve the differential equation centered there', giving us a total of seven different formulas for \(f(z),\) each of which makes sense on a different circle. If you click a point in any of the circles, your computer will calculate the value of the value of \(f(z)\) using any of the formulas which make sense (so, if your point is in exactly one circle, it will use that circle's formula, but if your point is in two circles, it will show you the answers you get using the formulas associated to both circles). 
 </p>
 
 <p>
@@ -2273,7 +2281,7 @@ which agree at one point <em>automatically agree in a small neighborhood of that
 To be a bit more concrete, imagine that \(f_0\) and \(f_1\) are two functions which both obey
 \[f_0'(z) = \frac{1}{2z}f_0(z),\]
 \[f_1'(z) = \frac{1}{2z}f_1(z),\]
-and suppose we know that \(f_0(1) = f_1(1).\) Then we claim that in fact \(f_0(z) = f_1(z)\) for all values of \(z\) which are close to 1. 
+and suppose we know that \(f_0(1) = f_1(1).\) Then in fact \(f_0(z) = f_1(z)\) for all values of \(z\) which are close to 1. 
 </p>
 
 <p>
@@ -2575,14 +2583,14 @@ Here, we run into a problem: we have no common initial condition! The solution o
 The trouble here is that the local uniqueness theorem for differential equations requires you to know one common value in order to conclude that the two solutions coincide -- but there's no common value we can use for the red and blue disks.
 </p>
 
-<h2>Return of the Mobius strip</h2>
+<h2>Return of the Möbius strip</h2>
 
 <p>
-Recall that, at the start of this article, we highlighted a funny property of the Mobius strip: while you could always <em>locally</em> orient the Mobius strip, globally you cannot label one side as up and one side as down: if you try to label one side as up, and then you move continuously around the Mobius strip, you'll end up labelling that same side as down! 
+Recall that, at the start of this article, we highlighted a funny property of the Möbius strip: while you could always <em>locally</em> orient it, globally you cannot label one side as up and one side as down. If you try to label one side as up, and then you move continuously around the Möbius strip, you'll end up labelling that same side as down! 
 </p>
 
 <p>
-This is very similar to what happened with our differential equation: we tried to find a solution, and while we could always do this <em>locally</em>, on small patches of the complex plane, we found that if we went in a circle around the origin, our solution got negated -- instead of \(f(1) = 1,\) if we continue around the origin, we found a solution with \(f(1) = -1.\) This \(+1\) switching to a \(-1\) is just like how, if you go around a Mobius strip, up becomes down. 
+This is very similar to what happened with our differential equation: we tried to find a solution, and while we could always do this <em>locally</em>, on small patches of the complex plane, we found that if we went in a circle around the origin, our solution got negated -- instead of \(f(1) = 1,\) if we continue around the origin, we found a solution with \(f(1) = -1.\) This \(+1\) switching to a \(-1\) is just like how, if you go around a Möbius strip, up becomes down. 
 </p>
 
 <p>
@@ -2985,7 +2993,7 @@ However, this is not quite what the true space of solutions looks like! Remember
 </p>
 
 <p>
-This twisting is quite hard to visualize in 3-dimensions. To get a sense of what it looks like, let's pretend instead of having a 2-dimensional space of initial conditions, we only had a 1-dimensional space. Then, instead of planes rotating and twisting around in space, we'd have a <em>line</em> rotating and twisting around in space. If we think about the shape such a line would trace out, it is just a Mobius strip! You can see for yourself in the animation below: 
+This twisting is quite hard to visualize in 3-dimensions. To get a sense of what it looks like, let's pretend instead of having a 2-dimensional space of initial conditions, we only had a 1-dimensional space. Then, instead of planes rotating and twisting around in space, we'd have a <em>line</em> rotating and twisting around in space. If we think about the shape such a line would trace out, it is just a Möbius strip! You can see for yourself in the animation below: 
 </p>
 <style>
     .figure-card {
@@ -3486,7 +3494,7 @@ So, the Möbius strip is literally <em>part of the vector bundle of solutions to
 </p>
 
 <p>
-The punchline to all this, though, is that the strange Mobius strip arises in this very concrete way when thinking about the solutions to differential equations! 
+The punchline to all this, though, is that the strange Möbius strip arises naturally from the solutions to a differential equation! 
 </p>
 
 <p>
