@@ -266,15 +266,15 @@ Comparing Newton's equation to the Euler-Lagrange equation, it seems we should c
 </p>
 
 <p>
-The second of the above two equations is easy to solve. Let \(||\vec v||\) denote the length of the vector \(\vec v.\) By the product rule, because \(||\vec v||^2 = \vec v \cdot \vec v,\) we have
-\[\frac{\partial}{\partial v}(||\vec v||^2) = 2\vec v,\]
+The second of the above two equations is easy to solve. Let \(\|\vec v\|=\sqrt{v_1^2+v_2^2+v_3^2}\) denote the length of the vector \(\vec v=(v_1,v_2,v_3).\) By the product rule, because \(\|\vec v\|^2 = \vec v \cdot \vec v,\) we have
+\[\frac{\partial}{\partial v}(\|\vec v\|^2) = 2\vec v,\]
 so that
-\[\frac{\partial}{\partial v}\left(\frac{1}{2}||\vec v||^2\right) = m\vec v.\] 
+\[\frac{\partial}{\partial v}\left(\frac{1}{2}m\|\vec v\|^2\right) = m\vec v.\] 
 </p>
 
 <p>
 The quantity
-\[T = \frac{1}{2}||\vec v||^2\]
+\[T = \frac{1}{2}m\|\vec v\|^2\]
 is called the <em>kinetic energy</em> in Newtonian mechanics, and is an incredibly important quantity. So, our function \(L\) ought to have a term involving the potential energy.
 </p>
 
@@ -331,6 +331,7 @@ From here, we can figure out the kinetic energy term in the Lagrangian:
 \[
 T = \frac12mv^2=\frac12m(\ell\dot\theta)^2.
 \]
+Here \(\dot\theta\) is physics notation for the time-derivative \(\frac{d\theta}{dt}\).
 </p>
 
 <p>
