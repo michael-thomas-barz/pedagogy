@@ -29,7 +29,7 @@ Newton mechanics describes the world moment-by-moment: it tells you how to, give
 </p>
 
 <p>
-But sometimes the moment-by-moment answers which Newtonian mechanics gives obey strange properties in the long term. For example, <a href="https://en.wikipedia.org/wiki/Snell%27s_law">light always takes the fastest path between two points.</a> Newtonian mechanics predicts the behavior of light by moment-by-moment cause and effects; but the final answer obeys a magical special property allowing you to compute it more efficiently, without going moment-by-moment. 
+But sometimes the moment-by-moment answers which Newtonian mechanics gives obey strange properties in the long term. For example, <a href="https://en.wikipedia.org/wiki/Snell%27s_law">light always takes the fastest path between two points</a>. It is mysetrious that, when you let light evolve according to the moment-by-moment rules of Newton, a special overall property emerges.
 </p>
 
 <p>
@@ -37,7 +37,7 @@ Light always taking the fastest path is not the only optimization problem you se
 </p>
 
 <p>
-This led Lagrange to wonder: can one re-formulate physics in terms of optimization problems, instead of cause and effect? It is perhaps highly counterintuitive to think this way at first, but Lagrange's formalism ends up having immense power. Next week, for example, we will use Lagrange's formalism of physics to explain Emmy Noether's wonderful discovery that symmetries of the universe correspond to conservation laws (conservation of energy, momentum, and angular momentum). Noether's theorem is very tricky to derive from Newtonian mechanics, but becomes conceptually transparent once you use Lagrangian mechanics.
+This led Lagrange to wonder: can one re-formulate physics in terms of optimization problems, instead of cause-and-effect? It is perhaps counter-intuitive to think this way at first, but Lagrange's formalism ends up having immense power. Next week, for example, we will use Lagrange's formalism of physics to explain Emmy Noether's wonderful discovery that symmetries of the universe correspond to conservation laws (conservation of energy, momentum, and angular momentum). Noether's theorem is very tricky to derive from Newtonian mechanics, but becomes conceptually transparent once you use Lagrangian mechanics.
 </p>
 
 <p>
@@ -56,11 +56,11 @@ The position is the simplest to explain: it is just where the particle is in spa
 </p>
 
 <p>
-Newtonian mechanics tells you how the world evolves from one moment to the other. One of Newton's big insights (called one of his <em>laws of motion</em>) is the idea that, by default, every particle moves in a straight line, at a constant speed. To record this, we write down the particle's <em>velocity</em>: this is another vector \(\vec v = (v_1, v_2, v_3),\) whose direction tells us which way the particle moves, and whose length tells us the constant speed at which the particle moves.
+Newtonian mechanics tells you how the world evolves from one moment to the other. One of Newton's big insights (called one of his <em>laws of motion</em>) is the idea that, by default, every particle moves in a straight line, at a constant speed. To record this, we write down the particle's <em>velocity</em>: this is another vector \(\vec v = (v_1, v_2, v_3),\) whose direction tells us which way the particle moves, and whose length \(\sqrt{v_1^2+v_2^2+v_3^2}\) tells us the constant speed at which the particle moves.
 </p>
 
 <p>
-However, throughout your life you have observed many objects which did <em>not</em> move in straight lines. This is because, while particles move in straight lines with constant speed by default, a particle's motion can be altered by things like gravity, or another particle colliding with it. 
+However, throughout your life you have observed many objects which do <em>not</em> move in straight lines. This is because, while particles move in straight lines with constant speed by default, a particle's motion can be altered by factors like gravity, or another particle colliding with it. 
 </p>
 
 <p>
@@ -90,7 +90,7 @@ Newton's equation is often written \(F = ma,\) where \(a\) (acceleration) is jus
 <p>
 In practice, Newtonian mechanics can be tricky to use: solving the differential equation
 \[\frac{d\vec v}{dt} = \frac{1}{m}\vec F\]
-is often tricky, and -- as any physics undergraduate student will complain -- it can be quite complicated to calculate all the forces acting on an object to determine \(\vec F.\) However, Newtonian mechanics is remarkably powerful, and humans have managed to use it in all sorts of situations to make extremely helpful and accurate predictions about nature.
+is often tricky, and -- as any physics undergraduate student will complain -- it can be quite complicated to calculate all the forces acting on an object to determine \(\vec F.\) However, Newtonian mechanics is remarkably powerful, and humans have managed to use it in all sorts of accurate predictions about nature.
 </p>
 
 <!-- <img src="particles.svg" alt="TikZ graph" style="display:block;
@@ -111,9 +111,10 @@ Here, \(\vec x\) is the position, \(\vec v\) is the velocity, and \(m\) is the m
 </p>
 
 <p>
-Let's try to find a function \(L\) as above such that solving Newton's equation \(F = ma\) is equivalent to minimizing the quantity
-\[S = \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt.\] 
-Here, \(t_0\) is the time we start tracking our particle's motion, \(t_1\) is the time we stop, and \(\vec x(t), \vec v(t)\) are the position and velocity of our particle at time \(t.\) 
+  Imagine at every moment in time \(t\) we expend some "cost" \(L(\vec x,\vec v,m)\). Then, as our physical system evolves from time \(t_0\) to \(t_1\), we expend a total cost of
+  \[S = \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt.\] 
+  Here \(\vec x(t)\) and \(\vec v(t)\) are the position and velocity of our particle at time \(t.\) 
+  We want to minimize this quantity \(S\). So Let's try to find a function \(L\) such that solving Newton's equation \(F = ma\) is equivalent to minimizing \(S\).
 </p>
 
 <p>
@@ -204,11 +205,17 @@ Going back to Lagrange, letting \(L(\vec x, \vec v, m)\) be some mystery functio
 </p>
 
 <p>
-Suppose our particle's path \((\vec x(t), \vec v(t))\) minimizes \(S.\) Then, by Fermat's principle, small perturbations of this path should make \(S\) larger. In other words, if 
+Suppose our particle's path \((\vec x(t), \vec v(t))\) minimizes \(S.\) Then, by Fermat's principle, small perturbations of this path should make \(S\) larger. 
+So let's try perturbing the path \(\vec x(t)\) to \(\vec x(t)+\vec\epsilon(t)\).
+The key difference with the previous section is that \(\vec\epsilon(t)\) is no longer a single number: it is some (small) function!
+</p>
+
+<p>
+If 
 \[\vec x(t) + \vec \epsilon(t)\]
-is a small perturbation of our original position, and 
-\[\vec v(t) + \vec{\epsilon}^{\,\prime}(t)\]
-the corresponding perturbation of our original velocity, then this new path should have
+is a small perturbation of our original position, then velocity is perturbed as
+\[\vec v(t) + \vec{\epsilon}^{\,\prime}(t),\]
+and this new path should have
 \[\int_{t_0}^{t_1} L(\vec x(t) + \vec \epsilon(t), \vec v(t) + \vec{\epsilon}^{\,\prime}(t), m) \, dt \geq  \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt.\]
 </p>
 
@@ -282,7 +289,7 @@ In Newtonian mechanics, a commonly used quantity is the <em>potential energy</em
 
 <p>
 The reason we mention potential energy is because it is defined as the <em>anti-derivative</em> of \(-F(\vec x).\) That is, potential energy is some function \(V(\vec x)\) so that
-\[\frac{\parital V}{\partial \vec x}(\vec x) = -F(\vec x).\] 
+\[\frac{\partial V}{\partial \vec x}(\vec x) = -F(\vec x).\] 
 </p>
 
 <p>
