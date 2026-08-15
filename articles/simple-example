@@ -1,0 +1,83 @@
+
+<p>Although this differential equation is difficult to solve in general, when the angle \(\theta\) is small you can use the small angle approximation \(\sin\theta\approx\theta\) and instead solve
+\[
+\frac{d^2\theta}{dt^2}+\frac{g}\ell\theta=0.
+\]
+ Solving the differential equation, we see that
+\[
+\theta=C_1\cos\bigg(\sqrt{\frac g\ell}t\bigg)+C_2\sin\bigg(\sqrt{\frac g\ell}t\bigg).
+\]
+Since sine and cosine have period \(2\pi\), the pendulum itself will have period (approximately)
+\[
+2\pi\sqrt{\frac\ell g}.
+\]</p>
+
+
+
+<h2>A simple example</h2>
+
+<p>
+Since we've worked quite abstractly so far, let's solve an explicit problem using Lagrangian mechanics.
+</p>
+
+<p>
+Suppose that we're standing in a room, with a flat floor. Choose a coordinate system so that the floor is described by the plane \(x_3 = 0.\)
+</p>
+
+<p>
+You brought a ball of mass \(2\text{kg}\) with you, and toss it; say your toss gives the ball an initial velocity \(\vec v(0) = (1\text{m/s}, 1\text{m/s}, 0),\) and you threw the ball from initial position \(\vec x(0) = (0, 0, 1\text{m}).\) We want to compute the position \(\vec x(t)\) of the velocity \(t\) seconds after you threw it. 
+</p>
+
+<p>
+Let's say the only force acting on the ball is gravity. In his study of gravity on Earth, Newton computed that the potential energy of gravity is 
+\[V(t) = 10\frac{\text{m}}{\text{s}^2} \cdot 2\text{kg} \cdot x_3(t),\]
+where \(x_3(t)\) appears because it is the height of the ball above the ground. 
+</p>
+
+<p>
+Thus our Lagrangian is 
+\[L = (v_1(t)^2 + v_2(t)^2 + v_3(t)^2) \cdot 1\text{kg} - 20x_3(t)\frac{\text{m}\cdot\text{kg}}{\text{s}^2}\]
+</p>
+
+<p>
+
+</p>
+
+<p>
+  The Euler-Lagrange equation for the first coordinate tells us
+  \[
+  \frac{\partial L}{\partial x_1}=0
+  \]
+  equals
+  \[
+  \frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)=\frac d{dt}(mv_1)=m\frac{dv_1}{dt}.
+  \]
+  So the Euler-Lagrange equations know that the ball shouldn't accelerate in the \(x_1\)-direction! This matches our physical intuition, since gravity is only acting in the vertical direction; the velocity of the object in horizontal directions shouldn't change.
+  The Euler-Lagrange equation for the second coordinate also tells us
+  \[
+  m\frac{dv_2}{dt}=0,
+  \]
+  which makes sense from the same physical intuition.
+</p>
+
+<p>
+  Finally, the Euler-Lagrange equation for the third coordinate tells us
+  \[
+  \frac{\partial L}{\partial x_3}=-mg
+  \]
+  equals
+  \[
+  \frac d{dt}\bigg(\frac{\partial L}{\partial v_3}\bigg)=\frac d{dt}(mv_3)=m\frac{dv_3}{dt}.
+  \]
+  In other words, 
+  \[
+  m\frac{dv_3}{dt}=-mg,
+  \]
+  which tells us
+  \[
+  \frac{dv_3}{dt}=-g.
+  \]
+  This is just saying the ball accelerates downwards by \(g\), which is also exactly what we expect!
+</p>
+
+

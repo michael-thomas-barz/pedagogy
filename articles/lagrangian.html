@@ -21,79 +21,99 @@
 <p class="meta">July 10, 2026</p>
 
 <p>
-  Nature is lazy and always evolves in the most "efficient" way possible. This is why soap bubbles are spherical--to minimize surface area--and why <a href="https://en.wikipedia.org/wiki/Snell%27s_law">light refracts</a> when traveling through glass.
+Physics is usually taught with <em>cause and effect</em>. In Newtonian mechanics, forces cause an object to change its motion. And Newtonian mechanics is an incredibly successful theory of physics, which can explain huge amounts of observations about the world. 
 </p>
 
 <p>
-  Lagrange's idea was to use this principle, that nature is lazy, as the foundations for mechanics. This is in contrast to Newton's approach to mechanics, which is based on force.
-  Our goal in this article is to mathematically formalize Lagrange's idea.
-  <!-- How can we formalize this mathematically? This is the principle called <em>the least action principle</em>, and was Lagrange's approach to mechanics. -->
+Newton mechanics describes the world moment-by-moment: it tells you how to, given the current state of the world, calculate what the world will be like at the very next instant. 
 </p>
 
 <p>
-  Since Newton's approach to physics already works so well, you may ask why we care about Lagrange's approach. 
-  For one, the more abstract approach to mechanics is better at solving complicated physical systems, and adapts better to other settings such as quantum mechanics.
-  Another reason is Emmy Noether's discovery that conservation laws (conservation of energy, momentum, and angular momentum) correspond to continuous symmetries. 
+But sometimes the moment-by-moment answers which Newtonian mechanics gives obey strange properties in the long term. For example, <a href="https://en.wikipedia.org/wiki/Snell%27s_law">light always takes the fastest path between two points.</a> Newtonian mechanics predicts the behavior of light by moment-by-moment cause and effects; but the final answer obeys a magical special property allowing you to compute it more efficiently, without going moment-by-moment. 
 </p>
 
-  <p>  Noether's theorem fall out naturally from Lagrange's approach to mechanics! We will explore this more next week.</p>
+<p>
+Light always taking the fastest path is not the only optimization problem you see in physics. Soap bubbles and rain drops tend to become round, because the sphere is the most efficient shape at enclosing any given volume: of all shapes of a fixed volume, the sphere will have the smallest surface area.
+</p>
+
+<p>
+This led Lagrange to wonder: can one re-formulate physics in terms of optimization problems, instead of cause and effect? It is perhaps highly counterintuitive to think this way at first, but Lagrange's formalism ends up having immense power. Next week, for example, we will use Lagrange's formalism of physics to explain Emmy Noether's wonderful discovery that symmetries of the universe correspond to conservation laws (conservation of energy, momentum, and angular momentum). Noether's theorem is very tricky to derive from Newtonian mechanics, but becomes conceptually transparent once you use Lagrangian mechanics.
+</p>
+
+<p>
+Lagrange's first insight was that <em>nature is lazy</em>. Nature will always try to be as efficient as possible, for some metric of efficiency: with light, that metric was 'least time to travel,' and with soap bubbles, that metric was 'least surface area.' But how do you figure out that time is the thing to minimize with light, and surface area is the thing to minimize with soap bubbles? Lagrange's next insight was how to determine this; but before explaining his solution, let's review Newtonian mechanics.
+</p>
+
 
 <h2>Newton's approach to physics</h2>
-Let's imagine a particle with mass \(m\) at some positions \(\vec x=(x_1,x_2,x_3)\) and having some velocities \(\vec v=(v_1,v_2,v_3)\). We need to use vectors since we live in a 3-dimensional universe!
+
+<p>
+In Newtonian mechanics, the most important things to know about a particle are its <em>position,</em> <em>velocity,</em> and <em>mass</em>. 
+</p>
+
+<p>
+The position is the simplest to explain: it is just where the particle is in space. It is typically represented as a vector with three components; let's say our particle has position \(\vec x = (x_1, x_2, x_3).\) We live in 3-dimensional space, which is why we need three numbers to keep track of positions.
+</p>
+
+<p>
+Newtonian mechanics tells you how the world evolves from one moment to the other. One of Newton's big insights (called one of his <em>laws of motion</em>) is the idea that, by default, every particle moves in a straight line, at a constant speed. To record this, we write down the particle's <em>velocity</em>: this is another vector \(\vec v = (v_1, v_2, v_3),\) whose direction tells us which way the particle moves, and whose length tells us the constant speed at which the particle moves.
+</p>
+
+<p>
+However, throughout your life you have observed many objects which did <em>not</em> move in straight lines. This is because, while particles move in straight lines with constant speed by default, a particle's motion can be altered by things like gravity, or another particle colliding with it. 
+</p>
+
+<p>
+The most important equation of Newtonian mechanics, then, is the one which tells you how to compute how the <em>velocity</em> changes from one moment to the next. Newtonian mechanics roughly says that, when going from one instant to another, every object moves in a straight line at constant speed, but the direction of motion and speed of motion can both <em>change</em> from instant to instant. 
+</p>
+
+<p>
+To calculate how velocity changes, one needs to know two things about the particle: its <em>mass</em>, a fundamental property of the particle itself; and the <em>forces acting on it</em>. The forces acting on a particle can change constantly, and are not intrinsic to the particle itself -- they are just whatever other entities of the universe are currently interfering with your particle's desire to move in a straight line. 
+</p>
+
+<p>
+Forces, like velocity and position, are vectors; the fundamental equation of Newtonian mechanics is 
+\[\vec F = m \cdot \frac{d\vec v}{dt},\]
+where \(\vec F\) is the sum of all forces acting on your object. 
+</p>
+
+<p>
+In other words, 
+\[\frac{d\vec v}{dt} = \frac{1}{m}\vec F,\]
+so that if you want to know how your particle's velocity changes from moment-to-moment, you only need to know its mass, and the sum \(\vec F\) of all forces acting on it at that moment. 
+</p> 
+
+<p>
+Newton's equation is often written \(F = ma,\) where \(a\) (acceleration) is just an abbreviation for the derivative \(d\vec v/dt.\) 
+</p>
+
+<p>
+In practice, Newtonian mechanics can be tricky to use: solving the differential equation
+\[\frac{d\vec v}{dt} = \frac{1}{m}\vec F\]
+is often tricky, and -- as any physics undergraduate student will complain -- it can be quite complicated to calculate all the forces acting on an object to determine \(\vec F.\) However, Newtonian mechanics is remarkably powerful, and humans have managed to use it in all sorts of situations to make extremely helpful and accurate predictions about nature.
+</p>
 
 <!-- <img src="particles.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             max-width:90%;
             height:auto;"> -->
 
-The fundamental equation in Newtonian mechanics is \(F=ma\). Let's say our particle experiences a force of \(\vec F\). That means
-\[
-\vec F=m\frac{d\vec v}{dt}.
-\]
-Of course, we also know that
-\[
-\vec v=\frac{d\vec x}{dt}.
-\]
-Newton would solve these equations to figure out how each particle moves.
-
-<h2>Least action principle</h2>
-
-Let's now try to understand what Lagrange's approach to physics is. Nature being "lazy" means it expends the least energy possible. 
-So he defined a function \(L\), called the <em>Lagrangian</em>, which keeps track of all the energy present in the system. It is
-\[
-L=T-V\]
-where \(T\) is kinetic energy, and \(V\) is potential energy. The kinetic energy is
-\[
-T=\frac12mv^2,
-\]
-where by \(v\) we mean the size of the vector \(\vec v\),
-\[
-v=\sqrt{v_1^2+v_2^2+v_3^2}.
-\] 
-The function \(V\) can change depending on the context. For example, if the particles experience gravity, the gravitational potential \(mgh\) would appear here.
+<h2>Lagrange's least action principle</h2>
 
 <p>
-The important point is that \(L\) is some function of the position \(\vec x\) and the velocity \(\vec v\) of the particle, and time \(t\). We might write it as
-\[
-L(\vec x,\vec v,t)=L(x_1,x_2,x_3,v_1,v_2,v_3,t).\]
-Our goal is to understand how the positions and velocities of the particles change over time.
+With Newtonian physics out of the way, let's finally explain Lagrange's approach. As we recall from the introduction, Lagrangian mechanics is based on the idea that nature is "lazy" in the sense that it is as efficient as possible. But what is the metric of efficiency? 
 </p>
 
 <p>
-  Let's say we know at time \(t=0\) the particle is at position \(\vec x\), and at time \(t=T\) the particle is at position \(\vec y\). Which path could the particle have taken to get from \(\vec x\) to \(\vec y\)?
-Let's say the particles evolve as functions \(\vec x(t)=(x_1(t),x_2(t),x_3(t))\) and their velocities evolve as the derivative, \(\vec v(t)=(v_1(t),v_2(t),v_3(t))\). 
-  Since we specified the positions of the particles at the beginning and end, we require
-  \[
-  \vec x(0)=\vec x,\ \ \vec x(T)=\vec y.
-  \]
+We will derive this using Newtonian mechanics. In Newtonian mechanics, the most important things to know about a particle are its position, velocity, and mass. So, let's say our metric of efficiency is some function 
+\[L(\vec x, \vec v, m).\]
+Here, \(\vec x\) is the position, \(\vec v\) is the velocity, and \(m\) is the mass, just like above.
 </p>
 
 <p>
-  The total energy expended after evolving from time \(0\) to \(T\) with these functions is the integral, called the <em>action</em>,
-  \[
-  S=\int_0^T L\big(x_1(t),x_2(t),x_3(t),v_1(t),v_2(t),v_3(t),t\big)dt.
-  \]
-  Therfore, a lazy universe would try to minimize the value of \(S\). How do we go about solving this? 
+Let's try to find a function \(L\) as above such that solving Newton's equation \(F = ma\) is equivalent to minimizing the quantity
+\[S = \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt.\] 
+Here, \(t_0\) is the time we start tracking our particle's motion, \(t_1\) is the time we stop, and \(\vec x(t), \vec v(t)\) are the position and velocity of our particle at time \(t.\) 
 </p>
 
 <p>
@@ -117,190 +137,218 @@ Let's say the particles evolve as functions \(\vec x(t)=(x_1(t),x_2(t),x_3(t))\)
 
 
 <h2>How to minimize a function</h2>
-How do you minimize a function? Let's say we're trying to minimize the function \(f(x)=x^3-x^2-x+2\).
+
+<p>
+But wait... how do we actually minimize a complicated expression like \(S\)? 
+</p>
+
+<p>
+Let's start with a simple example: minimizing \(f(x)=x^3-x^2-x+2\).
+</p>
 
 <img src="minimum.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             max-width:90%;
             height:auto;">
-Suppose our function \(f(x)\) achieved a minimum at some number \(x_0\), and let's try nudging it a little.
-If the derivative \(f'(x_0)\) were negative, then
-\[
-f(x_0+\epsilon)\approx f(x_0)+f'(x_0)\epsilon
-\]
-would be a little smaller than \(f(x_0)\), which contradicts \(f(x_0)\) being the minimum. Similarly, if \(f'(x_0)\) were positive, then
-\[
-f(x_0-\epsilon)\approx f(x_0)-f'(x_0)\epsilon
-\]
-would be a little smaller than \(f(x_0)\), which again contradicts \(f(x_0)\) being the minimum. That means for \(f\) to achieve a minimum at \(x_0\) we need \(f'(x_0)=0\).
 
 <p>
-  For our function \(f(x)=x^3-x^2-x+2\), we would be solving the equation
-  \[
-  f'(x_0)=3x_0^2-2x_0-1=0.
-  \]
-  If you solve the quadratic equation, you see two solutions:
-  \[
-  x_0=-\frac13, \ \ x_0=1.
-  \]
-  Here, you see some subtleties in our approach! First of all, the derivative cannot distinguish between whether if live on top of a hill (at \(x_0=-\frac13)\) or if we live in a valley (at \(x_0=1\)).
-  Moreover, even though \(x_0=1\) is a valley, it is not a minimum! You can see in the graph that if \(x_0\) is very negative, you get a smaller value of \(f\).
+Take a point \(x_0.\) One of the fundamental ideas of calculus, called <em>Fermat's principle</em>, is that we can use the derivative to understand if \(x_0\) has the potential to be the point at which \(f(x)\) achieves its minimum value.
 </p>
 
 <p>
-  Although these are all valid concerns, for now let's pretend these issues don't exist, and that minimizing \(f\) is the same as \(f'(x)=0\). This already gives us interesting constraints on our physical system.
-</p>
-
-<h2>Minimizing action</h2>
-
-<p>
-  Remember that right now we are trying to minimize the action integral
-  \[
-  S=\int_0^T L\big(x_1(t),x_2(t),x_3(t),v_1(t),v_2(t),v_3(t),t\big)dt.
-  \]
-Although we don't really know what the derivative of \(S\) means, it still makes sense to nudge the variables of \(S\) a little bit. So let's try nudging \(x_1(t)\) to a different function \(x_1(t)+\epsilon(t)\), so \(v_1(t)\) also gets nudged to \(v_1(t)+\dot\epsilon(t)\), where \(\dot\epsilon(t)\) is the derivative of \(\epsilon(t)\).
-In analogy with the function case, we want to make sure the first-order error term vanishes.
-Since we were nudging our functions so that the start and endpoint of the particle is fixed at \(\vec x\) and \(\vec y\), we assume
-  \[\epsilon(0)=\epsilon(T)=0.\]
+Recall that the derivative is just the best linear approximation to our function; so
+\[f(x_0 + \epsilon) \approx f(x_0) + f'(x_0)\epsilon,\]
+where \(\epsilon\) is some small perturbation applied to our original input \(x_0.\) 
 </p>
 
 <p>
-  We need to compare \(S\) with the nudged value
-  \[
-  S'=\int_0^T L\big(x_1(t)+\epsilon(t),x_2(t),x_3(t),v_1(t)+\dot\epsilon(t),v_2(t),v_3(t),t\big)dt.
-  \]
-  What is the integrand? The way the function \(L\) changes when you nudge the variables is exactly what the partial derivatives tells you! That means
-\[
-L\big(x_1(t)+\epsilon(t),x_2(t),x_3(t),v_1(t)+\dot\epsilon(t),v_2(t),v_3(t),t\big)\approx L+\epsilon(t)\frac{\partial L}{\partial x_1}+\dot\epsilon(t)\frac{\partial L}{\partial v_1},
-\]
-where \(L\) is short-hand for \(L(x_1(t),x_2(t),x_3(t),v_1(t),v_2(t),v_3(t),t)\). Substituting into our equation, we see that
-\[
-S'\approx\int_0^T\bigg(L+\epsilon(t)\frac{\partial L}{\partial x_1}dt+\dot\epsilon(t)\frac{\partial L}{\partial v_1}\bigg)dt.
-\]
-By definition
-\[
-S=\int_0^TLdt,
-\]
-so
-\[
-S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt+\int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt.
-\]
+If \(f'(x_0)\) is a <em>negative</em> number, then if \(\epsilon\) is a small positive number, then \(f(x_0+\epsilon)\) will be a little smaller than \(f(x_0).\) For example, if \(f'(x_0) = -4\) and \(\epsilon = 0.01,\) then
+\[f(x_0 + 0.01) \approx f(x_0) - 0.04,\]
+which is a little smaller than \(f(x_0).\) 
 </p>
 
 <p>
-  The expression we end up with has both \(\epsilon(t)\) and \(\dot\epsilon(t)\). This looks hard to work with, so let's integrate by parts to get rid of \(\dot\epsilon(t)\):
+Thus, if \(f'(x_0) \lt 0,\) then <em>\(f(x_0)\) cannot be the minimum value of \(f\)</em>, as moving right makes the value lower.
+</p>
+
+<p>
+Similarly, if \(f'(x_0) \gt 0,\) then <em>\(f(x_0)\) also cannot be the minimum value of \(f\)</em>, as moving <em>left</em> would make the value lower. 
+</p>
+
+<p>
+We have thus derived <em>Fermat's principle</em>: if you want to minimize a function, you need only study the points where its derivative is zero.
+</p>
+
+<p>
+  For our function \(f(x)=x^3-x^2-x+2\), the derivative is
   \[
-  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=\bigg[\epsilon(t)\frac{\partial L}{\partial v_1}\bigg]_0^T-\int_0^T\epsilon(t)\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
-  \]
-  Since we assumed \(\epsilon(0)=\epsilon(T)=0\), the first term disappears and we end up with
-  \[
-  \int_0^T\dot\epsilon(t)\frac{\partial L}{\partial v_1}dt=-\int_0^T\epsilon(t)\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
+  f'(x_0)=3x_0^2-2x_0-1.
   \]
 </p>
 
 <p>
-  By substituting back into our expression for \(S'\), we see
-  \[
-  S'\approx S+\int_0^T\epsilon(t)\frac{\partial L}{\partial x_1}dt-\int_0^T\epsilon(t)\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)dt.
-  \]
-  We could re-group the expression, so
-  \[
-  S'\approx S+\int_0^T\epsilon(t)\bigg(\frac{\partial L}{\partial x_1}-\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)\bigg)dt.
-  \]
+Setting \(f'(x_0) = 0\) then gives us the quadratic equation
+\[3x_0^2 - 2x_0 - 1 = 0.\]
+This quadratic has two solutions: \(x_0 = -\frac{1}{3},\) or \(x_0 = 1.\) 
 </p>
 
 <p>
-   If \(\vec x(t)\) were an optimal path from \(\vec x\) to \(\vec y\), we would want the first-order error term above to vanish. The easiest way to make the first-order error term vanish is to just let 
-    \[
-    \frac{\partial L}{\partial x_1}-\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)=0,
-    \]
-    or in other words,
-    \[
-    \frac{\partial L}{\partial x_1}=\frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg).
-    \]
-    This is the fundamental equation in Lagrange's formulation of mechanics, knonw as the <em>Euler-Lagrange equation</em>. By repeating the same argument by nudging the \(x_2\)-coordinate, we get
-     \[
-    \frac{\partial L}{\partial x_2}=\frac d{dt}\bigg(\frac{\partial L}{\partial v_2}\bigg),
-    \]
-    and by nudging the \(x_3\)-coordinate we get
-    \[
-    \frac{\partial L}{\partial x_3}=\frac d{dt}\bigg(\frac{\partial L}{\partial v_3}\bigg).
-    \]
+From here, Fermat's principle is of no further help, and you have to examine these points individually to see which -- if either! -- is the minimum. However, note how the derivative has narrowed our search down considerably: instead of trying every real number, we only have to test out two! 
+</p>
+
+<h2>The Euler-Lagrange equation</h2>
+
+<p>
+Going back to Lagrange, letting \(L(\vec x, \vec v, m)\) be some mystery function, let's try to minimize
+\[S = \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt.\]
 </p>
 
 <p>
-  The same caveats as before apply here: the solution to the Euler-Lagrange equations aren't necessarily truly a minimum for the action integral \(S\). 
-  Oftentimes \(S\) is minimized, but not always.
-  Nevertheless, Lagrange still postulates the equations as the axioms of his physics.
-</p>
-
-<h2>A simple example</h2>
-Since we worked very abstractly so far, let's work out an explicit example. Let's say we have a ball of mass \(m\) at coordinate \(\vec x=(x_1,x_2,x_3)\) and moving at velocity \(\vec v=(v_1,v_2,v_3)\), and we want to describe how it falls according to gravity.
-
-<p>
-  Let's imagine the ground is at \(x_3=0\), so the height of the ball is \(x_3\). That means the gravitational potential of the ball is \(mgx_3\), and our Lagrangian is
-  \[
-  L=T-V=\frac12mv^2-mgx_3=\frac12m(v_1^2+v_2^2+v_3^2)-mgx_3.
-  \]
+Suppose our particle's path \((\vec x(t), \vec v(t))\) minimizes \(S.\) Then, by Fermat's principle, small perturbations of this path should make \(S\) larger. In other words, if 
+\[\vec x(t) + \vec \epsilon(t)\]
+is a small perturbation of our original position, and 
+\[\vec v(t) + \vec{\epsilon}^{\,\prime}(t)\]
+the corresponding perturbation of our original velocity, then this new path should have
+\[\int_{t_0}^{t_1} L(\vec x(t) + \vec \epsilon(t), \vec v(t) + \vec{\epsilon}^{\,\prime}(t), m) \, dt \geq  \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt.\]
 </p>
 
 <p>
-  The Euler-Lagrange equation for the first coordinate tells us
-  \[
-  \frac{\partial L}{\partial x_1}=0
-  \]
-  equals
-  \[
-  \frac d{dt}\bigg(\frac{\partial L}{\partial v_1}\bigg)=\frac d{dt}(mv_1)=m\frac{dv_1}{dt}.
-  \]
-  So the Euler-Lagrange equations know that the ball shouldn't accelerate in the \(x_1\)-direction! This matches our physical intuition, since gravity is only acting in the vertical direction; the velocity of the object in horizontal directions shouldn't change.
-  The Euler-Lagrange equation for the second coordinate also tells us
-  \[
-  m\frac{dv_2}{dt}=0,
-  \]
-  which makes sense from the same physical intuition.
+Using the derivatives of \(L,\) we can form the approximation
+\[L(\vec x(t) + \vec \epsilon(t), \vec v(t) + \vec{\epsilon}^{\,\prime}(t), m) \approx L(\vec x(t), \vec v(t), m) + \frac{\partial L}{\partial x}(\vec x(t)) \cdot \epsilon(t) + \frac{\partial L}{\partial v}(\vec v(t)) \cdot \vec{\epsilon}^{\,\prime}(t).\] 
 </p>
 
 <p>
-  Finally, the Euler-Lagrange equation for the third coordinate tells us
-  \[
-  \frac{\partial L}{\partial x_3}=-mg
-  \]
-  equals
-  \[
-  \frac d{dt}\bigg(\frac{\partial L}{\partial v_3}\bigg)=\frac d{dt}(mv_3)=m\frac{dv_3}{dt}.
-  \]
-  In other words, 
-  \[
-  m\frac{dv_3}{dt}=-mg,
-  \]
-  which tells us
-  \[
-  \frac{dv_3}{dt}=-g.
-  \]
-  This is just saying the ball accelerates downwards by \(g\), which is also exactly what we expect!
+Thus our inequality can be rearranged to read
+\[\int_{t_0}^{t_1} \frac{\partial L}{\partial x}(\vec x(t)) \cdot (\vec \epsilon(t)) + \frac{\partial L}{\partial v}(\vec v(t)) \cdot (\vec{\epsilon}^{\,\prime}(t)) \, dt \geq 0.\] 
 </p>
+
+<p>
+Integration by parts allows us to write
+\[\int_{t_0}^{t_1} \frac{\partial L}{\partial v}(\vec v(t)) \cdot (\vec{\epsilon}^{\,\prime}(t)) \, dt = -\int_{t_0}^{t_1} \vec\epsilon(t) \frac{d}{dt}\left(\frac{\partial L}{\partial v}(\vec v(t))\right) \, dt.\] 
+</p>
+
+<p>
+Thus our inequality can again be rewritten to read
+\[\int_{t_0}^{t_1} \vec\epsilon(t) \cdot \left(\frac{\partial L}{\partial x}(\vec x(t)) - \frac{d}{dt}\frac{\partial L}{\partial v}(\vec v(t))\right) \, dt \geq 0.\] 
+</p>
+
+<p>
+As in Fermat's principle, the only way this could happen for <em>every</em> possible pertubation \(\epsilon(t)\) is if 
+\[\frac{\partial L}{\partial x}(\vec x(t)) - \frac{d}{dt}\frac{\partial L}{\partial v}(\vec v(t)) = 0\]
+for all times \(t.\) 
+</p>
+
+<p>
+This gives the <em>Euler-Lagrange equation</em>: to minimize 
+\[S = \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt,\]
+you need to find a solution to 
+\[\frac{\partial L}{\partial x}(\vec x(t)) = \frac{d}{dt}\frac{\partial L}{\partial v}(\vec v(t)).\] 
+</p>
+
+<p>
+We want to choose our function \(L\) in such a way that we recover Newton's equations. So, let's try to pick \(L\) such that the Euler-Lagrange equation above becomes
+\[F(\vec x(t)) = m\frac{d \vec v(t)}{dt} = \frac{d}{dt}(m\vec v(t)).\] 
+
+Here, we view \(F\) as being a function of \(\vec x,\) because the force of our particle depends on its position in space; we think of \(F\) as being some time-independent force, like gravity: gravity depends on your location, but not on what time it is. 
+</p>
+
+<p>
+Comparing Newton's equation to the Euler-Lagrange equation, it seems we should choose \(L\) so that
+\[\frac{\partial L}{\partial \vec x}(\vec x) = F(\vec x),\]
+\[\frac{\partial L}{\partial \vec v}(\vec v) = m\vec v.\]
+</p>
+
+<p>
+The second of the above two equations is easy to solve. Let \(||\vec v||\) denote the length of the vector \(\vec v.\) By the product rule, because \(||\vec v||^2 = \vec v \cdot \vec v,\) we have
+\[\frac{\partial}{\partial v}(||\vec v||^2) = 2\vec v,\]
+so that
+\[\frac{\partial}{\partial v}\left(\frac{1}{2}||\vec v||^2\right) = m\vec v.\] 
+</p>
+
+<p>
+The quantity
+\[T = \frac{1}{2}||\vec v||^2\]
+is called the <em>kinetic energy</em> in Newtonian mechanics, and is an incredibly important quantity. So, our function \(L\) ought to have a term involving the potential energy.
+</p>
+
+<p>
+However, the equation \(\partial L/\partial\vec v = m\vec v\) we just solved only tells us about the terms of \(L\) involving \(\vec v.\) We still don't know about the terms of \(L\) which involve \(\vec x\)! For that, we go to our first equation,
+\[\frac{\partial L}{\partial \vec x}(\vec x) = F(\vec x).\] 
+</p>
+
+<p>
+In Newtonian mechanics, a commonly used quantity is the <em>potential energy</em>. Intuitively, potential energy measures how much work the forces acting on your particle would have to do to move your particle in the way they desire. For example, if gravity is acting, then your particle will have <em>gravitational potential energy</em> depending on how high it is: gravity <em>wants</em> to pull your particle down, but gravity has to do a certain amount of work to pull it down; gravitational potential energy is just a measure of how much work gravity would have to do to pull your object down. A ball held very high up has more gravitational potential energy than that same ball held closer to the ground. 
+</p>
+
+<p>
+The reason we mention potential energy is because it is defined as the <em>anti-derivative</em> of \(-F(\vec x).\) That is, potential energy is some function \(V(\vec x)\) so that
+\[\frac{\parital V}{\partial \vec x}(\vec x) = -F(\vec x).\] 
+</p>
+
+<p>
+Putting these two terms together, we get the <em>Lagrangian</em>
+\[L(\vec x, \vec v, m) = T - V.\]
+This is Lagrange's formulation of the laws of motion: a particle always moves in a path which minimizes the <em>action integral</em>
+\[S = \int_{t_0}^{t_1} L(\vec x(t), \vec v(t), m) \, dt\]
+where \(L = T - V.\) 
+</p>
+
 
 <h2>The pendulum</h2>
-Now, let's try to work out a slightly less simple example. Let's imagine a pendulum with a string of length \(\ell\) and an object of mass \(m\) attached to the end.
+
+<p>
+To end, we are going to give an example of how to use Lagrangian mechanics to solve a physics problem. 
+</p>
+
+<p>
+Imagine a pendulum with a string of length \(\ell\) and an object of mass \(m\) attached to the end, as drawn below.
+</p>
+
 <img src="pendulum.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             max-width:90%;
             height:auto;">
-Another advantage of Lagrange's approach is that you can choose any coordinate system you want. So let's parametrize our physical sysetem by the angle \(\theta\).
-The angle changes at rate \(\frac{d\theta}{dt}\), so the velocity is
+
+<p>
+While in our derivation of Lagrangian mechanics we used standard 3-dimensional coordinates, for this physical system it's helpful to only remember one coordinate: the angle \(\theta\) which the pendulum makes with some reference line.
+</p>
+
+<p>
+The velocity of the particle at the end of our rope is given by 
+\[v = \ell\frac{d\theta}{dt}.\]
+This is because how fast the mass moves depends both on how long the string is and on how much the angle \(\theta\) moves. 
+</p>
+
+<p>
+From here, we can figure out the kinetic energy term in the Lagrangian: 
 \[
-v=\ell\frac{d\theta}{dt}
+T = \frac12mv^2=\frac12m(\ell\dot\theta)^2.
 \]
-and the kinetic energy is
+</p>
+
+<p>
+To figure out the potential energy term in the Lagrangian, we need to specify which forces are acting on our pendulum. Let's assume the only force is gravity; Newton, in his deep studies of gravity, determined that the potential energy of gravity on Earth is equal to 
+\[V = mgh,\]
+where \(m\) is the mass, \(h\) is the <em>height</em> of the object above the surface of the Earth, and \(g \approx 10 \frac{\text{meters}}{\text{second}^2}\) is an experimentally observed constant coming from the strength of Earth's gravitational field.
+</p>
+
+<p>
+We make a remark: \(V\) was defined as the anti-derivative of force, so it is only defined up to a constant: if \(A(x)\) is an antiderivative of \(-F(x),\) then \(A(x) + 23\) is also an antiderivative of \(-F(x),\) for example. 
+</p>
+
+<p>
+Similarly, 'height' is ambiguous: do we mean height above sea level? Height above the ground? Notice that height and \(V\) are ambiguous in the exact same way: both are ambiguous up to adding a constant. So, let's just fix this constant by saying that, in our example, 'height' means distance above (or below) the pivot point of our pendulum. 
+</p>
+
+<p>
+Then trigonometry tells us that the height of our particle is \(-\ell\cos\theta\), so the gravitational potential is \(V = -mg\ell\cos\theta\). Putting this all together, the Lagrangian is
 \[
-\frac12mv^2=\frac12m(\ell\dot\theta)^2.
+L=T-V=\frac12m(\ell\dot\theta)^2-(-mg\ell\cos\theta)=\frac12m\ell^2\dot\theta^2+mg\ell\cos\theta.
 \]
-Moreover, the height is \(-\ell\cos\theta\), so the gravitational potential is \(-mg\ell\cos\theta\). Therefore, the Lagrangian is
-\[
-L(\theta,\dot\theta,t)=\frac12m(\ell\dot\theta)^2-(-mg\ell\cos\theta)=\frac12m\ell^2\dot\theta^2+mg\ell\cos\theta.
-\]
-Now, the Euler-Lagrange equation tells us
+</p>
+
+<p>
+From here, the Euler-Lagrange equation tells us
 \[
 \frac{\partial L}{\partial\theta}=\frac d{dt}\bigg(\frac{\partial L}{\partial\dot\theta}\bigg).
 \]
@@ -326,19 +374,11 @@ i.e.,
 \]
 This is the usual equation for the pendulum! Slightly surprisingly, there is no dependence on the mass \(m\).
 
-<p>Although the differential equation is difficult to solve in general, when the angle \(\theta\) is small you can use the small angle approximation \(\sin\theta\approx\theta\) and instead solve
-\[
-\frac{d^2\theta}{dt^2}+\frac{g}\ell\theta=0.
-\]
- Solving the differential equation, we see that
-\[
-\theta=C_1\cos\bigg(\sqrt{\frac g\ell}t\bigg)+C_2\sin\bigg(\sqrt{\frac g\ell}t\bigg).
-\]
-Since sine and cosine have period \(2\pi\), the pendulum itself will have period (approximately)
-\[
-2\pi\sqrt{\frac\ell g}.
-\]</p>
+<h2>Conclusion</h2>
 
+<p>
+At the moment, Lagrangian mechanics seems to be just a very counterintuitive way to restate Newtonian mechanics. But this reformulation enabled new major discoveries, which we hope you'll explore with us next week!
+</p>
 
 </body>
 <!-- MailerLite Universal -->
