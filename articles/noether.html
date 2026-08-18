@@ -150,11 +150,50 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
     </td>
   </tr>
 </table>
-
-
-<h2>Why momentum is conserved</h2>  
 <p>
-  <a href="lagrangian.html">Last week</a> we discussed Lagrange's approach to mechanics.
+  Let's explore how continuous symmetries really correspond to conserved quantities. We will start with conservation of momentum.
+</p>
+
+
+<h2>Why is momentum conserved?</h2>  
+<!-- Momentum is conserved when there are no <em>non-conservative</em> forces on the system. -->
+ <h3>Newton's approach</h3>
+Suppose there are particles with velocities \(\vec v_1,\dots,\vec v_n\) and masses \(m_1,\dots,m_n\), and suppose there are no "external" forces acting on our particles.
+Then each particle exerts a force of \(m_i\vec a_i\), where \(\vec a_i=\frac{d\vec v_i}{dt}\) is the acceleration of the particle.
+Since there are no external forces on the system, Newton tells us the sum of these forces is zero:
+\[
+m_1\vec a_1+m_2\vec a_2+\cdots+m_n\vec a_n=0.
+\]
+Equivalently, we know
+\[
+m_1\frac{d\vec v_1}{dt}+m_2\frac{d\vec v_2}{dt}+\cdots+m_n\frac{d\vec v_n}{dt}=0.
+\]
+This is the same as
+\[
+\frac d{dt}(m_1\vec v_1+\cdots+m_n\vec v_n)=0.
+\]
+But the derivative of \(m_1\vec v_1+\cdots+m_n\vec v_n\) being zero means it does not change with time. In other words, it is a conserved quantity! This is exactly why momentum is conserved.
+
+<h3>Lagrange's approach</h3>
+
+<p>
+  <a href="lagrangian.html">Last week</a> we discussed Lagrange's approach to mechanics. Let's understand why momentum is conserved from this perspective.
+</p>
+
+<p>
+  In Lagrange's approach, we take a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,m)=T-V\), and try to minimize the action integral
+  \[
+  S=\int_{t_0}^{t_1}L(\vec x(t),\vec v(t),m)dt.
+  \] 
+  Minimizing this integral amounts to the <em>Euler-Lagrange equation</em>,
+  \[
+  \frac{\partial L}{\partial x}(\vec x(t))=\frac d{dt}\frac{\partial L}{\partial v}(\vec v(t)).
+    \]
+</p>
+
+<p>
+  I said above that conservation of momentum corresponds to translation symmetry. To see what this means conceretely, let's take a particle moving along a path \(\vec x(t)\) which is a solution to the Euler-Lagrange equation.
+  Then 
 </p>
 
 </body>
