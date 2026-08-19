@@ -151,50 +151,197 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
   </tr>
 </table>
 <p>
-  Let's explore how continuous symmetries really correspond to conserved quantities. We will start with conservation of momentum.
+  Let's explore how continuous symmetries really correspond to conserved quantities. We will start with conservation of energy.
 </p>
 
-
-<h2>Why is momentum conserved?</h2>  
-<!-- Momentum is conserved when there are no <em>non-conservative</em> forces on the system. -->
- <h3>Newton's approach</h3>
-Suppose there are particles with velocities \(\vec v_1,\dots,\vec v_n\) and masses \(m_1,\dots,m_n\), and suppose there are no "external" forces acting on our particles.
-Then each particle exerts a force of \(m_i\vec a_i\), where \(\vec a_i=\frac{d\vec v_i}{dt}\) is the acceleration of the particle.
-Since there are no external forces on the system, Newton tells us the sum of these forces is zero:
-\[
-m_1\vec a_1+m_2\vec a_2+\cdots+m_n\vec a_n=0.
-\]
-Equivalently, we know
-\[
-m_1\frac{d\vec v_1}{dt}+m_2\frac{d\vec v_2}{dt}+\cdots+m_n\frac{d\vec v_n}{dt}=0.
-\]
-This is the same as
-\[
-\frac d{dt}(m_1\vec v_1+\cdots+m_n\vec v_n)=0.
-\]
-But the derivative of \(m_1\vec v_1+\cdots+m_n\vec v_n\) being zero means it does not change with time. In other words, it is a conserved quantity! This is exactly why momentum is conserved.
-
-<h3>Lagrange's approach</h3>
+<h2>Why is energy conserved?</h2>
 
 <p>
-  <a href="lagrangian.html">Last week</a> we discussed Lagrange's approach to mechanics. Let's understand why momentum is conserved from this perspective.
+  <a href="lagrangian.html">Last week</a> we discussed Lagrange's approach to mechanics. Let's understand why energy is conserved from this perspective.
 </p>
 
 <p>
-  In Lagrange's approach, we take a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,m)=T-V\), and try to minimize the action integral
+  As a quick review, in Lagrange's approach, we take a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,t)=T-V\), and try to minimize the action integral
   \[
-  S=\int_{t_0}^{t_1}L(\vec x(t),\vec v(t),m)dt.
+  S=\int_{t_0}^{t_1}L(\vec x(t),\vec v(t),t)dt.
   \] 
   Minimizing this integral amounts to the <em>Euler-Lagrange equation</em>,
   \[
-  \frac{\partial L}{\partial x}(\vec x(t))=\frac d{dt}\frac{\partial L}{\partial v}(\vec v(t)).
+  \frac{\partial L}{\partial \vec x}=\frac d{dt}\frac{\partial L}{\partial \vec v}.
     \]
+    We want to find a conserved quantity. This is some function \(C\) which should remain constant as our system evolves. Mathematically, this just means we want to find a function \(C\) such that
+\[
+\frac{dC}{dt}=0.
+\]
+  </p>
+
+<p> 
+<!-- Noether tells us the conservation of energy arises from time-invariance. Therefore, although in general the Lagrangian is allowed to vary by time, let's assume \(L\) is independent of \(t\). -->
+Since we have a function \(L\) lying around, let's just try to take its derivative!
+ Let's make a simplifying assumption that the Lagrangian is independent of time; in other words, that our physical system obeys the "same laws" at every instance.
 </p>
 
 <p>
-  I said above that conservation of momentum corresponds to translation symmetry. To see what this means conceretely, let's take a particle moving along a path \(\vec x(t)\) which is a solution to the Euler-Lagrange equation.
-  Then 
+Under this hypothesis, the time-derivative of the Lagrangian may be computed by a multi-variable version of the chain rule,
+\[
+\frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
+\]
+But the Euler-Lagrange equation (and since \(\vec v=\frac{d\vec x}{dt}\) by definition) lets us re-write the first part:
+\[
+\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial v}\cdot\frac{d\vec v}{dt}
+=\frac d{dt}\big(\frac{\partial L}{\partial \vec v}\big)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
+\]
+By the product rule, we can re-write this expression as
+\[
+\frac d{dt}\big(\frac{\partial L}{\partial \vec v}\big)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
+\]
+From our computations we conclude
+\[
+\frac{dL}{dt}=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
+\]
+This gives us a function
+\[
+E=\frac{\partial L}{\partial\vec v}\cdot\vec v-L
+\]
+whose time-derivative is zero. This is a conserved quantity, which we will call <em>energy</em>.
 </p>
+
+<p>
+  Let's see what the conservation of energy means when our Lagrangian is of the form
+\[
+L(\vec x,\vec v)=\frac12\|\vec v\|^2-V(\vec x),
+\]
+where \(V(\vec x)\) is the potential energy of the particle \(\vec x\). As we computed last week, by the product rule
+\[
+\frac{\partial L}{\partial \vec v}=\frac\partial{\partial\vec v}\bigg(\frac12\|\vec v\|^2\bigg)=\vec v.
+\]
+Thus the energy becomes
+\[
+E=\frac{\partial L}{\partial\vec v}\cdot\vec v-L=\vec v\cdot\vec v-L=\frac12\|\vec v\|^2+V(\vec x).
+\]
+That is, energy is the sum of kinetic energy and potential energy!
+</p>
+
+<p>
+  By the way, our assumption that the Lagrangian \(L\) doesn't depend on time \(t\) was more than a simplifying assumption! If we didn't assume time-independence, the time-derivative of \(L\) obtains a new term:
+  \[
+  \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
+  \]
+  The extra term \(\frac{\partial L}{\partial t}\), which measures "how much the physical laws of our system depends on time", will tag along through our entire derivation. So we would only be able to conclude that
+  \[
+  \frac{dE}{dt}=-\frac{\partial L}{\partial t}.
+  \]
+  In other words, the conservation of energy is equivalent to the time-independence of the Lagrangian! This is the first indication that the symmetry of our system may be related to conservation laws!
+</p>
+
+
+<h2>Why is momentum conserved?</h2>
+What exactly happened in the last section? We assumed that the Lagrangian is time-independent, and we analyzed what happens when we change time infinitesimally. 
+Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze what happens under an infinitesimal change in position.
+
+<p>
+  Before that, note that although above we only treated the Lagrangian for one particle, we could have just as easily treated the Lagrangian with \(n\) particles. 
+  In that case, we have a function \(L(\vec x_1,\dots,\vec x_n,\vec v_1,\dots,\vec v_n,t)\) depending on the position and velocities of \(n\) particles and time.
+   The Euler-Lagrange equations becomes \(n\) equations
+  \[
+  \frac{\partial L}{\partial \vec x_1}=\frac d{dt}\frac{\partial L}{\partial \vec v_1}  \]
+  \[
+  \frac{\partial L}{\partial \vec x_2}=\frac d{dt}\frac{\partial L}{\partial \vec v_2}  \]
+  \[
+  \cdots
+  \]
+  \[
+  \frac{\partial L}{\partial \vec x_n}=\frac d{dt}\frac{\partial L}{\partial \vec v_n}.  \]
+</p>
+
+<p>
+  Now, let's shift our entire physical system by some small vector \(\vec\epsilon\). Then the Lagrangian changes as
+  \[
+  L(\vec x_1+\vec\epsilon,\dots,\vec x_n+\vec\epsilon,\vec v_1,\dots,\vec v_n,t)=L+\frac{\partial L}{\partial \vec x_1}\cdot\vec\epsilon+\cdots+\frac{\partial L}{\partial \vec x_n}\cdot\vec\epsilon.
+  \]
+  In other words, the total change is
+  \[
+  \bigg(\frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}\bigg)\cdot\vec\epsilon.
+  \]
+  If the Lagrangian is independent of such shifts, we must necessarily have 
+  \[
+  \frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}=0.
+  \]
+  By the Euer-Lagrange equation, this equals
+  \[
+  \frac d{dt}\frac{\partial L}{\partial\vec v_1}+\cdots+\frac d{dt}\frac{\partial L}{\partial\vec v_n}=0.
+  \]
+  In other words, the function
+  \[
+  C=\frac{\partial L}{\partial\vec v_1}+\cdots+\frac{\partial L}{\partial\vec v_n}
+  \]
+  satisfies
+  \[
+  \frac{dC}{dt}=0,\]
+  i.e., is a conserved quantity. 
+  Each derivative \(\frac{\partial L}{\partial \vec v_i}\) is called the <em>momentum</em> of the \(i\)-th particle, and this exactly says the total momentum is conserved.
+</p>
+
+ <h3>What would Newton say?</h3>
+Let's again go back to the situation where the \(i\)-th particle has mass \(m_i\), and the Lagrangian has the form
+\[
+L=\frac12m_1\|\vec v_1\|^2+\cdots+\frac12m_n\|\vec v_n\|^2-V(\vec x_1,\dots,\vec x_n)
+\]
+where \(V(\vec x_1,\dots,\vec x_n)\) is the sum of the potential energy of the particles.
+Then the momentum of the \(i\)-th particle is
+\[
+\frac{\partial L}{\partial\vec v_i}=m_i\vec v_i,
+\]
+so the conservation of momentum says
+\[
+m_1\vec v_1+\cdots+m_n\vec v_n
+\]
+is conserved. In other words, its time-derivative,
+\[
+m_1\vec a_1+\cdots+m_n\vec a_n=0.\]
+Here Newton says \(\vec F_i=m_i\vec a_i\) is the force the \(i\)-th particle exerts. So the conservation of momentum just says
+\[
+\vec F_1+\cdots+\vec F_n=0.
+\]
+This is exactly Newton's third law, that every action has an equal and opposite reaction!
+
+
+<h2>Why is angular momentum conserved?</h2>
+
+The last conservation law--the conservation of angular momentum--is more involved, so we won't go through the full derivation.
+But the basic idea remains the same. Let's suppose our Lagrangian
+\[
+L(\vec x_1,\dots,\vec x_n,\vec v_1,\dots,\vec v_n,t)
+\]
+is invariant under rotation. In the language of linear algebra, we can represent rotation by a 3x3-matrix \(A\). The invariance of the Lagrangian means
+\[
+L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=L(\vec x_1,\dots,\vec x_n,\vec v_1,\dots,\vec v_n,t).
+\]
+In other words, the derivative by \(A\) (whatever that means...) is zero!
+\[
+\frac d{dA}L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=0.
+\]
+Using the Euler-Lagrange equations, this expression can be re-written as \(\frac{dC}{dt}\) for some function \(C\). So we conclude
+\[
+\frac{dC}{dt}=0,
+\]
+i.e., \(C\) is a conserved quantity. We call this quantity (really, a vector) \(C\) the <em>angular momentum</em>.
+
+<h2>Conclusion: Lie groups</h2>
+
+Noether's big insight was that continuous symmetries correspond to conservation laws.
+ That means, whereas Newton needed to rely on some cleverness to discover conserved quantities, we can instead just hunt for symmetries of our physical system.
+
+ <p>
+  Sophus Lie took this idea of continuous symmetries and developed the theory of <em>Lie groups</em>.
+Lie groups are analogous to Galois's theory of symmetries that he developed in the course of studying solutions to equations, but encorporates what it means for two symmetries to be "close to each other."
+He then formalized how to perform calculus on Lie groups--how do you take derivatives of a function on a Lie group? This is precisely what we were doing when we took a derivative with respect to a matrix \(A\) in the derivation of angular momentum.
+ </p>
+
+ <p>
+  Sophus Lie's theory of continuous symmetries has since then developed into a rich subject now known as <em>representation theory</em>.
+   Some questions are: What are all possible Lie groups (=sets of continuous symmetries)? In what dimensions can they be realized? What do they look like geometrically--we saw the example of a circle, but what about in higher dimensions?
+ </p>
 
 </body>
 <!-- MailerLite Universal -->
