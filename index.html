@@ -5,6 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hidden Phenomena</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin: 1.25em 0;
+    }
+    .filter-btn {
+      font: inherit;
+      font-size: 0.9em;
+      padding: 0.35em 0.9em;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.15s ease, background 0.15s ease;
+    }
+    .filter-btn:hover {
+      opacity: 1;
+    }
+    .filter-btn.is-active {
+      opacity: 1;
+      background: currentColor;
+    }
+    .filter-btn.is-active {
+      color: inherit;
+    }
+    .filter-btn.is-active {
+      background: rgba(128, 128, 128, 0.2);
+    }
+    .article-list li[hidden] {
+      display: none;
+    }
+    .no-results {
+      opacity: 0.7;
+      font-style: italic;
+    }
+  </style>
  <!-- KaTeX -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
@@ -19,45 +59,54 @@
 
 <hr>
 
+<div class="category-filter" role="group" aria-label="Filter articles by area">
+  <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+  <button type="button" class="filter-btn" data-filter="number-theory">Number theory</button>
+  <button type="button" class="filter-btn" data-filter="analysis">Calculus</button>
+  <button type="button" class="filter-btn" data-filter="physics">Physics</button>
+  <button type="button" class="filter-btn" data-filter="algebra">Algebra</button>
+</div>
+
 <ul class="article-list">
-  <li>
+  <li data-categories="analysis physics">
           <a href="articles/lagrangian.html">Mechanics I: nature is lazy</a> August 15, 2026
   </li>
-        <li>
+        <li data-categories="analysis">
           <a href="articles/monodromy.html">Möbius strips and differential equations</a> August 8, 2026
   </li>
-  <li>
+  <li data-categories="number-theory">
           <a href="articles/lucas.html">Fractal patterns hidden inside Pascal's triangle</a> July 31, 2026
   </li>
-        <li>
+        <li data-categories="algebra">
           <a href="articles/cubic.html">How to solve cubic and quartic equations II: cubics</a> July 24, 2026
   </li>
-        <li>
+        <li data-categories="algebra">
           <a href="articles/quartic.html">How to solve cubic and quartic equations I: quartics</a> July 17, 2026
   </li>
-        <li>
+        <li data-categories="analysis">
           <a href="articles/gamma.html">What is the factorial of 3.5?</a> July 10, 2026
   </li>
-        <li>
+        <li data-categories="number-theory analysis">
           <a href="articles/dirichlet.html">Infinitely many primes end in a 7</a> February 22, 2026
   </li>
-   <li>
+   <li data-categories="number-theory analysis">
           <a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> February 13, 2026
   </li>
-        <li>
+        <li data-categories="number-theory">
 
           <a href="articles/modular.html">Why study Diophantine equations?</a> <span>February 10, 2026</span>
   </li>
-  <li>
+  <li data-categories="number-theory">
           <a href="articles/primitive.html">What is \(\log(3)\) modulo \(7\)?</a> <span>February 7, 2026</span>
   </li>
-  <li>
+  <li data-categories="number-theory">
           <a href="articles/quadratic-residues.html">What is \(\sqrt{-1}\) modulo \(5\)?</a> <span>February 3, 2026</span>
   </li>
-  <li>
+  <li data-categories="number-theory analysis">
           <a href="articles/hensels.html">Using calculus to do number theory</a> <span>February 2, 2026</span>
   </li>
 </ul>
+<p class="no-results" hidden>No articles in this area yet.</p>
 
 <footer>
         <p>This webpage is maintained by <a href="https://michael.dog/">Michael Barz</a> and <a href="https://kentajsuzuki.github.io/">Kenta Suzuki</a>. We are two mathematics PhD students at Princeton, both broadly interested in arithmetic geometry.</p>
@@ -73,6 +122,32 @@
     ml('account', '2110982');
 </script>
 <!-- End MailerLite Universal -->
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.filter-btn');
+  var items = document.querySelectorAll('.article-list li');
+  var noResults = document.querySelector('.no-results');
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      buttons.forEach(function (b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+
+      var filter = btn.getAttribute('data-filter');
+      var visibleCount = 0;
+
+      items.forEach(function (li) {
+        var cats = (li.getAttribute('data-categories') || '').split(' ');
+        var show = filter === 'all' || cats.indexOf(filter) !== -1;
+        li.hidden = !show;
+        if (show) visibleCount++;
+      });
+
+      noResults.hidden = visibleCount !== 0;
+    });
+  });
+})();
+</script>
 <footer>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
