@@ -163,7 +163,7 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
 <p>
   As a quick review, in Lagrange's approach, we take a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,t)=T-V\), and try to minimize the action integral
   \[
-  S=\int_{t_0}^{t_1}L(\vec x(t),\vec v(t),t)dt.
+  S=\int_{t_0}^{t_1}L\big(\vec x(t),\vec v(t),t\big)dt.
   \] 
   Minimizing this integral amounts to the <em>Euler-Lagrange equation</em>,
   \[
@@ -198,11 +198,11 @@ However under our assumption that \(L\) is time-independent the last term vanish
 Now the Euler-Lagrange equation (and since \(\vec v=\frac{d\vec x}{dt}\) by definition) lets us re-write the first part:
 \[
 \frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial v}\cdot\frac{d\vec v}{dt}
-=\frac d{dt}\big(\frac{\partial L}{\partial \vec v}\big)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
+=\frac d{dt}\bigg(\frac{\partial L}{\partial \vec v}\bigg)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
 \]
 By the product rule, we can re-write this expression as
 \[
-\frac d{dt}\big(\frac{\partial L}{\partial \vec v}\big)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
+\frac d{dt}\bigg(\frac{\partial L}{\partial \vec v}\bigg)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d}{dt}\vec v=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
 \]
 From our computations we conclude
 \[
@@ -247,7 +247,7 @@ That is, energy is the sum of kinetic energy and potential energy!
   In other words, the conservation of energy (\(\frac{dE}{dt}=0\)) is equivalent to the time-independence of the Lagrangian (\(\frac{\partial L}{\partial t}=0\))!
 For example, when there is friction and our Lagrangian is of the form \(e^{ct}L'\) where \(L'\) is a time-independent Lagrangian. In this case, we see
 \[
-  \frac{dE}{dt}=-\frac{\partial}{\partial t}(e^{ct}L')=-ce^{ct}L'=-cL.
+  \frac{dE}{dt}=-\frac{\partial}{\partial t}\big(e^{ct}L'\big)=-ce^{ct}L'=-cL.
   \]
   This means energy is lost through friction, which matches our physical understanding.
 </p>
@@ -285,7 +285,7 @@ Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze wha
   \[
   \frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}=0.
   \]
-  By the Euer-Lagrange equation, this equals
+  By the Euer-Lagrange equation, this means
   \[
   \frac d{dt}\frac{\partial L}{\partial\vec v_1}+\cdots+\frac d{dt}\frac{\partial L}{\partial\vec v_n}=0.
   \]
@@ -314,10 +314,10 @@ so the conservation of momentum says
 \[
 m_1\vec v_1+\cdots+m_n\vec v_n
 \]
-is conserved. In other words, its time-derivative,
+is conserved. In other words, its time-derivative is zero:
 \[
 m_1\vec a_1+\cdots+m_n\vec a_n=0.\]
-Here Newton says \(\vec F_i=m_i\vec a_i\) is the force the \(i\)-th particle exerts. So the conservation of momentum just says
+Newton tells us \(\vec F_i=m_i\vec a_i\) is the force the \(i\)-th particle exerts. So the conservation of momentum just says
 \[
 \vec F_1+\cdots+\vec F_n=0.
 \]
