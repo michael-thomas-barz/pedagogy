@@ -177,16 +177,25 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
 
 <p> 
 <!-- Noether tells us the conservation of energy arises from time-invariance. Therefore, although in general the Lagrangian is allowed to vary by time, let's assume \(L\) is independent of \(t\). -->
-Since we have a function \(L\) lying around, let's just try to take its derivative!
- Let's make a simplifying assumption that the Lagrangian is independent of time; in other words, that our physical system obeys the "same laws" at every instance.
+Noether tells us that for convervation of energy, we need the Lagrangian to be independent of time; in other words, that our physical system obeys the "same laws" at every instance.
+There are two main reasons why this assupmtion may fail in general:
+<ol>
+  <li>the force on your system may depend on time; and</li>
+  <li>the presence of non-conservative forces, such as friction, would make your Lagrangian look like \(e^{ct}L'\) where \(L'\) is some time-independent Lagrangian.</li>
+</ol>
+<!-- Let's make a simplifying assumption that the Lagrangian is independent of time; in other words, that our physical system obeys the "same laws" at every instance. -->
 </p>
 
 <p>
-Under this hypothesis, the time-derivative of the Lagrangian may be computed by a multi-variable version of the chain rule,
+Now, since we have a function \(L\) lying around, let's just try to take its derivative! This can be computed by a multi-variable version of the chain rule,
+\[
+\frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{dL}{dt}.
+\]
+However under our assumption that \(L\) is time-independent the last term vanishes, and simply
 \[
 \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
 \]
-But the Euler-Lagrange equation (and since \(\vec v=\frac{d\vec x}{dt}\) by definition) lets us re-write the first part:
+Now the Euler-Lagrange equation (and since \(\vec v=\frac{d\vec x}{dt}\) by definition) lets us re-write the first part:
 \[
 \frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial v}\cdot\frac{d\vec v}{dt}
 =\frac d{dt}\big(\frac{\partial L}{\partial \vec v}\big)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
@@ -206,6 +215,8 @@ E=\frac{\partial L}{\partial\vec v}\cdot\vec v-L
 whose time-derivative is zero. This is a conserved quantity, which we will call <em>energy</em>.
 </p>
 
+<h3>Example: in Newtonian mechanics</h3>
+
 <p>
   Let's see what the conservation of energy means when our Lagrangian is of the form
 \[
@@ -222,8 +233,10 @@ E=\frac{\partial L}{\partial\vec v}\cdot\vec v-L=\vec v\cdot\vec v-L=\frac12\|\v
 That is, energy is the sum of kinetic energy and potential energy!
 </p>
 
+<h3>Side-quest: what about time-dependent Lagrangians?</h3>
+
 <p>
-  By the way, our assumption that the Lagrangian \(L\) doesn't depend on time \(t\) was more than a simplifying assumption! If we didn't assume time-independence, the time-derivative of \(L\) obtains a new term:
+  By the way, what would happen if the Lagrangian \(L\) really dependend on the time \(t\)? If we didn't assume time-independence, the time-derivative of \(L\) obtains a new term:
   \[
   \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
   \]
@@ -231,7 +244,12 @@ That is, energy is the sum of kinetic energy and potential energy!
   \[
   \frac{dE}{dt}=-\frac{\partial L}{\partial t}.
   \]
-  In other words, the conservation of energy (\(\frac{dE}{dt}=0\)) is equivalent to the time-independence of the Lagrangian (\(\frac{\partial L}{\partial t}=0\))! This is the first indication that the symmetry of our system may be related to conservation laws.
+  In other words, the conservation of energy (\(\frac{dE}{dt}=0\)) is equivalent to the time-independence of the Lagrangian (\(\frac{\partial L}{\partial t}=0\))!
+For example, when there is friction and our Lagrangian is of the form \(e^{ct}L'\) where \(L'\) is a time-independent Lagrangian. In this case, we see
+\[
+  \frac{dE}{dt}=-\frac{\partial}{\partial t}(e^{ct}L')=-ce^{ct}L'=-cL.
+  \]
+  This means energy is lost through friction, which matches our physical understanding!
 </p>
 
 
