@@ -28,16 +28,16 @@
 Let's imagine I let go of a ball of mass \(m\) at height \(h\). Initially, since the ball is not moving, there is no kinetic energy. 
 However, there is a potential energy of \(mgh\) coming from gravity.
 
-<p>After some time \(t\), the ball has fallen to some height \(h'\). Since the gravitational acceleration is \(g\), the ball is now falling at speed \(gt\). 
+<p>After some time \(t\), the ball has fallen to some height \(h'\). Since the gravitational acceleration is \(g\), around 10m/s, the ball is now falling at speed \(gt\). 
   So now the ball has kinetic energy of
 \[
 \frac12 mv^2=\frac12m(gt)^2,
 \]
-and has potential energy \(mgh'\). By conservation of energy, we know
+and has potential energy \(mgh'\). By conservation of energy, we know the total energy didn't change:
 \[
-mgh=\frac12m(gt)^2+mgh',
+mgh=\frac12m(gt)^2+mgh'.
 \]
-and we can solve for \(h'\):
+By solving for \(h'\), we can compute how far the ball has fallen:
 \[
 h'=h-\frac12gt^2.
 \]
@@ -67,7 +67,7 @@ Now, imagine I am playing billiard. A billiard ball of mass \(m_1\) is sitting o
 
 <h3>Conservation of angular momentum</h3>
 
-  Angular momentum is defined with respect to some origin.
+  Angular momentum is defined with respect to some origin--the "center of rotation".
 For a particle with momentum \(\vec p\) and position vector \(\vec r\), the angular momentum is the cross product \(\vec r\times\vec p\).
 
   <p>
@@ -82,7 +82,7 @@ For a particle with momentum \(\vec p\) and position vector \(\vec r\), the angu
       This is the reason why when figure skaters pull in their arms, <a href="https://www.youtube.com/shorts/4b7v3Yki4os">they rotate more frequently</a>.
   </p>
   
-  <p>We see that each of our conserved quantities (energy, momentum, and angular momentum) tells us something useful about our physical system.
+  <p>Each of our conserved quantities (energy, momentum, and angular momentum) tells us something useful about our physical system.
     However, finding these quantities requires some cleverness on our part. 
     Wouldn't it be wonderful if there is a more systematic method for finding conserved quantities?
     Emmy Noether discovered that conserved quantities exactly correspond to continuous symmetries of the physical system, thereby answering this question!
@@ -161,7 +161,7 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
 </p>
 
 <p>
-  As a quick review, in Lagrange's approach, we take a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,t)=T-V\), and try to minimize the action integral
+  As a quick review, in Lagrange's approach, we start with a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,t)=T-V\), and try to minimize the action integral
   \[
   S=\int_{t_0}^{t_1}L\big(\vec x(t),\vec v(t),t\big)dt.
   \] 
@@ -181,17 +181,17 @@ Noether tells us that for convervation of energy, we need the Lagrangian to be i
 There are two main reasons why this assupmtion may fail in general:
 <ol>
   <li>the force on your system may depend on time; and</li>
-  <li>the presence of non-conservative forces, such as friction, would make your Lagrangian look like \(e^{ct}L'\) where \(L'\) is some time-independent Lagrangian.</li>
+  <li>non-conservative forces, such as friction, makes your Lagrangian look like \(e^{ct}L'\) where \(L'\) is some time-independent Lagrangian.</li>
 </ol>
 <!-- Let's make a simplifying assumption that the Lagrangian is independent of time; in other words, that our physical system obeys the "same laws" at every instance. -->
 </p>
 
 <p>
-Now, since we have a function \(L\) lying around, let's just try to take its derivative! This can be computed by a multi-variable version of the chain rule,
+Now, since we have a function \(L\) lying around, let's just try to take its derivative! We can apply a multi-variable version of the chain rule,
 \[
 \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
 \]
-However under our assumption that \(L\) is time-independent the last term vanishes, and simply
+Under our assumption that \(L\) is time-independent the last term vanishes:
 \[
 \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
 \]
@@ -236,7 +236,7 @@ That is, energy is the sum of kinetic energy and potential energy!
 <h3>Side-quest: what about time-dependent Lagrangians?</h3>
 
 <p>
-  By the way, what would happen if the Lagrangian \(L\) really depended on the time \(t\)? In this scenario, the time-derivative of \(L\) obtains a new term:
+  By the way, what would happen if the Lagrangian \(L\) depended on the time \(t\)? In this scenario, the time-derivative of \(L\) obtains a new term:
   \[
   \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
   \]
@@ -281,7 +281,7 @@ Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze wha
   \[
   \bigg(\frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}\bigg)\cdot\vec\epsilon.
   \]
-  If the Lagrangian is independent of such shifts, we must necessarily have 
+  In order for the Lagrangian is independent of translations, we need
   \[
   \frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}=0.
   \]
@@ -305,7 +305,7 @@ Let's again go back to the situation where the \(i\)-th particle has mass \(m_i\
 \[
 L=\frac12m_1\|\vec v_1\|^2+\cdots+\frac12m_n\|\vec v_n\|^2-V(\vec x_1,\dots,\vec x_n)
 \]
-where \(V(\vec x_1,\dots,\vec x_n)\) is the sum of the potential energy of the particles.
+where \(V(\vec x_1,\dots,\vec x_n)\) is the total potential energy of the particles.
 Then the momentum of the \(i\)-th particle is
 \[
 \frac{\partial L}{\partial\vec v_i}=m_i\vec v_i,
@@ -339,7 +339,7 @@ In other words, the derivative by \(A\) (whatever that means...) is zero!
 \[
 \frac d{dA}L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=0.
 \]
-Using the Euler-Lagrange equations, this expression can be re-written as \(\frac{dC}{dt}\) for some function \(C\). So we conclude
+Using the Euler-Lagrange equations, the left-hand-side can be re-written as \(\frac{dC}{dt}\) for some function \(C\). So we conclude
 \[
 \frac{dC}{dt}=0,
 \]
