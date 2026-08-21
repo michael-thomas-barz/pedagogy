@@ -25,7 +25,7 @@ Physical systems tend to obey <em>conservation laws</em>. A conservation law is 
 </p>
 
 <p>
-<a href="lagrangian.html">Last week</a>, we introduced Lagrange's formalism of mechanics. Secretly, our purpose for doing so was to explain how Emme Noether beautifully used it to prove that <em>symmetries of a physical system cause conservation laws</em>.
+<a href="lagrangian.html">Last week</a>, we introduced Lagrange's formalism of mechanics. Secretly, our purpose for doing so was to explain how Emmy Noether beautifully used it to prove that <em>symmetries of a physical system cause conservation laws</em>.
 </p>
 
 <p>
@@ -35,7 +35,7 @@ But, before going to Noether's theorem, let's see some examples of conservation 
 <h3>Conservation of energy</h3>
 
 <p>
-Imagine you have a ball of mass \(m.\) You are standing on top of a very tall building, and drop your ball from a very large height \(H\) above the ground. Let's ignore wind resistance, so that the only force acting on this ball is gravity, and try to see how your ball falls to the ground over time.
+Imagine you have a ball of mass \(m.\) You are standing on top of a building, and drop your ball from a height \(H\) above the ground. Let's ignore wind resistance, so that the only force acting on this ball is gravity, and try to see how your ball falls to the ground over time.
 </p>
 
 <p>
@@ -76,10 +76,6 @@ In particular, the energy is <em>independent of time!</em>
 This is a standard example of a conservation law: the energy does not change no matter how much time passes, so we say that the energy \(E(t)\) is a conserved quantity. 
 </p>
 
-<p>
-We'll remark that this toy physical model does break down: after a long enough time, your ball will hit the Earth, and lose some energy in the collision; so, this conservation law only applies if we stop time <em>before</em> our ball hits the Earth. To get a more permanent conservation law, you'd need to account for the kinetic energy of the Earth. 
-</p>
-
 <h3>Conservation of momentum</h3>
 
 <p>
@@ -100,10 +96,6 @@ Imagine you are playing billiards. There is a billiard ball of mass \(m_1\) rest
 
 <p>
 Let's say that, after the collisions, the billiard ball has velocity \(v_1'\) and the cue ball has velocity \(v_2'.\) How do we compute \(v_1'\) and \(v_2'\)? 
-</p>
-
-<p>
-In the previous example, we used Newton's laws to derive a formula for the total energy, and then observed that energy is conserved. However, the true power of conservation laws is that you can use them as a <em>shortcut</em> -- if you know some quantity is conserved, then you don't need to fully study your physical system. 
 </p>
 
 <p>
@@ -128,7 +120,7 @@ However, this system also obeys a <em>second</em> conservation law: <em>conserva
 </p>
 
 <p>
-We now have a <em>second</em>equation in our two unknowns; with two equations and two variables, we can solve to find \(v_1'\) and \(v_2'.\) Thus, without needing to do any of the calculus that is usually required in Newtonian mechanics, we can figure out what happens to our billiard balls!
+We now have a <em>second</em> equation in our two unknowns; with two equations and two variables, we can solve to find \(v_1'\) and \(v_2'.\) Thus, without needing to do any of the calculus that is usually required in Newtonian mechanics, we can figure out what happens to our billiard balls!
 </p>
 
 <h3>Conservation of angular momentum</h3>
@@ -162,13 +154,13 @@ As we shall see below, it turns out that angular momentum is conserved in many p
 
 <p>
 Let's imagine the particle is slowly moving closer to the center point. This means that, say,
-\[r(1\text{sec}) \lt r(0\text{sec}),\]
+\[r(1\, \text{sec}) \lt r(0\,\text{sec}),\]
 because after a second passes, the particle is closer to the center than it was at the start.
 </p> 
 
 <p>
 Because momentum was conserved, we know
-\[L(1\text{sec}) = L(0\text{sec}),\]
+\[L(1\, \text{sec}) = L(0\, \text{sec}),\]
 so that
 \[2\pi mf(1)r(1)^2 = 2\pi mf(0)r(0)^2.\]
 Dividing by \(2\pi m,\) we find that
@@ -338,7 +330,7 @@ and so
 </p>
 
 <p>
-What good is that formula? Well, if \(\phi\) and \(\frac{\partial L}{\partial \vec{v}}\cdot \vec{v}\) have the same time derivative, then
+What good is that formula? Well, if \(\phi = L(\vec{x}(t), \vec{v}(t), t)\) and \(\frac{\partial L}{\partial \vec{v}}\cdot \vec{v}\) have the same time derivative, then their difference
 \[E = \frac{\partial L}{\partial \vec{v}} \cdot \vec{v} - L\]
 is a quantity whose time derivative is zero!
 </p>
@@ -476,7 +468,7 @@ is invariant under rotation. In the language of linear algebra, we can represent
 \[
 L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=L(\vec x_1,\dots,\vec x_n,\vec v_1,\dots,\vec v_n,t).
 \]
-In other words, the derivative by \(A\) (whatever that means...) is zero:
+In other words, the derivative by \(A\) (whatever that means... advanced readers can look at the ending for an explanation) is zero:
 \[
 \frac d{dA}L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=0.
 \]
@@ -507,6 +499,76 @@ He then formalized how to perform calculus on Lie groups--how do you take deriva
 
 <p>
 For more advanced readers, we give here a sampling of Lie groups, by comparison with some simple finite groups.
+</p>
+
+<p>
+In our windmill example above, we explained how, while in a first course on group theory you might encounter finite cyclic groups like \(C_4\) or \(C_n\) which govern the rotational symmetries of objects like windmills, the <em>circle</em> has an infinite, continuous group of symmetries: in fact, the circle \(S^1\) itself <em>is</em> the Lie group of rotational symmetries of a circle; we can think of a circle as a group via the group law asserting that
+\[\text{rotation by \(\theta\)} \times \text{rotation by \(\phi\)} = \text{rotation by \(\theta+\phi\)}.\]
+</p>
+
+<p>
+In a finite group theory course, you may also encounter the <em>dihedral groups</em>. The dihedral group \(D_n\) is the group of all symmetries -- rotations and reflections -- of a regular \(n\)-sided polygon. The dihedral group is obtained by starting with the cyclic group \(C_n\) of rotational symmetries, and taking a <em>semidirect product</em> with the group \(\{1, -1\}\) to account for the reflectional symmetries.
+</p>
+
+<p>
+Similarly, the group of (origin-preserving) isometries of the plane can be found by taking a semidirect product of \(S^1\) and \(\{1, -1\},\) to account for reflections; concretely, we call this group \(O(2)\) (the \(O\) stands for 'orthogonal,' for reasons we won't go into), and it can be viewed as the group of all \(2\times 2\) matrices \(A\) such that \[A^{\intercal}A = \begin{pmatrix} 1 & 0 \\ 0 & 1\end{pmatrix}.\]
+</p>
+
+<p>
+We say that \(O(2)\) has a <em>faithful 2-dimensional representation</em>, because we can realize it as a subgroup of the group of \(2\times 2\) matrices. Matrix groups are the easiest sorts of Lie groups to understand -- our computers can quickly calculate products in matrix groups, for instance -- and the desire for faithful representations of Lie groups is one (of many!) reasons mathematicians study representation theory. 
+</p>
+
+<p>
+However, we live in a 3-dimensional world. Our rotations are thus more complicated; they are governed not by the Lie group \(S^1,\) but instead by the Lie group \(\operatorname{SO}(3)\) (the letters stand for 'special orthogonal,' but you can ignore what that means if you don't already know). As before, to get the full group of (origin-preserving) <em>isometries</em> of 3-dimensional space, we take a semidirect product with the group \(\{1, -1\}.\) 
+</p>
+
+<p>
+This leads to the group \(O(3),\) which can be represented as the Lie group of \(3\times 3\) matrices \(M\) obeying 
+\[M^{\intercal}M = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}\]
+</p>
+
+<p>
+In our derivation of conservation of angular momentum, we were a bit hand-wavy and mentioned "differentiation by \(A\)", for \(A\) a \(3\times 3\) rotation matrix. We can now be a little more precise on this point.
+</p>
+
+<p>
+Assume our Lagrangian is rotation invariant, so that
+\[L(A\cdot \vec{x}_1, ..., A \cdot \vec{x}_n, A \cdot \vec{v}_1, ..., A \cdot \vec{v}_n, t) = L(\vec{x}_1, ..., \vec{x}_n, \vec{v}_1, ..., \vec{v}_n, t)\]
+for all \(A \in O(3).\) 
+</p>
+
+<p>
+Differentiation is all about making <em>small</em> perturbations to our input. If we want to exploit this invariance to get an identity involving derivatives, we therefore want to think about matrix <em>very close to the identity</em> which belong to \(O(3).\) A matrix close to the identity matrix 
+\[I = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}\]
+looks like \(A = I + \epsilon M,\) where \(M\) is some arbitrary matrix and \(\epsilon\) is small. To say that \(A\) is orthogonal is to say that
+\[AA^{\intercal} = I,\]
+or in other words that
+\[(I+\epsilon M)(I+\epsilon M^{\intercal}) = I.\]
+Expanding this out, we find that it is equivalent to demand
+\[\epsilon(M + M^{\intercal}) + \epsilon^2MM^{\intercal} = 0.\]
+As \(\epsilon\) is so small, the \(\epsilon^2\) term is negligible, and so we simplify this to just 
+\[M + M^{\intercal} = 0.\]
+</p>
+
+<p>
+Ths equations defines the so-called <em>Lie algebra</em> of the Lie group \(O(3).\) If \(M\) belongs to the Lie algebra of \(O(3),\) then plugging in \(A = 1+\epsilon M\) into our rotational symmetry equation, and letting \(\epsilon\) go to 0, we get the differential equation
+\[\sum_{i=1}^n \left(\frac{\partial L}{\partial \vec{x_i}} \cdot M\vec{x}_i + \frac{\partial L}{\partial \vec{v}_i} \cdot M\vec{v}_i\right) = 0.\]
+</p>
+
+<p>
+Applying the Euler-Lagrange equation to rewrite \(\partial L/\partial\vec{x}_i\) as a time derivative, we deduce
+\[\frac{d}{dt}\left(\sum_{i=1}^n \frac{\partial L}{\partial\vec{v}_i} \cdot M\vec{x}_i\right) = 0.\] 
+
+Thus every \(M\) in the Lie algebra for \(O(3)\) gives us a conserved quatnity! We can package these conserved quantities together in a convenient way: it turns out that every \(3\times 3\) matrix obeying \(M + M^{\intercal} = 0\) is of the form
+\[M\vec{x} = \vec{\omega} \times \vec{x},\]
+where \(\times\) is the cross product and \(\vec{\omega}\) is some vector depending on \(M.\) As
+\[\vec{a} \cdot (\vec{\omega} \times \vec{x}) = -\vec{\omega} \cdot (\vec{a} \times \vec{x}),\]
+our conservation law above becomes
+\[-\frac{d}{dt}\left(\omega \cdot \left(\sum_{i=1}^n \frac{\partial L}{\partial\vec{v}_i} \times \vec{x}_i\right)\right) = 0.\]
+
+Because this holds for every choice of \(\vec{\omega},\) we find that
+\[\sum_{i=1}^n \frac{\partial L}{\partial\vec{v}_i} \times \vec{x}_i\]
+is a conserved quantity; this conserved quantity is the angular momentum.
 </p>
 
  </body>
