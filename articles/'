@@ -21,15 +21,7 @@
 <p class="meta">August 22, 2026</p>
 
 <p>
-Physical systems tend to obey <em>conservation laws</em>. A conservation law is just an assertion that, in some physical system, some quantity never changes, no matter how the system evolves. 
-</p>
-
-<p>
-<a href="lagrangian.html">Last week</a>, we introduced Lagrange's formalism of mechanics. Secretly, our purpose for doing so was to explain how Emme Noether beautifully used it to prove that <em>symmetries of a physical system cause conservation laws</em>.
-</p>
-
-<p>
-But, before going to Noether's theorem, let's see some examples of conservation laws, and what they're good for.
+Physical systems tend to obey <em>conservation laws</em>. A conservation law is just an assertion that, in some physical system, some quantity never changes, no matter how the system evolves. Let's see some examples.
 </p>
 
 <h3>Conservation of energy</h3>
@@ -83,106 +75,58 @@ We'll remark that this toy physical model does break down: after a long enough t
 <h3>Conservation of momentum</h3>
 
 <p>
-In the last example, we used Newton's laws to solve for the total energy at time \(t,\) and then observed it never changes. This is a cute observation, but what good does it have?
+In the last example, we cut off time before your ball hit the Earth; to give you a hint of how you'd account for that, let's give an example of a physical system involving collisions. 
 </p>
 
 <p>
-The true value in conservation laws is often going backwards: start with a system which you <em>know</em> obeys a conservation law, and then use that conservation law to find how the system evolves without needing to apply Newton's laws from scratch. 
+Imagine you are playing billiards. There is a billiard ball of mass \(m_1\) resting on the table. You hit the cue ball (say of mass \(m_2\)) in the direction of that billiard ball, and they collide; let's say that, just before the collision, the cue ball has velocity \(v.\) What happens to the balls? 
 </p>
 
 <p>
-Later in the article, we will discuss how to know a system obeys a conservation law; in this example, we're going to assume some conservation laws hold, and use them to solve for how our system evolves. 
-</p>
-
-<p>
-Imagine you are playing billiards. There is a billiard ball of mass \(m_1\) resting on the table. You hit the cue ball (say of mass \(m_2\)) in the direction of that billiard ball, and they collide; let's say that, just before the collision, the cue ball has velocity \(v_2.\) What happens to the balls? 
-</p>
-
-<p>
-Let's say that, after the collisions, the billiard ball has velocity \(v_1'\) and the cue ball has velocity \(v_2'.\) How do we compute \(v_1'\) and \(v_2'\)? 
-</p>
-
-<p>
-In the previous example, we used Newton's laws to derive a formula for the total energy, and then observed that energy is conserved. However, the true power of conservation laws is that you can use them as a <em>shortcut</em> -- if you know some quantity is conserved, then you don't need to fully study your physical system. 
+In the previous example, we used Newton's laws to derive a formula for the total energy, and then observed that energy is conserved. However, the true power of conservation laws is that you can use them as a <em>shortcut</em> -- if you know some quantity is conserved, then you don't need to fully study your physical system.
 </p>
 
 <p>
 Let's say our table is frictionless. Then all of the energy in our balls is kinetic, and so a moment before collision, the 2-ball system has total energy
-\[E = \frac{1}{2}m_2v_2^2 + \frac{1}{2}m_1 \cdot 0 = \frac{1}{2}m_2v_2^2.\]
+\[E = \frac{1}{2}m_2v^2 + \frac{1}{2}m_1 \cdot 0 = \frac{1}{2}m_2v^2.\]
 </p>
 
 <p>
-Let's assume that, like in the previous system, <em>energy is conserved</em>. Then, the energy 
-\[E' = \frac{1}{2}m_2(v_2')^2 + \frac{1}{2}m_1(v_1')^2\]
-<em>after</em> the collision has to be the same as the energy before; so
-\[\frac{1}{2}m_2v_2^2 =  \frac{1}{2}m_2(v_2')^2 + \frac{1}{2}m_1(v_1')^2.\] 
+Let's assume that, like in the previous system, <em>energy is conserved</em>. Later, we will derive 
 </p>
 
-<p>
-Unfortunately, we have a problem: in the equation above, we have two unknowns: \(v_1'\) and \(v_2'.\) With only one equation, you cannot solve for two unknowns, so at the moment conservation of energy is not so helpful!
-</p>
+<p>After the collision, the billiard ball I hit is moving at another velocity \(v_2\), and the billiard ball which was sitting on the table is now moving at some velocity \(v_1\). 
+  The total momentum here is \(m_1v_1+m_2v_2\).</p>
 
-<p>
-However, this system also obeys a <em>second</em> conservation law: <em>conservation of momentum</em>. Before the collision, the momentum is \(m_1\cdot 0 + m_2 \cdot v_2 = m_2v_2,\) and so
-\[m_2v_2 = m_1v_1' + m_2v_2'.\]
-</p>
+  <p>
+    By conservation of momentum, we know the total momentum is conserved, so
+    \[
+    m_2v=m_1v_1+m_2v_2.
+    \]
+    If you combine this with the conservation of energy,
+    \[
+    \frac12m_2v^2=\frac12m_1v_1^2+\frac12m_2v_2^2,
+    \]
+    you can solve for \(v_1\) and \(v_2\)!
+  </p>
 
-<p>
-We now have a <em>second</em>equation in our two unknowns; with two equations and two variables, we can solve to find \(v_1'\) and \(v_2'.\) Thus, without needing to do any of the calculus that is usually required in Newtonian mechanics, we can figure out what happens to our billiard balls!
-</p>
 
 <h3>Conservation of angular momentum</h3>
 
-<p>
-Related to momentum, there is a third conservation law we want to mention: conservation of <em>angular</em> momentum. Let's start by reviewing what angular momentum is.
-</p>
+  Angular momentum is defined with respect to some origin--the "center of rotation".
+For a particle with momentum \(\vec p\) and position vector \(\vec r\), the angular momentum is the cross product \(\vec r\times\vec p\).
 
-<p>
-Fix a point \(O,\) called the "center of rotation." If a particle is rotating around \(O,\) then its <em>angular momentum</em> is defined as the product
-\[L = mvr,\]
-where \(r\) is the distance from \(O\) to your particle, \(m\) is the mass of the particle, and \(v\) is the velocity of the particle.
-</p>
-
- <p>
- For example, say there is a particle of mass \(m\) rotating in a circle of radius \(r(t)\) around a fixed center point, with frequency \(f(t)\) -- if \(f = 3 \text{Hz},\) for instance, then we just mean that the particle goes around the circle three times per second. The reason we write \(r(t)\) and \(f(t)\) is because the particle's distance from the center, and its speed, might be changing over time.  
-</p>
-
-<p>
-An angular velocity of \(f(t)\) implies the particle has velocity \(v(t) = 2\pi f(t)r(t).\) This is because \(2\pi r(t)\) is the cirumference of the circle and \(f(t)\) is the number of laps the particle makes per second, so that the total distance the particle travels per second is \(2\pi f(t)r(t).\) 
-</p>
-
-<p>
-Thus the momentum of our particle is \(2\pi mf(t)r(t),\) and so the angular momentum will be
-\[L(t) = 2\pi mf(t)r(t)^2.\]
-</p>
-
-<p>
-As we shall see below, it turns out that angular momentum is conserved in many physical systems. What does that tell us here? 
-</p>
-
-<p>
-Let's imagine the particle is slowly moving closer to the center point. This means that, say,
-\[r(1\text{sec}) \lt r(0\text{sec}),\]
-because after a second passes, the particle is closer to the center than it was at the start.
-</p> 
-
-<p>
-Because momentum was conserved, we know
-\[L(1\text{sec}) = L(0\text{sec}),\]
-so that
-\[2\pi mf(1)r(1)^2 = 2\pi mf(0)r(0)^2.\]
-Dividing by \(2\pi m,\) we find that
-\[f(1) \cdot r(1)^2 = f(0) \cdot r(0)^2.\] 
-</p>
-
-<p>
-Because \(r(1) \lt r(0),\) we find that
-\[f(1) = f(0) \cdot \left(\frac{r(0)}{r(1)}\right)^2 \lt f(0).\] 
-</p>
-
-<p>
-In other words, if your particle moves closer to the center of rotation, then its frequency must increase! This is the reason why when figure skaters pull in their arms, <a href="https://www.youtube.com/shorts/4b7v3Yki4os">they rotate more frequently</a> -- pulling in their arms makes their center of mass closer to the center of their rotation, and hence forces the frequency to increase.
-</p>
+  <p>
+    For example, say there is a particle of mass \(m\) rotating in a circle of radius \(r\) around a rod with frequency \(f\).
+    Then the particle is moving with velocity \(2\pi fr\), so the momentum is \(2\pi mfr\). Therefore, the angular momentum has size
+    \[2\pi mfr^2.\]
+    Let's say the particle moves into a smaller orbit, of radius \(r'<{r}\). That particle will have a new frequency \(f'\).                                                              Then conservation of angular momentum tells us
+    \[2\pi mfr^2=2\pi mf'(r')^2.\]
+    We can solve for \(f'\) as
+    \[f'=\frac{r^2}{(r')^2}f>f.\]
+    In other words, as the radius decreases, the frequency increases!
+      This is the reason why when figure skaters pull in their arms, <a href="https://www.youtube.com/shorts/4b7v3Yki4os">they rotate more frequently</a>.
+  </p>
   
   <p>Each of our conserved quantities (energy, momentum, and angular momentum) tells us something useful about our physical system.
     However, finding these quantities requires some cleverness on our part. 
@@ -190,13 +134,8 @@ In other words, if your particle moves closer to the center of rotation, then it
     Emmy Noether discovered that conserved quantities exactly correspond to continuous symmetries of the physical system, thereby answering this question!
   </p>
 
-<h2>Towards Noether's theorem: continuous symmetries</h2>
-
-<p>
-Noeher's theorem tells us that every <em>continuous symmetry</em> of a physical system causes a conservation law. But what is a continuous symmetry? 
-</p>
-
-<p>A windmill, as shown below, has some symmetry.</p>
+<h2>What is continuous symmetry?</h2>
+A windmill as below has symmetries.
 
 <img src="windmill.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
@@ -216,11 +155,11 @@ Then, rotating by any angle \(\theta\) doesn't change the shape. That means the 
 
 
 <p>
-  Our world has (at least!) three types of continuous symmertries:
+  Our world has three types of continuous symmertries:
   <ul>
-  <li>Time symmetry: our universe will have the same physical laws 10 seconds from now as it does right now.</li>
+  <li>Time symmetry: our universe will have the same physical laws 10 seconds from now.</li>
   <li>Translation symmetry: the laws of physics on my block is the same as the laws of physics 3 blocks down.</li>
-  <li>Rotational symmetry: if I spin around, the laws of physics don't change.</li>
+  <li>Rotational symmetry: if I turn left, the laws of physics don't change.</li>
 </ul>
 Noether tells us that each of these symmetries corresponds to a conserved quantity.</p>
 <table style="border-collapse: collapse; text-align: center;">
@@ -264,15 +203,15 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
 <h2>Why is energy conserved?</h2>
 
 <p>
-  <a href="lagrangian.html">Last week</a>, we discussed Lagrange's approach to mechanics. Let's understand why energy is conserved from this perspective.
+  <a href="lagrangian.html">Last week</a> we discussed Lagrange's approach to mechanics. Let's understand why energy is conserved from this perspective.
 </p>
 
 <p>
-  As a quick review, in Lagrange's approach, we start with a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,t)=K-P\) (kinetic minus potential), and try to minimize the action integral
+  As a quick review, in Lagrange's approach, we start with a function called the <em>Lagrangian</em> \(L(\vec x,\vec v,t)=T-V\), and try to minimize the action integral
   \[
   S=\int_{t_0}^{t_1}L\big(\vec x(t),\vec v(t),t\big)dt.
   \] 
-  Minimizing this integral amounts to solving the <em>Euler-Lagrange equation</em>
+  Minimizing this integral amounts to the <em>Euler-Lagrange equation</em>,
   \[
   \frac{\partial L}{\partial \vec x}=\frac d{dt}\frac{\partial L}{\partial \vec v}.
     \]
@@ -288,66 +227,41 @@ Noether tells us that for convervation of energy, we need the Lagrangian to be i
 There are two main reasons why this assupmtion may fail in general:
 <ol>
   <li>the force on your system may depend on time; and</li>
-  <li>non-conservative forces, such as friction, can introduce time-dependence into your Lagrangian.</li>
+  <li>non-conservative forces, such as friction, makes your Lagrangian look like \(e^{ct}L'\) where \(L'\) is some time-independent Lagrangian.</li>
 </ol>
 <!-- Let's make a simplifying assumption that the Lagrangian is independent of time; in other words, that our physical system obeys the "same laws" at every instance. -->
 </p>
 
 <p>
-But let's assume that our Lagrangian <em>is</em> time-independent. How did Noether find a conserved quantity?
-</p>
-
-<p>
-Our time-indepndence assumption is the same as saying
-\[\frac{\partial L}{\partial t} = 0.\]
-What does that tell us about our action integral? 
-</p>
-
-<p>
-In our action integral \(S,\) we're integrating the function
-\[\phi(t) = L(\vec{x}(t), \vec{v}(t), t).\]
-</p>
-
-<p>
-Applying a multivariable version of the chain rule from calculus, we can compute the time derivative of \(\phi\) to be
+Now, since we have a function \(L\) lying around, let's just try to take its derivative! We can apply a multi-variable version of the chain rule,
 \[
-\frac{d\phi}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
+\frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
 \]
-Under our assumption that \(L\) is time-independent the last term vanishes, so that we have just
+Under our assumption that \(L\) is time-independent the last term vanishes:
 \[
-\frac{d\phi}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
+\frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
 \]
-</p>
-
-<p>
-Applying the Euler-Lagrange equation, and remembering that
-\[\vec {v}(t) = \frac{d\vec x(t)}{dt},\]
-we find 
+Now the Euler-Lagrange equation (and since \(\vec v=\frac{d\vec x}{dt}\) by definition) lets us re-write the first part:
 \[
-\frac{d\phi}{dt} = \frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial v}\cdot\frac{d\vec v}{dt}
+\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial v}\cdot\frac{d\vec v}{dt}
 =\frac d{dt}\bigg(\frac{\partial L}{\partial \vec v}\bigg)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}.
 \]
-Using the product rule, we can re-write this expression as
+By the product rule, we can re-write this expression as
 \[
-\frac d{dt}\bigg(\frac{\partial L}{\partial \vec v}\bigg)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d}{dt}\vec v=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg),
+\frac d{dt}\bigg(\frac{\partial L}{\partial \vec v}\bigg)\cdot\vec v+\frac{\partial L}{\partial\vec v}\cdot\frac{d}{dt}\vec v=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
 \]
-and so
+From our computations we conclude
 \[
-\frac{d\phi}{dt}=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
+\frac{dL}{dt}=\frac d{dt}\bigg(\frac{\partial L}{\partial\vec v}\cdot\vec v\bigg).
 \]
+This gives us a function
+\[
+E=\frac{\partial L}{\partial\vec v}\cdot\vec v-L
+\]
+whose time-derivative is zero. This is a conserved quantity, which we will call <em>energy</em>.
 </p>
 
-<p>
-What good is that formula? Well, if \(\phi\) and \(\frac{\partial L}{\partial \vec{v}}\cdot \vec{v}\) have the same time derivative, then
-\[E = \frac{\partial L}{\partial \vec{v}} \cdot \vec{v} - L\]
-is a quantity whose time derivative is zero!
-</p>
-
-<p>
-Thus, assuming our Lagrangian is time independent gives us a conserved quantity, which is named <em>energy.</em>
-</p>
-
-<h3>An example</h3>
+<h3>Example: in Newtonian mechanics</h3>
 
 <p>
   Let's see what the conservation of energy means when our Lagrangian is of the form
@@ -362,38 +276,32 @@ Thus the energy becomes
 \[
 E=\frac{\partial L}{\partial\vec v}\cdot\vec v-L=m\vec v\cdot\vec v-L=\frac12m\|\vec v\|^2+V(\vec x).
 \]
-That is, energy is the sum of kinetic energy and potential energy, like usual! 
+That is, energy is the sum of kinetic energy and potential energy!
 </p>
 
 <h3>Side-quest: what about time-dependent Lagrangians?</h3>
 
 <p>
-  By the way, what would happen if the Lagrangian \(L\) depended on the time \(t\)? In this scenario, we have to use the full expansion
+  By the way, what would happen if the Lagrangian \(L\) depended on the time \(t\)? In this scenario, the time-derivative of \(L\) obtains a new term:
   \[
-  \frac{d\phi}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
+  \frac{dL}{dt}=\frac{\partial L}{\partial\vec x}\cdot\frac{d\vec x}{dt}+\frac{\partial L}{\partial\vec v}\cdot\frac{d\vec v}{dt}+\frac{\partial L}{\partial t}.
   \]
   The extra term \(\frac{\partial L}{\partial t}\), which measures "how much the physical laws of our system depends on time", will tag along through our entire derivation. So we would only be able to conclude that
   \[
   \frac{dE}{dt}=-\frac{\partial L}{\partial t}.
   \]
   In other words, the conservation of energy (\(\frac{dE}{dt}=0\)) is equivalent to the time-independence of the Lagrangian (\(\frac{\partial L}{\partial t}=0\))!
-For example, when there is friction, our Lagrangian is of the form \(L=e^{ct}L'\) where \(L'\) is a time-independent. In this case, we see
+For example, when there is friction, our Lagrangian is of the form \(L=e^{ct}L'\) where \(L'\) is a time-independent Lagrangian. In this case, we see
 \[
   \frac{dE}{dt}=-\frac{\partial}{\partial t}\big(e^{ct}L'\big)=-ce^{ct}L'=-cL.
   \]
-  This means energy is <em>lost</em> when we have friction, which perfectly matches our physical understanding -- in the billiard ball example, for instance, our balls are actually going to slow down over time, as they slowly lose energy due to friction with the table.
+  This means energy is lost through friction, which matches our physical understanding.
 </p>
 
 
 <h2>Why is momentum conserved?</h2>
-
-<p>
-In the last section, we assumed that the Lagrangian is time-independent, and we analyzed what happens when we change time infinitesimally. 
-</p>
-
-<p>
-Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze what happens under an infinitesimal change in <em>position</em> instead.
-</p>
+What exactly happened in the last section? We assumed that the Lagrangian is time-independent, and we analyzed what happens when we change time infinitesimally. 
+Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze what happens under an infinitesimal change in position.
 
 <p>
   Before that, note that although above we only treated the Lagrangian for one particle, we could have just as easily treated the Lagrangian with \(n\) particles. 
@@ -419,11 +327,11 @@ Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze wha
   \[
   \bigg(\frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}\bigg)\cdot\vec\epsilon.
   \]
-  In order for the Lagrangian to be independent of all translations, we need
+  In order for the Lagrangian to be independent of translations, we need
   \[
   \frac{\partial L}{\partial \vec x_1}+\cdots+\frac{\partial L}{\partial\vec x_n}=0.
   \]
-  By the Euler-Lagrange equation, this means
+  By the Euer-Lagrange equation, this means
   \[
   \frac d{dt}\frac{\partial L}{\partial\vec v_1}+\cdots+\frac d{dt}\frac{\partial L}{\partial\vec v_n}=0.
   \]
@@ -435,12 +343,10 @@ Now, let's assume the Lagrangian \(L\) is translation-invariant, and analyze wha
   \[
   \frac{dC}{dt}=0,\]
   i.e., is a conserved quantity. 
-  Each derivative \(\frac{\partial L}{\partial \vec v_i}\) is called the <em>momentum</em> of the \(i^{\text{th}}\) particle, and so this just tells us that the total momentum is conserved!
+  Each derivative \(\frac{\partial L}{\partial \vec v_i}\) is called the <em>momentum</em> of the \(i\)-th particle, and this exactly says the total momentum is conserved.
 </p>
 
- <h3>What would Newton do?</h3>
-
-<p>
+ <h3>What would Newton say?</h3>
 Let's again go back to the situation where the \(i\)-th particle has mass \(m_i\), and the Lagrangian has the form
 \[
 L=\frac12m_1\|\vec v_1\|^2+\cdots+\frac12m_n\|\vec v_n\|^2-V(\vec x_1,\dots,\vec x_n)
@@ -461,8 +367,7 @@ Newton tells us \(\vec F_i=m_i\vec a_i\) is the force the \(i\)-th particle exer
 \[
 \vec F_1+\cdots+\vec F_n=0.
 \]
-This is exactly Newton's third law: every action has an equal and opposite reaction, and so the net force on any system is zero!
-</p>
+This is exactly Newton's third law, that every action has an equal and opposite reaction!
 
 
 <h2>Why is angular momentum conserved?</h2>
@@ -472,11 +377,11 @@ But the basic idea remains the same. Let's suppose our Lagrangian
 \[
 L(\vec x_1,\dots,\vec x_n,\vec v_1,\dots,\vec v_n,t)
 \]
-is invariant under rotation. In the language of linear algebra, we can represent rotation by a \(3\times 3\) matrix \(A\). The invariance of the Lagrangian means
+is invariant under rotation. In the language of linear algebra, we can represent rotation by a 3x3-matrix \(A\). The invariance of the Lagrangian means
 \[
 L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=L(\vec x_1,\dots,\vec x_n,\vec v_1,\dots,\vec v_n,t).
 \]
-In other words, the derivative by \(A\) (whatever that means...) is zero:
+In other words, the derivative by \(A\) (whatever that means...) is zero!
 \[
 \frac d{dA}L(A\cdot \vec x_1,\dots,A\cdot \vec x_n,A\cdot \vec v_1,\dots,A\cdot\vec v_n,t)=0.
 \]
@@ -502,14 +407,7 @@ He then formalized how to perform calculus on Lie groups--how do you take deriva
    Some questions are: What are all possible Lie groups (=sets of continuous symmetries)? In what dimensions can they be realized? What do they look like geometrically--we saw the example of a circle, but what about in higher dimensions?
  </p>
 
-
-<h3>Some Lie groups</h3>
-
-<p>
-For more advanced readers, we give here a sampling of Lie groups, by comparison with some simple finite groups.
-</p>
-
- </body>
+</body>
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
