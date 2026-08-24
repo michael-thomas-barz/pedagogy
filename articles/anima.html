@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syzygies and higher groupoids</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>Syzygies and higher groupoids</h1>
+<p class="meta">August 28, 2026</p>
+
+<p>
+You might have heard about \(\infty\)-category theory before. This is a subject which seems to have capture the popular imagination to some extent, despite not being used by most mathematicians. However, \(\infty\)-category theory is growing, and many fields -- including our own beloved arithmetic geometry! -- are finding it more and more useful to incorporate it. 
+</p>
+
+<p>
+The goal of this post is to give a sense of what \(\infty\)-<em>groupoids</em> are, and why they can be useful; \(\infty\)-groupoids are to \(\infty\)-category theory as sets are to ordinary category theory. 
+</p>
+
+<p>
+Mathematics got on just fine for a very, very long time without groupoids. One possible reaction to hearing about basic uses of \(\infty\)-groupoids -- to solve problems which can easily be solved without them -- is to think they are an overly complicated tool. However, they are quite essential for some purposes, and without them certain theorems would be much trickier to prove (or even correctly state!). We hope that these basic examples can be used to give the reader some idea about what situations \(\infty\)-groupoids help you with, even if it is possible to treat our situations by more elementary means.
+</p>
+
+<p>
+One can compare this to the advent of calculus. In a first course on calculus, you might be asked to find the area under a parabola, or the volumes enclosed by various complicated solids; historically, these sorts of questions arose, and were successfully answered, long before intetgral calculus was invented. However, when first learning the subject, it is hard to start with one of calculus' first totally novel applications, like Newton's derivation of Kepler's laws, even if those are what historically motivated people to learn and invent calculus.
+</p>
+
+<p>
+With that in mind, let's get to some examples! 
+</p>
+
+<h2>Equivalence relations</h2>
+
+<p>
+In mathematics, it is very common to <em>quotient</em> a set by an <em>equivalence relation</em>. Roughly, this means making two different things the same.
+</p>
+
+<p>
+At the moment this is a bit philosophical, so let's get concrete.
+</p>
+
+<p>
+Equivalence relations often arise when one describes some type of object in a way such that multiple descriptions can correspond to the same object.
+</p>
+
+<p>
+For example, if you were programming fractions into a computer, it might be tempting to have your computer store each fraction as a pair of two integers -- a numerator and a denominator (top and bottom). Then \(\frac{1}{2}\) would correspond to the pair \((1, 2),\) the fraction \(\frac{3}{7}\) would correspond to the pair \((3, 7),\) and the fraction \(\frac{5}{10}\) would correspond to \((5, 10).\) 
+</p>
+
+<p>
+However, if you program fractions this way, you have to be careful when defining equality: as fractions, \(\frac{1}{2} = \frac{5}{10},\) but the ordered pairs \((1, 2)\) and \((5, 10)\) look very different! We have two different ways of encoding the same quantity.
+</p>
+
+<p>
+This is our first example of something called an <em>equivalence relation</em>: an equivalence relation is just when you start with some set \(X,\) and declare that distinct elements in it are the same. Here, our set \(X\) is the set of all ordered pairs \((a, b)\) (maybe with \(b\neq 0,\) since 0 isn't a valid fraction denominator), and the equivalence relation says things like
+\[(1, 2) \sim (5, 10),\]
+\[(2, 3) \sim (8, 12),\]
+and so on, encoding the fact that, if we want to interpret the elements of \(X\) as a fractions, then distinct points of \(X\) correspond to the same fraction.
+</p>
+
+<p>
+As another example, I have triangular tiles -- some amber and some teal -- and I want to build a square out of them. 
+</p>
+
+<p>
+A square is built out of four of my trianglular tiles, as shown below. If I was giving instructions to a robot on how to build the squares, I might give it just a string of 4 characters -- maybe I'd give the string ATAT to mean "make the left triangle amber, the top triangle teal, the right triangle amber, and the bottom triangle teal."
+</p>
+
+<p>
+When a square is assembled in the real world, though, it can be rotated or flipped around, and so different strings of instructions correspond to the same finished square tile. In the widget below, you can flip through all the 16 possible instructions I could give the robot, and see how there are only 6 possible tiles.
+</p>
+
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.gv-btn{background:#3c3836;color:#ebdbb2;border:0.5px solid #665c54;border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer}
+.gv-btn:hover{background:#504945}
+.gv-btn:active{transform:scale(0.98)}
+.gv-dot{width:7px;height:7px;border-radius:50%;background:#504945;display:inline-block}
+.gv-dot.active{background:#fabd2f}
+</style>
+<div style="background:#282828;border-radius:12px;padding:24px 20px;font-family:sans-serif;color:#ebdbb2;">
+<h2 class="sr-only">Interactive widget stepping through the 6 equivalence classes of square side-colorings under rotation, showing every member of each class at equal size, labeled with its 4-letter amber/teal string.</h2>
+
+<div id="step-name" style="font-size:16px;font-weight:500;color:#fabd2f;margin-bottom:20px;"></div>
+
+<div id="orbit-row" style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;"></div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:22px;">
+  <button class="gv-btn" id="prev-btn" aria-label="Previous class">&larr; prev</button>
+  <div id="dots" style="display:flex;gap:6px;"></div>
+  <button class="gv-btn" id="next-btn" aria-label="Next class">next &rarr;</button>
+</div>
+</div>
+
+<script>
+(function(){
+var COLOR_A = "#fabd2f";
+var COLOR_T = "#8ec07c";
+var classes = [
+  {name:"All amber", pattern:["A","A","A","A"]},
+  {name:"All teal", pattern:["T","T","T","T"]},
+  {name:"Alternating", pattern:["A","T","A","T"]},
+  {name:"Opposite pairs", pattern:["A","A","T","T"]},
+  {name:"Three amber, one teal", pattern:["A","A","A","T"]},
+  {name:"Three teal, one amber", pattern:["T","T","T","A"]}
+];
+
+function rotations(p){
+  var seen = {};
+  var out = [];
+  for(var r=0;r<4;r++){
+    var rot = [0,1,2,3].map(function(i){ return p[(i - r + 4) % 4]; });
+    var key = rot.join("");
+    if(!seen[key]){ seen[key]=true; out.push(rot); }
+  }
+  return out;
+}
+
+function colorFor(letter){ return letter === "A" ? COLOR_A : COLOR_T; }
+
+function makeSquare(pattern){
+  var ns = "http://www.w3.org/2000/svg";
+  var svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("width","110");
+  svg.setAttribute("height","110");
+  svg.setAttribute("viewBox","0 0 200 200");
+  var shapes = [
+    {pts:"0,0 200,0 100,100", idx:0},
+    {pts:"200,0 200,200 100,100", idx:1},
+    {pts:"200,200 0,200 100,100", idx:2},
+    {pts:"0,200 0,0 100,100", idx:3}
+  ];
+  shapes.forEach(function(s){
+    var poly = document.createElementNS(ns,"polygon");
+    poly.setAttribute("points", s.pts);
+    poly.setAttribute("fill", colorFor(pattern[s.idx]));
+    poly.setAttribute("stroke", "#282828");
+    poly.setAttribute("stroke-width", "2.5");
+    svg.appendChild(poly);
+  });
+  var col = document.createElement("div");
+  col.style.display = "flex";
+  col.style.flexDirection = "column";
+  col.style.alignItems = "center";
+  col.style.gap = "8px";
+  var box = document.createElement("div");
+  box.style.background = "#3c3836";
+  box.style.borderRadius = "8px";
+  box.style.padding = "6px";
+  box.appendChild(svg);
+  var label = document.createElement("div");
+  label.textContent = pattern.join("");
+  label.style.fontSize = "13px";
+  label.style.fontFamily = "monospace";
+  label.style.color = "#d5c4a1";
+  col.appendChild(box);
+  col.appendChild(label);
+  return col;
+}
+
+var current = 0;
+var stepName = document.getElementById("step-name");
+var orbitRow = document.getElementById("orbit-row");
+var dotsEl = document.getElementById("dots");
+
+for(var d=0; d<classes.length; d++){
+  var dot = document.createElement("span");
+  dot.className = "gv-dot";
+  dot.id = "dot-"+d;
+  dotsEl.appendChild(dot);
+}
+
+function render(){
+  var cls = classes[current];
+  stepName.textContent = (current+1) + " of 6 \u2014 " + cls.name;
+
+  orbitRow.innerHTML = "";
+  var orbit = rotations(cls.pattern);
+  orbit.forEach(function(p){ orbitRow.appendChild(makeSquare(p)); });
+
+  for(var d2=0; d2<classes.length; d2++){
+    document.getElementById("dot-"+d2).classList.toggle("active", d2 === current);
+  }
+}
+
+document.getElementById("prev-btn").addEventListener("click", function(){
+  current = (current - 1 + classes.length) % classes.length;
+  render();
+});
+document.getElementById("next-btn").addEventListener("click", function(){
+  current = (current + 1) % classes.length;
+  render();
+});
+
+render();
+})();
+</script>
+
+<p>
+This is another situation where we might want to use an equivalence relation: our set is
+\[X = \{AAAA, AAAT, AATA, AATT, ATAA, ATAT, ATTA, ATTT, \\ TAAA, TAAT, TATA, TATT, TTAA, TTAT, TTTA, TTTT\},\]
+but we want to declare
+\[ATAT \sim TATA,\]
+\[AATT \sim TAAT \sim TTAA \sim ATTA,\] 
+\[AAAT \sim AATA \sim ATAA \sim TAAA,\]
+\[TTTA \sim ATTT \sim TATT \sim TTAT,\]
+to represent how different instruction strings encode the same tile. 
+</p>
+
+<h2>The formal definition of an equivalence relation</h2>
+
+<p>
+Generally, an <em>equivalence relation</em> on a set \(X\) is the data of a <em>subset</em> \(E \subseteq X\times X,\) obeying some conditions we'll state in a moment. For now, to get a sense of what this means, let's revisit the square example; as we said before, there we have
+\[X = \{AAAA, AAAT, AATA, AATT, ATAA, ATAT, ATTA, ATTT, \\ TAAA, TAAT, TATA, TATT, TTAA, TTAT, TTTA, TTTT\},\]
+the set of all instruction strings.
+</p>
+
+<p>
+The set \(X \times X\) is the set of all possible <em>pairs</em> of instruction strings. For example,
+\[(AAAA, AAAT), (TTTT, TTTT), \text{ and }(ATTA, ATTT)\]
+are all possible pairs. The full set \(X \times X\) has \(16 \times 16 = 256\) elements, though, so we won't write them all down.
+</p>
+
+<p>
+The subset \(E\) which defines our equivalence relation is thought of as the set of pairs of elements which <em>should be made equal</em>. Thus, in our square example, the set \(E\) contains pairs like
+\[(AAAT, ATAA)\text{ and } (ATAT, TATA),\]
+because the instruction strings AAAT, ATAA both correspond to the same tile, as do ATAT and TATA. 
+</p>
+
+<p>
+Now that we've made sense of the data -- an equivalence relation on \(X\) consists of a subset \(E\) of \(X\times X\) -- we can make sense of the <em>constraints</em> this data must obey to be dubbed an equivalence relation. Equality has three basic properties: it is reflexive (\(x = x\)), symmetric (if \(x = y,\) then \(y = x\)), and transitive (if \(x = y\) and \(y=z,\) then \(x=z\)). An equivalence relation is required to obey the analogous properties.
+</p>
+
+<p>
+For reflexivity, we demand that, for every \(x \in X,\) (this symbol means \(x\) is an element of \(X\)) we have \((x, x) \in E.\) In other words, \(x\) and \(x\) should encode the same object; in our square example, \((AAAA, AAAA) \in E,\) for instance.
+</p>
+
+<p>
+For symmetry, we say that if \((x, y) \in E,\) then \((y, x) \in E\) as well. For transitivity, we say that if \((x, y)\in E\) and \((y, z) \in E,\) then \((x, z) \in E\) as well. 
+</p>
+
+<h2>Groupoids</h2>
+
+<p>
+Equivalence relations are an incredibly common, and useful, mathematical construct. However, over time, it was realized that they have a certain defect, which can make them inconvenient in some applications.
+</p>
+
+<p>
+The key problem of the equivalence relation is that it just remembers whether or not two elements of \(X\) are the same; but it doesn't remember <em>why</em> they are the same.
+</p>
+
+<p>
+To see why this causes trouble, let's think back to our example of building squares out of triangle. There, our set \(X\) has 16 elements (corresponding to the four letter strings TATA, ATTA, etc.). Each square tile has 8 symmetries (4 rotational symmetries and 4 reflections), and so you might expect there to be 
+\[\frac{16}{8} = 2\]
+total 'finished' tiles. Yet we found <em>six</em> different tile types above! What's going on?
+</p>
+
+<p>
+The trouble is that, sometimes, a symmetry does nothing. For example, if you rotate the tile labelled TATA by a quarter turn counterclockwise, then you'd get the tile labelled ATAT. But if you rotated TATA by a <em>half</em> turn instead of a quarter turn, then you'd get TATA again! And if you rotated TATA by a quarter turn <em>clockwise</em>, then you'd get ATAT -- something we've already seen! 
+</p>
+
+<p>
+Indeed, instead of all four rotations of the TATA tile getting distinct labels, two of them are called TATA and two of them are called ATAT. This makes our naive \(16/8\) count from before go wrong: not every string has the full 8 symmetries.
+</p>
+
+<p>
+There is another way of thinking about this: TATA and TATA encode the same tile for <em>multiple reasons</em>. For example, \(ATAT \sim TATA\) for <em>four reasons</em>: these strings encode the same tile, because you can go from the ATAT tile to the TATA tile by either a quarter turn clockwise, a quarter turn counterclockwise, or by flipping the square along the diagonal from bottom left to top right, or by flipping the square along the diagonal from top left to bottom right.
+</p>
+
+<p>
+Similarly, \(TATA \sim TATA\) for four reasons: because any two strings encode the same tile, or because the TATA tile and the TATA tile can be made the same by flipping the tile horizontally, flipping it vertically, or rotating a half-turn.
+</p>
+
+<p>
+Our \(\frac{16}{8}\) computation from before has a kernel of truth to it: there eight <em>reasons</em> for TATA to be equivalent to something else, its just that some of those reasons make TATA equivalent to the same thing! 
+</p>
+
+<p>
+To account for this, mathematicians invented the <em>groupoid</em>. This is a variant of equivalence relation, in which you're allowed to encode the multiple reasons two elements can be equivalent. The key change in the definition is that, instead of requiring \(E\) to be a <em>subset</em> of \(X\times X,\) we allow our set \(E\) of equivalences to be arbitrary. 
+</p>
+
+<p>
+So, for example, when \(X\) is our set of strings ATTA, AAAA, etc., again, the <em>groupoid</em> encoding equivalence is now a set of <em>triples</em> of two equal strings, plus a <em>reason</em> for equality: while our equivalence relation had the pair \((TATA, ATAT),\) our groupoid now has four triples
+\[(TATA, ATAT, \text{quarter turn clockwise}),\]
+\[(TATA, ATAT, \text{quarter turn counterclockwise}),\]
+\[(TATA, ATAT, \text{flipping along top left to bottom right diagonal}),\]
+\[(TATA, ATAT, \text{flipping along bottom left to top right diagonal}).\] 
+</p>
+
+<h3>The formal definition of a groupoid</h3>
+
+<p>
+The formal definition of a groupoid is not so hard. Let \(X\) be a set. A <em>groupoid</em> on \(X\) is another set \(E,\) together with the following extra operations.
+</p>
+
+<p>
+An element of \(E\) should be thought of as two elements of \(X,\) plus a reason they are equivalent. Thus we make a groupoid have two extra functions
+\[s : E \to X,\]
+\[t : E \to X\]
+(often called <em>source</em> and <em>target</em>) which just send an element of \(E\) to the two elements it is equating.
+</p>
+
+<p>
+Remember that equivalence relations were required to obey reflexivity: for every \(x,\) we always have \(x \sim x.\) The analogue of reflexivity for groupoids is that, for every \(x \in X,\) there should be some \(\operatorname{id}(x) \in E\) so that \(s(\operatorname{id}(x)) = x\) and \(t(\operatorname{id}(x)) = x.\) We encode this as a function
+\[\operatorname{id} : X \to E,\]
+which we think of as the function sending every element \(x\) to the element of \(E\) encoding the fact that "\(x\sim x\) because \(x\) is itself." We require this function \(\operatorname{id}\) to obey
+\[s(\operatorname{id}(x)) = t(\operatorname{id}(x)) = x.\] 
+</p>
+
+<p>
+A groupoid also has symmetry: if \(x \sim y,\) then \(y \sim x.\) In groupoids, we encode this with an extra function
+\[\iota : E \to E,\]
+obeying the condition that 
+\[s(\iota(e)) = t(e)\]
+and
+\[t(\iota(e)) = s(e).\]
+In other words, given any reason \(e \in E\) that \(s(e) \sim t(e),\) we can apply \(\iota\) to get a reason \(\iota(e)\) that \(t(e) \sim s(e).\) 
+</p>
+
+<p>
+The last axiom of equivalence relations was transitivity: if \(x\sim y\) and \(y\sim z,\) then \(x \sim z.\) For groupoids, we encode this as a binary function 
+\[\mu : \{(e_1, e_2) \in E \times E \mid t(e_1) = s(e_2)\} \to E.\]
+That is, \(\mu\) is a function whose input is pair \((e_1, e_2)\) of two elements of \(E\), such that \(t(e_1) = s(e_2),\) and whose output is a new element of \(E.\) We require \(\mu\) to obey
+\[s(\mu(e_1, e_2)) = s(e_1),\]
+\[t(\mu(e_1, e_2)) = t(e_2).\] 
+This way, if \(e_1\) is a reason that \(x\sim y,\) and \(e_2\) is a reason that \(y \sim z,\) then \(\mu(e_1, e_2)\) is a reason that \(x \sim z.\) 
+
+This \(\mu\) is also required to be associative: 
+\[\mu(e_1, \mu(e_2, e_3)) = \mu(\mu(e_1, e_2), e_3).\]
+This just means that, if you have reasons that \(x\sim y, y\sim z,\) and \(z\sim w,\) then the final transitive reason that \(x\sim w\) doesn't depend on if you start by using \(\mu\) to generate a reason that \(x\sim z,\) or if you start by using \(\mu\) to generate a reason that \(y\sim w.\) 
+</p>
+
+<p>
+These operations must obey some last compatibilities. Recall our function 
+\[\operatorname{id} : X \to E\]
+implementing reflexivity. We don't want \(e\) to just send \(x\) to any random reason that \(x\sim x,\) though; we really want it to pick out the 'trivial' reason that \(x\sim x.\) For this reason, we require \(\operatorname{id}\) and \(\mu\) to interact: whenever \(e, e' \in E\) are such that \(t(e) = x\) and \(s(e') = x,\) we have
+\[\mu(\operatorname{id}(x), e) = e,\]
+\[\mu(e', \operatorname{id}(x)) = e'.\] 
+We think of \(\operatorname{id}(x)\) as the trivial reason that \(x \sim x,\) and \(e\) as some reason that \(x\sim y.\) Transitivitity applied to the trivial reason that \(x\sim x\) and the reason \(e\) that \(x\sim y\) should just give us \(e\) back again. This is the reason for these two compatibilities.
+</p>
+
+<p>
+For the last compatibility, recall that \(\iota\) is supposed to implement symmetry. We require that
+\[\mu(e, \iota(e)) = \operatorname{id}(s(e)),\]
+\[\mu(\iota(e), e) = \operatorname{id}(t(e)).\] 
+This is because, if \(e\) is some reason that \(x \sim y,\) then \(\iota(e)\) is the symmetric reason that \(y\sim x.\) Thus, when we apply transitivity to these two to get a reason that \(x\sim x,\) we shouldn't expect anything exciting to happen: \(e\) and \(\iota(e)\) are 'the same reason,' but just with opposite source and target, and so composing them should never result in anything interesting.
+</p>
+
+<h3>An advanced example: action groupoids</h3>
+
+<p>
+This subsection is intended for people who know a little group theory; those who don't can safely skip it. 
+</p>
+
+<p>
+As an example of a groupoid, let \(X\) be a set, and suppose \(G\) is a group acting on \(X.\) The <em>action groupoid</em> associated to this group action, often denoted by \([X/G],\) is the groupoid on \(X\) given by 
+\[E = G \times X.\] 
+</p>
+
+<p>
+The source and target functions are
+\[s(g, x) = x, t(g, x) = g \cdot x.\]
+In other words, we think of \((g, x)\) as a 'reason' that \(x \sim g \cdot x.\) Thus, the action groupoid \([X/G]\) is an enhancement of the usual set-theoretic quotient \(X/G,\) the set of \(G\)-orbits of our action.
+</p>
+
+<p>
+The identity function is of course
+\[\operatorname{id}(x) = (1, x),\]
+where \(1 \in G\) denotes the identity element of our group.
+</p>
+
+<p>
+The function
+\[\iota : G \times X \to G\times X\]
+is given by 
+\[\iota(g, x) = (g^{-1}, gx).\] 
+</p>
+
+<p>
+Finally, the transitivity operation \(\mu\) is given by
+\[\mu((g_1, x), (g_2, g_1x)) = (g_2g_1, x).\] 
+</p>
+
+<p>
+The primary difference between the set-theoretic quotient \(X/G\) and the action groupoid \([X/G]\) is that the action groupoid can remember that two elements might be in the same orbit for <em>multiple reasons</em>. That is, two points \(x, x' \in X\) lie in the same \(G\)-orbit whenever there is some \(g \in G\) so that \(x' = g \cdot x.\) We think of this element \(g\) as being a <em>reason</em> that \(x, x'\) lie in the same orbit; group actions can have stabilizers, though, and so there can be distinct reasons that two points lie in the same orbit. The action groupoid is very good at encoding these distinct reasons! 
+</p>
+
+<h2>Groupoid-based mathematics</h2>
+
+<p>
+Once you are convinced of the utility of groupoids, it can be tempting to re-define various basic mathematical objects, but trying to replace any <em>equivalence relations</em> involved with <em>groupoids</em>. 
+</p>
+
+<p>
+One common example of equivalence relations in mathematics come from <em>quotient spaces</em>. As an example, suppose you want to study <em>even functions</em> -- these are functions
+\[f : \mathbb{R} \to \mathbb{R}\]
+obeying the property that
+\[f(x) = f(-x).\]
+The functions \(x^2, \cos(x),\) and \(|x|\) are all examples. 
+</p>
+
+<p>
+At the moment, studying even functions might seem a little strange, but actually studying functions obeying some invariance property comes up all the time in mathematics; this study of even functions is a special case of discrete Fourier theory, for instance, as we elaborated on in TODOCITE the dirichlet article. As a more sophisticated example, <em>modular forms</em> occupy a central role in modern number theory, and are just functions obeying some (rather complicated!) invariance properties.
+</p>
+
+<p>
+Observe that, if \(f(x) = f(-x),\) then the values of \(f\) on negative real numbers are determined by its values on negative reals; that is, \(f(-1) = f(+1), f(-2.3) = f(+2.3),\) and so on. Thus, <em>even functions are equivalent to arbitrary functions with domain \([0, \infty).\)</em> 
+</p>
+
+<p>
+Said another way, instead of studying even functions, it is enough to study functions on the shape positive number line (\([0, \infty)\) is just notation for "the collection of all numbers greather than or equal to zero"). 
+</p>
+
+<p>
+There is a more principled way to discover this: because \(f(x) = f(-x),\) it is natural to form the <em>quotient space</em> of the real number line \(\mathbb{R}\) by the equivalence relation 
+\[x \sim -x.\] 
+</p>
+
+<p>
+That is, we start with the set \(X\) of all real numbers, and then <em>quotient</em> by the equivalence relation identifying each real number with its negative; you can visually imagine this as folding the negative half of the real number line onto the positive, as depicted in the widget below.
+</p>
+
+<svg id="foldsvg" width="100%" viewBox="0 0 680 300" role="img">
+<title>Folding R at 0 to form R/(x~-x)</title>
+<desc>Negative half of the real line rotates up and over the origin, landing on the positive half, illustrating the quotient space.</desc>
+<line x1="60" y1="220" x2="620" y2="220" stroke="#504945" stroke-width="1"/>
+<line id="posray" x1="340" y1="220" x2="580" y2="220" stroke="#b8bb26" stroke-width="3" stroke-linecap="round"/>
+<path id="foldpath" fill="none" stroke="#fe8019" stroke-width="3" stroke-linecap="round"/>
+<g id="postick"></g>
+<g id="negtick"></g>
+<circle cx="340" cy="220" r="6" fill="#fb4934"/>
+<text x="340" y="245" text-anchor="middle" font-size="13" fill="#fb4934">0</text>
+</svg>
+<div style="display:flex;align-items:center;gap:14px;margin-top:.75rem;">
+<button id="playbtn" style="background:#3c3836;color:#ebdbb2;border:0.5px solid #665c54;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px;">
+<i class="ti ti-player-play" style="font-size:16px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>fold
+</button>
+<input type="range" id="tslider" min="0" max="100" value="0" step="1" style="flex:1;accent-color:#fe8019;">
+<span id="tlabel" style="color:#a89984;font-size:13px;min-width:70px;text-align:right;">unfolded</span>
+</div>
+</div>
+<script>
+(function(){
+const cx=340, cy=220, scale=60, N=4;
+const posT = document.getElementById('postick');
+const negT = document.getElementById('negtick');
+let ph = '';
+for(let i=1;i<=N;i++){
+  const x = cx + i*scale;
+  posT.innerHTML += '<circle cx="'+x+'" cy="'+cy+'" r="5" fill="#8ec07c"/><text x="'+x+'" y="245" text-anchor="middle" font-size="13" fill="#ebdbb2">'+i+'</text>';
+  negT.innerHTML += '<circle id="ndot'+i+'" cx="'+(cx-i*scale)+'" cy="'+cy+'" r="5" fill="#fabd2f"/><text id="nlbl'+i+'" x="'+(cx-i*scale)+'" y="245" text-anchor="middle" font-size="13" fill="#ebdbb2">-'+i+'</text>';
+}
+function angle(t){ return Math.PI*(1-t); }
+function pos(s,t){
+  const a = angle(t);
+  return { x: cx + s*scale*Math.cos(a), y: cy - s*scale*Math.sin(a) };
+}
+function render(t){
+  let d = '';
+  const steps = 60;
+  for(let k=0;k<=steps;k++){
+    const s = N*k/steps;
+    const p = pos(s,t);
+    d += (k===0?'M':'L') + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ' ';
+  }
+  document.getElementById('foldpath').setAttribute('d', d);
+  for(let i=1;i<=N;i++){
+    const p = pos(i,t);
+    const dot = document.getElementById('ndot'+i);
+    const lbl = document.getElementById('nlbl'+i);
+    dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y);
+    lbl.setAttribute('x', p.x); lbl.setAttribute('y', p.y-10);
+    lbl.setAttribute('fill', t>0.5 ? '#3c3836' : '#ebdbb2');
+    lbl.textContent = t < 0.98 ? '-'+i : '';
+  }
+  const label = document.getElementById('tlabel');
+  label.textContent = t < 0.02 ? 'unfolded' : (t > 0.98 ? 'folded: x ~ -x' : 'folding\u2026');
+}
+render(0);
+const slider = document.getElementById('tslider');
+slider.addEventListener('input', ()=> render(slider.value/100));
+let playing = false, raf = null;
+document.getElementById('playbtn').addEventListener('click', ()=>{
+  if(playing) return;
+  playing = true;
+  const start = performance.now();
+  const dur = 1600;
+  function step(now){
+    const t = Math.min(1, (now-start)/dur);
+    slider.value = Math.round(t*100);
+    render(t);
+    if(t<1){ raf = requestAnimationFrame(step); } else { playing = false; }
+  }
+  slider.value = 0; render(0);
+  raf = requestAnimationFrame(step);
+});
+})();
+</script>
+
+<h3>Odd functions</h3>
+
+<p>
+Recall that an <em>odd function</em> is a function obeying \(f(x) = -f(-x).\) Examples include \(\sin(x)\) and \(x^3.\) 
+</p>
+
+<p>
+As with even functions, an odd function is completely determined by its values on non-negative numbers: if you know \(f(0),\) and if you know \(f(x)\) for every \(x \gt 0,\) then you can determine \(f\): on a negative input like \(f(-7.32),\) you can just use the rule \(f(-7.32) = -f(7.32)\) and the fact that you know the values on positive inputs.
+</p>
+
+<p>
+Unfortunately, unlike with even functions, it is <em>not</em> the case that that odd functions are equivalent to functions from \([0, \infty)\) to \(\mathbb{R}.\) This is because odd functions have one peculiarity: if we plug in \(x=0\) to our odd function rule, then we find
+\[f(0) = -f(0),\]
+so that \(f(0)\) is forced to be zero. 
+</p>
+
+<p>
+You can think that, in the quotient of \(\mathbb{R}\) by the equivalence relation \(x\sim -x,\) we add an extra reason that \(0 = 0.\) So, from the point of view of <em>groupoids</em> 0 of the quotient set is slightly different than the other points: \(0 = 0\) for <em>two</em> different reasons. 
+</p>
+
+<p>
+In the next subheading, we explore this a little more, but use the language of group theory. A reader who doesn't know group theory should feel free to skim (or skip entirely!) that subheading. 
+</p>
+
+<h3>Even and odd functions, with group theory</h3>
+
+<p>
+Even and odd functions are both special cases of the same setup, which group theory and groupoids can enlighten. Let \(X\) be some shape (in our example, \(X\) was the real number line), and let \(G\) be a group acting on \(X\) (in our example, \(G\) was the group \(\{1, -1\},\) and the group action was \(1 \cdot x = x, -1 \cdot x = -x\)). 
+</p>
+
+<p>
+Similarly, take \(Y\) another shape with an action of \(G.\) 
+</p>
+
+<p>
+A <em>\(G\)-equivariant function</em> 
+\[f : X \to Y\]
+is any function obeying
+\[f(g \cdot x) = g \cdot f(x).\] 
+</p>
+
+<p>
+Odd functions are just \(\{\pm 1\}\)-equivariant functions \(\mathbb{R} \to \mathbb{R}.\) 
+</p>
+
+<p>
+Even functions are also a type of equivariant function; if we let \(\mathbb{R}_{\operatorname{triv}}\) denote "the real numbers, but where the group \(\{\pm 1\}\) acts in the trivial way \(1 \cdot x = -1 \cdot x = x\)", then even functions are \(\{\pm 1\}\)-equivariant functions \(\mathbb{R} \to \mathbb{R}_{\operatorname{triv}}.\) 
+</p>
+
+<p>
+Recall from earlier that we can form the <em>action groupoid</em> associated to the action of \(G\) on \(X.\) This is the groupoid 
+\[G \times X \rightrightarrows X,\]
+where \(s(g, x) = x, t(g, x) = g \cdot x.\) 
+</p>
+
+<p>
+Similarly, we can form an action groupoid for the action of \(G\) on \(Y.\) A <em>morphism of groupoids</em> between these two action groupoids is the data of a function \(f : X\to Y,\) together with a function \(\phi : G \times X \to G\times Y,\) obeying various compatibilities: for example, we should have
+\[\operatorname{id}(f(x)) = \phi(\operatorname{id}(x)),\]
+and
+\[s(\phi(g, x)) = f(s(g, x)),\]
+and similar compatibilities between targets, composition, and inverses.
+</p>
+
+<p>
+Any \(G\)-equivariant function \(f : X\to Y\) can be upgraded <em>in a unique way</em> to a morphism of the corresponding action groupoids; indeed, we can define
+\[\phi : G \times X \to G \times Y\]
+to be 
+\[\phi(g, x) = (g, f(x)).\]
+The \(G\)-equivariance of \(f\) ends up implying that \(\phi\) and \(f\) obey all the compatibilities needed to give a morphism of groupoids. And, for experts, we will remark that every morphism of groupoids <em>compatible with the natural maps to \(BG\)</em> gives rise to a \(G\)-equivariant function \(X \to Y.\) 
+</p>
+
+<p>
+From this groupoid picture, the distinction between even and odd functions just becomes the distinction between the action groupoids associated to \(\mathbb{R}\) and \(\mathbb{R}_{\operatorname{triv}}.\) To be even more precise: the action groupoid associated to \(\mathbb{R}\) with its usual \(\{\pm 1\}\) action has the amusing property that there are <em>two</em> reasons that \(0 \sim 0.\) 
+</p>
+
+<p>
+A morphism of action groupoids \(\mathbb{R}/\{\pm 1\} \to \mathbb{R}/\{\pm 1\}\) <em>over \(\pt/\{\pm 1\}\)</em> therefore <em>must</em> send 0 to some object which has two reasons to equal itself. However, the only object of \(\mathbb{R}/\{\pm 1\}\) which equals itself for two reasons is zero! So, odd functions -- which, as we discussed, are equivalent to groupoid morphisms \(\mathbb{R}/\{\pm 1\} \to \mathbb{R}/\{\pm 1\}\) over \(\pt/\{\pm 1\}\) -- must send 0 to 0.
+</p>
+
+<p>
+But even functions are groupoid maps \(\mathbb{R}/\{\pm 1\} \to \mathbb{R}_{\operatorname{triv}}/\{\pm 1\}.\) And in this new action groupoid \(\mathbb{R}_{\operatorname{triv}}/\{\pm 1\},\) <em>every point is equal to itself for two reasons!</em> When we take the trivial action and quotient by it, we're just saying that every \(g\in G\) gives a reason that \(x = x.\) 
+</p>
+
+<p>
+So, even functions do not have any restriction about sending zero to zero. Thus, if you want to understand functions obeying some symmetry, like even or odd functions, groupoids are the way to go! In fact, one of the first 'concrete situations' where mathematicians needed groupoids were in the study of <em>modular curves</em>. As we mentioned above, modular forms -- an important part of modern number theory -- are defined as functions obeying a certain invariance property. Similarly to even and odd functions, this invariance property can be phrased as \(G\)-equivariance for the hyperbolic plane and some complicated group \(G.\) The resulting quotient space of the hyperbolic plane is called a <em>modular curve</em>, and to understand modular curves completely, one needs to remember the <em>orbifold</em> or <em>stacky</em> points -- that is, the points which are equal to themselves for multiple reasons under the quotient!
+</p>
+
+<h2>The inadequacy of groupoids</h2>
+
+<p>
+The longer you do certain types of algebraic geometry or algebraic topology, the more convinced you might be that groupoids occupy a fundamental role in mathematics. This lead to mathematicians trying to redo various mathematical concepts, but replacing all the <em>sets</em> involved in their definition with groupoids. 
+</p>
+
+<p>
+For example, algebraic geometers replaced the sets used in the definition of a <em>scheme</em> (this is the basic type of shape studied in algebraic geometry) with groupoids, leading to <em>stacks</em>. You can also define <em>ring groupoids</em>, which are like rings, but the <em>set</em> of numbers is replaced by a groupoid of numbers!
+</p>
+
+<p>
+But if you take groupoid-based mathematics seriously enough, groupoids then seem inadequate because they are based on sets! And this inadequacy is not purely academic, although the trouble you run into is hard to explain without assuming some more advanced algebra background. The next subheading gives a 'concrete' situation where the fact that groupoids are defined using sets instead of groupoids causes trouble, though a reader unfamiliar with abstract algebra can safely skim or skip that section.
+</p>
+
+<h3>An advanced example: syzygies</h3>
+
+<p>
+Let \(M\) be a \(\mathbb{C}[x,y]\)-module. Consider the quotient \(M/xM.\) Quotients are a prime signal that you should use groupoids, and indeed something quite nice happens if you model this quotient as a groupoid.
+</p>
+
+<p>
+In this quotient \(M/xM,\) we say \(m = m'\) whenever \(m' - m \in xM,\) or equivalently whenever we can find some \(n \in M\) such that \(m' - m = xn.\) 
+</p>
+
+<p>
+Thus the groupoid replacement for the quotient \(M/xM\) is
+\[M \times M \rightrightarrows M,\]
+\[s(m, n) = m, t(m, n) = m + xn.\] 
+</p>
+
+<p>
+In particular, the reasons that \(m = m\) in this quotient groupoid are just the pairs \((m, n)\) for which \(xn = 0.\) In other words, <em>this quotient groupoid sees the \(x\)-torsion in \(M.\)</em>
+</p>
+
+<p>
+Torsion is a very important concept in homological algebra, so this is good! 
+</p>
+
+<p>
+You might even hope that groupoids can help you concretely access the <em>higher</em> \(\operatorname{Tor}\)-functors. Unfortunately, there is a big problem here. If we wanted to look at a quotient like \(M/(x, y)M,\) where we might see \(\operatorname{Tor}\) functors, groupoids aren't enough: we'd compute the higher tors using a complex like
+\[\mathbb{C}[x, y] \to \mathbb{C}[x, y] \oplus \mathbb{C}{x, y] \to \mathbb{C}[x, y],\]
+where the third term comes from the <em>syzygy</em> between the two relations \(x = 0\) and \(y = 0.\) That is, when we quotient by \((x, y),\) we set \(xy = 0\) for <em>two</em> reasons: once because we set \(x\) to 0, and once because we set \(y\) to 0. 
+</p>
+
+<p>
+Groupoids can handle that perfectly well; indeed, there is a groupoid version of the quotient \(M/(x,y)M\), where \(xy \cdot m = 0\) for two separate reasons. 
+</p>
+
+<p>
+However, the third time in the free resolution used to calculate tor functors <em>kills the syzygy</em>, making it so \(xy = 0\) for a <em>unique</em> reason again. Or, in other words, this third term in our resolution <em>adds a 'reason' that the two reasons that \(xy = 0\) should be the same.</em> Homological algebra is very successful, and it is a point against groupoids that they cannot handle this three time complex! 
+</p>
+
+<p>
+However, if you simply replace the <em>set</em> of reasons with a <em>groupoid</em> of reasons in the definition of groupoid, then you solve this problem: you can add a reason that two reasons are equivalent!
+</p>
+
+<h3>2-groupoids</h3>
+
+<p>
+If you try to reformulate the definition of groupoid, but replacing the two sets \(E, X\) by groupoids, then you get an object called a <em>2-groupoid</em>. 
+</p>
+
+<p>
+The final definition of 2-groupoid is actually quite a bit subtle, because there are many many equivalent-but-not-obviously-equivalent ways to define 2-groupoids. 
+</p>
+
+<h2>\(\infty\)-groupoids; or, anima</h2>
+
+<p>
+You might have noticed something: 2-groupoids were defined because groupoids are not groupoid-y enough; their definition involves sets. But 2-groupoids are also not 2-groupoid-y: their definition involves ordinary groupoids. 
+</p>
+
+<p>
+This leads to <em>\(3\)-groupoids</em>, which are defined by replacing all the groupoids in the definition of 2-groupoid by 2-groupoids. Similarly, you can define 4-groupoids, 5-groupoids, etc., and even a limiting object of <em>\(\infty\)-groupoids</em>. 
+</p>
+
+<p>
+Much modern mathematics -- at least in certain fields like algebraic geometry -- uses \(\infty\)-groupoids in fundamental ways. These \(\infty\)-groupoids go by another name: <em>anima</em>, coined by Dustin Clausen, inspired by Sasha Beilinson referring to an \(\infty\)-groupoid version of a theorem about sets as an <em>animation</em> of the theorem about sets.
+</p>
+
+<p>
+Why did Beilinson use the word animation, though? For this, we explain <em>Grothendieck's homotopy hypothesis.</em>
+</p>
+
+<p>
+Groupoids arose by generalizing equivalence relations. One common equivalence relation is <em>path-equivalence</em>: for any shape \(X,\) we can make an equivalence relation on \(X\) by saying \(x \sim y\) whenever there is a path from \(x\) to \(y.\) 
+</p>
+
+<p>
+To upgrade this to a groupoid, one can just replace the relation of path equivalence by the set of <em>paths</em>.Although there end up being some complications to this -- in order to make composition of paths associative (remember, groupoids require this associativity of composition!), you need to consider something called <em>homotopy classes of paths</em>. 
+</p> 
+
+<p>
+But, using these homtopy classes of paths, one can associate to every shape \(X,\) one can associate a groupoid called its <em>fundamental groupoid</em>. 
+</p>
+
+<p>
+It turns out that every groupoid is the fundamental groupoid of some shape. We can think of this shape associated to a groupoid as an <em>animation</em> of it, in the following sense: if we took the quotient set associated to the groupoid, we'd get the set of connected components of our shape \(X\); we think that this shape \(X\) gives each point of the quotient set a playground to move around in -- these playgrounds are just the different connected pieces of the shape \(X.\) 
+</p>
+
+<p>
+Grothendieck's homotopy hypothesis is the assertion (which, depending on how you define \(\infty\)-groupoid, is either a theorem or an axiom!) that \(\infty\)-groupoids are just homotopy classes of shapes. So, in some sense, every groupoid comes just by trying to understand the equivalence relation of path connectedness in some shape!
+</p>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+</html>
