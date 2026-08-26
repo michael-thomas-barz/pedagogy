@@ -306,21 +306,21 @@ The formal definition of a groupoid is not so hard. Let \(X\) be a set. A <em>gr
 
 <p>
 An element of \(E\) should be thought of as two elements of \(X,\) plus a reason they are equivalent. Thus we make a groupoid have two extra functions
-\[s : E \to X,\]
-\[t : E \to X\]
+\[s\colon E \to X,\]
+\[t\colon E \to X\]
 (often called <em>source</em> and <em>target</em>) which just send an element of \(E\) to the two elements it is equating.
 </p>
 
 <p>
 Remember that equivalence relations were required to obey reflexivity: for every \(x,\) we always have \(x \sim x.\) The analogue of reflexivity for groupoids is that, for every \(x \in X,\) there should be some \(\operatorname{id}(x) \in E\) so that \(s(\operatorname{id}(x)) = x\) and \(t(\operatorname{id}(x)) = x.\) We encode this as a function
-\[\operatorname{id} : X \to E,\]
+\[\operatorname{id}\colon  X \to E,\]
 which we think of as the function sending every element \(x\) to the element of \(E\) encoding the fact that "\(x\sim x\) because \(x\) is itself." We require this function \(\operatorname{id}\) to obey
 \[s(\operatorname{id}(x)) = t(\operatorname{id}(x)) = x.\] 
 </p>
 
 <p>
 A groupoid also has symmetry: if \(x \sim y,\) then \(y \sim x.\) In groupoids, we encode this with an extra function
-\[\iota : E \to E,\]
+\[\iota\colon  E \to E,\]
 obeying the condition that 
 \[s(\iota(e)) = t(e)\]
 and
@@ -330,7 +330,7 @@ In other words, given any reason \(e \in E\) that \(s(e) \sim t(e),\) we can app
 
 <p>
 The last axiom of equivalence relations was transitivity: if \(x\sim y\) and \(y\sim z,\) then \(x \sim z.\) For groupoids, we encode this as a binary function 
-\[\mu : \{(e_1, e_2) \in E \times E \mid t(e_1) = s(e_2)\} \to E.\]
+\[\mu \colon  \{(e_1, e_2) \in E \times E \mid t(e_1) = s(e_2)\} \to E.\]
 That is, \(\mu\) is a function whose input is pair \((e_1, e_2)\) of two elements of \(E\), such that \(t(e_1) = s(e_2),\) and whose output is a new element of \(E.\) We require \(\mu\) to obey
 \[s(\mu(e_1, e_2)) = s(e_1),\]
 \[t(\mu(e_1, e_2)) = t(e_2).\] 
@@ -343,7 +343,7 @@ This just means that, if you have reasons that \(x\sim y, y\sim z,\) and \(z\sim
 
 <p>
 These operations must obey some last compatibilities. Recall our function 
-\[\operatorname{id} : X \to E\]
+\[\operatorname{id}\colon  X \to E\]
 implementing reflexivity. We don't want \(e\) to just send \(x\) to any random reason that \(x\sim x,\) though; we really want it to pick out the 'trivial' reason that \(x\sim x.\) For this reason, we require \(\operatorname{id}\) and \(\mu\) to interact: whenever \(e, e' \in E\) are such that \(t(e) = x\) and \(s(e') = x,\) we have
 \[\mu(\operatorname{id}(x), e) = e,\]
 \[\mu(e', \operatorname{id}(x)) = e'.\] 
@@ -382,7 +382,7 @@ where \(1 \in G\) denotes the identity element of our group.
 
 <p>
 The function
-\[\iota : G \times X \to G\times X\]
+\[\iota\colon  G \times X \to G\times X\]
 is given by 
 \[\iota(g, x) = (g^{-1}, gx).\] 
 </p>
@@ -404,14 +404,14 @@ Once you are convinced of the utility of groupoids, it can be tempting to re-def
 
 <p>
 One common example of equivalence relations in mathematics come from <em>quotient spaces</em>. As an example, suppose you want to study <em>even functions</em> -- these are functions
-\[f : \mathbb{R} \to \mathbb{R}\]
+\[f\colon  \mathbb{R} \to \mathbb{R}\]
 obeying the property that
 \[f(x) = f(-x).\]
 The functions \(x^2, \cos(x),\) and \(|x|\) are all examples. 
 </p>
 
 <p>
-At the moment, studying even functions might seem a little strange, but actually studying functions obeying some invariance property comes up all the time in mathematics; this study of even functions is a special case of discrete Fourier theory, for instance, as we elaborated on in TODOCITE the dirichlet article. As a more sophisticated example, <em>modular forms</em> occupy a central role in modern number theory, and are just functions obeying some (rather complicated!) invariance properties.
+At the moment, studying even functions might seem a little strange, but actually studying functions obeying some invariance property comes up all the time in mathematics; this study of even functions is a special case of discrete Fourier theory, for instance, as we elaborated on in <a href="dirichlet.html">Infinitely many primes end in a 7</a>. As a more sophisticated example, <em>modular forms</em> occupy a central role in modern number theory, and are just functions obeying some (rather complicated!) invariance properties.
 </p>
 
 <p>
@@ -544,7 +544,7 @@ Similarly, take \(Y\) another shape with an action of \(G.\)
 
 <p>
 A <em>\(G\)-equivariant function</em> 
-\[f : X \to Y\]
+\[f\colon X \to Y\]
 is any function obeying
 \[f(g \cdot x) = g \cdot f(x).\] 
 </p>
@@ -564,7 +564,7 @@ where \(s(g, x) = x, t(g, x) = g \cdot x.\)
 </p>
 
 <p>
-Similarly, we can form an action groupoid for the action of \(G\) on \(Y.\) A <em>morphism of groupoids</em> between these two action groupoids is the data of a function \(f : X\to Y,\) together with a function \(\phi : G \times X \to G\times Y,\) obeying various compatibilities: for example, we should have
+Similarly, we can form an action groupoid for the action of \(G\) on \(Y.\) A <em>morphism of groupoids</em> between these two action groupoids is the data of a function \(f \colon  X\to Y,\) together with a function \(\phi \colon  G \times X \to G\times Y,\) obeying various compatibilities: for example, we should have
 \[\operatorname{id}(f(x)) = \phi(\operatorname{id}(x)),\]
 and
 \[s(\phi(g, x)) = f(s(g, x)),\]
@@ -572,8 +572,8 @@ and similar compatibilities between targets, composition, and inverses.
 </p>
 
 <p>
-Any \(G\)-equivariant function \(f : X\to Y\) can be upgraded <em>in a unique way</em> to a morphism of the corresponding action groupoids; indeed, we can define
-\[\phi : G \times X \to G \times Y\]
+Any \(G\)-equivariant function \(f\colon X\to Y\) can be upgraded <em>in a unique way</em> to a morphism of the corresponding action groupoids; indeed, we can define
+\[\phi\colon G \times X \to G \times Y\]
 to be 
 \[\phi(g, x) = (g, f(x)).\]
 The \(G\)-equivariance of \(f\) ends up implying that \(\phi\) and \(f\) obey all the compatibilities needed to give a morphism of groupoids. And, for experts, we will remark that every morphism of groupoids <em>compatible with the natural maps to \(BG\)</em> gives rise to a \(G\)-equivariant function \(X \to Y.\) 
