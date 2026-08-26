@@ -29,11 +29,11 @@ The goal of this post is to give a sense of what \(\infty\)-<em>groupoids</em> a
 </p>
 
 <p>
-Mathematics got on just fine for a very, very long time without groupoids. One possible reaction to hearing about basic uses of \(\infty\)-groupoids -- to solve problems which can easily be solved without them -- is to think they are an overly complicated tool. However, they are quite essential for some purposes, and without them certain theorems would be much trickier to prove (or even correctly state!). We hope that these basic examples can be used to give the reader some idea about what situations \(\infty\)-groupoids help you with, even if it is possible to treat our situations by more elementary means.
+Mathematics got on just fine for a very long time without groupoids. One possible reaction to hearing about basic uses of \(\infty\)-groupoids -- to solve problems which can easily be solved without them -- is to think they are an overly complicated tool. However, they are quite essential for some purposes, and without them certain theorems would be much trickier to prove (or even correctly state!). We hope that these basic examples can be used to give the reader some idea about what situations \(\infty\)-groupoids help you with, even if it is possible to treat our situations by more elementary means.
 </p>
 
 <p>
-One can compare this to the advent of calculus. In a first course on calculus, you might be asked to find the area under a parabola, or the volumes enclosed by various complicated solids; historically, these sorts of questions arose, and were successfully answered, long before intetgral calculus was invented. However, when first learning the subject, it is hard to start with one of calculus' first totally novel applications, like Newton's derivation of Kepler's laws, even if those are what historically motivated people to learn and invent calculus.
+One can compare this to the advent of calculus. In a first course on calculus, you might be asked to find the area under a parabola, or the volumes enclosed by various complicated solids. Historically, these sorts of questions arose, and were successfully answered, <a href="https://en.wikipedia.org/wiki/Quadrature_of_the_Parabola">long before</a> intetgrals were invented. However, when first learning the subject, it is hard to start with one of calculus's first totally novel applications, like Newton's derivation of Kepler's laws, even if those are what historically motivated people to learn and invent calculus.
 </p>
 
 <p>
@@ -43,7 +43,7 @@ With that in mind, let's get to some examples!
 <h2>Equivalence relations</h2>
 
 <p>
-In mathematics, it is very common to <em>quotient</em> a set by an <em>equivalence relation</em>. Roughly, this means making two different things the same.
+In mathematics, it is very common to <em>quotient</em> a set by an <em>equivalence relation</em>. Roughly, this means declaring two different things are equal.
 </p>
 
 <p>
@@ -54,6 +54,7 @@ At the moment this is a bit philosophical, so let's get concrete.
 Equivalence relations often arise when one describes some type of object in a way such that multiple descriptions can correspond to the same object.
 </p>
 
+  <h3>Fractions</h3>
 <p>
 For example, if you were programming fractions into a computer, it might be tempting to have your computer store each fraction as a pair of two integers -- a numerator and a denominator (top and bottom). Then \(\frac{1}{2}\) would correspond to the pair \((1, 2),\) the fraction \(\frac{3}{7}\) would correspond to the pair \((3, 7),\) and the fraction \(\frac{5}{10}\) would correspond to \((5, 10).\) 
 </p>
@@ -69,8 +70,9 @@ This is our first example of something called an <em>equivalence relation</em>: 
 and so on, encoding the fact that, if we want to interpret the elements of \(X\) as a fractions, then distinct points of \(X\) correspond to the same fraction.
 </p>
 
+  <h3>Tilings</h3>
 <p>
-As another example, I have triangular tiles -- some amber and some teal -- and I want to build a square out of them. 
+As another example, let's say I have triangular tiles -- some amber and some teal -- and I want to build a square out of them. 
 </p>
 
 <p>
@@ -301,18 +303,18 @@ So, for example, when \(X\) is our set of strings ATTA, AAAA, etc., again, the <
 <h3>The formal definition of a groupoid</h3>
 
 <p>
-The formal definition of a groupoid is not so hard. Let \(X\) be a set. A <em>groupoid</em> on \(X\) is another set \(E,\) together with the following extra operations.
+The formal definition of a groupoid is only slightly more complicated than an equivalence relation. Let \(X\) be a set. A <em>groupoid</em> on \(X\) is another set \(E,\) together with the following extra operations.
 </p>
 
 <p>
 An element of \(E\) should be thought of as two elements of \(X,\) plus a reason they are equivalent. Thus we make a groupoid have two extra functions
 \[s\colon E \to X,\]
 \[t\colon E \to X\]
-(often called <em>source</em> and <em>target</em>) which just send an element of \(E\) to the two elements it is equating.
+(often called <em>source</em> and <em>target</em>) which just send an element of \(E\) to the two elements it is equating. In other words, any element \(e\in E\) tells you \(s(e)\sim t(e)\).
 </p>
 
 <p>
-Remember that equivalence relations were required to obey reflexivity: for every \(x,\) we always have \(x \sim x.\) The analogue of reflexivity for groupoids is that, for every \(x \in X,\) there should be some \(\operatorname{id}(x) \in E\) so that \(s(\operatorname{id}(x)) = x\) and \(t(\operatorname{id}(x)) = x.\) We encode this as a function
+Remember that equivalence relations were required to be reflexive. In other words, any element \(x\) should be equivalent to itself: \(x \sim x.\) The analogue of reflexivity for groupoids is that, for every \(x \in X,\) there should be some element \(\operatorname{id}(x) \in E\) so that \(s(\operatorname{id}(x)) = x\) and \(t(\operatorname{id}(x)) = x.\) We encode this as a function
 \[\operatorname{id}\colon  X \to E,\]
 which we think of as the function sending every element \(x\) to the element of \(E\) encoding the fact that "\(x\sim x\) because \(x\) is itself." We require this function \(\operatorname{id}\) to obey
 \[s(\operatorname{id}(x)) = t(\operatorname{id}(x)) = x.\] 
@@ -407,11 +409,11 @@ One common example of equivalence relations in mathematics come from <em>quotien
 \[f\colon  \mathbb{R} \to \mathbb{R}\]
 obeying the property that
 \[f(x) = f(-x).\]
-The functions \(x^2, \cos(x),\) and \(|x|\) are all examples. 
+The functions \(x^2\), \(\cos(x),\) and \(|x|\) are all examples. 
 </p>
 
 <p>
-At the moment, studying even functions might seem a little strange, but actually studying functions obeying some invariance property comes up all the time in mathematics; this study of even functions is a special case of discrete Fourier theory, for instance, as we elaborated on in <a href="dirichlet.html">Infinitely many primes end in a 7</a>. As a more sophisticated example, <em>modular forms</em> occupy a central role in modern number theory, and are just functions obeying some (rather complicated!) invariance properties.
+At the moment, studying even functions might seem a little strange, but actually studying functions obeying some invariance property comes up all the time in mathematics; this study of even functions is a special case of discrete Fourier theory, for instance, as we elaborated on in <a href="dirichlet.html">Infinitely many primes end in a 7</a>. As a more sophisticated example, <em>modular forms</em> (which also came up at the end of <a href="dirichlet.html">What is \(\sqrt{-1}\) modulo 5?</a>) occupy a central role in modern number theory, and are just functions obeying some (rather complicated!) invariance properties.
 </p>
 
 <p>
@@ -635,7 +637,7 @@ Torsion is a very important concept in homological algebra, so this is good!
 
 <p>
 You might even hope that groupoids can help you concretely access the <em>higher</em> \(\operatorname{Tor}\)-functors. Unfortunately, there is a big problem here. If we wanted to look at a quotient like \(M/(x, y)M,\) where we might see \(\operatorname{Tor}\) functors, groupoids aren't enough: we'd compute the higher tors using a complex like
-\[\mathbb{C}[x, y] \to \mathbb{C}[x, y] \oplus \mathbb{C}{x, y] \to \mathbb{C}[x, y],\]
+\[\mathbb{C}[x, y] \to \mathbb{C}[x, y] \oplus \mathbb{C}[x, y] \to \mathbb{C}[x, y],\]
 where the third term comes from the <em>syzygy</em> between the two relations \(x = 0\) and \(y = 0.\) That is, when we quotient by \((x, y),\) we set \(xy = 0\) for <em>two</em> reasons: once because we set \(x\) to 0, and once because we set \(y\) to 0. 
 </p>
 
