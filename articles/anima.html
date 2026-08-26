@@ -334,12 +334,12 @@ In other words, given any reason \(e \in E\) that \(s(e) \sim t(e),\) we can app
 The last axiom of equivalence relations was transitivity: if \(x\sim y\) and \(y\sim z,\) then \(x \sim z.\) For groupoids, we encode this as a binary function 
 \[\mu \colon  \{(e_1, e_2) \in E \times E \mid t(e_1) = s(e_2)\} \to E.\]
 That is, \(\mu\) is a function whose input is pair \((e_1, e_2)\) of two elements of \(E\), such that \(t(e_1) = s(e_2),\) and whose output is a new element of \(E.\) We require \(\mu\) to obey
-\[s(\mu(e_1, e_2)) = s(e_1),\]
-\[t(\mu(e_1, e_2)) = t(e_2).\] 
+\[s\big(\mu(e_1, e_2)\big) = s(e_1),\]
+\[t\big(\mu(e_1, e_2)\big) = t(e_2).\] 
 This way, if \(e_1\) is a reason that \(x\sim y,\) and \(e_2\) is a reason that \(y \sim z,\) then \(\mu(e_1, e_2)\) is a reason that \(x \sim z.\) 
 
 This \(\mu\) is also required to be associative: 
-\[\mu(e_1, \mu(e_2, e_3)) = \mu(\mu(e_1, e_2), e_3).\]
+\[\mu\big(e_1, \mu(e_2, e_3)\big) = \mu\big(\mu(e_1, e_2), e_3\big).\]
 This just means that, if you have reasons that \(x\sim y, y\sim z,\) and \(z\sim w,\) then the final transitive reason that \(x\sim w\) doesn't depend on if you start by using \(\mu\) to generate a reason that \(x\sim z,\) or if you start by using \(\mu\) to generate a reason that \(y\sim w.\) 
 </p>
 
@@ -347,15 +347,15 @@ This just means that, if you have reasons that \(x\sim y, y\sim z,\) and \(z\sim
 These operations must obey some last compatibilities. Recall our function 
 \[\operatorname{id}\colon  X \to E\]
 implementing reflexivity. We don't want \(e\) to just send \(x\) to any random reason that \(x\sim x,\) though; we really want it to pick out the 'trivial' reason that \(x\sim x.\) For this reason, we require \(\operatorname{id}\) and \(\mu\) to interact: whenever \(e, e' \in E\) are such that \(t(e) = x\) and \(s(e') = x,\) we have
-\[\mu(\operatorname{id}(x), e) = e,\]
-\[\mu(e', \operatorname{id}(x)) = e'.\] 
+\[\mu\big(\operatorname{id}(x), e\big) = e,\]
+\[\mu\big(e', \operatorname{id}(x)\big) = e'.\] 
 We think of \(\operatorname{id}(x)\) as the trivial reason that \(x \sim x,\) and \(e\) as some reason that \(x\sim y.\) Transitivitity applied to the trivial reason that \(x\sim x\) and the reason \(e\) that \(x\sim y\) should just give us \(e\) back again. This is the reason for these two compatibilities.
 </p>
 
 <p>
 For the last compatibility, recall that \(\iota\) is supposed to implement symmetry. We require that
-\[\mu(e, \iota(e)) = \operatorname{id}(s(e)),\]
-\[\mu(\iota(e), e) = \operatorname{id}(t(e)).\] 
+\[\mu\big(e, \iota(e)\big) = \operatorname{id}\big(s(e)\big),\]
+\[\mu\big(\iota(e), e\big) = \operatorname{id}\big(t(e)\big).\] 
 This is because, if \(e\) is some reason that \(x \sim y,\) then \(\iota(e)\) is the symmetric reason that \(y\sim x.\) Thus, when we apply transitivity to these two to get a reason that \(x\sim x,\) we shouldn't expect anything exciting to happen: \(e\) and \(\iota(e)\) are 'the same reason,' but just with opposite source and target, and so composing them should never result in anything interesting.
 </p>
 
@@ -372,7 +372,7 @@ As an example of a groupoid, let \(X\) be a set, and suppose \(G\) is a group ac
 
 <p>
 The source and target functions are
-\[s(g, x) = x, t(g, x) = g \cdot x.\]
+\[s(g, x) = x,\ t(g, x) = g \cdot x.\]
 In other words, we think of \((g, x)\) as a 'reason' that \(x \sim g \cdot x.\) Thus, the action groupoid \([X/G]\) is an enhancement of the usual set-theoretic quotient \(X/G,\) the set of \(G\)-orbits of our action.
 </p>
 
@@ -391,7 +391,7 @@ is given by
 
 <p>
 Finally, the transitivity operation \(\mu\) is given by
-\[\mu((g_1, x), (g_2, g_1x)) = (g_2g_1, x).\] 
+\[\mu\big((g_1, x), (g_2, g_1x)\big) = (g_2g_1, x).\] 
 </p>
 
 <p>
@@ -562,7 +562,7 @@ Even functions are also a type of equivariant function; if we let \(\mathbb{R}_{
 <p>
 Recall from earlier that we can form the <em>action groupoid</em> associated to the action of \(G\) on \(X.\) This is the groupoid 
 \[G \times X \rightrightarrows X,\]
-where \(s(g, x) = x, t(g, x) = g \cdot x.\) 
+where \(s(g, x) = x\) and \(t(g, x) = g \cdot x.\) 
 </p>
 
 <p>
@@ -624,7 +624,7 @@ In this quotient \(M/xM,\) we say \(m = m'\) whenever \(m' - m \in xM,\) or equi
 <p>
 Thus the groupoid replacement for the quotient \(M/xM\) is
 \[M \times M \rightrightarrows M,\]
-\[s(m, n) = m, t(m, n) = m + xn.\] 
+\[s(m, n) = m,\ t(m, n) = m + xn.\] 
 </p>
 
 <p>
