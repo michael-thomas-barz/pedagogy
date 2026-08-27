@@ -70,6 +70,21 @@ This is our first example of something called an <em>equivalence relation</em>: 
 and so on, encoding the fact that, if we want to interpret the elements of \(X\) as a fractions, then distinct points of \(X\) correspond to the same fraction.
 </p>
 
+<p>We <em>could</em> have just encoded fractions as pairs \(a,b\) such that \(a\) and \(b\) have no common factors.
+  This also makes sure there are no "duplicate" encodings. While this approach is equally valid, some things are easier in Approach 1 than in Approach 2.
+</p>
+<p>
+  For example, how do you encode the multiplication of two fractions? Since
+  \[\frac ab\cdot\frac cd=\frac{ac}{bd},\]
+  we would like to define
+  \[(a,b)\cdot(c,d)=(ac,bd).\]
+  While this is an entirely valid formula in Approach 1, it does <em>not</em> make sense in Approach 2.
+  For example, while \((1,2)\) and \((2,1)\) are both valid fractions in Approach 2, their product,
+  \[(1,2)\cdot(2,1)=(2,2)\]
+  is <em>not</em> a valid fraction. We would need to reduce the fraction to its lowest form, \((1,1)\).
+  This is the advantage of Approach 1! In Approach 2 you only keep track of one valid representation of a fraction, but equivalence relations keep track of all valid representations of a fraction simultaneously!
+</p>
+
   <h3>Tilings</h3>
 <p>
 As another example, let's say I have triangular tiles -- some amber and some teal -- and I want to build a square out of them. 
