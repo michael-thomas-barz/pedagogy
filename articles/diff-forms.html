@@ -25,7 +25,7 @@ How do you do calculus <em>on the surface of a sphere</em>?
 </p>
 
 <p>
-The goal of this blog post is to explain how the ideas of single variable calculus can be applied to more exotic shapes. In each section, we'll start by recalling a concept from single variable calculus, 
+The goal of this blog post is to explain how the ideas of single variable calculus can be applied to more exotic shapes. This is the start of the field of <em>differential geometry</em> 
 </p>
 
 <h2>Derivatives and tangent spaces</h2>
@@ -56,12 +56,12 @@ and
 
 <p>
 These two types of changes are packaged in a vector called the <em>gradient</em>: 
-\[\grad F := \left(\frac{\partial F}{\partial x}, \frac{\partial F}{\partial y}\right).\]
+\[\operatorname{grad} F := \left(\frac{\partial F}{\partial x}, \frac{\partial F}{\partial y}\right).\]
 </p>
 
 <p>
 The gradient is a particularly convenient packaging because of the following formula: if we view the input of \(F\) as a 2-dimensional vector, and \(\vec{v}\) is a short 2-dimensional vector, then
-\[F(\vec{x} + \vec{v}) - F(\vec{x}) \approx \grad(F)(\vec{x}) \cdot \vec{v},\]
+\[F(\vec{x} + \vec{v}) - F(\vec{x}) \approx \operatorname{grad}(F)(\vec{x}) \cdot \vec{v},\]
 where the right hand side is the dot product. This can be found by expanding out the vectors into components. 
 </p>
 
@@ -124,8 +124,8 @@ Mathematicians tend to use the word <em>manifold</em> to refer to shapes (like t
 <h3>The gradient in general</h3>
 
 <p>
-Let \(f : M \to \mathbb{R}\) be a function whose input is a point on the shape \(M,\) and whose output is a real number. Using tangent spaces, we can define the <em>gradient</em> of \(f\) as follows: at a point \(p\) of \(M,\) the gradient \(\grad f(p)\) is the unique vector <em>in \(T_pM\)</em> such that
-\[f(p + \vec{v}) - f(p) \approx \grad f(p) \cdot \vec{v}\]
+Let \(f : M \to \mathbb{R}\) be a function whose input is a point on the shape \(M,\) and whose output is a real number. Using tangent spaces, we can define the <em>gradient</em> of \(f\) as follows: at a point \(p\) of \(M,\) the gradient \(\operatorname{grad} f(p)\) is the unique vector <em>in \(T_pM\)</em> such that
+\[f(p + \vec{v}) - f(p) \approx \operatorname{grad} f(p) \cdot \vec{v}\]
 for all vectors \(\vec{v}\) in \(T_pM.\) 
 </p>
 
@@ -147,7 +147,7 @@ Observe that
 </p>
 
 <p>
-Thus, nudging our input changes our output by \(-\epsilon_1-\epsilon_2.\) To find the \(\grad f(p)\) in this example, we therefore need some vector \((a, b, -a-b)\in T_pM\) such that
+Thus, nudging our input changes our output by \(-\epsilon_1-\epsilon_2.\) To find the \(\operatorname{grad} f(p)\) in this example, we therefore need some vector \((a, b, -a-b)\in T_pM\) such that
 \[(a,b,-a-b) \cdot (\epsilon_1, \epsilon_2, -\epsilon_1-\epsilon_2) = -\epsilon_1 - \epsilon_2.\] 
 </p>
 
@@ -168,7 +168,7 @@ There, the gradient is just \((0, 0, 1).\) The reason that the two gradients are
 <h3>The gradient as a covector</h3>
 
 <p>
-The most important part about the gradient is not what the vector \(\grad f(p)\) itself is, but instead what it <em>does</em>: the dot product \(\grad f(p) \cdot \vec{v}\) turns the vector \(\vec{v}\) into the number \(f(p+\vec{v}) - f(p).\) It can sometimes be focus on how \(\grad f(p)\) turns vectors into numbers, instead of thinking of \(\grad f(p)\) as a vector itself. 
+The most important part about the gradient is not what the vector \(\operatorname{grad} f(p)\) itself is, but instead what it <em>does</em>: the dot product \(\operatorname{grad} f(p) \cdot \vec{v}\) turns the vector \(\vec{v}\) into the number \(f(p+\vec{v}) - f(p).\) It can sometimes be focus on how \(\operatorname{grad} f(p)\) turns vectors into numbers, instead of thinking of \(\operatorname{grad} f(p)\) as a vector itself. 
 </p>
 
 <p>
@@ -298,12 +298,12 @@ then
 
 <p>
 Using this approximation, we find 
-\[F(\vec{\gamma}(t+dt)) - F(\vec{\gamma}(t)) \approx \grad F(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, dt.\]
+\[F(\vec{\gamma}(t+dt)) - F(\vec{\gamma}(t)) \approx \operatorname{grad} F(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, dt.\]
 </p>
 
 <p>
 Adding all of these changes up, we find 
-\[F(\vec{x}_1) - F(\vec{x}_0) = \int_0^1 \grad F(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, dt.\] 
+\[F(\vec{x}_1) - F(\vec{x}_0) = \int_0^1 \operatorname{grad} F(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, dt.\] 
 </p>
 
 <p>
