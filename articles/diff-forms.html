@@ -461,7 +461,7 @@ of our drain; now we need <em>two</em> parameters -- as opposed to the one param
 </p>
 
 <p>
-Near the point \(\sigma(s,t),\) the vector field \(\vec{V}(x,y,z)\) controlling flow is approximately constant. So, let's look at the tiny patch of our drain with corners \(\sigma(s,t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2),\) and \(\sigma(s+\epsilon_1,t+\epsilon_2).\) For \(\epsilon\) very small, this patch is approximately a rectangle. TODO claude.
+Near the point \(\sigma(s,t),\) the vector field \(\vec{V}(x,y,z)\) controlling flow is approximately constant. So, let's look at the tiny patch of our drain with corners \(\sigma(s,t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2),\) and \(\sigma(s+\epsilon_1,t+\epsilon_2).\) For \(\epsilon\) very small, this patch is approximately a parallelogram. TODO claude.
 </p>
 
 <p>
@@ -472,7 +472,7 @@ and
 </p>
 
 <p>
-Using our constant flow calculation from above, we find that, in this tiny rectangle, we get a total flow of 
+Using our constant flow calculation from above, we find that, in this tiny parallelogram, we get a total flow of 
 \[\vec{V}(\sigma(s,t)) \cdot \left|\frac{\partial\sigma}{\partial s}(s,t)\times\frac{\partial\sigma}{\partial t}(s,t)\right| \cdot \epsilon_1\epsilon_2.\]
 </p>
 
@@ -484,10 +484,113 @@ Adding up all of these tiny patches, our total flow is the integral
 <h3>Abstracting away</h3>
 
 <p>
-For line integrals, our vector field really just turned 
+In \(\mathbb{R}^3,\) surface integrals mesaure the flow of some fluid through a surface. The key step to making them was having some way to measure the flow going through very thin rectangles.
 </p>
 
-<h3>Differential 2-forms</h3>
+<p>
+To make this work on an arbitrary manifold \(M,\) we introduce <em>differential 2-forms</em>. A differential 2-form \(\omega\) is some gadget which takes in <em>two</em> tangent vectors -- thought of as the two vectors spanning some very tiny parallelogram -- and outputs the amount of flow through that rectangle.
+</p>
+
+<p>
+Like differential 1-forms, \(\omega\) should be linear in both arguments; this means
+\[\omega(\vec{v}_1 + \vec{w}_1, \vec{v}_2) = \omega(\vec{v}_1, \vec{v}_2) + \omega(\vec{w}_1, \vec{v}_2),\]
+\[\omega(\vec{v}_1, \vec{v}_2+ \vec{w}_2) = \omega(\vec{v}_1, \vec{v}_2) + \omega(\vec{v}_1, \vec{w}_2),\]
+and
+\[\omega(\lambda \vec{v}_1, \vec{v}_2) = \omega(\vec{v}_1, \lambda \vec{v}_2) = \lambda\omega(\vec{v}_1, \vec{v}_2).\]
+</p>
+
+<p>
+However, differential 2-forms obey one more requirement, related to our discussion of signs and orientations when doing flows above. We require
+\[\omega(\vec{v}, \vec{w}) = -\omega(\vec{w}, \vec{v}).\]
+That is, if you swap the order of the two vectors, then the total flow going through the parallelogram they span should reverse. TODOclaude orientation
+
+TODO: discuss signs with flows! 
+</p>
+
+<p>
+Given a differential 2-form \(\omega\) on a manifold \(M,\) and a surface
+\[\sigma : [0, 1] \times [0, 1] \to M\]
+embedded in \(M,\) we can define 
+\[\int_{\sigma} \omega = \int_0^1\int_0^1 \omega(\sigma(s,t))\left(\frac{\partial\sigma}{\partial s}(s,t), \frac{\partial\sigma}{\partial t}(s, t)\right) \, ds dt.\]
+</p>
+
+<h2>The derivative of a 1-form</h2>
+
+<p>
+Our first 'concrete' example of a differential 1-form was the derivative of a function. Can we produce differential 2-forms by differentiating 1-forms?
+</p>
+
+<p>
+Let \(\omega\) be a differential 1-form. Suppose that \(p\) is a point on our manifold \(M,\) and \(\vec{v} \in T_pM\) is some tangent vector. Then the <em>differential</em> of \(\omega\) is the differential 2-form \(d\omega\) such that
+\[\omega(p + \vec{v})(\vec{w}) - \omega(p)(\vec{w}) \approx d\omega(\vec{v}, \vec{w}).\] 
+</p>
+
+<p>
+The fundamental theorem of calculus told us that
+\[f(q) - f(p) = \int_{\gamma} df,\]
+where \(\gamma\) is any path from \(p\) to \(q.\) Is there a similar identity for 1-forms?
+</p>
+
+<p>
+Take 
+\[\sigma : [0, 1] \times [0, 1] \to M\]
+some surface. Can we express the surface integral
+\[\int_{\sigma} d\omega\]
+any more simply?
+</p>
+
+<p>
+By a miracle, we can! To start, let's think about what this surface integral means. Over a tiny region of \(\sigma,\) say with vertices
+\[\sigma(s, t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2), \sigma(s+\epsilon_1,t+\epsilon_2),\]
+the flow is 
+\[d\omega\left(\frac{\partial\sigma}{\partial s}\epsilon_1, \frac{\partial\sigma}{\partial t}\epsilon_1\right) \approx \omega\left(\sigma(s,t) + \frac{\partial\sigma}{\partial s}\epsilon_1\right)\left(\frac{\partial\sigma}{\partial t}\epsilon_2\right) - \omega(\sigma(s,t))\left(\frac{\partial\sigma}{\partial t}\epsilon_2\right).\]
+</p>
+
+<p>
+Adding these up, as we move in both the \(s\) and \(t\) directions, only the boundary terms survive TODOclaude.
+</p>
+
+<p>
+So, TODOclaude labels
+\[\int_{\sigma} d\omega = \int_a \omega + \int_b\omega + \int_c \omega + \int_d \omega.\] 
+</p>
+
+<p>
+Sometimes people abbreviate this to 
+\[\int_{\sigma} d\omega = \int_{\partial\sigma} \omega,\]
+where \(\partial\sigma\) means "boundary of \(\sigma\)" -- that is, the four sides \(a,b,c,d,\) oriented the way TODO. 
+</p>
+
+<h2>Differential forms</h2>
+
+<p>
+In general, a <em>differential \(k\)-form</em> on a manifold \(M\) is some gadget which takes in \(k\) different tangent vectors and spits out a number, obeying some axioms (saying that it should be linear in each argument, and 'alternating' -- meaning if you swap any two consecutive arguments, the outputted number is negated). 
+</p>
+
+<p>
+Given a \(k\)-dimensional piece
+\[\sigma : [0, 1]^k \to M\]
+of your manifold, and a differential \(k\)-form \(\omega,\) you can define an integral
+\[\int_{\sigma} \omega,\]
+analogously to the line and surface integrals defined above. 
+</p>
+
+<p>
+And, similarly to before, given a differential \(k\)-form \(\omega,\) we can define a differential \((k+1)\)-form \(d\omega,\) called the <em>differential</em> of \(\omega,\) and which obeys
+\[\omega(p+ \vec{v})(\vec{w}_1, ..., \vec{w}_k) - \omega(p)(\vec{w}_1, ..., \vec{w}_k) \approx d\omega(p)(\vec{v}, \vec{w}_1, ..., \vec{w}_k).\] 
+</p>
+
+<p>
+<em>Stokes' theorem</em>, a profound generalization of the fundamental theorem of calculus, tells us that, for any differential \(k\)-form \(\omega,\) and any \((k+1)\)-dimensional piece
+\[\sigma : [0, 1]^{k+1} \to M\]
+of your manifold, we have
+\[\int_{\sigma} d\omega = \int_{\partial\sigma} \omega,\]
+where (as in our surface integral case) we write \(\partial\sigma\) to mean the boundary of \(\sigma.\)
+</p>
+
+<p>
+These ideas are the beginnings of the field of <em>differential geometry</em>. TODO: conclusion
+</p>
 
 <!-- MailerLite Universal -->
 <script>
