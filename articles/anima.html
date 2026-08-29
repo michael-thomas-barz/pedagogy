@@ -89,17 +89,17 @@ and so on, encoding the fact that, if we want to interpret the elements of \(X\)
   This is the advantage of Approach 1! In Approach 2 you only keep track of one valid representation of a fraction, but equivalence relations keep track of all valid representations of a fraction simultaneously!
 </p>
 
-  <h3>Tilings</h3>
+  <h3>Squares</h3>
 <p>
-As another example, let's say I have triangular tiles -- some amber and some teal -- and I want to build a square out of them. 
+As another example, let's say I have triangular pieces -- some amber and some teal -- and I want to build a square out of them. 
 </p>
 
 <p>
-A square is built out of four of my trianglular tiles, as shown below. If I was giving instructions to a robot on how to build the squares, I might give it just a string of 4 characters -- maybe I'd give the string ATAT to mean "make the left triangle amber, the top triangle teal, the right triangle amber, and the bottom triangle teal."
+A square is built out of four of my trianglular pieces, as shown below. If I was giving instructions to a robot on how to build the squares, I might give it just a string of 4 characters -- maybe I'd give the string ATAT to mean "make the left triangle amber, the top triangle teal, the right triangle amber, and the bottom triangle teal."
 </p>
 
 <p>
-When a square is assembled in the real world, though, it can be rotated or flipped around, and so different strings of instructions correspond to the same finished square tile. In the widget below, you can flip through all the 16 possible instructions I could give the robot, and see how there are only 6 possible tiles.
+When a square is assembled in the real world, though, it can be rotated or flipped around, and so different strings of instructions correspond to the same finished square. In the widget below, you can flip through all the 16 possible instructions I could give the robot, and see how there are only 6 possible squares.
 </p>
 
 <style>
@@ -236,7 +236,7 @@ but we want to declare
 \[AATT \sim TAAT \sim TTAA \sim ATTA,\] 
 \[AAAT \sim AATA \sim ATAA \sim TAAA,\]
 \[TTTA \sim ATTT \sim TATT \sim TTAT,\]
-to represent how different instruction strings encode the same tile. 
+to represent how different instruction strings encode the same square. 
 </p>
 
 <h2>The formal definition of an equivalence relation</h2>
@@ -256,7 +256,7 @@ are all possible pairs. The full set \(X \times X\) has \(16 \times 16 = 256\) e
 <p>
 The subset \(E\) which defines our equivalence relation is thought of as the set of pairs of elements which <em>should be made equal</em>. Thus, in our square example, the set \(E\) contains pairs like
 \[(AAAT, ATAA)\text{ and } (ATAT, TATA),\]
-because the instruction strings AAAT, ATAA both correspond to the same tile, as do ATAT and TATA. 
+because the instruction strings AAAT, ATAA both correspond to the same square, as do ATAT and TATA. 
 </p>
 
 <p>
@@ -282,25 +282,25 @@ The key problem of the equivalence relation is that it just remembers whether or
 </p>
 
 <p>
-To see why this causes trouble, let's think back to our example of building squares out of triangle. There, our set \(X\) has 16 elements (corresponding to the four letter strings TATA, ATTA, etc.). Each square tile has 8 symmetries (4 rotational symmetries and 4 reflections), and so you might expect there to be 
+To see why this causes trouble, let's think back to our example of building squares out of triangle. There, our set \(X\) has 16 elements (corresponding to the four letter strings TATA, ATTA, etc.). Each square has 8 symmetries (4 rotational symmetries and 4 reflections), and so you might expect there to be 
 \[\frac{16}{8} = 2\]
-total 'finished' tiles. Yet we found <em>six</em> different tile types above! What's going on?
+total 'finished' squares. Yet we found <em>six</em> different types above! What's going on?
 </p>
 
 <p>
-The trouble is that, sometimes, a symmetry does nothing. For example, if you rotate the tile labelled TATA by a quarter turn counterclockwise, then you'd get the tile labelled ATAT. But if you rotated TATA by a <em>half</em> turn instead of a quarter turn, then you'd get TATA again! And if you rotated TATA by a quarter turn <em>clockwise</em>, then you'd get ATAT -- something we've already seen! 
+The trouble is that, sometimes, a symmetry does nothing. For example, if you rotate the square labelled TATA by a quarter turn counterclockwise, then you'd get the square labelled ATAT. But if you rotated TATA by a <em>half</em> turn instead of a quarter turn, then you'd get TATA again! And if you rotated TATA by a quarter turn <em>clockwise</em>, then you'd get ATAT -- something we've already seen! 
 </p>
 
 <p>
-Indeed, instead of all four rotations of the TATA tile getting distinct labels, two of them are called TATA and two of them are called ATAT. This makes our naive \(16/8\) count from before go wrong: not every string has the full 8 symmetries.
+Indeed, instead of all four rotations of the TATA square getting distinct labels, two of them are called TATA and two of them are called ATAT. This makes our naive \(16/8\) count from before go wrong: not every string has the full 8 symmetries.
 </p>
 
 <p>
-There is another way of thinking about this: TATA and TATA encode the same tile for <em>multiple reasons</em>. For example, \(ATAT \sim TATA\) for <em>four reasons</em>: these strings encode the same tile, because you can go from the ATAT tile to the TATA tile by either a quarter turn clockwise, a quarter turn counterclockwise, or by flipping the square along the diagonal from bottom left to top right, or by flipping the square along the diagonal from top left to bottom right.
+There is another way of thinking about this: TATA and TATA encode the same square for <em>multiple reasons</em>. For example, \(ATAT \sim TATA\) for <em>four reasons</em>: these strings encode the same square, because you can go from the ATAT square to the TATA square by either a quarter turn clockwise, a quarter turn counterclockwise, or by flipping the square along the diagonal from bottom left to top right, or by flipping the square along the diagonal from top left to bottom right.
 </p>
 
 <p>
-Similarly, \(TATA \sim TATA\) for four reasons: because any two strings encode the same tile, or because the TATA tile and the TATA tile can be made the same by flipping the tile horizontally, flipping it vertically, or rotating a half-turn.
+Similarly, \(TATA \sim TATA\) for four reasons: because any two strings encode the same square, or because the TATA square and the TATA square can be made the same by flipping the square horizontally, flipping it vertically, or rotating a half-turn.
 </p>
 
 <p>
