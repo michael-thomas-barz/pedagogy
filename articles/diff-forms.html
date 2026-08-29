@@ -17,32 +17,225 @@
 
 <a href="../index.html">← back</a>
 
-<h1>Differential forms</h1>
+<h1>Manifolds, differential forms, and multivariable calculus</h1>
 <p class="meta">September 5th, 2026</p>
 
 <p>
-The two authors of this blog are PhD students, who both participate in our university's directed reading program, where graduate students like us mentor undergraduate students in mathematics. One thing which has become apparent in our semesters at this program is that the undergraduate math courses at our university don't seem to teach differential forms very well. By writing this blog post, we hope to at least slightly improve the situation.
+How do you do calculus <em>on the surface of a sphere</em>?  
 </p>
 
-<h2>A reminder on the fundamental theorem of calculus</h2>
+<p>
+The goal of this blog post is to explain how the ideas of single variable calculus can be applied to more exotic shapes. In each section, we'll start by recalling a concept from single variable calculus, 
+</p>
+
+<h2>Derivatives and tangent spaces</h2>
 
 <p>
-The <em>fundamental theorem of calculus</em> says that
+The first concept of single variable calculus is the <em>derivative</em>. And the purpose of the derivative is to tell you how to <em>approximate</em> your function; more precisely, the derivative \(f'(x)\) is defined as the number making the approximation
+\[f(x+\epsilon) \approx f(x) + f'(x)\epsilon\]
+as good as possible, for small \(\epsilon.\) So, if you change the input to your function by a tiny amount, and want to know how much the output changes, the derivative tells you.
+</p>
+
+<p>
+TODO cite other articles we've used
+</p>
+
+<h3>The gradient</h3> 
+
+<p>
+The analogue of the derivative in multivariable calculus is called the <em>gradient</em>. The gradient is slightly more complicated than the derivative, because we have two inputs to nudge: if we nudge the \(x\) input, then
+\[F(x + \epsilon, y) = (x+\epsilon)^2 - y^3 \approx F(x, y) + 2x\epsilon,\]
+and if we nudge the \(y\) input, then
+\[F(x, y+\epsilon) = x^2 - (y+\epsilon)^3 \approx F(x, y) - 3y^2\epsilon.\] 
+
+This leads to the <em>partial derivatives</em> of \(F\); in general, we have approximations
+\[F(x+\epsilon, y) - F(x, y) \approx \frac{\partial F}{\partial x}(x, y) \cdot \epsilon\]
+and
+\[F(x, y + \epsilon) - F(x, y) \approx \frac{\partial F}{\partial y}(x, y) \cdot \epsilon.\] 
+</p>
+
+<p>
+These two types of changes are packaged in a vector called the <em>gradient</em>: 
+\[\grad F := \left(\frac{\partial F}{\partial x}, \frac{\partial F}{\partial y}\right).\]
+</p>
+
+<p>
+The gradient is a particularly convenient packaging because of the following formula: if we view the input of \(F\) as a 2-dimensional vector, and \(\vec{v}\) is a short 2-dimensional vector, then
+\[F(\vec{x} + \vec{v}) - F(\vec{x}) \approx \grad(F)(\vec{x}) \cdot \vec{v},\]
+where the right hand side is the dot product. This can be found by expanding out the vectors into components. 
+</p>
+
+<h3>Tangent spaces</h3>
+
+<p>
+Multivariable calculus doesn't just apply to the Euclidean plane, though -- it also applies to <em>curved spaces</em>. As an example, consider the sphere inside of 3-dimensional space; recall that the sphere is cut out by the equation \(x^2 + y^2 + z^2 = 1.\) TODO claude
+</p>
+
+<p>
+Imagine we have a function <em>on the sphere</em>. That is, we have a way of taking as input a point on the sphere, and outputting a number. For example, if the sphere is thought of as the surface of our planet Earth, then maybe the function is 'temperature at that point.' 
+</p>
+
+<p>
+How do we differentiate such a function? As with the gradient from before, the key thing to work out is in how many ways we can nudge our input.
+</p>
+
+<p>
+Let's say that \((x,y,z)\) is a point on the sphere. For \(\epsilon_1, \epsilon_2, \epsilon_3\) three small numbers, when will
+\[(x+\epsilon_1, y+\epsilon_2, z+\epsilon_3)\]
+still lie on the sphere? Well, it's pretty easy to check when a point is on the sphere: square the coordinates and see if the squares add up to 1. Doing this, and using that \(\epsilon_1,\epsilon_2,\) and \(\epsilon_3\) are all very small, we find
+\[(x+\epsilon_1)^2 + (y+\epsilon_2)^2 + (z+\epsilon_3)^2 \approx (x^2+y^2+z^2) + 2x\epsilon_1 + 2y\epsilon_2 + 2z\epsilon_3.\]
+</p>
+
+<p>
+As \((x,y,z)\) lies on the sphere already, we have \(x^2+y^2+z^2 = 1.\) So, to get 
+\[(x+\epsilon_1, y+\epsilon_2, z+\epsilon_3)\]
+to lie on the sphere, we need
+\[2x\epsilon_1 + 2y\epsilon_2 + 2z\epsilon_3 = 0.\]
+</p>
+
+<p>
+So, if we start at \((x,y,z),\) then the small 'nudges' to the input we're allowed to make are exactly given by solutions to the equation above. Observe how the nudges we're allowed to make <em>depend on which point we're at!</em>
+</p>
+
+<p>
+For example, at the point \((1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3})\) on the sphere, then a point like
+\[\left(\frac{1}{\sqrt{3}} + \epsilon, \frac{1}{\sqrt{3}} - 2\epsilon, \frac{1}{\sqrt{3}} + \epsilon\right)\]
+will still lie on the sphere (at least for \(\epsilon\) very small!), because
+\[2 \cdot \frac{1}{\sqrt{3}} \cdot \epsilon + 2 \cdot \frac{1}{\sqrt{3}} \cdot (-2\epsilon) + 2 \cdot \frac{1}{\sqrt{3}} \cdot \epsilon = 0.\]
+</p>
+
+<p>
+But at the point \((1/\sqrt{2}, 1/\sqrt{2}, 0)\) on the sphere, that same nudge is no longer allowed: 
+\[\left(\frac{1}{\sqrt{2}} + \epsilon, \frac{1}{\sqrt{2}} - 2\epsilon, 0 + \epsilon\right)\]
+<em>does not lie on the sphere anymore</em>, because now 
+\[2 \cdot \frac{1}{\sqrt{2}} \cdot \epsilon + 2 \cdot \frac{1}{\sqrt{2}} \cdot (-2\epsilon) + 2 \cdot 0 \cdot \epsilon = -\sqrt{2} \cdot \epsilon,\]
+which isn't zero anymore.
+</p>
+
+<p>
+This leads to the more complicated notion of the <em>tangent space</em> of a shape: when \(M\) is a shape like a sphere, and \(p\) is a point of \(M,\) the <em>tangent space</em> \(T_pM\) is the collection of all the small nudges you can make to \(p\) while still keeping it on \(M.\) For example, if \(M\) is the unit sphere as above, then we just saw that \(T_{(x,y,z)}M\) is the set of solutions to 
+\[2x\epsilon_1 + 2y\epsilon_2 + 2z\epsilon_3 = 0.\]
+</p> 
+
+<p>
+Mathematicians tend to use the word <em>manifold</em> to refer to shapes (like the sphere, or the plane, or a torus) where the notions of calculus (tangent spaces, derivatives, etc.) make sense.
+</p>
+
+<h3>The gradient in general</h3>
+
+<p>
+Let \(f : M \to \mathbb{R}\) be a function whose input is a point on the shape \(M,\) and whose output is a real number. Using tangent spaces, we can define the <em>gradient</em> of \(f\) as follows: at a point \(p\) of \(M,\) the gradient \(\grad f(p)\) is the unique vector <em>in \(T_pM\)</em> such that
+\[f(p + \vec{v}) - f(p) \approx \grad f(p) \cdot \vec{v}\]
+for all vectors \(\vec{v}\) in \(T_pM.\) 
+</p>
+
+<p>
+As an example, let's consider the function
+\[f(x,y,z) = z\]
+defined on the sphere from above. What is the gradient of \(f\) at the point \(p = (1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3})\)? 
+</p>
+
+<p>
+Well, the tangent space at \((0,0,1)\) is just the collection of all perturbations \((\epsilon_1,\epsilon_2,\epsilon_3)\) where
+\[\epsilon_1 + \epsilon_2 + \epsilon_3 = 0.\]
+In other words, we have the collection of all vectors \((\epsilon_1, \epsilon_2, -\epsilon_1-\epsilon_2).\) 
+</p>
+
+<p>
+Observe that
+\[f\left(\frac{1}{\sqrt{3}} + \epsilon_1, \frac{1}{\sqrt{3}} + \epsilon_2, \frac{1}{\sqrt{3}} - \epsilon_1 - \epsilon_2\right) = \frac{1}{\sqrt{3}} - \epsilon_1 - \epsilon_2.\]
+</p>
+
+<p>
+Thus, nudging our input changes our output by \(-\epsilon_1-\epsilon_2.\) To find the \(\grad f(p)\) in this example, we therefore need some vector \((a, b, -a-b)\in T_pM\) such that
+\[(a,b,-a-b) \cdot (\epsilon_1, \epsilon_2, -\epsilon_1-\epsilon_2) = -\epsilon_1 - \epsilon_2.\] 
+</p>
+
+<p>
+Expanding out that dot product, we see it is just
+\[2a\epsilon_1 + 2b\epsilon_2,\]
+so 
+\[(-1/2, -1/2, 1)\in T_pM\]
+is our gradient! 
+</p>
+
+<p>
+Notice how <em>different</em> this is from the gradient of the function \(g : \mathbb{R}^3 \to \mathbb{R}\) given by the same formula
+\[g(x,y,z) = z.\] 
+There, the gradient is just \((0, 0, 1).\) The reason that the two gradients are different is beacuse, when we constrain our input to the unit sphere, the gradient needs to be a <em>tangent vector</em>; this vector \((0,0,1)\) is not tangent to the sphere at \((1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3}),\) so it cannot be the gradient! 
+</p>
+
+<h3>The gradient as a covector</h3>
+
+<p>
+The most important part about the gradient is not what the vector \(\grad f(p)\) itself is, but instead what it <em>does</em>: the dot product \(\grad f(p) \cdot \vec{v}\) turns the vector \(\vec{v}\) into the number \(f(p+\vec{v}) - f(p).\) It can sometimes be focus on how \(\grad f(p)\) turns vectors into numbers, instead of thinking of \(\grad f(p)\) as a vector itself. 
+</p>
+
+<p>
+A <em>covector</em> (or, a linear functional) is some <em>linear</em> operation which turns vectors into numbers; if we write our covector as \(L,\) then saying \(L\) is linear just means
+\[L(\vec{v} + \vec{w}) = L(\vec{v}) + L(\vec{w})\]
+and
+\[L(\lambda \cdot \vec{v}) = \lambda \cdot \vec{v}\]
+for any scalar \(\lambda.\) 
+</p>
+
+<p>
+As examples of covectors, one simple covector on space \(\mathbb{R}^3\) is the covector \(dx,\) which is defined by
+\[dx(v_1, v_2, v_3) = v_1.\]
+In other words, \(dx\) sends a vector \(\vec{v}\) to its \(x\)-component. Similarly, there are covectors \(dy\) and \(dz\) given by
+\[dy(v_1, v_2, v_3) = v_2,\]
+\[dz(v_1, v_2, v_3) = v_3.\] 
+</p>
+
+<p>
+We can then define the derivative of a function \(f : M \to \mathbb{R}\) at a point \(p\) as the covector \(df(p)\) which obeys
+\[f(x+\vec{v}) - f(x) \approx df(p)(\vec{v}).\] 
+
+Remember: \(df(p)\) is a covector in \(T_pM,\) meaning it takes tangent vectors in \(T_pM\) and turns them into numbers. So, the notation \(df(p)(\vec{v})\) means to apply this covector to the tangent vector \(\vec{v}.\) 
+</p>
+
+<p>
+In our example from the last section, where \(M\) was the sphere and \(f(x,y,z) = z,\) the covector approach makes things a little easier than defining the derivative as a gradient. Indeed, let's try to compute the derivative of \(f\) at \(p = (1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3})\) again. As we saw above, \(T_pM\) was the space of triples \((\epsilon_1,\epsilon_2,\epsilon_3)\) where 
+\[\epsilon_1+\epsilon_2+\epsilon_3=0.\]
+</p>
+
+<p>
+Then
+\[f(p + (\epsilon_1,\epsilon_2,\epsilon_3)) - f(p) = \epsilon_3,\]
+so, as a covector, the derivative is simple:
+\[df(p)(\epsilon_1,\epsilon_2,\epsilon_3) = \epsilon_3.\]
+</p>
+
+<p>
+Notice that this \(df(p)\) is the same as the covector \(dz\) from above; in other words, \(df(p) = dz.\) 
+</p>
+
+<p>
+We can also write this covector a different way: because \(\epsilon_1+\epsilon_2+\epsilon_3 = 0,\) inside of \(T_pM,\) we have
+\[dx + dy + dz = 0,\]
+because the three coordinates of any vector in \(T_pM\) sum to zero. Thus 
+\[dz = -dx-dy,\]
+so we could have also written
+\[df(p) = -dx-dy.\] 
+</p>
+
+<p>
+This covector view of derivatives is often incredibly convenient, as the fundamental aspect of the derivative is what it does to other vectors, so the gradient is in some sense unnatural.
+</p>
+
+<h2>The fundamental theorem of calculus</h2>
+
+<p>
+The derivative is defined to help us calculate how the output of our function changes when we make a small change in the input. But what do we do when we need to figure out how the output of our function changes after we make a <em>big</em> change in put? 
+</p>
+
+<p>
+Here, the <em>fundamental theorem of calculus</em> says that
 \[f(x_1) - f(x_0) = \int_{x_0}^{x_1} f'(t) \, dt.\] 
 </p>
 
 <p>
-Let's briefly recall why this is true. The derivative \(f'(t)\) is <em>defined</em> by the relation
-\[f(t + dt) - f(t) \approx f'(t)dt.\]
-That is, over a very small change in input \(dt,\) the output of \(f\) changes by \(f'(t) dt.\) 
-</p>
-
-<p>
-To calculate \(f(x_1) - f(x_0),\) though, we run into a problem: the derivative only tells us how the function changes over a very small change in input, but \(x_1\) and \(x_0\) might be very far apart! What should we do? 
-</p>
-
-<p>
-The idea of calculus is to break down that large change in input into an enormous number of small changes. For example, even if \(x_1-x_0\) is very large, the quantity
+The idea behind this theorem is to break down the large change in input (from \(x_0\) to \(x_1\)) into an enormous number of small changes. For example, even if \(x_1-x_0\) is very large, the quantity
 \[\epsilon = \frac{x_1 - x_0}{10^9}\]
 is probably pretty small. To go from \(x_0\) to \(x_1\), you could take one big step of size \(x_1 - x_0,\) <em>or</em> you could take one billion steps of size \(\epsilon.\) 
 </p>
@@ -74,7 +267,7 @@ and in the limit we get
 \[\int_{x_0}^{x_1} f'(t) \, dt = f(x_1) - f(x_0).\] 
 </p>
 
-<h2>A 2-variable fundamental theorem of calculus</h2>
+<h3>A 2-variable fundamental theorem of calculus</h3>
 
 <p>
 Is there a version of the fundamental theorem of calculus for <em>two variable</em> functions? 
@@ -84,45 +277,8 @@ Is there a version of the fundamental theorem of calculus for <em>two variable</
 For example, let's consider the function
 \[F(x, y) = x^2 - y^3.\]
 This function has two inputs, and one output. Can we rewrite
-\[F(x_2, y_2) - F(x_1, y_1)\]
-as an integral? 
-</p>
-
-<p>
-The usual fundamental theorem of calculus used the derivative to understand how \(f\) changed when you nudged the input a small amount, and then using the integral to add up those small nudges into one big nudge.
-</p>
-
-<h3>The gradient</h3> 
-
-<p>
-The analogue of the derivative in multivariable calculus is called the <em>gradient</em>. The gradient is slightly more complicated than the derivative, because we have two inputs to nudge: if we nudge the \(x\) input, then
-\[F(x + \epsilon, y) = (x+\epsilon)^2 - y^3 \approx F(x, y) + 2x\epsilon,\]
-and if we nudge the \(y\) input, then
-\[F(x, y+\epsilon) = x^2 - (y+\epsilon)^3 \approx F(x, y) - 3y^2\epsilon.\] 
-
-This leads to the <em>partial derivatives</em> of \(F\); in general, we have approximations
-\[F(x+\epsilon, y) - F(x, y) \approx \frac{\partial F}{\partial x}(x, y) \cdot \epsilon\]
-and
-\[F(x, y + \epsilon) - F(x, y) \approx \frac{\partial F}{\partial y}(x, y) \cdot \epsilon.\] 
-</p>
-
-<p>
-These two types of changes are packaged in a vector called the <em>gradient</em>: 
-\[\grad F := \left(\frac{\partial F}{\partial x}, \frac{\partial F}{\partial y}\right).\]
-</p>
-
-<p>
-The gradient is a particularly convenient packaging because of the following formula: if we view the input of \(F\) as a 2-dimensional vector, and \(\vec{v}\) is a short 2-dimensional vector, then
-\[F(\vec{x} + \vec{v}) - F(\vec{x}) \approx \grad(F)(\vec{x}) \cdot \vec{v},\]
-where the right hand side is the dot product. This can be found by expanding out the vectors into components. 
-</p>
-
-<h3>Paths</h3>
-
-<p>
-With our multivariable notion of derivative, we can now get a multivariable fundamental theorem of calculus. So, let's try to rewrite 
 \[F(\vec{x}_1) - F(\vec{x}_0)\]
-as an integral, where \(F(x,y) = x^2 - y^3\) is our 2-variable function from before.
+as an integral? 
 </p>
 
 <p>
@@ -154,7 +310,7 @@ Adding all of these changes up, we find
 This is a wonderful formula, and it is the analogue of the fundamental theorem of calculus for 2 variable functions.
 </p>
 
-<h2>Line integrals</h2>
+<h3>Line integrals</h3>
 
 <p>
 The kind of integral appearing in our multivariable fundamental theorem of calculus has a special name: a <em>line integral</em>.
@@ -171,7 +327,7 @@ Then
 \[\int_{\gamma} \vec{V} \, d\vec{r} = todo.\] 
 </p>
 
-<h2>Digression: work</h2>
+<h3>Digression: work</h3>
 
 <p>
 Before explaining differential forms, we are going to explain <em>line integrals</em> in great detail. But our explanation of line integrals will be based on some intuition from physics, which we quickly review.
@@ -188,29 +344,150 @@ The longer the ball moves, the more energy it should lose. Thus work depends on 
 One way to see this is reasonable is to do dimensional-analysis; this quantity has the correct units to be energy, and work should measure something like total energy expenditure. For more mathematically-minded readers, a stronger justification of this definition of \(W\) will be the upcoming <em>work-energy theorem.</em> 
 </p>
 
-<h2>Line integrals</h2>
+<h2>Line integrals on manifolds</h2>
 
 <p>
-Let's think about the 2-dimensional plane. Suppose we have a <em>vector field</em> in our 2-dimensional plane -- that is, we have a function \(\vec{F}(x, y)\) whose input is a point \((x, y)\) on the plane, and whose output is a vector. TODO claude
+Let \(M\) be a manifold -- for example, the sphere from earlier. What should a line integral on \(M\) mean? 
 </p>
 
 <p>
-We use the letter \(\vec{F}\) for this vector field because we think of \(\vec{F}(x,y)\) as measuring some force; for example, maybe \(\vec{F}(x,y)\) is the force of gravity at that point in the plane (or more precisely, the gravitational force that would be experienced by a 1 kilogram object placed at that point -- remember, gravitiational force depends linearly on the mass of the object!).
+To start, we take a path
+\[\gamma : [0, 1] \to M\]
+on \(M.\) 
 </p>
 
 <p>
-How much <em>work</em> would a (1 kilogram) particle need to do to move along a path \(\gamma\) in this plane? todo claude
+Just as our paths above had tangent vectors, at every time \(t,\) we can find some tangent vector \(\gamma'(t) \in T_{\gamma(t)}M\) of our path in \(M.\)
 </p>
 
 <p>
-At each point, TODO
+In the classical line integrals from earlier, we also started with a vector field \(\vec{F}\) to integrate. But remember: the only thing we did with this vector field was form the dot product \(\vec{F}(\gamma(t)) \cdot \gamma'(t).\) Thus, to form line integrals, it doesn't matter what the vector \(\vec{F}(\gamma(t))\) is -- it only matters that you know how to compute the dot product against it. As with the gradient, this suggests that it is more natural to replace vector fields with <em>covector fields</em>. These covector fields are usually called <em>differential 1-forms</em>. 
 </p>
-
-<h2>Differential 1-forms</h2>
 
 <p>
-todo: path independence, yadda yadda
+A vector field on \(\mathb{R}^2\), recall, assigns a vector to every point of the plane. Similarly, on a manifold \(M,\) a <em>differential 1-form</em> is a way of assigning a <em>covector</em> to every point of \(M.\) Given a differential 1-form \(\omega\), and a point \(p\) on the manifold \(M,\) we can extract a covector \(\omega(p).\) This means \(\omega(p)\) is some linear operator which turns tangent vectors in \(T_pM\) into numbers.
 </p>
+
+<p>
+So, assume we have a path \(\gamma : [0, 1] \to M,\) and a differential 1-form \(\omega.\) Then we can define the <em>line integral</em> of \(\omega\) over \(\gamma\) as 
+\[\int_{\gamma} \omega = \int_0^1 \omega(\gamma(t))(\gamma'(t)) \, dt.\] 
+Remember: \(\gamma(t)\) is some point of \(M,\) and \(\gamma'(t)\) is a tangent vector at that point; \(\omega(\gamma(t))\) is a covector, and so it can be used to turn the vector \(\gamma'(t)\) into the number \(\omega(\gamma(t))(\gamma'(t)).\) Thus the integral on the right hand side is the integration of an ordinary number-valued function.
+</p>
+
+<p>
+As an example, when \(\vec{F}(x, y) = (-y, x)\) is the vector field TODOclaude, the line integral
+\[\int_{\gamma} \vec{F} \cdot d\vec{r}\]
+we defined above can be rewritten in terms of differential forms as
+\[\int_{\gamma} -y dx + x dy.\] 
+This is because 
+\[(-y, x) \cdot (v_1, v_2) = -yv_1 + xv_2,\]
+so taking the dot product of \(\vec{F}\) with a vector \(\vec{v}\) is the same as applying the covector \(-y dx + xdy\) to \(\vec{v}.\)
+</p>
+
+<p>
+The fundamental theorem of calculus on a general manifold \(M\) now reads
+\[f(q) - f(p) = \int_{\gamma} df,\]
+where \(\gamma\) is any path from \(p\) to \(q,\) and \(df\) is the covector derivative we defined earlier.
+</p>
+
+<h3>The fundamental theorem of calculus on the sphere</h3>
+
+<p>
+As a concrete example, let's let \(M\) be the sphere again, and set \(f(x,y,z)=z.\) 
+</p>
+
+<p>
+Let \(q = (0,0,1)\) be the north pole, and \(p = (0, 0, -1)\) be the south pole of our sphere. We can define a path
+\[\gamma : [0, 1] \to M\]
+from the north pole to the south pole by the formula
+\[\gamma(t) = (0, \sin(\pi t), \cos(\pi t)).\]
+This path is drawn in TODOclaude.
+</p>
+
+<p>
+Observe that
+\[\gamma'(t) = (0, -\pi\cos(\pi t), \pi\sin(\pi t)).\] 
+As a sanity check, this vector does indeed lie in \(T_{\gamma(t)}M,\) because it obeys the equation
+\[2 \cdot 0 \cdot 0 + 2 \cdot \sin(\pi t) \cdot (-\pi\cos(\pi t)) + 2 \cdot \cos(\pi t) \cdot \pi\sin(\pi t) = -2\pi \cos(\pi t)\sin(\pi t) + 2\pi\cos(\pi t)\sin(\pi t) = 0.\] 
+</p>
+
+<p>
+As we saw earlier, \(df = dz.\) Thus 
+\[\int_{\gamma} df = \int_{\gamma} dz = \int_0^1 dz(\gamma'(t)) \, dt = \int_0^1 \pi\sin(\pi t) = 2.\] 
+</p>
+
+<p>
+And indeed,
+\[f(q) - f(p) = 1 - (-1) = 2\]
+as well, just like the fundamental theorem of calculus predicts!
+</p>
+
+<h2>Differential 2-forms</h2>
+
+<p>
+In the last section, we saw differential 1-forms: these turn tangent vectors into numbers, and we can use them to make line integrals.
+</p>
+
+<p>
+But, in classical multivariable calculus, there is <em>another</em> type of integral we can do: <em>surface integrals</em>. 
+</p>
+
+<h3>Flows</h3>
+
+<p>
+As an example of a surface integral, imagine you're building a drain in 3-dimensional space. This drain can be idealized as a 2-dimensional hole which water flows through. You want to know: how much water flows through your drain every second?
+</p>
+
+<p>
+Let's start with a simple example: imagine the water was flowing at a constant velocity \(\vec{v}\) everywhere; in fact, let's say it's even flowing straight down. Imagine also that our drain is a little rectangle, like in TODOclaude.
+</p>
+
+<p>
+The flow rate depends on the angle our rectangular drain is at compared to the flow. TODO
+</p>
+
+<p>
+Unfortunately, in the real world, water flows in a much more complicated way. 
+
+todo vector field \(\vec{V}(x,y,z)\)
+
+TODOclaude
+</p>
+
+<p>
+Imagine we have a parametrization
+\[\sigma : [0, 1] \times [0, 1] \to \mathbb{R}^3\]
+of our drain; now we need <em>two</em> parameters -- as opposed to the one parameter we needed to define a path -- because the drain is 2-dimensional.
+</p>
+
+<p>
+Near the point \(\sigma(s,t),\) the vector field \(\vec{V}(x,y,z)\) controlling flow is approximately constant. So, let's look at the tiny patch of our drain with corners \(\sigma(s,t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2),\) and \(\sigma(s+\epsilon_1,t+\epsilon_2).\) For \(\epsilon\) very small, this patch is approximately a rectangle. TODO claude.
+</p>
+
+<p>
+The area of this rectangle is the product of the lengths of its two sides. To find the two side lengths, observe that
+\[\sigma(s+\epsilon, t) - \sigma(s, t) \approx \frac{\partial\sigma}{\partial s}(s, t) \cdot \epsilon_1\]
+and
+\[\sigma(s, t+\epsilon) - \sigma(s, t) \approx \frac{\partial\sigma}{\partial t}(s, t) \cdot \epsilon_2.\]
+</p>
+
+<p>
+Using our constant flow calculation from above, we find that, in this tiny rectangle, we get a total flow of 
+\[\vec{V}(\sigma(s,t)) \cdot \left|\frac{\partial\sigma}{\partial s}(s,t)\times\frac{\partial\sigma}{\partial t}(s,t)\right| \cdot \epsilon_1\epsilon_2.\]
+</p>
+
+<p>
+Adding up all of these tiny patches, our total flow is the integral
+\[\int_0^1\int_0^1 \vec{V}(\sigma(s,t)) \cdot \left(\frac{\partial\sigma}{\partial s}(s,t)\times\frac{\partial\sigma}{\partial t}(s,t)\right) \, ds dt.\] 
+</p>
+
+<h3>Abstracting away</h3>
+
+<p>
+For line integrals, our vector field really just turned 
+</p>
+
+<h3>Differential 2-forms</h3>
 
 <!-- MailerLite Universal -->
 <script>
