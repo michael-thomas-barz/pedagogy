@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Differential forms</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>Differential forms</h1>
+<p class="meta">September 5th, 2026</p>
+
+<p>
+The two authors of this blog are PhD students, who both participate in our university's directed reading program, where graduate students like us mentor undergraduate students in mathematics. One thing which has become apparent in our semesters at this program is that the undergraduate math courses at our university don't seem to teach differential forms very well. By writing this blog post, we hope to at least slightly improve the situation.
+</p>
+
+<h2>A reminder on the fundamental theorem of calculus</h2>
+
+<p>
+The <em>fundamental theorem of calculus</em> says that
+\[f(x_1) - f(x_0) = \int_{x_0}^{x_1} f'(t) \, dt.\] 
+</p>
+
+<p>
+Let's briefly recall why this is true. The derivative \(f'(t)\) is <em>defined</em> by the relation
+\[f(t + dt) - f(t) \approx f'(t)dt.\]
+That is, over a very small change in input \(dt,\) the output of \(f\) changes by \(f'(t) dt.\) 
+</p>
+
+<p>
+To calculate \(f(x_1) - f(x_0),\) though, we run into a problem: the derivative only tells us how the function changes over a very small change in input, but \(x_1\) and \(x_0\) might be very far apart! What should we do? 
+</p>
+
+<p>
+The idea of calculus is to break down that large change in input into an enormous number of small changes. For example, even if \(x_1-x_0\) is very large, the quantity
+\[\epsilon = \frac{x_1 - x_0}{10^9}\]
+is probably pretty small. To go from \(x_0\) to \(x_1\), you could take one big step of size \(x_1 - x_0,\) <em>or</em> you could take one billion steps of size \(\epsilon.\) 
+</p>
+
+<p>
+But \(\epsilon\) is so small that our derivative approximation works very well for jumps of size \(\epsilon.\) Breaking our journey into a billion small steps, we find
+\[f(x_1) - f(x_0) = \left(f(x_0 + \epsilon) - f(x_0)\right) + \left(f(x_0 + 2\epsilon) - f(x_0 +\epsilon)\right) + \cdots + \left(f(x_0 + 10^9\epsilon) - f(x_0 + (10^9-1)\epsilon)\right).\]
+</p>
+
+<p>
+Using the derivative, we can approximate each term of the right hand side: 
+\[f(x_0 + \epsilon) - f(x_0) \approx f'(x_0) \cdot \epsilon\]
+\[f(x_0 + 2\epsilon) - f(x_0+\epsilon) \approx f'(x_0+\epsilon) \cdot \epsilon,\]
+\[f(x_0 + 3\epsilon) - f(x_0+2\epsilon) \approx f'(x_0+2\epsilon) \cdot \epsilon.\] 
+and so on, so that
+\[f(x_1) - f(x_0) \approx f'(x_0)\epsilon + f'(x_0+\epsilon)\epsilon + \cdots + f'(x_0+(10^9-1)\epsilon)\epsilon.\] 
+</p>
+
+<p>
+An astute reader might notice a problem, though: we added up one billion approximations together -- surely this increases our error dramatically! Fortunately, the final error is not so bad; the error in the derivative approximations is on the order of \(\epsilon^2.\) So, one billion derivative approximations summed together have an error on the order of \(10^9\epsilon^2 = (x_2-x_1)^2/10^9.\) One billion is pretty big, so this quotient is still pretty small! 
+</p>
+
+<p>
+As we make the denominator \(10^9\) in 
+\[\epsilon = \frac{x_1-x_0}{10^9}\]
+go to infinity, the resulting sum converges to
+\[\int_{x_0}^{x_1} f'(t) \, dt,\]
+and in the limit we get
+\[\int_{x_0}^{x_1} f'(t) \, dt = f(x_1) - f(x_0).\] 
+</p>
+
+<h2>A 2-variable fundamental theorem of calculus</h2>
+
+<p>
+Is there a version of the fundamental theorem of calculus for <em>two variable</em> functions? 
+</p>
+
+<p>
+For example, let's consider the function
+\[F(x, y) = x^2 - y^3.\]
+This function has two inputs, and one output. Can we rewrite
+\[F(x_2, y_2) - F(x_1, y_1)\]
+as an integral? 
+</p>
+
+<p>
+The usual fundamental theorem of calculus used the derivative to understand how \(f\) changed when you nudged the input a small amount, and then using the integral to add up those small nudges into one big nudge.
+</p>
+
+<h3>The gradient</h3> 
+
+<p>
+The analogue of the derivative in multivariable calculus is called the <em>gradient</em>. The gradient is slightly more complicated than the derivative, because we have two inputs to nudge: if we nudge the \(x\) input, then
+\[F(x + \epsilon, y) = (x+\epsilon)^2 - y^3 \approx F(x, y) + 2x\epsilon,\]
+and if we nudge the \(y\) input, then
+\[F(x, y+\epsilon) = x^2 - (y+\epsilon)^3 \approx F(x, y) - 3y^2\epsilon.\] 
+
+This leads to the <em>partial derivatives</em> of \(F\); in general, we have approximations
+\[F(x+\epsilon, y) - F(x, y) \approx \frac{\partial F}{\partial x}(x, y) \cdot \epsilon\]
+and
+\[F(x, y + \epsilon) - F(x, y) \approx \frac{\partial F}{\partial y}(x, y) \cdot \epsilon.\] 
+</p>
+
+<p>
+These two types of changes are packaged in a vector called the <em>gradient</em>: 
+\[\grad F := \left(\frac{\partial F}{\partial x}, \frac{\partial F}{\partial y}\right).\]
+</p>
+
+<p>
+The gradient is a particularly convenient packaging because of the following formula: if we view the input of \(F\) as a 2-dimensional vector, and \(\vec{v}\) is a short 2-dimensional vector, then
+\[F(\vec{x} + \vec{v}) - F(\vec{x}) \approx \grad(F)(\vec{x}) \cdot \vec{v},\]
+where the right hand side is the dot product. This can be found by expanding out the vectors into components. 
+</p>
+
+<h3>Paths</h3>
+
+<p>
+With our multivariable notion of derivative, we can now get a multivariable fundamental theorem of calculus. So, let's try to rewrite 
+\[F(\vec{x}_1) - F(\vec{x}_0)\]
+as an integral, where \(F(x,y) = x^2 - y^3\) is our 2-variable function from before.
+</p>
+
+<p>
+To start, we need to break the jump from \(\vec{x}_0\) to \(\vec{x}_1\) down into smaller pieces. This is slightly more complicated in 2-dimensions, because there are many possible paths from \(\vec{x}_0\) to \(\vec{x}_1.\) Let's just say 
+\[\vec{\gamma} : [0, 1] \to \mathbb{R}^2\]
+is a path from \(\vec{x}_0\) to \(\vec{x}_1\); this means, for every time \(t\) between 0 and 1, \(\vec{\gamma}(t)\) is some vector, such that \(\vec{\gamma}(0)\) is \(\vec{x}_0\) and \(\vec{\gamma}(1)\) is \(\vec{x}_1.\) TODO claude
+</p>
+
+<p>
+Our small steps now look like going from \(\vec{\gamma}(t)\) to \(\vec{\gamma}(t+dt).\) We can use the derivative of \(\vec{\gamma}\) to approximate
+\[\vec{\gamma}(t+dt) - \vec{\gamma}(t) \approx \vec{\gamma}'(t)dt,\]
+where \(\vec{\gamma'}(t)\) is the <em>vector</em> which is found by differentiating the components of \(\vec{\gamma}\); for example, if 
+\[\vec{\gamma}(t) = (1+t, t^3 - t),\]
+then
+\[\vec{\gamma}'(t) = (1, 3t^2 - 1).\] 
+</p>
+
+<p>
+Using this approximation, we find 
+\[F(\vec{\gamma}(t+dt)) - F(\vec{\gamma}(t)) \approx \grad F(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, dt.\]
+</p>
+
+<p>
+Adding all of these changes up, we find 
+\[F(\vec{x}_1) - F(\vec{x}_0) = \int_0^1 \grad F(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, dt.\] 
+</p>
+
+<p>
+This is a wonderful formula, and it is the analogue of the fundamental theorem of calculus for 2 variable functions.
+</p>
+
+<h2>Line integrals</h2>
+
+<p>
+The kind of integral appearing in our multivariable fundamental theorem of calculus has a special name: a <em>line integral</em>.
+</p>
+
+<p>
+Generally, let 
+\[\vec{V} : \mathbb{R}^2 \to \mathbb{R}^2\]
+be a <em>vector field</em> todo claude.
+</p>
+
+<p>
+Then 
+\[\int_{\gamma} \vec{V} \, d\vec{r} = todo.\] 
+</p>
+
+<h2>Digression: work</h2>
+
+<p>
+Before explaining differential forms, we are going to explain <em>line integrals</em> in great detail. But our explanation of line integrals will be based on some intuition from physics, which we quickly review.
+</p>
+
+<p>
+In physics, <em>work</em> is the amount of energy needed to move when a force is opposing you. For example, imagine a ball is rolling over a rough surface, experiencing a <em>constant</em> force of friction of \(\mu\) Newtons (where \(\mu\) is some number). Intuitively, the ball is losing some energy due to this friction; physicists quantify this with <em>work</em>. 
+</p>
+
+<p>
+The longer the ball moves, the more energy it should lose. Thus work depends on \(\mu\) (the friction force) and on \(\ell,\) the length the ball moves. In fact, physicists <em>define</em> work as
+\[W = \ell \cdot \mu.\]
+
+One way to see this is reasonable is to do dimensional-analysis; this quantity has the correct units to be energy, and work should measure something like total energy expenditure. For more mathematically-minded readers, a stronger justification of this definition of \(W\) will be the upcoming <em>work-energy theorem.</em> 
+</p>
+
+<h2>Line integrals</h2>
+
+<p>
+Let's think about the 2-dimensional plane. Suppose we have a <em>vector field</em> in our 2-dimensional plane -- that is, we have a function \(\vec{F}(x, y)\) whose input is a point \((x, y)\) on the plane, and whose output is a vector. TODO claude
+</p>
+
+<p>
+We use the letter \(\vec{F}\) for this vector field because we think of \(\vec{F}(x,y)\) as measuring some force; for example, maybe \(\vec{F}(x,y)\) is the force of gravity at that point in the plane (or more precisely, the gravitational force that would be experienced by a 1 kilogram object placed at that point -- remember, gravitiational force depends linearly on the mass of the object!).
+</p>
+
+<p>
+How much <em>work</em> would a (1 kilogram) particle need to do to move along a path \(\gamma\) in this plane? todo claude
+</p>
+
+<p>
+At each point, TODO
+</p>
+
+<h2>Differential 1-forms</h2>
+
+<p>
+todo: path independence, yadda yadda
+</p>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+</html>
