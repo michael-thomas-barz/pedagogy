@@ -36,10 +36,6 @@ The first concept of single variable calculus is the <em>derivative</em>. And th
 as good as possible, for small \(\epsilon.\) So, if you change the input to your function by a tiny amount, and want to know how much the output changes, the derivative tells you.
 </p>
 
-<p>
-TODO cite other articles we've used
-</p>
-
 <h3>The gradient</h3> 
 
 <p>
@@ -72,9 +68,8 @@ Multivariable calculus doesn't just apply to the Euclidean plane, though -- it a
 </p>
 
 <p>
-Imagine we have a function <em>on the sphere</em>. That is, we have a way of taking as input a point on the sphere, and outputting a number. For example, if the sphere is thought of as the surface of our planet Earth, then maybe the function is 'temperature at that point.' The widget below lets you play around with an example of such a temperature function.
+Imagine we have a function <em>on the sphere</em>. That is, we have a way of taking as input a point on the sphere, and outputting a number. For example, if the sphere is thought of as the surface of our planet Earth, then maybe the function is 'temperature at that point.' The widget below lets you play around with an example of such a temperature function; click on a point to see the temperature there, and drag to rotate the sphere.
 </p>
-
 <style>
   :root {
     /* gruvbox dark */
@@ -90,14 +85,7 @@ Imagine we have a function <em>on the sphere</em>. That is, we have a way of tak
     --mono: "Menlo", "Consolas", monospace;
   }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg0);
-    color: var(--fg1);
-    font-family: var(--mono);
-  }
-  #wrap {
+ #wrap {
     max-width: 860px;
     margin: 0 auto;
     padding: 12px;
@@ -114,7 +102,7 @@ Imagine we have a function <em>on the sphere</em>. That is, we have a way of tak
   }
   #stage.dragging { cursor: grabbing; }
   #stage canvas { display: block; width: 100%; height: 100%; }
- 
+
   #legend {
     position: absolute;
     right: 12px;
@@ -124,7 +112,7 @@ Imagine we have a function <em>on the sphere</em>. That is, we have a way of tak
     background: linear-gradient(90deg, var(--blue), var(--bg2), var(--orange));
     border: 1px solid var(--bg2);
   }
- 
+
   #readout {
     margin-top: 10px;
     font-size: 15px;
@@ -134,8 +122,6 @@ Imagine we have a function <em>on the sphere</em>. That is, we have a way of tak
   #readout .val { color: var(--yellow); }
   #readout .placeholder { color: var(--gray); }
 </style>
-</head>
-<body>
 <div id="wrap">
   <div id="stage">
     <div id="legend"></div>
@@ -332,7 +318,7 @@ Imagine we have a function <em>on the sphere</em>. That is, we have a way of tak
  
     readout.innerHTML =
       `<span class="point">(x, y, z) = (${nx.toFixed(2)}, ${ny.toFixed(2)}, ${nz.toFixed(2)})</span>` +
-      `T = <span class="val">${t.toFixed(1)}\u00B0</span>`;
+                  `<br> T = <span class="val">${t.toFixed(1)}\u00B0</span>`;
   }
  
   function animate() {
@@ -365,6 +351,250 @@ to lie on the sphere, we need
 <p>
 So, if we start at \((x,y,z),\) then the small 'nudges' to the input we're allowed to make are exactly given by solutions to the equation above. Observe how the nudges we're allowed to make <em>depend on which point we're at!</em>
 </p>
+
+<p>
+You can see this in the widget below; click on a point to see which nudges are allowed there!
+</p>
+
+<style>
+  :root {
+    /* gruvbox dark */
+    --bg0: #282828;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --fg1: #ebdbb2;
+    --fg3: #bdae93;
+    --gray: #928374;
+    --mono: "Menlo", "Consolas", monospace;
+  }
+  * { box-sizing: border-box; }
+ #wrap2 {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 12px;
+  }
+  #stage2 {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 320px;
+    background: var(--bg0);
+    overflow: hidden;
+    cursor: grab;
+    border: 1px solid var(--bg2);
+  }
+  #stage2.dragging { cursor: grabbing; }
+  #stage2 canvas { display: block; width: 100%; height: 100%; }
+ 
+  #readout2 {
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: center;
+    color: var(--fg1);
+  }
+  #readout2 .placeholder { color: var(--gray); font-style: italic; }
+</style>
+<div id="wrap2">
+  <div id="stage2"></div>
+  <div id="readout2"><span class="placeholder2">click a point</span></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const stage = document.getElementById('stage2');
+  const readout = document.getElementById('readout2');
+ 
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  const BASE_DIST = 4.4;
+  camera.position.set(0, 0, BASE_DIST);
+ 
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  stage.appendChild(renderer.domElement);
+ 
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+ 
+  const group = new THREE.Group();
+  scene.add(group);
+ 
+  const RADIUS = 1.5;
+  const geo = new THREE.SphereGeometry(RADIUS, 96, 64);
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0x689d6a, // gruvbox faded aqua/green
+    roughness: 0.8,
+    metalness: 0.0,
+  });
+  const sphereMesh = new THREE.Mesh(geo, mat);
+  group.add(sphereMesh);
+ 
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.9);
+  dl.position.set(3, 4, 5);
+  scene.add(dl);
+  const dl2 = new THREE.DirectionalLight(0xffffff, 0.25);
+  dl2.position.set(-4, -2, -3);
+  scene.add(dl2);
+ 
+  // graticule (lat/long lines)
+  const graticule = new THREE.Group();
+  const gratMat = new THREE.LineBasicMaterial({ color: 0x282828, transparent: true, opacity: 0.3 });
+  const R2 = RADIUS * 1.001;
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const phi = THREE.MathUtils.degToRad(lat);
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const lon = (i / 64) * Math.PI * 2;
+      pts.push(new THREE.Vector3(
+        R2 * Math.cos(phi) * Math.cos(lon),
+        R2 * Math.sin(phi),
+        R2 * Math.cos(phi) * Math.sin(lon)
+      ));
+    }
+    graticule.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), gratMat));
+  }
+  for (let lon = 0; lon < 360; lon += 30) {
+    const theta = THREE.MathUtils.degToRad(lon);
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const phi = -Math.PI / 2 + (i / 64) * Math.PI;
+      pts.push(new THREE.Vector3(
+        R2 * Math.cos(phi) * Math.cos(theta),
+        R2 * Math.sin(phi),
+        R2 * Math.cos(phi) * Math.sin(theta)
+      ));
+    }
+    graticule.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), gratMat));
+  }
+  group.add(graticule);
+ 
+  // marker for the clicked point
+  const markerGeo = new THREE.SphereGeometry(0.045, 20, 16);
+  const markerMat = new THREE.MeshBasicMaterial({ color: 0xfbf1c7 });
+  const marker = new THREE.Mesh(markerGeo, markerMat);
+  marker.visible = false;
+  group.add(marker);
+ 
+  // two tangent-vector arrows, plus one non-tangent (normal) arrow in red
+  const ARROW_LEN = 0.7;
+  const arrow1 = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(), ARROW_LEN, 0xfabd2f, 0.18, 0.1);
+  const arrow2 = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(), ARROW_LEN, 0x83a598, 0.18, 0.1);
+  const arrow3 = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(), ARROW_LEN, 0xfb4934, 0.18, 0.1);
+  arrow1.visible = false;
+  arrow2.visible = false;
+  arrow3.visible = false;
+  group.add(arrow1);
+  group.add(arrow2);
+  group.add(arrow3);
+ 
+  function tangentBasis(n) {
+    const arbitrary = Math.abs(n.y) < 0.99 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0);
+    const t1 = new THREE.Vector3().crossVectors(arbitrary, n).normalize();
+    const t2 = new THREE.Vector3().crossVectors(n, t1).normalize();
+    return [t1, t2];
+  }
+ 
+  // ---- orientation is tracked as a quaternion, so we can slerp it ----
+  const startEuler = new THREE.Euler(-0.25, 0.5, 0);
+  group.quaternion.setFromEuler(startEuler);
+ 
+  const ROT_SPEED = 0.008;
+  const worldY = new THREE.Vector3(0, 1, 0);
+  const worldX = new THREE.Vector3(1, 0, 0);
+ 
+  let dragging = false, moved = false, lastX = 0, lastY = 0;
+  const DRAG_THRESHOLD = 5;
+ 
+  function pointerDown(x, y) {
+    dragging = true; moved = false;
+    lastX = x; lastY = y;
+    stage.classList.add('dragging');
+  }
+  function pointerMove(x, y) {
+    if (!dragging) return;
+    const dx = x - lastX, dy = y - lastY;
+    if (Math.abs(dx) + Math.abs(dy) > DRAG_THRESHOLD) moved = true;
+ 
+    const qYaw = new THREE.Quaternion().setFromAxisAngle(worldY, dx * ROT_SPEED);
+    const qPitch = new THREE.Quaternion().setFromAxisAngle(worldX, dy * ROT_SPEED);
+    group.quaternion.premultiply(qYaw).premultiply(qPitch);
+ 
+    lastX = x; lastY = y;
+  }
+  function pointerUp(x, y) {
+    dragging = false;
+    stage.classList.remove('dragging');
+    if (!moved) handleClick(x, y);
+  }
+ 
+  stage.addEventListener('mousedown', e => pointerDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => pointerMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', e => pointerUp(e.clientX, e.clientY));
+ 
+  stage.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    pointerDown(t.clientX, t.clientY);
+  }, { passive: true });
+  stage.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    pointerMove(t.clientX, t.clientY);
+  }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    const t = e.changedTouches[0];
+    pointerUp(t.clientX, t.clientY);
+  });
+ 
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    camera.position.z = Math.min(8, Math.max(1.8, camera.position.z + e.deltaY * 0.003));
+  }, { passive: false });
+ 
+  const raycaster = new THREE.Raycaster();
+  const mouseNDC = new THREE.Vector2();
+ 
+  function handleClick(clientX, clientY) {
+    const rect = stage.getBoundingClientRect();
+    mouseNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouseNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouseNDC, camera);
+    const hits = raycaster.intersectObject(sphereMesh);
+    if (hits.length === 0) return;
+ 
+    const worldPoint = hits[0].point.clone();
+    const localPoint = group.worldToLocal(worldPoint.clone());
+    const normal = localPoint.clone().normalize();
+ 
+    marker.position.copy(localPoint);
+    marker.visible = true;
+ 
+    const [t1, t2] = tangentBasis(normal);
+    arrow1.position.copy(localPoint);
+    arrow1.setDirection(t1);
+    arrow1.visible = true;
+    arrow2.position.copy(localPoint);
+    arrow2.setDirection(t2);
+    arrow2.visible = true;
+    arrow3.position.copy(localPoint);
+    arrow3.setDirection(normal);
+    arrow3.visible = true;
+ 
+          readout.innerHTML = 'small steps in either of these directions keep you on the sphere, but small steps in the red direction will kick you off the sphere! <br> <br>';
+  }
+ 
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  resize();
+  animate();
+})();
+</script>
 
 <p>
 For example, at the point \((1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3})\) on the sphere, then a point like
@@ -553,7 +783,7 @@ as an integral?
 <p>
 To start, we need to break the jump from \(\vec{x}_0\) to \(\vec{x}_1\) down into smaller pieces. This is slightly more complicated in 2-dimensions, because there are many possible paths from \(\vec{x}_0\) to \(\vec{x}_1.\) Let's just say 
 \[\vec{\gamma} : [0, 1] \to \mathbb{R}^2\]
-is a path from \(\vec{x}_0\) to \(\vec{x}_1\); this means, for every time \(t\) between 0 and 1, \(\vec{\gamma}(t)\) is some vector, such that \(\vec{\gamma}(0)\) is \(\vec{x}_0\) and \(\vec{\gamma}(1)\) is \(\vec{x}_1.\) TODO claude
+is a path from \(\vec{x}_0\) to \(\vec{x}_1\); this means, for every time \(t\) between 0 and 1, \(\vec{\gamma}(t)\) is some vector, such that \(\vec{\gamma}(0)\) is \(\vec{x}_0\) and \(\vec{\gamma}(1)\) is \(\vec{x}_1.\) 
 </p>
 
 <p>
@@ -588,18 +818,237 @@ The kind of integral appearing in our multivariable fundamental theorem of calcu
 <p>
 Generally, let 
 \[\vec{V} : \mathbb{R}^2 \to \mathbb{R}^2\]
-be a <em>vector field</em> todo claude.
+be a <em>vector field</em>. This means \(V\) assigns a vector to every point of the plane; an example of a vector field is illustrated in the widget below. A vector field attaches a vector to every point of the plane; but drawing a vector at every point would lead to an unreadable diagram, so the picture only draws certain vectors; feel free to click a point to see what the vector field does there. 
 </p>
 
 <p>
+There is one more thing we mention: vectors have length and direction. Unfortunately, some of the vectors in a vector field are so short that they're hard to see, and some are so long that they would obstruct your view of other vectors in the vector field. For this reason, in our drawing of a vector field, we draw all vectors as being roughly the same length, and instead use color to indicate length.
+</p>
+
+<style>
+  #vfWidget {
+    /* gruvbox dark, scoped to this widget only */
+    --bg0: #282828;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --fg1: #ebdbb2;
+    --fg3: #bdae93;
+    --gray: #928374;
+    --blue: #83a598;
+    --orange: #fe8019;
+    --yellow: #fabd2f;
+    --mono: "Menlo", "Consolas", monospace;
+ 
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 12px;
+    font-family: var(--mono);
+    color: var(--fg1);
+  }
+  #vfWidget * { box-sizing: border-box; }
+  #vfWidget .vf-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--bg0);
+    border: 1px solid var(--bg2);
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  #vfWidget .vf-stage canvas { display: block; width: 100%; height: 100%; }
+  #vfWidget .vf-readout {
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: center;
+    color: var(--fg1);
+  }
+  #vfWidget .vf-placeholder { color: var(--gray); font-style: italic; }
+</style>
+</head>
+<body>
+<div id="vfWidget">
+  <div class="vf-stage">
+    <canvas></canvas>
+  </div>
+  <div class="vf-readout"><span class="vf-placeholder">click a point</span></div>
+</div>
+ 
+<script>
+(function() {
+  const root = document.getElementById('vfWidget');
+  const stage = root.querySelector('.vf-stage');
+  const canvas = root.querySelector('canvas');
+  const readout = root.querySelector('.vf-readout');
+  const ctx = canvas.getContext('2d');
+ 
+  const COLORS = {
+    bg0: '#282828',
+    bg2: '#504945',
+    grid: '#3c3836',
+    axis: '#665c54',
+    blue: '#83a598',
+    orange: '#fe8019',
+    yellow: '#fabd2f',
+    fg1: '#ebdbb2',
+  };
+ 
+  // the field: F(x, y) = (-y, x)
+  function field(x, y) {
+    return [-y, x];
+  }
+ 
+  let R = 3.2;          // half-extent of the view, in world units
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let cw = 0, ch = 0;    // canvas CSS size in px
+  let highlight = null;  // { x, y } in world coords
+ 
+  function worldToScreen(x, y, scale) {
+    return [cw / 2 + x * scale, ch / 2 - y * scale];
+  }
+  function screenToWorld(px, py, scale) {
+    return [(px - cw / 2) / scale, -(py - ch / 2) / scale];
+  }
+ 
+  function colorForMag(m, maxM) {
+    let f = Math.min(1, m / maxM);
+    const lo = hexToRgb(COLORS.blue), mid = hexToRgb(COLORS.bg2), hi = hexToRgb(COLORS.orange);
+    let c;
+    if (f < 0.5) c = lerpRgb(lo, mid, f / 0.5);
+    else c = lerpRgb(mid, hi, (f - 0.5) / 0.5);
+    return `rgb(${c[0]},${c[1]},${c[2]})`;
+  }
+  function hexToRgb(hex) {
+    const v = parseInt(hex.slice(1), 16);
+    return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+  }
+  function lerpRgb(a, b, t) {
+    return [a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t, a[2] + (b[2]-a[2])*t];
+  }
+ 
+  function drawArrow(x0, y0, x1, y1, color, headSize) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+ 
+    const angle = Math.atan2(y1 - y0, x1 - x0);
+    const h = headSize;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - h * Math.cos(angle - 0.5), y1 - h * Math.sin(angle - 0.5));
+    ctx.lineTo(x1 - h * Math.cos(angle + 0.5), y1 - h * Math.sin(angle + 0.5));
+    ctx.closePath();
+    ctx.fill();
+  }
+ 
+  function resize() {
+    const rect = stage.getBoundingClientRect();
+    cw = rect.width;
+    ch = rect.height;
+    canvas.width = cw * dpr;
+    canvas.height = ch * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  window.addEventListener('resize', resize);
+ 
+  function draw() {
+    const scale = Math.min(cw, ch) / (2 * R);
+ 
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.fillStyle = COLORS.bg0;
+    ctx.fillRect(0, 0, cw, ch);
+ 
+    // axes
+    ctx.strokeStyle = COLORS.axis;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, ch / 2); ctx.lineTo(cw, ch / 2);
+    ctx.moveTo(cw / 2, 0); ctx.lineTo(cw / 2, ch);
+    ctx.stroke();
+ 
+    // grid of sampled vectors
+    const step = R <= 2 ? 0.28 : (R <= 4 ? 0.4 : 0.6);
+    const maxMag = R * Math.SQRT2;
+    const maxLen = step * scale * 0.85;
+    const minLen = maxLen * 0.4;
+ 
+    for (let x = -R; x <= R + 1e-6; x += step) {
+      for (let y = -R; y <= R + 1e-6; y += step) {
+        const [u, v] = field(x, y);
+        const m = Math.hypot(u, v);
+        if (m < 1e-6) continue;
+        const [sx, sy] = worldToScreen(x, y, scale);
+        const len = minLen + (maxLen - minLen) * Math.sqrt(m / maxMag);
+        const ex = sx + (u / m) * len;
+        const ey = sy - (v / m) * len;
+        drawArrow(sx, sy, ex, ey, colorForMag(m, maxMag), 5);
+      }
+    }
+ 
+    // highlighted, precisely-sampled vector from a click
+    if (highlight) {
+      const { x, y } = highlight;
+      const [u, v] = field(x, y);
+      const m = Math.hypot(u, v);
+      const [sx, sy] = worldToScreen(x, y, scale);
+      const len = (minLen + (maxLen - minLen) * Math.sqrt(m / maxMag)) * 1.3;
+      const ex = m > 1e-6 ? sx + (u / m) * len : sx;
+      const ey = m > 1e-6 ? sy - (v / m) * len : sy;
+ 
+      ctx.fillStyle = COLORS.fg1;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+ 
+      drawArrow(sx, sy, ex, ey, COLORS.yellow, 7);
+    }
+  }
+ 
+  function handleClick(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const px = clientX - rect.left;
+    const py = clientY - rect.top;
+    const scale = Math.min(cw, ch) / (2 * R);
+    const [wx, wy] = screenToWorld(px, py, scale);
+    if (Math.abs(wx) > R || Math.abs(wy) > R) return;
+ 
+    highlight = { x: wx, y: wy };
+    const [u, v] = field(wx, wy);
+    readout.innerHTML =
+      `F(${wx.toFixed(2)}, ${wy.toFixed(2)}) = (${u.toFixed(2)}, ${v.toFixed(2)})`;
+    draw();
+  }
+ 
+  canvas.addEventListener('click', e => handleClick(e.clientX, e.clientY));
+  canvas.addEventListener('touchend', e => {
+    const t = e.changedTouches[0];
+    handleClick(t.clientX, t.clientY);
+  });
+ 
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    R = Math.min(6, Math.max(1.2, R + e.deltaY * 0.003));
+    draw();
+  }, { passive: false });
+ 
+  resize();
+})();
+</script>
+
+<p>
 Then 
-\[\int_{\gamma} \vec{V} \, d\vec{r} = todo.\] 
+\[\int_{\gamma} \vec{V} \, d\vec{r} = \int_0^1 \vec{V}(\gamma(t)) \cdot \gamma'(t) \, dt.\] 
+This is the exact same type of formula that appeared in the fundamental theorem of calculus, but now with a general vector field \(\vec{V}.\)
 </p>
 
 <h3>Digression: work</h3>
 
 <p>
-Before explaining differential forms, we are going to explain <em>line integrals</em> in great detail. But our explanation of line integrals will be based on some intuition from physics, which we quickly review.
+Why are line integrals so common? One application of them is the concept of <em>work</em> in physics. Even when your line integral doesn't come from physics, pretending it is calculating work can often be helpful for gaining intuition. This is a common trend in mathematics: if the same formula shows up in two contexts, it can often be helpful to use your intuition from the first context to understand the formula's appearance in the second context, even if the two contexts are completely different.
 </p>
 
 <p>
@@ -607,10 +1056,430 @@ In physics, <em>work</em> is the amount of energy needed to move when a force is
 </p>
 
 <p>
-The longer the ball moves, the more energy it should lose. Thus work depends on \(\mu\) (the friction force) and on \(\ell,\) the length the ball moves. In fact, physicists <em>define</em> work as
-\[W = \ell \cdot \mu.\]
+The longer the ball moves, the more energy it should lose. Thus work depends on \(\mu\) (the friction force) and on \(d,\) the length the ball moves. In fact, physicists <em>define</em> work as
+\[W = d \cdot \mu.\]
 
-One way to see this is reasonable is to do dimensional-analysis; this quantity has the correct units to be energy, and work should measure something like total energy expenditure. For more mathematically-minded readers, a stronger justification of this definition of \(W\) will be the upcoming <em>work-energy theorem.</em> 
+One way to see this is reasonable is to do dimensional-analysis; this quantity has the correct units to be energy, and work should measure something like total energy expenditure.
+</p>
+
+<p>
+Sometimes, though, work is a little more complicated. Imagine a bunny is hopping around. Whenever the bunny leaves the ground, they experience some force \(F\) due to gravity, pulling them straight down. If they wanted to hop straight up with distance \(d,\) then the work needed to counteract gravity's pull would be \(d \cdot F,\) exactly as the formula above. 
+</p>
+
+<p>
+However, bunnies rarely jump straight up -- they usually hop in parabolic arcs, where they move forwards and upwards at the same time. This complicates our calculation, because now we can't just multiply distance of motion times \(F\): gravity only makes it harder for you to move up, and it doesn't care at all about your lateral motion. So, we have to tweak the formula somewhat, to only account for <em>horizontal</em> displacement. The work done by the bunny to oppose gravity is just \(h \cdot F,\) where \(h\) is the height of the jump at its highest point.
+</p>
+
+<p>
+To better understand this, remember that force and displacement are both <em>vectors</em>. So, instead of naively multiplying the magnitude of force and displacement together, we should take the the <em>dot product</em> of force and displacement; this is like taking the product of the lengths of those vectors, but accounts for the fact that the vectors might not be lined up exactly. The true work formula is the <em>dot product</em> of displacement and force: 
+\[W = \vec{r} \cdot \vec{F},\]
+where \(\vec{r}\) is displacement and \(\vec{F}\) is force.
+</p>
+
+<p>
+But wait: in our bunny example, the total displacement of a hop is a vector with no vertical component (because the bunny hops and then lands back on the ground). So, the force of gravity is purely vertical, the net displacement is purely horizontal, and thus the dot product is zero. This isn't what we expect: the work the bunny does should be related to the total height! 
+</p>
+
+<p>
+The trouble with the formula \(W = \vec{r} \cdot \vec{F}\) is that it only works on objects moving in a <em>straight line</em> and experiencing a <em>constant force</em>. 
+</p>
+
+<p>
+However, most of the time objects are not experiencing a constant force, and are not moving in a straight line. For example, imagine gravity: gravity pulls you towards the center of the Earth, and depending on where you're standing, the direction of this pull is different. We can represent this with a vector field
+\[\vec{F} : \mathbb{R}^2 \to \mathbb{R}^2,\]
+assigning to every point a vector representing the force which a 1 kilogram object would feel (here we're using a 2-dimensional model of the world to make our drawings simpler, but you could do the math in the same way with a 3-dimensional world).
+</p>
+
+<p>
+Fortunately, we can break any path into a series of approximately straight line paths, on which the force is approximately constant; see the widget below. Then, adding up the work over each of those small segments (using our \(\vec{r} \cdot \vec{F}\) work formula), we can get an approximation to the total work over the path.Then, adding up the work over each of those small segments (using our \(\vec{r} \cdot \vec{F}\) work formula), we can get an approximation to the total work over the path.
+</p>
+
+<style>
+  #workWidget {
+    /* gruvbox dark, scoped to this widget only */
+    --bg0: #282828;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --fg1: #ebdbb2;
+    --fg3: #bdae93;
+    --gray: #928374;
+    --blue: #83a598;
+    --orange: #fe8019;
+    --yellow: #fabd2f;
+    --green: #b8bb26;
+    --mono: "Menlo", "Consolas", monospace;
+ 
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 12px;
+    font-family: var(--mono);
+    color: var(--fg1);
+  }
+  #workWidget * { box-sizing: border-box; }
+  #workWidget .w-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--bg0);
+    border: 1px solid var(--bg2);
+    overflow: hidden;
+  }
+  #workWidget .w-stage canvas { display: block; width: 100%; height: 100%; }
+  #workWidget .w-caption {
+    margin-top: 10px;
+    min-height: 40px;
+    font-size: 14.5px;
+    text-align: center;
+    line-height: 1.45;
+  }
+  #workWidget .w-caption .sub {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--fg3);
+  }
+  #workWidget .w-nav {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  #workWidget .w-btn {
+    font-family: var(--mono);
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    background: var(--bg1);
+    color: var(--fg1);
+    border: 1px solid var(--bg2);
+    cursor: pointer;
+  }
+  #workWidget .w-btn:hover:not(:disabled) { background: var(--bg2); }
+  #workWidget .w-btn:disabled { color: var(--gray); cursor: default; opacity: 0.5; }
+  #workWidget .w-step {
+    font-size: 12px;
+    color: var(--fg3);
+    min-width: 40px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div id="workWidget">
+  <div class="w-stage"><canvas></canvas></div>
+  <div class="w-caption"></div>
+  <div class="w-nav">
+    <button class="w-btn" id="wPrev">&lsaquo;</button>
+    <span class="w-step"></span>
+    <button class="w-btn" id="wNext">&rsaquo;</button>
+  </div>
+</div>
+ 
+<script>
+(function() {
+  const root = document.getElementById('workWidget');
+  const stage = root.querySelector('.w-stage');
+  const canvas = root.querySelector('canvas');
+  const caption = root.querySelector('.w-caption');
+  const stepLabel = root.querySelector('.w-step');
+  const btnPrev = root.querySelector('#wPrev');
+  const btnNext = root.querySelector('#wNext');
+  const ctx = canvas.getContext('2d');
+ 
+  const COLORS = {
+    bg0: '#282828',
+    bg2: '#504945',
+    axis: '#665c54',
+    blue: '#83a598',
+    orange: '#fe8019',
+    yellow: '#fabd2f',
+    green: '#b8bb26',
+    fg1: '#ebdbb2',
+  };
+ 
+  // ---- setup: a mass at the origin, gravity pulling toward it ----
+  const K = 3.0;
+  function field(x, y) {
+    let r = Math.hypot(x, y);
+    if (r < 0.12) r = 0.12;
+    const factor = -K / (r * r * r);
+    return [factor * x, factor * y];
+  }
+ 
+  const A = [-2.5, 2.0];
+  const B = [1.0, 0.8];
+  const CTRL = [0.0, 2.6];
+  function pathPoint(t) {
+    const x = (1 - t) ** 2 * A[0] + 2 * (1 - t) * t * CTRL[0] + t ** 2 * B[0];
+    const y = (1 - t) ** 2 * A[1] + 2 * (1 - t) * t * CTRL[1] + t ** 2 * B[1];
+    return [x, y];
+  }
+ 
+  // partition defined by explicit parameter boundaries, so we can make
+  // individual chunks finer without changing the overall step structure.
+  // the last chunk is split into two smaller pieces.
+  const T_BOUNDS = [0, 0.25, 0.5, 0.75, 0.875, 1.0];
+  function partitionWork(tBounds) {
+    let sum = 0;
+    const segs = [];
+    for (let i = 0; i < tBounds.length - 1; i++) {
+      const t0 = tBounds[i], t1 = tBounds[i + 1];
+      const p0 = pathPoint(t0);
+      const p1 = pathPoint(t1);
+      const dr = [p1[0] - p0[0], p1[1] - p0[1]];
+      const f = field(p0[0], p0[1]);
+      const dot = f[0] * dr[0] + f[1] * dr[1];
+      sum += dot;
+      segs.push({ p0, p1, dr, f, dot, t0, t1 });
+    }
+    return { sum, segs };
+  }
+  const COARSE = partitionWork(T_BOUNDS);
+  const N_SEG = COARSE.segs.length;
+ 
+  // ---- view / drawing helpers ----
+  const R = 3.5;
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let cw = 0, ch = 0;
+ 
+  function worldToScreen(x, y, scale) {
+    return [cw / 2 + x * scale, ch / 2 - y * scale];
+  }
+ 
+  function colorForMag(m, maxM) {
+    let f = Math.min(1, m / maxM);
+    const lo = hexToRgb(COLORS.blue), mid = hexToRgb(COLORS.bg2), hi = hexToRgb(COLORS.orange);
+    const c = f < 0.5 ? lerpRgb(lo, mid, f / 0.5) : lerpRgb(mid, hi, (f - 0.5) / 0.5);
+    return `rgb(${c[0]},${c[1]},${c[2]})`;
+  }
+  function hexToRgb(hex) {
+    const v = parseInt(hex.slice(1), 16);
+    return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+  }
+  function lerpRgb(a, b, t) {
+    return [a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t, a[2] + (b[2]-a[2])*t];
+  }
+ 
+  function drawArrow(x0, y0, x1, y1, color, headSize, width, alpha) {
+    ctx.globalAlpha = alpha === undefined ? 1 : alpha;
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = width || 1.6;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+    const angle = Math.atan2(y1 - y0, x1 - x0);
+    const h = headSize;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - h * Math.cos(angle - 0.5), y1 - h * Math.sin(angle - 0.5));
+    ctx.lineTo(x1 - h * Math.cos(angle + 0.5), y1 - h * Math.sin(angle + 0.5));
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+ 
+  function resize() {
+    const rect = stage.getBoundingClientRect();
+    cw = rect.width;
+    ch = rect.height;
+    canvas.width = cw * dpr;
+    canvas.height = ch * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    render();
+  }
+  window.addEventListener('resize', resize);
+ 
+  // ---- step layout ----
+  // 0: field only
+  // 1: + path
+  // 2 .. : two slides per chunk of the partition (force, then displacement)
+  const STEP_PATH = 1;
+  const STEP_SEG0 = 2;
+  const LAST_STEP = STEP_SEG0 + N_SEG * 2 - 1;
+  let step = 0;
+ 
+  function isSegmentStep(s) { return s >= STEP_SEG0 && s <= LAST_STEP; }
+  function segIndexFor(s) { return Math.floor((s - STEP_SEG0) / 2); }
+  function phaseFor(s) { return (s - STEP_SEG0) % 2 === 0 ? 'force' : 'displacement'; }
+ 
+  function fieldMaxMagnitude() {
+    let maxM = 0;
+    for (let x = -R; x <= R; x += 0.5) {
+      for (let y = -R; y <= R; y += 0.5) {
+        const m = Math.hypot(...field(x, y));
+        if (isFinite(m)) maxM = Math.max(maxM, m);
+      }
+    }
+    return maxM;
+  }
+  const FIELD_MAX_MAG = fieldMaxMagnitude();
+ 
+  function drawField(scale) {
+    const g = 0.5;
+    const maxLen = g * scale * 0.85;
+    const minLen = maxLen * 0.4;
+    for (let x = -R; x <= R + 1e-6; x += g) {
+      for (let y = -R; y <= R + 1e-6; y += g) {
+        const [u, v] = field(x, y);
+        const m = Math.hypot(u, v);
+        if (m < 1e-6) continue;
+        const [sx, sy] = worldToScreen(x, y, scale);
+        const len = minLen + (maxLen - minLen) * Math.sqrt(Math.min(1, m / FIELD_MAX_MAG));
+        const ex = sx + (u / m) * len;
+        const ey = sy - (v / m) * len;
+        drawArrow(sx, sy, ex, ey, colorForMag(m, FIELD_MAX_MAG), 4.5, 1.3);
+      }
+    }
+  }
+ 
+  function drawMass(scale) {
+    const [sx, sy] = worldToScreen(0, 0, scale);
+    ctx.fillStyle = COLORS.fg1;
+    ctx.beginPath();
+    ctx.arc(sx, sy, 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+ 
+  function drawSmoothPath(scale, alpha) {
+    ctx.strokeStyle = COLORS.yellow;
+    ctx.globalAlpha = alpha;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const [x, y] = pathPoint(i / 80);
+      const [sx, sy] = worldToScreen(x, y, scale);
+      if (i === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+ 
+  function drawEndpoints(scale) {
+    [[A, 'A'], [B, 'B']].forEach(([p, label]) => {
+      const [sx, sy] = worldToScreen(p[0], p[1], scale);
+      ctx.fillStyle = COLORS.yellow;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = COLORS.fg1;
+      ctx.font = '13px Menlo, Consolas, monospace';
+      ctx.fillText(label, sx + 8, sy - 8);
+    });
+  }
+ 
+  function forceArrowLen(fmag, scale) {
+    return Math.min(0.55, 0.15 + 0.25 * fmag) * scale;
+  }
+ 
+  function drawChords(scale, segs, activeIndex, hideInactive) {
+    segs.forEach((seg, i) => {
+      const active = activeIndex === i;
+      if (!active && hideInactive) return;
+      const alpha = active ? 1 : 0.15;
+      const [sx0, sy0] = worldToScreen(seg.p0[0], seg.p0[1], scale);
+      const [sx1, sy1] = worldToScreen(seg.p1[0], seg.p1[1], scale);
+      drawArrow(sx0, sy0, sx1, sy1, COLORS.fg1, 5, active ? 2.6 : 1.6, alpha);
+    });
+  }
+ 
+  // for the "force is approximately this vector" step: sample the true force
+  // at several points along the true curve within one chunk, to show they
+  // barely differ from each other
+  function drawSegmentForceSamples(scale, seg) {
+    const nSamples = 5;
+    for (let k = 0; k < nSamples; k++) {
+      const t = seg.t0 + (seg.t1 - seg.t0) * (k / (nSamples - 1));
+      const [x, y] = pathPoint(t);
+      const [sx, sy] = worldToScreen(x, y, scale);
+      const f = field(x, y);
+      const fmag = Math.hypot(f[0], f[1]);
+      const flen = forceArrowLen(fmag, scale);
+      const fx = sx + (f[0] / fmag) * flen;
+      const fy = sy - (f[1] / fmag) * flen;
+      const isRep = k === 0; // the representative sample used in the Riemann sum
+      drawArrow(sx, sy, fx, fy, isRep ? COLORS.orange : COLORS.green, isRep ? 6 : 4,
+                isRep ? 2.4 : 1.4, isRep ? 1 : 0.75);
+      ctx.fillStyle = isRep ? COLORS.orange : COLORS.green;
+      ctx.beginPath();
+      ctx.arc(sx, sy, isRep ? 3.2 : 2.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+ 
+  function render() {
+    const scale = Math.min(cw, ch) / (2 * R);
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.fillStyle = COLORS.bg0;
+    ctx.fillRect(0, 0, cw, ch);
+ 
+    // the field itself (blue/orange arrows) is only shown on the very
+    // first slide, to keep the later slides uncluttered
+    if (step === 0) drawField(scale);
+    drawMass(scale);
+ 
+    if (step >= STEP_PATH) {
+      drawSmoothPath(scale, step >= STEP_SEG0 ? 0.25 : 1);
+      drawEndpoints(scale);
+    }
+ 
+    if (isSegmentStep(step)) {
+      const idx = segIndexFor(step);
+      const phase = phaseFor(step);
+      if (phase === 'force') {
+        drawSegmentForceSamples(scale, COARSE.segs[idx]);
+      } else {
+        drawChords(scale, COARSE.segs, idx, true);
+      }
+    }
+ 
+    updateCaption();
+  }
+ 
+  function updateCaption() {
+    let html;
+    if (step === 0) {
+      html = 'Gravity pulls every point toward the mass at the center.';
+    } else if (step === STEP_PATH) {
+      html = 'A ball moves from A to B along this path.';
+    } else if (isSegmentStep(step)) {
+      const idx = segIndexFor(step);
+      const phase = phaseFor(step);
+      const seg = COARSE.segs[idx];
+      if (phase === 'force') {
+        html = `Step ${idx + 1} of ${N_SEG}: over this short stretch, the force is `
+          + `approximately the vector F &approx; (${seg.f[0].toFixed(2)}, ${seg.f[1].toFixed(2)}) &mdash; `
+          + `the sampled force barely changes along it.`;
+      } else {
+        html = `Step ${idx + 1} of ${N_SEG}: moving along the path here is a small displacement `
+          + `&Delta;r &approx; (${seg.dr[0].toFixed(2)}, ${seg.dr[1].toFixed(2)}).`
+          + `<span class="sub">This chunk contributes F&middot;&Delta;r &approx; ${seg.dot.toFixed(2)} to the work.</span>`;
+      }
+    }
+    caption.innerHTML = html;
+    stepLabel.textContent = `${step + 1} / ${LAST_STEP + 1}`;
+    btnPrev.disabled = step === 0;
+    btnNext.disabled = step === LAST_STEP;
+  }
+ 
+  btnPrev.addEventListener('click', () => { if (step > 0) { step--; render(); } });
+  btnNext.addEventListener('click', () => { if (step < LAST_STEP) { step++; render(); } });
+ 
+  resize();
+})();
+</script>
+
+<p>
+If you step through the widget, you'll see that the sum we do to calculate total work over this curve is very similar to what we did for line integrals in the fundamental theorem of calculus: we break our path up into small, approximately straight line pieces, and approximate the force vector field has constant over each piece. Thus the real work formula is 
+\[W = \int_{\gamma} \vec{F} \cdot d\vec{r},\]
+where \(\gamma\) is the path the object moves along. 
+</p>
+
+<p>
+In particular, line integrals show up in physics all the time!
 </p>
 
 <h2>Line integrals on manifolds</h2>
@@ -644,7 +1513,7 @@ Remember: \(\gamma(t)\) is some point of \(M,\) and \(\gamma'(t)\) is a tangent 
 </p>
 
 <p>
-As an example, when \(\vec{F}(x, y) = (-y, x)\) is the vector field TODOclaude, the line integral
+As an example, for the vector field \(\vec{F}(x, y) = (-y, x)\), the line integral
 \[\int_{\gamma} \vec{F} \cdot d\vec{r}\]
 we defined above can be rewritten in terms of differential forms as
 \[\int_{\gamma} -y dx + x dy.\] 
@@ -668,16 +1537,289 @@ As a concrete example, let's let \(M\) be the sphere again, and set \(f(x,y,z)=z
 <p>
 Let \(q = (0,0,1)\) be the north pole, and \(p = (0, 0, -1)\) be the south pole of our sphere. We can define a path
 \[\gamma : [0, 1] \to M\]
-from the north pole to the south pole by the formula
-\[\gamma(t) = (0, \sin(\pi t), \cos(\pi t)).\]
-This path is drawn in TODOclaude.
+from the south pole to the north pole by the formula
+\[\gamma(t) = (0, \sin(\pi t), -\cos(\pi t)).\]
+This path is drawn in the widget below; you can use your mouse to change the viewing angle.
 </p>
+<style>
+  #ftcPathWidget {
+    /* gruvbox dark, scoped to this widget only */
+    --bg0: #282828;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --fg1: #ebdbb2;
+    --fg3: #bdae93;
+    --gray: #928374;
+    --yellow: #fabd2f;
+    --orange: #fe8019;
+    --mono: "Menlo", "Consolas", monospace;
+ 
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 12px;
+    font-family: var(--mono);
+    color: var(--fg1);
+  }
+  #ftcPathWidget * { box-sizing: border-box; }
+  #ftcPathWidget .p-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--bg0);
+    border: 1px solid var(--bg2);
+    overflow: hidden;
+    cursor: grab;
+  }
+  #ftcPathWidget .p-stage.dragging { cursor: grabbing; }
+  #ftcPathWidget .p-stage canvas { display: block; width: 100%; height: 100%; }
+ 
+  #ftcPathWidget .p-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: var(--fg1);
+    background: rgba(40,40,40,0.55);
+    padding: 0px 5px;
+    border-radius: 3px;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+ 
+  #ftcPathWidget .p-controls {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  #ftcPathWidget .p-play {
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 6px 14px;
+    background: var(--bg1);
+    color: var(--fg1);
+    border: 1px solid var(--bg2);
+    cursor: pointer;
+  }
+  #ftcPathWidget .p-play:hover:not(:disabled) { background: var(--bg2); }
+  #ftcPathWidget .p-play:disabled { color: var(--gray); cursor: default; opacity: 0.6; }
+  #ftcPathWidget .p-readout {
+    font-size: 13.5px;
+    color: var(--fg3);
+    min-width: 220px;
+  }
+  #ftcPathWidget .p-readout .val { color: var(--yellow); }
+</style>
+</head>
+<body>
+<div id="ftcPathWidget">
+  <div class="p-stage">
+    <div class="p-label" id="labelQ">q</div>
+    <div class="p-label" id="labelP">p</div>
+  </div>
+  <div class="p-controls">
+    <button class="p-play" id="playBtn">&#9654; play</button>
+    <span class="p-readout" id="readout">t = 0.00, f(&gamma;(t)) = -1.00</span>
+  </div>
+</div>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const root = document.getElementById('ftcPathWidget');
+  const stage = root.querySelector('.p-stage');
+  const labelQ = root.querySelector('#labelQ');
+  const labelP = root.querySelector('#labelP');
+  const playBtn = root.querySelector('#playBtn');
+  const readout = root.querySelector('#readout');
+ 
+  // gamma(t) = (0, sin(pi t), -cos(pi t)); gamma(0) = p = south pole, gamma(1) = q = north pole
+  function gamma(t) {
+    return new THREE.Vector3(0, Math.sin(Math.PI * t), -Math.cos(Math.PI * t));
+  }
+  const NORTH = new THREE.Vector3(0, 0, 1);  // q
+  const SOUTH = new THREE.Vector3(0, 0, -1); // p
+ 
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0, 0, 5.6);
+ 
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  stage.appendChild(renderer.domElement);
+  stage.insertBefore(renderer.domElement, labelQ);
+ 
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+ 
+  const group = new THREE.Group();
+  scene.add(group);
+ 
+  const RADIUS = 1.5;
+  const sphereGeo = new THREE.SphereGeometry(RADIUS, 64, 48);
+  const sphereMat = new THREE.MeshStandardMaterial({ color: 0x504945, roughness: 0.85 });
+  group.add(new THREE.Mesh(sphereGeo, sphereMat));
+ 
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.9);
+  dl.position.set(3, 4, 5);
+  scene.add(dl);
+  const dl2 = new THREE.DirectionalLight(0xffffff, 0.25);
+  dl2.position.set(-4, -2, -3);
+  scene.add(dl2);
+ 
+  // graticule for reference
+  const graticule = new THREE.Group();
+  const gratMat = new THREE.LineBasicMaterial({ color: 0x282828, transparent: true, opacity: 0.3 });
+  const R2 = RADIUS * 1.001;
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const phi = THREE.MathUtils.degToRad(lat);
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const lon = (i / 64) * Math.PI * 2;
+      pts.push(new THREE.Vector3(R2 * Math.cos(phi) * Math.cos(lon), R2 * Math.sin(phi), R2 * Math.cos(phi) * Math.sin(lon)));
+    }
+    graticule.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), gratMat));
+  }
+  for (let lon = 0; lon < 360; lon += 30) {
+    const theta = THREE.MathUtils.degToRad(lon);
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const phi = -Math.PI / 2 + (i / 64) * Math.PI;
+      pts.push(new THREE.Vector3(R2 * Math.cos(phi) * Math.cos(theta), R2 * Math.sin(phi), R2 * Math.cos(phi) * Math.sin(theta)));
+    }
+    graticule.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), gratMat));
+  }
+  group.add(graticule);
+ 
+  // the path gamma, drawn on the surface
+  const pathPts = [];
+  for (let i = 0; i <= 100; i++) {
+    pathPts.push(gamma(i / 100).multiplyScalar(RADIUS * 1.002));
+  }
+  const pathGeo = new THREE.BufferGeometry().setFromPoints(pathPts);
+  const pathMat = new THREE.LineBasicMaterial({ color: 0xfabd2f, linewidth: 2 });
+  group.add(new THREE.Line(pathGeo, pathMat));
+ 
+  // pole markers q (north, t=0) and p (south, t=1)
+  const poleGeo = new THREE.SphereGeometry(0.05, 16, 12);
+  const poleMat = new THREE.MeshBasicMaterial({ color: 0xebdbb2 });
+  const qMarker = new THREE.Mesh(poleGeo, poleMat);
+  qMarker.position.copy(NORTH).multiplyScalar(RADIUS);
+  group.add(qMarker);
+  const pMarker = new THREE.Mesh(poleGeo, poleMat);
+  pMarker.position.copy(SOUTH).multiplyScalar(RADIUS);
+  group.add(pMarker);
+ 
+  // the moving point along the path
+  const ballGeo = new THREE.SphereGeometry(0.075, 20, 16);
+  const ballMat = new THREE.MeshBasicMaterial({ color: 0xfe8019 });
+  const ball = new THREE.Mesh(ballGeo, ballMat);
+  ball.position.copy(gamma(0)).multiplyScalar(RADIUS);
+  group.add(ball);
+ 
+  // ---- drag to rotate, scroll to zoom ----
+  // orient so q (north pole) is at the top and p (south pole) is at the bottom,
+  // with the path's midpoint swung around to face the camera
+  {
+    const qTilt = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+    const qSpin = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+    group.quaternion.copy(qSpin.multiply(qTilt));
+  }
+  const ROT_SPEED = 0.008;
+  const worldY = new THREE.Vector3(0, 1, 0);
+  const worldX = new THREE.Vector3(1, 0, 0);
+  let dragging = false, lastX = 0, lastY = 0;
+ 
+  function pointerDown(x, y) {
+    dragging = true; lastX = x; lastY = y;
+    stage.classList.add('dragging');
+  }
+  function pointerMove(x, y) {
+    if (!dragging) return;
+    const dx = x - lastX, dy = y - lastY;
+    const qYaw = new THREE.Quaternion().setFromAxisAngle(worldY, dx * ROT_SPEED);
+    const qPitch = new THREE.Quaternion().setFromAxisAngle(worldX, dy * ROT_SPEED);
+    group.quaternion.premultiply(qYaw).premultiply(qPitch);
+    lastX = x; lastY = y;
+  }
+  function pointerUp() {
+    dragging = false;
+    stage.classList.remove('dragging');
+  }
+  stage.addEventListener('mousedown', e => pointerDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => pointerMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', pointerUp);
+  stage.addEventListener('touchstart', e => { const t = e.touches[0]; pointerDown(t.clientX, t.clientY); }, { passive: true });
+  stage.addEventListener('touchmove', e => { const t = e.touches[0]; pointerMove(t.clientX, t.clientY); }, { passive: true });
+  stage.addEventListener('touchend', pointerUp);
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    camera.position.z = Math.min(8, Math.max(2.4, camera.position.z + e.deltaY * 0.003));
+  }, { passive: false });
+ 
+  // ---- label projection ----
+  function updateLabel(el, localPos) {
+    const worldPos = localPos.clone().applyMatrix4(group.matrixWorld);
+    const rotatedDir = localPos.clone().normalize().applyQuaternion(group.quaternion);
+    const behind = rotatedDir.z < -0.08;
+    el.style.opacity = behind ? '0' : '1';
+ 
+    const ndc = worldPos.clone().project(camera);
+    const rect = stage.getBoundingClientRect();
+    const x = (ndc.x * 0.5 + 0.5) * rect.width;
+    const y = (1 - (ndc.y * 0.5 + 0.5)) * rect.height;
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+  }
+ 
+  // ---- play animation ----
+  let animState = null; // { t0, dur }
+  const DURATION = 2400;
+ 
+  playBtn.addEventListener('click', () => {
+    animState = { t0: performance.now(), dur: DURATION };
+    playBtn.disabled = true;
+  });
+ 
+  function stepAnimation() {
+    if (!animState) return;
+    const now = performance.now();
+    let f = (now - animState.t0) / animState.dur;
+    if (f >= 1) { f = 1; }
+    const p = gamma(f).multiplyScalar(RADIUS);
+    ball.position.copy(p);
+    const z = -Math.cos(Math.PI * f);
+    readout.innerHTML = `t = <span class="val">${f.toFixed(2)}</span>, f(&gamma;(t)) = <span class="val">${z.toFixed(2)}</span>`;
+    if (f >= 1) {
+      animState = null;
+      playBtn.disabled = false;
+    }
+  }
+ 
+  function animate() {
+    requestAnimationFrame(animate);
+    stepAnimation();
+    updateLabel(labelQ, NORTH.clone().multiplyScalar(RADIUS));
+    updateLabel(labelP, SOUTH.clone().multiplyScalar(RADIUS));
+    renderer.render(scene, camera);
+  }
+  resize();
+  animate();
+})();
+</script>
 
 <p>
 Observe that
-\[\gamma'(t) = (0, -\pi\cos(\pi t), \pi\sin(\pi t)).\] 
+\[\gamma'(t) = (0, \pi\cos(\pi t), \pi\sin(\pi t)).\] 
 As a sanity check, this vector does indeed lie in \(T_{\gamma(t)}M,\) because it obeys the equation
-\[2 \cdot 0 \cdot 0 + 2 \cdot \sin(\pi t) \cdot (-\pi\cos(\pi t)) + 2 \cdot \cos(\pi t) \cdot \pi\sin(\pi t) = -2\pi \cos(\pi t)\sin(\pi t) + 2\pi\cos(\pi t)\sin(\pi t) = 0.\] 
+\[2 \cdot 0 \cdot 0 + 2 \cdot \sin(\pi t) \cdot \pi\cos(\pi t) + 2 \cdot (-\cos(\pi t)) \cdot \pi\sin(\pi t) = 2\pi \cos(\pi t)\sin(\pi t) - 2\pi\cos(\pi t)\sin(\pi t) = 0.\] 
 </p>
 
 <p>
@@ -708,19 +1850,342 @@ As an example of a surface integral, imagine you're building a drain in 3-dimens
 </p>
 
 <p>
-Let's start with a simple example: imagine the water was flowing at a constant velocity \(\vec{v}\) everywhere; in fact, let's say it's even flowing straight down. Imagine also that our drain is a little rectangle, like in TODOclaude.
+Let's start with a simple example: imagine the water was flowing at a constant velocity \(\vec{v}\) everywhere; in fact, let's say it's even flowing straight down. Imagine also that our drain is a little rectangle. The flow rate depends on the angle our rectangular drain is at compared to the flow; if you have trouble visualizing this, play with the widget below -- it helps to start with the extreme values of \(0^{\circ}\) (where the flow is maximized) and \(90^{\circ}\) (where there is no drainage at all!). 
+</p>
+
+<style>
+  #flowDrainWidget {
+    --fd-bg0: #282828;
+    --fd-bg1: #3c3836;
+    --fd-bg2: #504945;
+    --fd-fg: #fbf1c7;
+    --fd-muted: #a89984;
+    --fd-blue: #83a598;
+    --fd-green: #8ec07c;
+    --fd-yellow: #fabd2f;
+    --fd-orange: #fe8019;
+    --fd-mono: Monaco, Menlo, Consolas, monospace;
+
+    max-width: 640px;
+    margin: 1.25rem auto;
+    padding: 12px;
+    color: var(--fd-fg);
+    font-family: var(--fd-mono);
+  }
+  #flowDrainWidget * { box-sizing: border-box; }
+  #flowDrainWidget .fd-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 300px;
+    background: var(--fd-bg0);
+    border: 1px solid var(--fd-bg2);
+    overflow: hidden;
+    cursor: ns-resize;
+    touch-action: pan-y;
+  }
+  #flowDrainWidget .fd-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #flowDrainWidget .fd-hint {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    padding: 3px 6px;
+    background: rgba(40, 40, 40, 0.72);
+    color: var(--fd-muted);
+    font-size: 11px;
+    pointer-events: none;
+  }
+  #flowDrainWidget .fd-controls {
+    margin-top: 11px;
+  }
+  #flowDrainWidget .fd-slider-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+  }
+  #flowDrainWidget .fd-slider-row label,
+  #flowDrainWidget .fd-angle {
+    font-size: 13px;
+    color: var(--fd-muted);
+  }
+  #flowDrainWidget input[type="range"] {
+    width: 100%;
+    accent-color: var(--fd-green);
+  }
+  #flowDrainWidget .fd-readout {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-left: 3px solid var(--fd-green);
+    background: var(--fd-bg1);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  #flowDrainWidget .fd-flow-value {
+    color: var(--fd-yellow);
+  }
+  #flowDrainWidget .fd-formula {
+    color: var(--fd-muted);
+    font-size: 12.5px;
+  }
+  #flowDrainWidget .fd-meter {
+    height: 6px;
+    margin-top: 8px;
+    background: var(--fd-bg2);
+    overflow: hidden;
+  }
+  #flowDrainWidget .fd-meter-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--fd-green);
+    transition: width 80ms linear;
+  }
+  @media (max-width: 600px) {
+    #flowDrainWidget { padding: 8px 0; }
+    #flowDrainWidget .fd-stage { min-height: 250px; }
+    #flowDrainWidget .fd-slider-row {
+      grid-template-columns: 1fr auto;
+    }
+    #flowDrainWidget .fd-slider-row label {
+      grid-column: 1 / -1;
+    }
+    #flowDrainWidget input[type="range"] { min-height: 34px; }
+    #flowDrainWidget .fd-readout { font-size: 13.5px; }
+  }
+</style>
+
+<div id="flowDrainWidget">
+  <div class="fd-stage" aria-label="A rectangular drain in a downward water flow. Drag vertically to tilt the drain.">
+    <canvas></canvas>
+    <div class="fd-hint">drag up/down to tilt</div>
+  </div>
+  <div class="fd-controls">
+    <div class="fd-slider-row">
+      <label for="fdTilt">tilt θ</label>
+      <input id="fdTilt" type="range" min="0" max="90" value="25" step="1"
+             aria-label="Drain tilt in degrees">
+      <span class="fd-angle"><span id="fdAngleValue">25</span>&deg;</span>
+    </div>
+    <div class="fd-readout" aria-live="polite">
+      flow through drain = <span class="fd-flow-value" id="fdFlowValue">0.91 m&sup3;/s</span>
+      <div class="fd-formula">1 m/s &times; 1 m&sup2; &times; cos(<span id="fdFormulaAngle">25</span>&deg;)</div>
+      <div class="fd-formula">θ is the angle between the downward flow and the yellow normal.</div>
+      <div class="fd-meter" aria-hidden="true"><div class="fd-meter-fill" id="fdMeter"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('flowDrainWidget');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  const stage = root.querySelector('.fd-stage');
+  const canvas = root.querySelector('canvas');
+  const slider = root.querySelector('#fdTilt');
+  const angleValue = root.querySelector('#fdAngleValue');
+  const formulaAngle = root.querySelector('#fdFormulaAngle');
+  const flowValue = root.querySelector('#fdFlowValue');
+  const meter = root.querySelector('#fdMeter');
+  const ctx = canvas.getContext('2d');
+
+  const C = {
+    bg0: '#282828', bg1: '#3c3836', bg2: '#504945', fg: '#fbf1c7',
+    muted: '#a89984', blue: '#83a598', green: '#8ec07c',
+    yellow: '#fabd2f', orange: '#fe8019'
+  };
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let cw = 0, ch = 0;
+  let theta = Number(slider.value);
+  let dragging = false;
+  let lastY = 0;
+
+  function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+
+  // A light-weight oblique projection. y is vertical in the scene; z supplies depth.
+  function project(p) {
+    const scale = Math.min(cw / 4.8, ch / 4.2);
+    return [
+      cw * 0.50 + scale * (p.x + 0.46 * p.z),
+      ch * 0.49 - scale * (p.y - 0.23 * p.z)
+    ];
+  }
+
+  function rotateDrainPoint(x, z, rad) {
+    // Start with a horizontal x-z rectangle and tilt it around the z-axis.
+    return { x: x * Math.cos(rad), y: x * Math.sin(rad), z: z };
+  }
+
+  function drawArrow2D(a, b, color, width, head) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+    ctx.stroke();
+    const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    ctx.beginPath();
+    ctx.moveTo(b[0], b[1]);
+    ctx.lineTo(b[0] - head * Math.cos(ang - 0.48), b[1] - head * Math.sin(ang - 0.48));
+    ctx.lineTo(b[0] - head * Math.cos(ang + 0.48), b[1] - head * Math.sin(ang + 0.48));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function lineHitsDrain(x, z, rad) {
+    const c = Math.cos(rad);
+    if (Math.abs(c) < 1e-5) return Math.abs(x) < 0.03 && Math.abs(z) <= 0.72;
+    const localX = x / c;
+    return Math.abs(localX) <= 1.18 && Math.abs(z) <= 0.72;
+  }
+
+  function drawWater(rad) {
+    const xs = [-1.55, -1.15, -0.75, -0.35, 0.05, 0.45, 0.85, 1.25, 1.65];
+    const zs = [-0.72, 0, 0.72];
+    for (const z of zs) {
+      for (const x of xs) {
+        const hit = lineHitsDrain(x, z, rad);
+        const top = project({ x, y: 1.75, z });
+        const bot = project({ x, y: -1.65, z });
+        ctx.globalAlpha = hit ? 0.72 : 0.28;
+        drawArrow2D(top, bot, hit ? C.blue : C.bg2, hit ? 1.7 : 1.1, hit ? 5.5 : 4.5);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawDrain(rad) {
+    const corners = [
+      rotateDrainPoint(-1.18, -0.72, rad),
+      rotateDrainPoint( 1.18, -0.72, rad),
+      rotateDrainPoint( 1.18,  0.72, rad),
+      rotateDrainPoint(-1.18,  0.72, rad)
+    ].map(project);
+
+    const flux = Math.cos(rad);
+    ctx.fillStyle = `rgba(104, 157, 106, ${0.14 + 0.16 * flux})`;
+    ctx.strokeStyle = C.green;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(corners[0][0], corners[0][1]);
+    for (let i = 1; i < corners.length; i++) ctx.lineTo(corners[i][0], corners[i][1]);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // A few slats make the rectangle read visually as a drain rather than an abstract plane.
+    ctx.globalAlpha = 0.46;
+    ctx.strokeStyle = C.green;
+    ctx.lineWidth = 1;
+    for (const t of [-0.5, 0, 0.5]) {
+      const a = project(rotateDrainPoint(-1.18, t * 0.72, rad));
+      const b = project(rotateDrainPoint( 1.18, t * 0.72, rad));
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    // Oriented normal: n = (sin theta, -cos theta, 0), so v·n = cos(theta)
+    const center = project({ x: 0, y: 0, z: 0 });
+    const n = { x: Math.sin(rad), y: -Math.cos(rad), z: 0 };
+    const normalEnd = project({ x: n.x * 0.82, y: n.y * 0.82, z: 0 });
+    drawArrow2D(center, normalEnd, C.yellow, 2.2, 7);
+    ctx.fillStyle = C.yellow;
+    ctx.font = '12px Monaco, Menlo, Consolas, monospace';
+    ctx.fillText('normal', normalEnd[0] + 7, normalEnd[1] + 3);
+  }
+
+  function drawLabels() {
+    ctx.font = '12px Monaco, Menlo, Consolas, monospace';
+    ctx.fillStyle = C.blue;
+    ctx.fillText('water velocity v', 12, 20);
+    drawArrow2D([106, 12], [106, 45], C.blue, 1.8, 5.5);
+
+    ctx.fillStyle = C.muted;
+    ctx.fillText('1 m² drain', 12, ch - 16);
+  }
+
+  function render() {
+    const rad = theta * Math.PI / 180;
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.fillStyle = C.bg0;
+    ctx.fillRect(0, 0, cw, ch);
+
+    drawWater(rad);
+    drawDrain(rad);
+    drawLabels();
+
+    const flux = Math.max(0, Math.cos(rad));
+    angleValue.textContent = String(Math.round(theta));
+    formulaAngle.textContent = String(Math.round(theta));
+    flowValue.textContent = flux.toFixed(2) + ' m³/s';
+    meter.style.width = (100 * flux).toFixed(1) + '%';
+  }
+
+  function resize() {
+    const r = stage.getBoundingClientRect();
+    cw = Math.max(1, r.width);
+    ch = Math.max(1, r.height);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(cw * dpr);
+    canvas.height = Math.round(ch * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    render();
+  }
+
+  function setTheta(value) {
+    theta = clamp(Number(value) || 0, 0, 90);
+    slider.value = String(Math.round(theta));
+    render();
+  }
+
+  slider.addEventListener('input', function () { setTheta(slider.value); });
+
+  stage.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragging = true;
+    lastY = e.clientY;
+    stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    const dy = e.clientY - lastY;
+    lastY = e.clientY;
+    setTheta(theta + dy * 0.45);
+  });
+  function stopDrag(e) {
+    dragging = false;
+    if (stage.hasPointerCapture && stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
+  }
+  stage.addEventListener('pointerup', stopDrag);
+  stage.addEventListener('pointercancel', stopDrag);
+
+  window.addEventListener('resize', resize);
+  resize();
+})();
+</script>
+
+<p>
+In work, we used the dot product of vectors, which multiplied the lengths of the vectors, but with a correction factor for how aligned the vectors were. Similarly, to calculate the total drainage here, we take the <em>dot product</em> 
+\[\vec{v} \cdot \vec{n},\]
+where \(\vec{v}\) is the water velocity, and \(\vec{n}\) is a vector whose direction is normal to our drain, and whose length is the <em>area</em> of our drain.
 </p>
 
 <p>
-The flow rate depends on the angle our rectangular drain is at compared to the flow. TODO
+If the sides of our drain are given by vectors \(\vec{r}_1\) and \(\vec{r}_2,\) then the normal vector whose length is the area is just the cross product
+\[\vec{r}_1 \times \vec{r}_2.\]
+Thus the total flow through our drain is
+\[\vec{v} \cdot (\vec{r}_1 \times \vec{r}_2).\]
 </p>
 
 <p>
-Unfortunately, in the real world, water flows in a much more complicated way. 
-
-todo vector field \(\vec{V}(x,y,z)\)
-
-TODOclaude
+Unfortunately, in the real world, water flows in a much more complicated way -- the velocity is just given by some vector field, instead of being constant, and our drain can have any shape at all, not necessarily a rectangle.
 </p>
 
 <p>
@@ -730,7 +2195,7 @@ of our drain; now we need <em>two</em> parameters -- as opposed to the one param
 </p>
 
 <p>
-Near the point \(\sigma(s,t),\) the vector field \(\vec{V}(x,y,z)\) controlling flow is approximately constant. So, let's look at the tiny patch of our drain with corners \(\sigma(s,t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2),\) and \(\sigma(s+\epsilon_1,t+\epsilon_2).\) For \(\epsilon\) very small, this patch is approximately a parallelogram. TODO claude.
+Near the point \(\sigma(s,t),\) the vector field \(\vec{V}(x,y,z)\) controlling flow is approximately constant. So, let's look at the tiny patch of our drain with corners \(\sigma(s,t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2),\) and \(\sigma(s+\epsilon_1,t+\epsilon_2).\) For \(\epsilon\) very small, this patch is approximately a parallelogram. This will be illustrated in the widget below, but first we give a few formulas.
 </p>
 
 <p>
@@ -739,6 +2204,599 @@ The area of this rectangle is the product of the lengths of its two sides. To fi
 and
 \[\sigma(s, t+\epsilon) - \sigma(s, t) \approx \frac{\partial\sigma}{\partial t}(s, t) \cdot \epsilon_2.\]
 </p>
+
+<style>
+  #surfaceFluxWidget3D {
+    --sf-bg0: #282828;
+    --sf-bg1: #3c3836;
+    --sf-bg2: #504945;
+    --sf-fg: #fbf1c7;
+    --sf-muted: #a89984;
+    --sf-blue: #83a598;
+    --sf-green: #8ec07c;
+    --sf-yellow: #fabd2f;
+    --sf-orange: #fe8019;
+    --sf-mono: Monaco, Menlo, Consolas, monospace;
+
+    max-width: 640px;
+    margin: 1.25rem auto;
+    padding: 12px;
+    color: var(--sf-fg);
+    font-family: var(--sf-mono);
+  }
+  #surfaceFluxWidget3D * { box-sizing: border-box; }
+  #surfaceFluxWidget3D .sf-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 340px;
+    background: var(--sf-bg0);
+    border: 1px solid var(--sf-bg2);
+    overflow: hidden;
+    cursor: grab;
+  }
+  #surfaceFluxWidget3D .sf-stage.dragging { cursor: grabbing; }
+  #surfaceFluxWidget3D .sf-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #surfaceFluxWidget3D .sf-hint {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    padding: 3px 6px;
+    background: rgba(40,40,40,0.72);
+    color: var(--sf-muted);
+    font-size: 11px;
+    pointer-events: none;
+  }
+  #surfaceFluxWidget3D .sf-caption {
+    margin-top: 10px;
+    min-height: 72px;
+    padding: 10px 12px;
+    background: var(--sf-bg1);
+    border-left: 3px solid var(--sf-green);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  #surfaceFluxWidget3D .sf-caption .sub {
+    display: block;
+    margin-top: 5px;
+    color: var(--sf-muted);
+    font-size: 12.5px;
+  }
+  #surfaceFluxWidget3D .sf-accent { color: var(--sf-yellow); }
+  #surfaceFluxWidget3D .sf-v-symbol { color: var(--sf-yellow); }
+  #surfaceFluxWidget3D .sf-r1-symbol { color: var(--sf-orange); }
+  #surfaceFluxWidget3D .sf-r2-symbol { color: var(--sf-fg); }
+  #surfaceFluxWidget3D .sf-formula {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+  }
+  #surfaceFluxWidget3D .sf-nav {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  #surfaceFluxWidget3D .sf-btn {
+    font-family: var(--sf-mono);
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    background: var(--sf-bg1);
+    color: var(--sf-fg);
+    border: 1px solid var(--sf-bg2);
+    cursor: pointer;
+  }
+  #surfaceFluxWidget3D .sf-btn:hover:not(:disabled) { background: var(--sf-bg2); }
+  #surfaceFluxWidget3D .sf-btn:disabled {
+    color: var(--sf-muted);
+    cursor: default;
+    opacity: 0.5;
+  }
+  #surfaceFluxWidget3D .sf-step {
+    min-width: 42px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--sf-muted);
+  }
+  @media (max-width: 600px) {
+    #surfaceFluxWidget3D { padding: 8px 0; }
+    #surfaceFluxWidget3D .sf-stage { min-height: 280px; }
+    #surfaceFluxWidget3D .sf-caption { font-size: 13.5px; min-height: 88px; }
+  }
+</style>
+
+<div id="surfaceFluxWidget3D">
+  <div class="sf-stage" aria-label="3-dimensional surface integral widget showing a fluid flow field and a drain surface. Drag to move the camera.">
+    <div class="sf-hint">drag to rotate • scroll to zoom</div>
+  </div>
+  <div class="sf-caption" aria-live="polite"></div>
+  <div class="sf-nav">
+    <button class="sf-btn" id="sfPrev3D">&lsaquo;</button>
+    <span class="sf-step"></span>
+    <button class="sf-btn" id="sfNext3D">&rsaquo;</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  const root = document.getElementById('surfaceFluxWidget3D');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  const stage = root.querySelector('.sf-stage');
+  const caption = root.querySelector('.sf-caption');
+  const stepLabel = root.querySelector('.sf-step');
+  const btnPrev = root.querySelector('#sfPrev3D');
+  const btnNext = root.querySelector('#sfNext3D');
+
+  const C = {
+    bg0: 0x282828,
+    bg1: 0x3c3836,
+    bg2: 0x504945,
+    fg: 0xfbf1c7,
+    muted: 0xa89984,
+    blue: 0x83a598,
+    green: 0x8ec07c,
+    yellow: 0xfabd2f,
+    orange: 0xfe8019
+  };
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.set(2.7, 1.75, 4.15);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+  stage.insertBefore(renderer.domElement, stage.firstChild);
+
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 0, 0);
+  controls.enablePan = false;
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.minDistance = 2.4;
+  controls.maxDistance = 9;
+  controls.maxPolarAngle = Math.PI * 0.49;
+
+  renderer.domElement.addEventListener('pointerdown', () => stage.classList.add('dragging'));
+  window.addEventListener('pointerup', () => stage.classList.remove('dragging'));
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+  const key = new THREE.DirectionalLight(0xffffff, 0.92);
+  key.position.set(4.5, 6, 5);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.28);
+  fill.position.set(-4, 2, -3);
+  scene.add(fill);
+
+  function sigma(u, v) {
+    const x = 2.2 * (u - 0.5);
+    const z = 1.7 * (v - 0.5);
+    const y = -0.15 + 0.38 * (v - 0.5) + 0.28 * Math.sin(Math.PI * u) * Math.cos(0.9 * Math.PI * (v - 0.5));
+    return new THREE.Vector3(x, y, z);
+  }
+
+  function flow(p) {
+    return new THREE.Vector3(
+      0.28 + 0.24 * p.z,
+      -1.05 + 0.11 * p.x - 0.05 * p.z,
+      0.22 * Math.sin(1.2 * p.x) + 0.12 * p.y
+    );
+  }
+
+  const surfaceGroup = new THREE.Group();
+  scene.add(surfaceGroup);
+  const fieldGroup = new THREE.Group();
+  scene.add(fieldGroup);
+  const overlayGroup = new THREE.Group();
+  scene.add(overlayGroup);
+
+  function buildSurfaceGeometry(ru, rv) {
+    const positions = [];
+    for (let i = 0; i < ru; i++) {
+      const u0 = i / ru, u1 = (i + 1) / ru;
+      for (let j = 0; j < rv; j++) {
+        const v0 = j / rv, v1 = (j + 1) / rv;
+        const p00 = sigma(u0, v0), p10 = sigma(u1, v0), p11 = sigma(u1, v1), p01 = sigma(u0, v1);
+        [p00, p10, p01, p10, p11, p01].forEach(p => positions.push(p.x, p.y, p.z));
+      }
+    }
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geom.computeVertexNormals();
+    return geom;
+  }
+
+  const surfaceGeo = buildSurfaceGeometry(42, 28);
+  const surfaceMat = new THREE.MeshStandardMaterial({
+    color: C.bg2,
+    side: THREE.DoubleSide,
+    roughness: 0.88,
+    metalness: 0,
+    transparent: true,
+    opacity: 0.82
+  });
+  const surfaceMesh = new THREE.Mesh(surfaceGeo, surfaceMat);
+  surfaceGroup.add(surfaceMesh);
+
+  function curve(points, color, opacity, lw) {
+    const geom = new THREE.BufferGeometry().setFromPoints(points);
+    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: opacity == null ? 1 : opacity, linewidth: lw || 1 });
+    return new THREE.Line(geom, mat);
+  }
+
+  const surfaceGridThin = new THREE.Group();
+  for (let i = 0; i <= 12; i++) {
+    const u = i / 12;
+    const pts = [];
+    for (let j = 0; j <= 80; j++) pts.push(sigma(u, j / 80));
+    surfaceGridThin.add(curve(pts, C.green, 0.46, 2));
+  }
+  for (let j = 0; j <= 9; j++) {
+    const v = j / 9;
+    const pts = [];
+    for (let i = 0; i <= 80; i++) pts.push(sigma(i / 80, v));
+    surfaceGridThin.add(curve(pts, C.green, 0.46, 2));
+  }
+  surfaceGroup.add(surfaceGridThin);
+
+  const Nu = 3, Nv = 2;
+  const partitionGroup = new THREE.Group();
+  for (let i = 0; i <= Nu; i++) {
+    const u = i / Nu;
+    const pts = [];
+    for (let j = 0; j <= 80; j++) pts.push(sigma(u, j / 80));
+    partitionGroup.add(curve(pts, C.green, 1, 3.5));
+  }
+  for (let j = 0; j <= Nv; j++) {
+    const v = j / Nv;
+    const pts = [];
+    for (let i = 0; i <= 80; i++) pts.push(sigma(i / 80, v));
+    partitionGroup.add(curve(pts, C.green, 1, 3.5));
+  }
+  partitionGroup.visible = false;
+  surfaceGroup.add(partitionGroup);
+
+  function makeLabelSprite(text, colorHex) {
+    const cvs = document.createElement('canvas');
+    cvs.width = 256;
+    cvs.height = 64;
+    const cx = cvs.getContext('2d');
+    cx.clearRect(0, 0, cvs.width, cvs.height);
+    cx.font = '28px Monaco, Menlo, Consolas, monospace';
+    cx.fillStyle = '#' + colorHex.toString(16).padStart(6, '0');
+    cx.textBaseline = 'middle';
+    cx.fillText(text, 6, 34);
+    const tex = new THREE.CanvasTexture(cvs);
+    tex.needsUpdate = true;
+    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+    const sprite = new THREE.Sprite(mat);
+    sprite.scale.set(1.55, 0.38, 1);
+    return sprite;
+  }
+
+  const sigmaLabel = makeLabelSprite('surface σ', C.green);
+  sigmaLabel.position.copy(sigma(0.86, 0.75)).add(new THREE.Vector3(0.45, 0.2, 0.05));
+  surfaceGroup.add(sigmaLabel);
+
+  const flowLabel = makeLabelSprite('flow V', C.blue);
+  flowLabel.position.set(-2.25, 1.55, -1.35);
+  scene.add(flowLabel);
+
+  function addArrow(group, origin, vector, color, lengthScale, headScale, opacity) {
+    const dir = vector.clone();
+    const len = dir.length();
+    if (len < 1e-6) return null;
+    dir.normalize();
+    const L = (lengthScale == null ? 1 : lengthScale) * len;
+    const arrow = new THREE.ArrowHelper(dir, origin, L, color, headScale || 0.13, (headScale || 0.13) * 0.7);
+    arrow.line.material.transparent = true;
+    arrow.line.material.opacity = opacity == null ? 1 : opacity;
+    arrow.cone.material.transparent = true;
+    arrow.cone.material.opacity = opacity == null ? 1 : opacity;
+    group.add(arrow);
+    return arrow;
+  }
+
+  const fieldSamples = [];
+  const XS = [-2.25, -1.85, -1.45, -1.05, -0.65, -0.25, 0.15, 0.55, 0.95, 1.35, 1.75, 2.15];
+  const ZS = [-1.50, -1.15, -0.80, -0.45, -0.10, 0.25, 0.60, 0.95, 1.30, 1.65];
+  const YS = [1.90, 1.48, 1.06, 0.64, 0.22];
+  for (const y of YS) {
+    for (const x of XS) {
+      for (const z of ZS) {
+        const start = new THREE.Vector3(x, y, z);
+        const vec = flow(start).normalize().multiplyScalar(0.36);
+        fieldSamples.push(addArrow(fieldGroup, start, vec, C.blue, 1, 0.075, 0.42));
+      }
+    }
+  }
+
+  // A separate layer of arrows sampled directly on the drain, so the reader can
+  // see the fluid velocity right where the surface integral is being measured.
+  const surfaceFlowGroup = new THREE.Group();
+  scene.add(surfaceFlowGroup);
+  const SURF_U = 9, SURF_V = 7;
+  for (let i = 0; i < SURF_U; i++) {
+    for (let j = 0; j < SURF_V; j++) {
+      const u = (i + 0.5) / SURF_U;
+      const v = (j + 0.5) / SURF_V;
+      const start = sigma(u, v);
+      const vec = flow(start).normalize().multiplyScalar(0.31);
+      addArrow(surfaceFlowGroup, start, vec, C.blue, 1, 0.072, 0.72);
+    }
+  }
+
+  function tangentU(u, v) {
+    const h = 0.001;
+    const ua = Math.max(0, u - h), ub = Math.min(1, u + h);
+    return sigma(ub, v).sub(sigma(ua, v)).multiplyScalar(1 / Math.max(1e-6, ub - ua));
+  }
+
+  function tangentV(u, v) {
+    const h = 0.001;
+    const va = Math.max(0, v - h), vb = Math.min(1, v + h);
+    return sigma(u, vb).sub(sigma(u, va)).multiplyScalar(1 / Math.max(1e-6, vb - va));
+  }
+
+  const patches = [];
+  for (let j = 0; j < Nv; j++) {
+    for (let i = 0; i < Nu; i++) {
+      const u0 = i / Nu, u1 = (i + 1) / Nu;
+      const v0 = j / Nv, v1 = (j + 1) / Nv;
+      const p00 = sigma(u0, v0), p10 = sigma(u1, v0), p11 = sigma(u1, v1), p01 = sigma(u0, v1);
+      const center = sigma((u0 + u1) / 2, (v0 + v1) / 2);
+      const r1 = tangentU(u0, v0).multiplyScalar(u1 - u0);
+      const r2 = tangentV(u0, v0).multiplyScalar(v1 - v0);
+      const areaVec = r1.clone().cross(r2);
+      const cornerFlow = flow(p00);
+      patches.push({ i, j, u0, u1, v0, v1, p00, p10, p11, p01, center, r1, r2, areaVec, cornerFlow });
+    }
+  }
+
+  function disposeMaterial(mat) {
+    if (!mat) return;
+    if (Array.isArray(mat)) { mat.forEach(disposeMaterial); return; }
+    if (mat.map) mat.map.dispose && mat.map.dispose();
+    mat.dispose && mat.dispose();
+  }
+
+  function clearGroup(g) {
+    while (g.children.length) {
+      const child = g.children[0];
+      g.remove(child);
+      if (child.geometry) child.geometry.dispose && child.geometry.dispose();
+      disposeMaterial(child.material);
+      if (child.children && child.children.length) clearGroup(child);
+    }
+  }
+
+  const STEP_FIELD = 0;
+  const STEP_PARTITION = 1;
+  const STEP_PATCH0 = 2;
+  const PATCH_PHASES = 3;
+  const STEP_SUM = STEP_PATCH0 + patches.length * PATCH_PHASES;
+  const LAST_STEP = STEP_SUM;
+  let step = 0;
+
+  function isPatchStep(s) {
+    return s >= STEP_PATCH0 && s < STEP_SUM;
+  }
+
+  function patchIndexForStep(s) {
+    return Math.floor((s - STEP_PATCH0) / PATCH_PHASES);
+  }
+
+  function patchPhaseForStep(s) {
+    return (s - STEP_PATCH0) % PATCH_PHASES;
+  }
+
+  function addPatchBoundary(patch, color, opacity) {
+    const pts = [];
+    const N = 24;
+    for (let k = 0; k <= N; k++) pts.push(sigma(patch.u0 + (patch.u1 - patch.u0) * (k / N), patch.v0));
+    for (let k = 1; k <= N; k++) pts.push(sigma(patch.u1, patch.v0 + (patch.v1 - patch.v0) * (k / N)));
+    for (let k = 1; k <= N; k++) pts.push(sigma(patch.u1 - (patch.u1 - patch.u0) * (k / N), patch.v1));
+    for (let k = 1; k <= N; k++) pts.push(sigma(patch.u0, patch.v1 - (patch.v1 - patch.v0) * (k / N)));
+    overlayGroup.add(curve(pts, color, opacity == null ? 1 : opacity, 4.4));
+  }
+
+  function addCornerMarker(patch) {
+    const marker = new THREE.Mesh(
+      new THREE.SphereGeometry(0.052, 18, 14),
+      new THREE.MeshBasicMaterial({ color: C.yellow })
+    );
+    marker.position.copy(patch.p00);
+    overlayGroup.add(marker);
+  }
+
+  function localNormal(u, v) {
+    return tangentU(u, v).cross(tangentV(u, v)).normalize();
+  }
+
+  function addLocalFlowOverlay(patch) {
+    addPatchBoundary(patch, C.orange, 0.95);
+
+    const NU = 4, NV = 3;
+    for (let a = 0; a < NU; a++) {
+      for (let b = 0; b < NV; b++) {
+        const u = patch.u0 + (patch.u1 - patch.u0) * ((a + 0.5) / NU);
+        const v = patch.v0 + (patch.v1 - patch.v0) * ((b + 0.5) / NV);
+        const p = sigma(u, v);
+        const n = localNormal(u, v);
+        const start = p.clone().add(n.clone().multiplyScalar(-0.045));
+        const f = flow(p).multiplyScalar(0.33);
+        addArrow(overlayGroup, start, f, C.blue, 1, 0.075, 0.74);
+      }
+    }
+
+    addCornerMarker(patch);
+    const n0 = localNormal(patch.u0, patch.v0);
+    const vStart = patch.p00.clone().add(n0.clone().multiplyScalar(-0.055));
+    addArrow(overlayGroup, vStart, patch.cornerFlow.clone().multiplyScalar(0.47), C.yellow, 1, 0.14, 1);
+    const vLabel = makeLabelSprite('V', C.yellow);
+    vLabel.scale.set(0.55, 0.18, 1);
+    vLabel.position.copy(vStart.clone().add(patch.cornerFlow.clone().normalize().multiplyScalar(0.62))).add(new THREE.Vector3(0.05, 0.04, 0));
+    overlayGroup.add(vLabel);
+  }
+
+  function tangentParallelogramData(patch) {
+    const n = patch.areaVec.clone().normalize();
+    const base = patch.p00.clone().add(n.clone().multiplyScalar(0.065));
+    const q10 = base.clone().add(patch.r1);
+    const q01 = base.clone().add(patch.r2);
+    const q11 = base.clone().add(patch.r1).add(patch.r2);
+    return { n, base, q10, q01, q11 };
+  }
+
+  function addTangentParallelogram(patch, includeV, includeNormal) {
+    addPatchBoundary(patch, C.orange, 0.58);
+    addCornerMarker(patch);
+
+    const { n, base, q10, q01, q11 } = tangentParallelogramData(patch);
+
+    const positions = new Float32Array([
+      base.x, base.y, base.z,
+      q10.x, q10.y, q10.z,
+      q01.x, q01.y, q01.z,
+      q10.x, q10.y, q10.z,
+      q11.x, q11.y, q11.z,
+      q01.x, q01.y, q01.z
+    ]);
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geom.computeVertexNormals();
+    const mat = new THREE.MeshBasicMaterial({
+      color: C.orange,
+      transparent: true,
+      opacity: 0.23,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    overlayGroup.add(new THREE.Mesh(geom, mat));
+    overlayGroup.add(curve([base, q10, q11, q01, base], C.orange, 1, 3.6));
+
+    // A tiny connector makes clear that the parallelogram is the tangent approximation
+    // at the highlighted corner, merely shifted down for visibility.
+    overlayGroup.add(curve([patch.p00, base], C.muted, 0.72, 1.8));
+
+    addArrow(overlayGroup, base, patch.r1.clone().multiplyScalar(0.92), C.orange, 1, 0.12, 1);
+    addArrow(overlayGroup, base, patch.r2.clone().multiplyScalar(0.92), C.fg, 1, 0.12, 1);
+
+    const r1Label = makeLabelSprite('r₁', C.orange);
+    r1Label.scale.set(0.70, 0.20, 1);
+    r1Label.position.copy(base.clone().add(patch.r1.clone().multiplyScalar(0.58))).add(new THREE.Vector3(0.05, 0.07, 0));
+    overlayGroup.add(r1Label);
+
+    const r2Label = makeLabelSprite('r₂', C.fg);
+    r2Label.scale.set(0.70, 0.20, 1);
+    r2Label.position.copy(base.clone().add(patch.r2.clone().multiplyScalar(0.58))).add(new THREE.Vector3(0.05, 0.07, 0));
+    overlayGroup.add(r2Label);
+
+    if (includeV) {
+      addArrow(overlayGroup, base, patch.cornerFlow.clone().multiplyScalar(0.47), C.yellow, 1, 0.14, 1);
+      const vLabel = makeLabelSprite('V', C.yellow);
+      vLabel.scale.set(0.55, 0.18, 1);
+      vLabel.position.copy(base.clone().add(patch.cornerFlow.clone().normalize().multiplyScalar(0.62))).add(new THREE.Vector3(0.05, 0.04, 0));
+      overlayGroup.add(vLabel);
+    }
+
+    if (includeNormal) {
+      const normalArrow = n.clone().multiplyScalar(0.46);
+      addArrow(overlayGroup, base.clone().add(patch.r1.clone().add(patch.r2).multiplyScalar(0.5)), normalArrow, C.green, 1, 0.12, 0.95);
+      const crossLabel = makeLabelSprite('r₁×r₂', C.green);
+      crossLabel.scale.set(1.05, 0.22, 1);
+      crossLabel.position.copy(base.clone().add(patch.r1.clone().add(patch.r2).multiplyScalar(0.5)).add(normalArrow.clone().multiplyScalar(1.15)));
+      overlayGroup.add(crossLabel);
+    }
+  }
+
+  function updateScene() {
+    partitionGroup.visible = step >= STEP_PARTITION;
+    clearGroup(overlayGroup);
+
+    fieldGroup.visible = step === STEP_FIELD;
+    surfaceFlowGroup.visible = step === STEP_FIELD;
+
+    const patchStep = isPatchStep(step);
+    surfaceMat.opacity = patchStep ? 0.55 : 0.82;
+    surfaceMat.depthWrite = !patchStep;
+    surfaceMat.needsUpdate = true;
+
+    if (patchStep) {
+      const patch = patches[patchIndexForStep(step)];
+      const phase = patchPhaseForStep(step);
+      if (phase === 0) addLocalFlowOverlay(patch);
+      else if (phase === 1) addTangentParallelogram(patch, false, false);
+      else addTangentParallelogram(patch, true, true);
+    }
+
+    updateCaption();
+  }
+
+  function updateCaption() {
+    let html = '';
+    if (step === STEP_FIELD) {
+      html = 'Drag the picture to rotate the camera.';
+    } else if (step === STEP_PARTITION) {
+      html = 'We can partition σ into small patches, which are approximately parallelograms.';
+    } else if (isPatchStep(step)) {
+      const idx = patchIndexForStep(step);
+      const phase = patchPhaseForStep(step);
+      if (phase === 0) {
+        html = `On this small patch, the flow is approximately constant. We use the value <span class="sf-v-symbol">V</span> at the highlighted corner as our constant approximation.`;
+      } else if (phase === 1) {
+        html = `At that corner, the two tangent vectors <span class="sf-r1-symbol">r<sub>1</sub></span> and <span class="sf-r2-symbol">r<sub>2</sub></span> span a little parallelogram which approximates this patch of the drain.`;
+      } else {
+        html = `By our constant-flow calculation, the net flow through this little parallelogram is<br>`
+          + `<span class="sf-formula"><span class="sf-v-symbol">V</span> · (<span class="sf-r1-symbol">r<sub>1</sub></span> × <span class="sf-r2-symbol">r<sub>2</sub></span>)</span>.`;
+      }
+    } else {
+      html = 'Adding these contributions over all the patches gives a Riemann-sum approximation to the surface integral.';
+    }
+    caption.innerHTML = html;
+    stepLabel.textContent = `${step + 1} / ${LAST_STEP + 1}`;
+    btnPrev.disabled = step === 0;
+    btnNext.disabled = step === LAST_STEP;
+  }
+
+  btnPrev.addEventListener('click', () => {
+    if (step > 0) { step--; updateScene(); }
+  });
+  btnNext.addEventListener('click', () => {
+    if (step < LAST_STEP) { step++; updateScene(); }
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  resize();
+  updateScene();
+  animate();
+})();
+</script>
 
 <p>
 Using our constant flow calculation from above, we find that, in this tiny parallelogram, we get a total flow of 
@@ -771,9 +2829,7 @@ and
 <p>
 However, differential 2-forms obey one more requirement, related to our discussion of signs and orientations when doing flows above. We require
 \[\omega(\vec{v}, \vec{w}) = -\omega(\vec{w}, \vec{v}).\]
-That is, if you swap the order of the two vectors, then the total flow going through the parallelogram they span should reverse. TODOclaude orientation
-
-TODO: discuss signs with flows! 
+That is, if you swap the order of the two vectors, then the total flow going through the parallelogram they span should reverse.
 </p>
 
 <p>
@@ -790,8 +2846,19 @@ Our first 'concrete' example of a differential 1-form was the derivative of a fu
 </p>
 
 <p>
-Let \(\omega\) be a differential 1-form. Suppose that \(p\) is a point on our manifold \(M,\) and \(\vec{v} \in T_pM\) is some tangent vector. Then the <em>differential</em> of \(\omega\) is the differential 2-form \(d\omega\) such that
-\[\omega(p + \vec{v})(\vec{w}) - \omega(p)(\vec{w}) \approx d\omega(\vec{v}, \vec{w}).\] 
+Let \(\omega\) be a differential 1-form. Suppose that \(p\) is a point on our manifold \(M,\) and \(\vec{v} \in T_pM\) is some tangent vector. Then we may want to ask for an approximation to
+\[\omega(p + \vec{v})(\vec{w}) - \omega(p)(\vec{w}),\]
+in the same way that, for an ordinary function \(f,\) we have
+\[f(p + \vec{v}) - f(p) \approx \omega(p)(\vec{v}).\] 
+</p>
+
+<p>
+Unfortunately, there is one problem with trying to turn 
+\[\omega(p + \vec{v})(\vec{w}) - \omega(p)(\vec{w})\] 
+into a 2-form: 2-forms need to obey that funny condition where, if you swap the two input vectors, the output negates. Swapping \(\vec{v}\) and \(\vec{w}\) in the above gives
+\[\omega(p+\vec{w})(\vec{v}) - \omega(p)(\vec{v}),\]
+which has no obvious relation to the original expression. However, the <em>difference</em> of these two quantities will obey the "swapping inputs negates output", and so we define the derivative of a 1-form as the 2-form obeying
+\[d\omega(\vec{v}, \vec{w}) \approx \left(\omega(p + \vec{v})(\vec{w}) - \omega(p)(\vec{w})\right) - \left(\omega(p+\vec{w})(\vec{v}) - \omega(p)(\vec{v})\right).\] 
 </p>
 
 <p>
@@ -803,31 +2870,864 @@ where \(\gamma\) is any path from \(p\) to \(q.\) Is there a similar identity fo
 <p>
 Take 
 \[\sigma : [0, 1] \times [0, 1] \to M\]
-some surface. Can we express the surface integral
-\[\int_{\sigma} d\omega\]
-any more simply?
+some surface. The analogue of \(\int_{\gamma} df\) is then the surface integral
+\[\int_{\sigma} d\omega.\]
 </p>
 
 <p>
-By a miracle, we can! To start, let's think about what this surface integral means. Over a tiny region of \(\sigma,\) say with vertices
-\[\sigma(s, t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2), \sigma(s+\epsilon_1,t+\epsilon_2),\]
+What does that surface integral mean? Well, we are supposed to break the region \(\sigma\) up into tiny regions, and then sum the net flow through each region. Over a tiny region of \(\sigma,\) say with vertices
+\[p = \sigma(s, t), \sigma(s + \epsilon_1, t), \sigma(s, t+\epsilon_2), \sigma(s+\epsilon_1,t+\epsilon_2),\]
 the flow is 
-\[d\omega\left(\frac{\partial\sigma}{\partial s}\epsilon_1, \frac{\partial\sigma}{\partial t}\epsilon_1\right) \approx \omega\left(\sigma(s,t) + \frac{\partial\sigma}{\partial s}\epsilon_1\right)\left(\frac{\partial\sigma}{\partial t}\epsilon_2\right) - \omega(\sigma(s,t))\left(\frac{\partial\sigma}{\partial t}\epsilon_2\right).\]
+\[d\omega\left(\frac{\partial\sigma}{\partial s}\epsilon_1, \frac{\partial\sigma}{\partial t}\epsilon_1\right) \approx \omega\left(p + \frac{\partial\sigma}{\partial s}\epsilon_1\right)\left(\frac{\partial\sigma}{\partial t}\epsilon_2\right) - \omega(p)\left(\frac{\partial\sigma}{\partial t}\epsilon_2\right) - \omega\left(p+\frac{\partial\sigma}{\partial t}\epsilon_2\right)\left(\frac{\partial\sigma}{\partial s}\epsilon_1\right) + \omega(p)\left(\frac{\partial\sigma}{\partial s}\epsilon_1\right).\]
 </p>
 
 <p>
-Adding these up, as we move in both the \(s\) and \(t\) directions, only the boundary terms survive TODOclaude.
+This expression is a bit of a mess! There are four terms, some of which we add and some we subtract. To get a better idea of what's going on, it is helpful to set \(\vec{v} = \frac{\partia\sigma}{\partial s}(p)\epsilon_1\) and \(\vec{w} = \frac{\partial\sigma}{\partial t}(p)\epsilon_2.\) Then our four terms come from the diagram below. 
+</p>
+
+<style>
+  #localStokesWidgetV3 {
+    --ls-bg0: #282828;
+    --ls-bg1: #3c3836;
+    --ls-bg2: #504945;
+    --ls-fg: #fbf1c7;
+    --ls-muted: #a89984;
+    --ls-blue: #83a598;
+    --ls-green: #8ec07c;
+    --ls-yellow: #fabd2f;
+    --ls-orange: #fe8019;
+    --ls-red: #fb4934;
+    --ls-mono: Monaco, Menlo, Consolas, monospace;
+    max-width: 700px;
+    margin: 1.25rem auto;
+    padding: 12px;
+    color: var(--ls-fg);
+    font-family: var(--ls-mono);
+  }
+  #localStokesWidgetV3 * { box-sizing: border-box; }
+  #localStokesWidgetV3 .ls-stage {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 340px;
+    background: var(--ls-bg0);
+    border: 1px solid var(--ls-bg2);
+    overflow: hidden;
+  }
+  #localStokesWidgetV3 svg { display: block; width: 100%; height: 100%; }
+  #localStokesWidgetV3 .ls-caption {
+    margin-top: 10px;
+    min-height: 92px;
+    padding: 10px 12px;
+    background: var(--ls-bg1);
+    border-left: 3px solid var(--ls-green);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  #localStokesWidgetV3 .ls-caption .sub {
+    display: block;
+    margin-top: 5px;
+    color: var(--ls-muted);
+    font-size: 12.5px;
+  }
+  #localStokesWidgetV3 .ls-formula {
+    display: block;
+    margin-top: 6px;
+    color: var(--ls-yellow);
+    font-size: 15px;
+  }
+  #localStokesWidgetV3 .ls-nav {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  #localStokesWidgetV3 .ls-btn {
+    font-family: var(--ls-mono);
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    background: var(--ls-bg1);
+    color: var(--ls-fg);
+    border: 1px solid var(--ls-bg2);
+    cursor: pointer;
+  }
+  #localStokesWidgetV3 .ls-btn:hover:not(:disabled) { background: var(--ls-bg2); }
+  #localStokesWidgetV3 .ls-btn:disabled { color: var(--ls-muted); opacity: .5; cursor: default; }
+  #localStokesWidgetV3 .ls-step { min-width: 44px; text-align: center; font-size: 12px; color: var(--ls-muted); }
+  @media (max-width: 600px) {
+    #localStokesWidgetV3 { padding: 8px 0; }
+    #localStokesWidgetV3 .ls-stage { min-height: 280px; }
+    #localStokesWidgetV3 .ls-caption { min-height: 118px; font-size: 13.5px; }
+  }
+</style>
+
+<div id="localStokesWidgetV3">
+  <div class="ls-stage" aria-label="Widget showing the local terms in Stokes' theorem on a tiny square.">
+    <svg viewBox="0 0 700 440" role="img" aria-label="Tiny square with four labeled vertices and local boundary-term annotations"></svg>
+  </div>
+  <div class="ls-caption" aria-live="polite"></div>
+  <div class="ls-nav">
+    <button class="ls-btn" id="lsPrev3">&lsaquo;</button>
+    <span class="ls-step"></span>
+    <button class="ls-btn" id="lsNext3">&rsaquo;</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('localStokesWidgetV3');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  const svg = root.querySelector('svg');
+  const caption = root.querySelector('.ls-caption');
+  const stepLabel = root.querySelector('.ls-step');
+  const prev = root.querySelector('#lsPrev3');
+  const next = root.querySelector('#lsNext3');
+  const NS = 'http://www.w3.org/2000/svg';
+  const C = {
+    bg0:'#282828', bg1:'#3c3836', bg2:'#504945', fg:'#fbf1c7', muted:'#a89984',
+    blue:'#83a598', green:'#8ec07c', yellow:'#fabd2f', orange:'#fe8019', red:'#fb4934'
+  };
+
+  const LAST = 5;
+  let step = 0;
+
+  const X = 150, Y = 85, W = 300, H = 220;
+  const BL = [X, Y + H];
+  const BR = [X + W, Y + H];
+  const TL = [X, Y];
+  const TR = [X + W, Y];
+
+  function E(name, attrs) {
+    const e = document.createElementNS(NS, name);
+    if (attrs) Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+    return e;
+  }
+  function add(node) { svg.appendChild(node); return node; }
+  function clear() { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+  function rect(x,y,w,h,fill,stroke,sw,op,rx) {
+    const e = E('rect', { x, y, width:w, height:h, fill:fill||'none', stroke:stroke||'none', 'stroke-width':sw||1, rx:rx||6 });
+    if (op != null) e.setAttribute('opacity', op);
+    return add(e);
+  }
+  function line(x1,y1,x2,y2,c,w,op,dash) {
+    const e = E('line', { x1, y1, x2, y2, stroke:c, 'stroke-width':w||2, 'stroke-linecap':'round' });
+    if (op != null) e.setAttribute('opacity', op);
+    if (dash) e.setAttribute('stroke-dasharray', dash);
+    return add(e);
+  }
+  function text(x,y,s,c,sz,a,wt,op) {
+    const e = E('text', { x, y, fill:c||C.fg, 'font-size':sz||16, 'font-family':'Monaco, Menlo, Consolas, monospace', 'text-anchor':a||'start' });
+    if (wt) e.setAttribute('font-weight', wt);
+    if (op != null) e.setAttribute('opacity', op);
+    e.textContent = s;
+    return add(e);
+  }
+  function arrow(x1,y1,x2,y2,c,w,op) {
+    const g = E('g');
+    if (op != null) g.setAttribute('opacity', op);
+    const ln = E('line', { x1, y1, x2, y2, stroke:c, 'stroke-width':w||3, 'stroke-linecap':'round' });
+    g.appendChild(ln);
+    const a = Math.atan2(y2-y1, x2-x1), h = 9;
+    const poly = E('polygon', { points:`${x2},${y2} ${x2-h*Math.cos(a-.46)},${y2-h*Math.sin(a-.46)} ${x2-h*Math.cos(a+.46)},${y2-h*Math.sin(a+.46)}`, fill:c });
+    g.appendChild(poly);
+    return add(g);
+  }
+  function dot(x,y,c,r,op) {
+    const e = E('circle', { cx:x, cy:y, r:r||5, fill:c });
+    if (op != null) e.setAttribute('opacity', op);
+    return add(e);
+  }
+  function ring(x,y,c,r,sw,op) {
+    const e = E('circle', { cx:x, cy:y, r:r||11, fill:'none', stroke:c, 'stroke-width':sw||3 });
+    if (op != null) e.setAttribute('opacity', op);
+    return add(e);
+  }
+
+  function badge(x,y,label,fill,stroke,textColor) {
+    const w = 34 + 9 * label.length;
+    rect(x, y-20, w, 28, fill, stroke, 1.5, 0.96, 6);
+    text(x + w/2, y, label, textColor || C.fg, 16, 'middle', 'bold');
+  }
+
+  function annotationBox(x, y, w, h, lines, color, targetX, targetY) {
+    rect(x, y, w, h, 'rgba(60,56,54,0.92)', color, 1.8, 1, 8);
+    if (targetX != null && targetY != null) {
+      const px = x, py = y + h/2;
+      line(px, py, targetX, targetY, color, 2.2, 0.95);
+    }
+    lines.forEach((item, i) => {
+      text(x + 12, y + 24 + i * 22, item, color, 17, 'start', i === 0 ? 'bold' : null);
+    });
+  }
+
+  function drawBase() {
+    rect(0, 0, 700, 440, C.bg0, C.bg0, 0, 1, 0);
+    rect(X, Y, W, H, 'rgba(80,73,69,0.36)', C.green, 3, 1, 0);
+
+    // subtle midpoint guides
+    line(X + W/2, Y + H, X + W/2, Y, C.bg2, 1.5, 0.26, '6 8');
+    line(X, Y + H/2, X + W, Y + H/2, C.bg2, 1.5, 0.26, '6 8');
+
+    dot(...BL, C.yellow, 5.5);
+    dot(...BR, C.yellow, 5.5);
+    dot(...TL, C.yellow, 5.5);
+    dot(...TR, C.yellow, 5.5);
+
+    text(BL[0] - 16, BL[1] + 30, 'p', C.fg, 17, 'start', 'bold');
+    text(BR[0] - 36, BR[1] + 30, 'p + v', C.fg, 17, 'start', 'bold');
+    text(TL[0] - 16, TL[1] - 14, 'p + w', C.fg, 17, 'start', 'bold');
+    text(TR[0] - 102, TR[1] - 14, 'p + v + w', C.fg, 17, 'start', 'bold');
+
+    // axes
+    arrow(X - 52, Y + H - 24, X - 52, Y + 24, C.muted, 2.4, 0.9);
+    text(X - 64, Y + 16, 't', C.muted, 16, 'middle', 'bold');
+    arrow(X + 28, Y + H + 48, X + W - 28, Y + H + 48, C.muted, 2.4, 0.9);
+    text(X + W + 12, Y + H + 54, 's', C.muted, 16, 'middle', 'bold');
+
+          text(X - 18, Y - 40, 'tiny region of σ', C.fg, 18, 'start');
+  }
+
+  function highlightCorner(pt, color) {
+    ring(pt[0], pt[1], color, 13, 3.2, 0.96);
+    dot(pt[0], pt[1], color, 6.8, 1);
+  }
+
+  function slide1() {
+    drawBase();
+  }
+  function slide2() {
+    drawBase();
+    highlightCorner(BR, C.blue);
+    annotationBox(495, 145, 165, 52, ['+ ω(p+v)(w)'], C.blue, BR[0] + 10, BR[1] - 10);
+  }
+  function slide3() {
+    drawBase();
+    highlightCorner(BL, C.orange);
+    annotationBox(495, 145, 152, 52, ['− ω(p)(w)'], C.orange, BL[0] + 10, BL[1] - 10);
+  }
+  function slide4() {
+    drawBase();
+    highlightCorner(TL, C.red);
+    annotationBox(495, 145, 170, 52, ['− ω(p+w)(v)'], C.red, TL[0] + 12, TL[1] + 10);
+  }
+  function slide5() {
+    drawBase();
+    highlightCorner(BL, C.green);
+    annotationBox(495, 145, 152, 52, ['+ ω(p)(v)'], C.green, BL[0] + 10, BL[1] - 10);
+  }
+  function slide6() {
+    drawBase();
+    badge(BR[0] - 30, BR[1] - 18, '+', C.blue, C.blue, C.bg0);
+    badge(TL[0] + 16, TL[1] + 24, '−', C.red, C.red, C.bg0);
+    badge(BL[0] + 16, BL[1] - 26, '+', C.green, C.green, C.bg0);
+    badge(BL[0] + 58, BL[1] - 26, '−', C.orange, C.orange, C.bg0);
+    annotationBox(486, 124, 178, 108,
+      ['all four terms', '+ at p+v', '− at p+w', '+ and − at p'],
+      C.yellow, X + W + 6, Y + H/2);
+  }
+
+  function updateCaption() {
+    if (step === 0) {
+      caption.innerHTML = 'This is our small portion of σ.';
+    } else if (step === 1) {
+            caption.innerHTML = 'The first term in our sum is comes from evaluating ω at <b>p+v</b> with argument <b>w</b>.'
+        + '<span class="ls-formula">+ ω(p+v)(w)</span>';
+    } else if (step === 2) {
+            caption.innerHTML = 'The second term of our sum subtracts ω evaluated at <b>p</b> with argument <b>w</b>.'
+        + '<span class="ls-formula">− ω(p)(w)</span>';
+    } else if (step === 3) {
+      caption.innerHTML = 'The top edge contributes a term involving <b>v</b> based at the point <b>p+w</b>, again with a minus sign.'
+        + '<span class="ls-formula">− ω(p+w)(v)</span>';
+    } else if (step === 4) {
+      caption.innerHTML = 'The bottom edge contributes the remaining positive term based at <b>p</b>.'
+        + '<span class="ls-formula">+ ω(p)(v)</span>';
+    } else {
+      caption.innerHTML = 'Putting the four corner contributions together gives the local boundary expression for this tiny patch.'
+        + '<span class="ls-formula">+ ω(p+v)(w) − ω(p)(w) − ω(p+w)(v) + ω(p)(v)</span>';
+    }
+    stepLabel.textContent = `${step + 1} / ${LAST + 1}`;
+    prev.disabled = step === 0;
+    next.disabled = step === LAST;
+  }
+
+  function render() {
+    clear();
+    [slide1, slide2, slide3, slide4, slide5, slide6][step]();
+    updateCaption();
+  }
+
+  prev.addEventListener('click', () => { if (step > 0) { step--; render(); } });
+  next.addEventListener('click', () => { if (step < LAST) { step++; render(); } });
+  render();
+})();
+</script>
+
+<p>
+An incredible cancellation occurs when we put a few of these small regions next to each other.
+</p>
+
+<style>
+  #stokesGridWidgetV4 {
+    --sg-bg0: #282828;
+    --sg-bg1: #3c3836;
+    --sg-bg2: #504945;
+    --sg-fg: #fbf1c7;
+    --sg-muted: #a89984;
+    --sg-blue: #83a598;
+    --sg-green: #8ec07c;
+    --sg-yellow: #fabd2f;
+    --sg-orange: #fe8019;
+    --sg-red: #fb4934;
+    --sg-mono: Monaco, Menlo, Consolas, monospace;
+
+    max-width: 760px;
+    margin: 1.25rem auto;
+    padding: 12px;
+    color: var(--sg-fg);
+    font-family: var(--sg-mono);
+  }
+  #stokesGridWidgetV4 * { box-sizing: border-box; }
+  #stokesGridWidgetV4 .sg-stage {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 360px;
+    background: var(--sg-bg0);
+    border: 1px solid var(--sg-bg2);
+    overflow: hidden;
+  }
+  #stokesGridWidgetV4 svg { display:block; width:100%; height:100%; }
+  #stokesGridWidgetV4 .sg-caption {
+    margin-top: 10px;
+    min-height: 88px;
+    padding: 10px 12px;
+    background: var(--sg-bg1);
+    border-left: 3px solid var(--sg-green);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  #stokesGridWidgetV4 .sg-caption .sub {
+    display:block;
+    margin-top:5px;
+    color: var(--sg-muted);
+    font-size: 12.5px;
+  }
+  #stokesGridWidgetV4 .sg-formula {
+    display:block;
+    margin-top:6px;
+    color: var(--sg-yellow);
+    font-size: 15px;
+  }
+  #stokesGridWidgetV4 .sg-nav {
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+  }
+  #stokesGridWidgetV4 .sg-btn {
+    font-family: var(--sg-mono);
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height:1;
+    background: var(--sg-bg1);
+    color: var(--sg-fg);
+    border:1px solid var(--sg-bg2);
+    cursor:pointer;
+  }
+  #stokesGridWidgetV4 .sg-btn:hover:not(:disabled) { background: var(--sg-bg2); }
+  #stokesGridWidgetV4 .sg-btn:disabled { color: var(--sg-muted); opacity: .5; cursor: default; }
+  #stokesGridWidgetV4 .sg-step { min-width:44px; text-align:center; font-size:12px; color: var(--sg-muted); }
+  @media (max-width: 600px) {
+    #stokesGridWidgetV4 { padding: 8px 0; }
+    #stokesGridWidgetV4 .sg-stage { min-height: 300px; }
+    #stokesGridWidgetV4 .sg-caption { min-height: 112px; font-size: 13.5px; }
+  }
+</style>
+
+<div id="stokesGridWidgetV4">
+  <div class="sg-stage" aria-label="A two-by-two grid illustrating local terms and cancellation in Stokes' theorem.">
+    <svg viewBox="0 0 760 480" role="img" aria-label="Two by two grid with labeled vertices and cancelling local terms"></svg>
+  </div>
+  <div class="sg-caption" aria-live="polite"></div>
+  <div class="sg-nav">
+    <button class="sg-btn" id="sgPrev4">&lsaquo;</button>
+    <span class="sg-step"></span>
+    <button class="sg-btn" id="sgNext4">&rsaquo;</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('stokesGridWidgetV4');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  const svg = root.querySelector('svg');
+  const caption = root.querySelector('.sg-caption');
+  const stepLabel = root.querySelector('.sg-step');
+  const prev = root.querySelector('#sgPrev4');
+  const next = root.querySelector('#sgNext4');
+  const NS = 'http://www.w3.org/2000/svg';
+
+  const C = {
+    bg0:'#282828', bg1:'#3c3836', bg2:'#504945', fg:'#fbf1c7', muted:'#a89984',
+    blue:'#83a598', green:'#8ec07c', yellow:'#fabd2f', orange:'#fe8019', red:'#fb4934'
+  };
+
+  const LAST = 10;
+  let step = 0;
+
+  const X = 205, Y = 105, CELL = 135;
+  const W = 2 * CELL, H = 2 * CELL;
+
+  function E(name, attrs) {
+    const e = document.createElementNS(NS, name);
+    if (attrs) Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+    return e;
+  }
+  function add(node) { svg.appendChild(node); return node; }
+  function clear() { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+  function rect(x,y,w,h,fill,stroke,sw,op,rx) {
+    const e = E('rect', { x, y, width:w, height:h, fill:fill||'none', stroke:stroke||'none', 'stroke-width':sw||1, rx:rx||0 });
+    if (op != null) e.setAttribute('opacity', op);
+    return add(e);
+  }
+  function line(x1,y1,x2,y2,c,w,op,dash) {
+    const e = E('line', { x1, y1, x2, y2, stroke:c, 'stroke-width':w||2, 'stroke-linecap':'round' });
+    if (op != null) e.setAttribute('opacity', op);
+    if (dash) e.setAttribute('stroke-dasharray', dash);
+    return add(e);
+  }
+  function text(x,y,s,c,sz,a,wt,op) {
+    const e = E('text', { x, y, fill:c||C.fg, 'font-size':sz||16, 'font-family':'Monaco, Menlo, Consolas, monospace', 'text-anchor':a||'start' });
+    if (wt) e.setAttribute('font-weight', wt);
+    if (op != null) e.setAttribute('opacity', op);
+    e.textContent = s;
+    return add(e);
+  }
+  function dot(x,y,c,r,op) {
+    const e = E('circle', { cx:x, cy:y, r:r||4.5, fill:c });
+    if (op != null) e.setAttribute('opacity', op);
+    return add(e);
+  }
+  function ring(x,y,c,r,sw,op) {
+    const e = E('circle', { cx:x, cy:y, r:r||13, fill:'none', stroke:c, 'stroke-width':sw||3 });
+    if (op != null) e.setAttribute('opacity', op);
+    return add(e);
+  }
+  function arrow(x1,y1,x2,y2,c,w,op) {
+    const g = E('g');
+    if (op != null) g.setAttribute('opacity', op);
+    g.appendChild(E('line', { x1, y1, x2, y2, stroke:c, 'stroke-width':w||3, 'stroke-linecap':'round' }));
+    const a = Math.atan2(y2-y1, x2-x1), h = 9;
+    g.appendChild(E('polygon', { points:`${x2},${y2} ${x2-h*Math.cos(a-.46)},${y2-h*Math.sin(a-.46)} ${x2-h*Math.cos(a+.46)},${y2-h*Math.sin(a+.46)}`, fill:c }));
+    return add(g);
+  }
+
+  function badge(x,y,label,color,scale,opacity) {
+    const fs = scale || 13;
+    const op = opacity == null ? 1 : opacity;
+    const width = 30 + 7.4 * label.length;
+    rect(x - width/2, y - 15, width, 25, 'rgba(40,40,40,0.96)', color, 1.5, op, 5);
+    text(x, y + 2, label, color, fs, 'middle', 'bold', op);
+  }
+  function cancelMark(x,y,op) {
+    line(x-8,y-8,x+8,y+8,C.yellow,3.2,op == null ? 1 : op);
+    line(x-8,y+8,x+8,y-8,C.yellow,3.2,op == null ? 1 : op);
+  }
+  function annotationBox(x,y,w,h,title,lines,color) {
+    rect(x,y,w,h,'rgba(60,56,54,0.94)',color,1.6,1,8);
+    text(x+w/2,y+23,title,C.muted,14,'middle','bold');
+    lines.forEach((s,i) => text(x+12, y+50 + 25*i, s, color, 15, 'start', 'bold'));
+  }
+
+  function drawAxes() {
+    arrow(X - 55, Y + H - 18, X - 55, Y + 18, C.muted, 2.3, 0.9);
+    text(X - 67, Y + 10, 't', C.muted, 16, 'middle', 'bold');
+    arrow(X + 22, Y + H + 48, X + W - 22, Y + H + 48, C.muted, 2.3, 0.9);
+    text(X + W + 12, Y + H + 54, 's', C.muted, 16, 'middle', 'bold');
+  }
+
+  function drawGrid(cellHighlights) {
+    rect(0,0,760,480,C.bg0,C.bg0,0,1,0);
+    for (let j = 0; j < 2; j++) {
+      for (let i = 0; i < 2; i++) {
+        const hi = !cellHighlights || cellHighlights.some(([a,b]) => a === i && b === j);
+        rect(X + i*CELL, Y + j*CELL, CELL, CELL,
+          hi ? 'rgba(80,73,69,0.36)' : 'rgba(80,73,69,0.18)',
+          hi ? C.green : C.bg2,
+          hi ? 2.8 : 1.6,
+          hi ? 1 : 0.65,
+          0);
+      }
+    }
+    drawAxes();
+    text(X - 8, Y - 58, 'four tiny regions of σ', C.fg, 18, 'start');
+    for (let j = 0; j <= 2; j++) {
+      for (let i = 0; i <= 2; i++) dot(X + i*CELL, Y + j*CELL, C.yellow, 4.8, 1);
+    }
+  }
+
+  function drawVertexLabels(opacity) {
+    const op = opacity == null ? 1 : opacity;
+    const xs = [X, X+CELL, X+2*CELL];
+    const ys = [Y, Y+CELL, Y+2*CELL];
+    text(xs[0], ys[0]-18, 'p+w₁+w₂', C.fg, 13, 'middle', null, op);
+    text(xs[1], ys[0]-18, 'p+v₁+w₁+w₂', C.fg, 13, 'middle', null, op);
+    text(xs[2]+8, ys[0]-18, 'p+v₁+v₂+w₁+w₂', C.fg, 13, 'middle', null, op);
+
+    text(xs[0]-10, ys[1]+5, 'p+w₁', C.fg, 13, 'end', null, op);
+    text(xs[1]+4, ys[1]-13, 'p+v₁+w₁', C.fg, 13, 'middle', null, op);
+    text(xs[2]+12, ys[1]+5, 'p+v₁+v₂+w₁', C.fg, 13, 'start', null, op);
+
+    text(xs[0]-8, ys[2]+27, 'p', C.fg, 14, 'end', 'bold', op);
+    text(xs[1], ys[2]+27, 'p+v₁', C.fg, 14, 'middle', 'bold', op);
+    text(xs[2]+10, ys[2]+27, 'p+v₁+v₂', C.fg, 14, 'start', 'bold', op);
+  }
+
+  function slide1() {
+    drawGrid();
+    drawVertexLabels(1);
+  }
+
+  function slide2() {
+    drawGrid([[0,1]]);
+    drawVertexLabels(0.4);
+    const P = [X, Y+CELL];
+    ring(P[0], P[1], C.yellow, 14, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.3, 1);
+    text(P[0]-14, P[1]-19, 'p+w₁', C.yellow, 15, 'end', 'bold');
+    badge(P[0]+34, P[1]+31, '−v₁', C.red, 14);
+    annotationBox(500, 140, 224, 80, '', ['− ω(p+w₁)(v₁)'], C.yellow);
+  }
+
+  function slide3() {
+    drawGrid([[0,0]]);
+    drawVertexLabels(0.4);
+    const P = [X, Y+CELL];
+    ring(P[0], P[1], C.yellow, 14, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.3, 1);
+    text(P[0]-14, P[1]-19, 'p+w₁', C.yellow, 15, 'end', 'bold');
+    badge(P[0]+34, P[1]-28, '+v₁', C.green, 14);
+    badge(P[0]+88, P[1]-28, '−w₂', C.orange, 14);
+    annotationBox(484, 132, 240, 104, 'from the top-left square', ['+ ω(p+w₁)(v₁)', '− ω(p+w₁)(w₂)'], C.yellow);
+  }
+
+  function slide4() {
+    drawGrid([[0,0],[0,1]]);
+    drawVertexLabels(0.4);
+    const P = [X, Y+CELL];
+    ring(P[0], P[1], C.yellow, 14, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.3, 1);
+    text(P[0]-14, P[1]-19, 'p+w₁', C.yellow, 15, 'end', 'bold');
+    badge(P[0]+34, P[1]-28, '+v₁', C.green, 14, 0.35);
+    badge(P[0]+34, P[1]+31, '−v₁', C.red, 14, 0.35);
+    cancelMark(P[0]+82, P[1]+2, 1);
+    badge(P[0]+88, P[1]-28, '−w₂', C.orange, 14);
+    annotationBox(490, 132, 234, 104, '', ['the two v₁ terms cancel', 'only -w₂ survives'], C.yellow);
+  }
+
+  function slide5() {
+    drawGrid([[0,1]]);
+    drawVertexLabels(0.4);
+    const P = [X+CELL, Y+2*CELL];
+    ring(P[0], P[1], C.yellow, 14, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.3, 1);
+    text(P[0], P[1]+30, 'p+v₁', C.yellow, 15, 'middle', 'bold');
+    badge(P[0]-34, P[1]-30, '+w₁', C.blue, 14);
+    annotationBox(500, 140, 224, 80, 'from the bottom-left square', ['+ ω(p+v₁)(w₁)'], C.yellow);
+  }
+
+  function slide6() {
+    drawGrid([[1,1]]);
+    drawVertexLabels(0.4);
+    const P = [X+CELL, Y+2*CELL];
+    ring(P[0], P[1], C.yellow, 14, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.3, 1);
+    text(P[0], P[1]+30, 'p+v₁', C.yellow, 15, 'middle', 'bold');
+    badge(P[0]+34, P[1]-30, '−w₁', C.orange, 14);
+    badge(P[0]+34, P[1]+31, '+v₂', C.green, 14);
+    annotationBox(484, 132, 240, 104, 'from the bottom-right square', ['− ω(p+v₁)(w₁)', '+ ω(p+v₁)(v₂)'], C.yellow);
+  }
+
+  function slide7() {
+    drawGrid([[0,1],[1,1]]);
+    drawVertexLabels(0.4);
+    const P = [X+CELL, Y+2*CELL];
+    ring(P[0], P[1], C.yellow, 14, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.3, 1);
+    text(P[0], P[1]+30, 'p+v₁', C.yellow, 15, 'middle', 'bold');
+    badge(P[0]-34, P[1]-30, '+w₁', C.blue, 14, 0.35);
+    badge(P[0]+34, P[1]-30, '−w₁', C.orange, 14, 0.35);
+    cancelMark(P[0], P[1]-72, 1);
+    badge(P[0]+34, P[1]+31, '+v₂', C.green, 14);
+    annotationBox(490, 132, 234, 104, '', ['+w₁-w₁ cancels', 'leaving only +v₂'], C.yellow);
+  }
+
+  function slide8() {
+    drawGrid([[0,0],[1,0],[1,1]]);
+    drawVertexLabels(0.36);
+    const P = [X+CELL, Y+CELL];
+    ring(P[0], P[1], C.yellow, 15, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.5, 1);
+    text(P[0]+6, P[1]-18, 'p+v₁+w₁', C.yellow, 15, 'start', 'bold');
+    badge(P[0]-48, P[1]-30, '+w₂', C.blue, 14);
+    badge(P[0]+48, P[1]-30, '−w₂', C.orange, 14);
+    badge(P[0]-48, P[1]+31, '−v₂', C.red, 14);
+    badge(P[0]+48, P[1]+31, '+v₂', C.green, 14);
+    annotationBox(500, 132, 224, 104, 'at the interior point', ['+w₂ −w₂, +v₂ −v₂', ''], C.yellow);
+  }
+
+  function slide9() {
+    drawGrid([[0,0],[1,0],[1,1]]);
+    drawVertexLabels(0.36);
+    const P = [X+CELL, Y+CELL];
+    ring(P[0], P[1], C.yellow, 15, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.5, 1);
+    text(P[0]+6, P[1]-18, 'p+v₁+w₁', C.yellow, 15, 'start', 'bold');
+    badge(P[0]-48, P[1]-30, '+w₂', C.blue, 14, 0.35);
+    badge(P[0]+48, P[1]-30, '−w₂', C.orange, 14, 0.35);
+    badge(P[0]-48, P[1]+31, '−v₂', C.red, 14, 0.35);
+    badge(P[0]+48, P[1]+31, '+v₂', C.green, 14, 0.35);
+    cancelMark(P[0], P[1]-28, 1);
+    cancelMark(P[0], P[1]+28, 1);
+    annotationBox(500, 132, 224, 104, 'everything cancels!', ['+w₂ cancels −w₂', '+v₂ cancels −v₂'], C.yellow);
+  }
+
+  function slide10() {
+    drawGrid([[0,0],[1,0],[1,1]]);
+    drawVertexLabels(0.36);
+    const P = [X+CELL, Y+CELL];
+    ring(P[0], P[1], C.yellow, 15, 3.2, 1);
+    dot(P[0], P[1], C.yellow, 6.5, 1);
+    text(P[0]+6, P[1]-18, 'p+v₁+w₁', C.yellow, 15, 'start', 'bold');
+    text(P[0], P[1]+6, '0', C.yellow, 24, 'middle', 'bold');
+    annotationBox(510, 150, 214, 78, 'complete cancellation', ['nothing remains'], C.yellow);
+  }
+
+  function slide11() {
+    drawGrid();
+    drawVertexLabels(0.22);
+    line(X+CELL, Y+8, X+CELL, Y+H-8, C.bg2, 4, 0.3, '7 8');
+    line(X+8, Y+CELL, X+W-8, Y+CELL, C.bg2, 4, 0.3, '7 8');
+
+    // boundary leftovers shown on boundary segments
+    badge(X + CELL*0.5, Y + H - 26, '+v₁', C.green, 13);
+    badge(X + CELL*1.5, Y + H - 26, '+v₂', C.green, 13);
+    badge(X + 26, Y + CELL*1.5, '−w₁', C.orange, 13);
+    badge(X + 26, Y + CELL*0.5, '−w₂', C.orange, 13);
+    badge(X + W - 26, Y + CELL*1.5, '+w₁', C.blue, 13);
+    badge(X + W - 26, Y + CELL*0.5, '+w₂', C.blue, 13);
+    badge(X + CELL*0.5, Y + 26, '−v₁', C.red, 13);
+    badge(X + CELL*1.5, Y + 26, '−v₂', C.red, 13);
+
+    text(607, 128, 'interior terms', C.muted, 15, 'middle');
+    text(607, 152, 'cancel completely', C.yellow, 18, 'middle', 'bold');
+    text(607, 182, 'only boundary terms', C.muted, 15, 'middle');
+    text(607, 206, 'survive', C.yellow, 18, 'middle', 'bold');
+  }
+
+  function updateCaption() {
+    if (step === 0) {
+      caption.innerHTML = 'Start with the 2×2 grid and label all nine vertices.'
+        + '<span class="sub">The horizontal increments are <b>v₁, v₂</b>, and the vertical increments are <b>w₁, w₂</b>.</span>';
+    } else if (step === 1) {
+      caption.innerHTML = 'At <b>p+w₁</b>, the bottom-left square contributes the term'
+        + '<span class="sg-formula">−ω(p+w₁)(v₁).</span>';
+    } else if (step === 2) {
+      caption.innerHTML = 'That same point <b>p+w₁</b> also receives two contributions from the top-left square.'
+        + '<span class="sg-formula">+ω(p+w₁)(v₁) and −ω(p+w₁)(w₂).</span>';
+    } else if (step === 3) {
+      caption.innerHTML = 'The <b>+ω(p+w₁)(v₁)</b> and <b>−ω(p+w₁)(v₁)</b> terms cancel, so only one term remains there.'
+        + '<span class="sg-formula">−ω(p+w₁)(w₂).</span>';
+    } else if (step === 4) {
+      caption.innerHTML = 'At <b>p+v₁</b>, the bottom-left square contributes'
+        + '<span class="sg-formula">+ω(p+v₁)(w₁).</span>';
+    } else if (step === 5) {
+      caption.innerHTML = 'That same point <b>p+v₁</b> also receives two contributions from the bottom-right square.'
+        + '<span class="sg-formula">−ω(p+v₁)(w₁) and +ω(p+v₁)(v₂).</span>';
+    } else if (step === 6) {
+      caption.innerHTML = 'The <b>+ω(p+v₁)(w₁)</b> and <b>−ω(p+v₁)(w₁)</b> terms cancel, so only one term remains there.'
+        + '<span class="sg-formula">+ω(p+v₁)(v₂).</span>';
+    } else if (step === 7) {
+      caption.innerHTML = 'Now look at the interior point <b>p+v₁+w₁</b>. It receives four contributions from the neighboring squares.'
+        + '<span class="sg-formula">+w₂, −w₂, +v₂, −v₂.</span>';
+    } else if (step === 8) {
+      caption.innerHTML = 'These interior contributions cancel in pairs.'
+        + '<span class="sg-formula">+ω(p+v₁+w₁)(w₂) − ω(p+v₁+w₁)(w₂) = 0, &nbsp; +ω(p+v₁+w₁)(v₂) − ω(p+v₁+w₁)(v₂) = 0.</span>';
+    } else if (step === 9) {
+      caption.innerHTML = 'So the interior point <b>p+v₁+w₁</b> contributes nothing at all after cancellation.'
+        + '<span class="sg-formula">Everything there cancels completely.</span>';
+    } else {
+      caption.innerHTML = 'This is the global pattern: every interior term cancels completely, and only the terms lying on the boundary of the whole 2×2 region survive.'
+        + '<span class="sub">Those surviving boundary terms are exactly the ones shown on the four outer sides.</span>';
+    }
+    stepLabel.textContent = `${step + 1} / ${LAST + 1}`;
+    prev.disabled = step === 0;
+    next.disabled = step === LAST;
+  }
+
+  function render() {
+    clear();
+    [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10, slide11][step]();
+    updateCaption();
+  }
+
+  prev.addEventListener('click', () => { if (step > 0) { step--; render(); } });
+  next.addEventListener('click', () => { if (step < LAST) { step++; render(); } });
+  render();
+})();
+</script>
+
+<p>
+Thus, when we evaluate the entire surface integral, we get an enormous amount of cancellation. The only terms which survive come from the boundary of our surface \(\sigma.\) 
 </p>
 
 <p>
-So, TODOclaude labels
-\[\int_{\sigma} d\omega = \int_a \omega + \int_b\omega + \int_c \omega + \int_d \omega.\] 
+As is seen on slide 11 in the widget above, the only terms surviving on the bottom side of our region are the terms
+\[\omega(p)(\vec{v}_1) + \omega(p+\vec{v}_1)(\vec{v}_1 + \vec{v}_2) + \cdots,\]
+where the extra terms would appear if we continued our tiling instead of just looking at this small \(2\times 2\) chunk. 
 </p>
+
+<p>
+As we cover our region with smaller and smaller squares, the above difference converges to
+\[\int_a \omega,\]
+where \(a\) is just the bottom side of \(\sigma.\) Similarly studying the other three sides of \(\sigma,\) we find 
+\[\int_{\sigma}d\omega = \int_a \omega + \int_b\omega - \int_c \omega - \int_d\omega,\]
+where \(a,b,c,d\) are as in the below figure.
+</p>
+
+<style>
+  #signedBoundarySurfaceWidgetV2 {
+    --sb-bg0: #282828;
+    --sb-bg1: #3c3836;
+    --sb-bg2: #504945;
+    --sb-fg: #fbf1c7;
+    --sb-muted: #a89984;
+    --sb-blue: #83a598;
+    --sb-green: #8ec07c;
+    --sb-yellow: #fabd2f;
+    --sb-orange: #fe8019;
+    --sb-red: #fb4934;
+    --sb-mono: Monaco, Menlo, Consolas, monospace;
+
+    max-width: 760px;
+    margin: 1.25rem auto;
+    padding: 12px;
+    color: var(--sb-fg);
+    font-family: var(--sb-mono);
+  }
+  #signedBoundarySurfaceWidgetV2 * { box-sizing: border-box; }
+  #signedBoundarySurfaceWidgetV2 .sb-stage {
+    width: 100%;
+    background: var(--sb-bg0);
+    border: 1px solid var(--sb-bg2);
+    overflow: hidden;
+  }
+  #signedBoundarySurfaceWidgetV2 svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  #signedBoundarySurfaceWidgetV2 .sb-caption {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: var(--sb-bg1);
+    border-left: 3px solid var(--sb-green);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  #signedBoundarySurfaceWidgetV2 .sb-caption .sub {
+    display: block;
+    margin-top: 5px;
+    color: var(--sb-muted);
+    font-size: 12.5px;
+  }
+  #signedBoundarySurfaceWidgetV2 .sb-formula {
+    display: block;
+    margin-top: 7px;
+    color: var(--sb-yellow);
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    #signedBoundarySurfaceWidgetV2 { padding: 8px 0; }
+    #signedBoundarySurfaceWidgetV2 .sb-caption { font-size: 13.5px; }
+  }
+</style>
+
+<div id="signedBoundarySurfaceWidgetV2">
+  <div class="sb-stage" aria-label="Static widget showing a curved four-sided surface patch with boundary pieces a, b, c, d and their signs.">
+    <svg viewBox="0 0 760 420" role="img" aria-label="A four-sided curved surface patch with sides a, b, c, d. The sides a and b are positive, while c and d are negative.">
+      <defs>
+        <marker id="sbArrowGreen2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#8ec07c"></path>
+        </marker>
+        <marker id="sbArrowBlue2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#83a598"></path>
+        </marker>
+        <marker id="sbArrowRed2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#fb4934"></path>
+        </marker>
+        <marker id="sbArrowOrange2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#fe8019"></path>
+        </marker>
+      </defs>
+
+      <rect x="0" y="0" width="760" height="420" fill="#282828"></rect>
+
+      <text x="72" y="52" fill="#fbf1c7" font-size="18" font-family="Monaco, Menlo, Consolas, monospace"></text>
+
+      <!-- simple four-sided blob -->
+      <path d="M 160 280
+               C 260 330, 410 330, 545 265
+               C 615 230, 632 170, 590 125
+               C 470 78, 305 82, 185 130
+               C 142 170, 132 225, 160 280 z"
+            fill="#504945" fill-opacity="0.74" stroke="#8ec07c" stroke-width="4"></path>
+
+      <!-- boundary sides only -->
+      <path d="M 168 278 C 255 318, 397 320, 536 267"
+            fill="none" stroke="#8ec07c" stroke-width="6"></path>
+      <path d="M 542 264 C 603 233, 620 181, 590 131"
+            fill="none" stroke="#83a598" stroke-width="6"></path>
+      <path d="M 588 126 C 470 84, 310 88, 188 132"
+            fill="none" stroke="#fb4934" stroke-width="6" ></path>
+      <path d="M 182 136 C 152 172, 144 225, 165 274"
+            fill="none" stroke="#fe8019" stroke-width="6"></path>
+
+      <!-- labels -->
+      <g font-family="Monaco, Menlo, Consolas, monospace" font-size="20" font-weight="bold">
+        <text x="338" y="334" fill="#8ec07c">a</text>
+        <text x="615" y="208" fill="#83a598">b</text>
+        <text x="423" y="78" fill="#fb4934">c</text>
+        <text x="113" y="204" fill="#fe8019">d</text>
+      </g>
+
+      <!-- sign labels -->
+      <g font-family="Monaco, Menlo, Consolas, monospace" font-size="22" font-weight="bold">
+        <text x="340" y="362" fill="#8ec07c">+</text>
+        <text x="645" y="210" fill="#83a598">+</text>
+        <text x="445" y="56" fill="#fb4934">−</text>
+        <text x="84" y="206" fill="#fe8019">−</text>
+      </g>
+
+      <text x="365" y="210" fill="#fabd2f" font-size="24" font-family="Monaco, Menlo, Consolas, monospace" font-weight="bold">σ</text>
+
+      <text x="64" y="385" fill="#fabd2f" font-size="18" font-family="Monaco, Menlo, Consolas, monospace" font-weight="bold">∫σ dω = ∫a ω + ∫b ω − ∫c ω − ∫d ω</text>
+    </svg>
+  </div>
+</div>
 
 <p>
 Sometimes people abbreviate this to 
 \[\int_{\sigma} d\omega = \int_{\partial\sigma} \omega,\]
-where \(\partial\sigma\) means "boundary of \(\sigma\)" -- that is, the four sides \(a,b,c,d,\) oriented the way TODO. 
+where \(\partial\sigma\) means "boundary of \(\sigma\)" -- that is, the four sides \(a,b,c,d,\) but with \(a\) and \(b\) considered positive, and \(c, d\) considered negative. 
 </p>
 
 <h2>Differential forms</h2>
@@ -858,7 +3758,7 @@ where (as in our surface integral case) we write \(\partial\sigma\) to mean the 
 </p>
 
 <p>
-These ideas are the beginnings of the field of <em>differential geometry</em>. TODO: conclusion
+These ideas are the beginnings of the field of <em>differential geometry</em>. In differential geometry, one tries to do calculus on exotic shapes; this is incredibly useful for physics, as it turns out that most of the laws of physics are phrased in terms of calculus, but the shapes in our universe (the surface of the Earth, or even the structure of spacetime itself!) are not perfectly flat Euclidean planes, so that usual multivariable calculus doesn't directly apply. Differential geometry of incredibly high-dimensional shapes is also useful in abstract mathematics, because sometimes these shapes can represent rather concrete objects! We hope you're now more prepared to do calculus anywhere you need to -- and we hope that seeing how calculus is generalized to exotic shapes gives you a better appreciation of what makes calculus work in the usual settings!
 </p>
 
 <!-- MailerLite Universal -->
