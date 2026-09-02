@@ -54,10 +54,15 @@
 <h2>Least action principle: yet again</h2>
 Let's quickly review <a href="lagrangian.html">Lagrangian mechanics</a>. We start with the a certain function, known as the Lagrangian,
 \[
+L(q_1,\dots,q_n,\dot q_1,\dots,\dot q_n,t),
+\]
+which depends on coordinates \(q_1,\dots,q_n\), the <em>generalized velocity</em> \(\dot q_1,\dots,\dot q_n\), and time \(t\). 
+Throughout the article, to simplify notation we will often simply write
+\[
 L(q,\dot q,t),
 \]
-which depends on a coordinate \(q\), the velocity with respect to the coordinate \(\dot q\), and time \(t\). 
-In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the usual Euclidean coordinate \(x\), so \(\dot q=v\) was velocity.
+where \(q\) should be understood to be shorthand for \(q_1,\dots,q_n\).
+In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the usual cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
  But we could have taken \(q\) to be anything; at the end of the article we thought about the pendulum and used \(q=\theta\) the angle.
 
 <p>
@@ -103,7 +108,20 @@ In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the us
   This is the Euler-Lagrange equation!
 </p>
 
-<h3>Predicting where particles go</h3>
+<h3>Generalized coordinates</h3>
+
+<p>
+Let us introduce some terminology. We call \(q_i\) the generalized coordinate, and \(\dot q_i\) the generalized velocity.
+We call the derivative \(p_i=\frac{\partial L}{\partial\dot q_i}\) the <em>generalized momentum</em>, and the derivative \(F_i=\frac{\partial L}{\partial q_i}\) the <em>generalized force</em>.
+Then the Euler-Lagrange equation is non other than\[F_i=\frac{dp_i}{dt}.\]
+When \(q=x\) is the cartesian coordinate then \(\dot q=v\) is the usual velocity, and when the Lagrangian is \(L(x,v)=\frac12mv^2-V(x)\) where \(V(x)\) is potential energy, as we saw in our previous <a href="lagrangian.html">article</a>, we see
+\[
+p=\frac{\partial L}{\partial v}=mv
+\]
+is the usual momentum and \(F=\frac{\partial L}{\partial q}\) is the usual force. This is exactly Newton's famous equation!
+</p>
+
+<h2>Predicting where particles go</h2>
 In the previous paragraph, we assumed we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
 <img src="least_action2.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
@@ -136,6 +154,23 @@ This is closer to what we really want to do; knowing where the particle starts o
   The extra term \(\frac{\partial L}{\partial\dot q}(t_1)\delta q(t_1)\) follows along the entire derivation, and so
   \[
   \delta S=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)+\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
+  \]
+  When \(q(t)\) satisfies the Euler-Lagrange equation the integral vanishes and
+  \[
+  \delta S=p(t_1)\delta q(t_1).
+  \]
+  Here, \(p=\frac{\partial L}{\partial\dot q}\) denotes the generalized momentum.
+  With \(n\) degrees of freedom, we similarly have
+  \[
+  \delta S=\sum_{i=1}^np_i(t_1)\delta q_i(t_1),
+  \]
+  where \(p_i=\frac{\partial L}{\partial\dot q_i}\). 
+</p>
+
+<p>
+  This means, if we cosnider the action \(S\) as a function of the end position \(q_i=q_i(t_1)\), then
+  \[
+  \frac{\partial S}{\partial q_i}=p_i.
   \]
 </p>
 
