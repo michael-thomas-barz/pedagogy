@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Using calculus to do number theory</title>
+  <title>Mechanics III: the Hamiltonian</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -17,17 +17,34 @@
 
 <a href="../index.html">← back</a>
 
-<h1>Mehanics III: what are generalized coordinates?</h1>
-<p class="meta">August 29, 2026</p>
+<h1>Mechanics III: the Hamiltonian</h1>
+<p class="meta">September 12, 2026</p>
 
 <p>
-<a href="lagrangian.html">Two weeks ago</a> we discussed Lagrange's approach to mechanics, based on the principle of least action.
-The most basic object was the <em>Lagrangian</em>, and we derived all our laws of physics from it.
-This week we will discuss yet another approach to classical mechanics, due to Hamilton, due to Hamilton, based on <em>energy</em> as the most basic concept.
+  Newton gave the first formulation of mechanics, in the 17th century. For him, <em>force</em> was the most basic concept, and a physical system evolves according to the equation \(F=ma\).
 </p>
 
 <p>
-  Hamilton's approach to mechanics is even more abstract than Lagrange's, but it has the advantage of allowing us to understand change of coordinates and conserved quantities in a more conceptual way.
+  In 1788, Lagrange introduced a <a href="lagrangian.html">more abstract framework for mechanics</a>. 
+  His approach was based on the <em>Lagrangian</em>, and a physical system evolves to minimize the action integral
+  \[
+  S=\int_{t_0}^{t_1}L\big(x(t),v(t),t\big)dt.
+  \]
+  A big advantage of Lagrange's approach was that it made it possible to prove <a href="noether.html">Noether's theorem</a>, which allowed us to find various conservation laws.
+</p>
+
+<p>
+  In 1833, Hamilton introduced yet another approach to classical mechanics, which is even more abstract than Lagrange's approach. For him, <em>energy</em> is the most basic concept.
+</p>
+
+<p>
+  What is the point of this fancy abstract formalism for mechanics? It has several advantages:
+  <ul>
+    <li>it gives a clearer view on conserved quantities;</li>
+    <li>it allows for more general changes of coordinates, which can simplify our problems; and</li>
+    <li>it is a bridge between classical mechanics and quantum mechanics.</li>
+  </ul>
+  Our goal in this article is to show how Hamilton's abstract formalism is natural, both physically and mathematically.
 </p>
 
 <!-- <p>
@@ -35,14 +52,91 @@ This week we will discuss yet another approach to classical mechanics, due to Ha
 </p> -->
 
 <h2>Least action principle: yet again</h2>
-Let's review what happened <a href="lagrangian.html">two weeks ago</a> when we derived the Euler-Lagrange equation.
+Let's quickly review <a href="lagrangian.html">Lagrangian mechanics</a>. We start with the a certain function, known as the Lagrangian,
+\[
+L(q,\dot q,t),
+\]
+which depends on a coordinate \(q\), the velocity with respect to the coordinate \(\dot q\), and time \(t\). 
+In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the usual Euclidean coordinate \(x\), so \(\dot q=v\) was velocity.
+ But we could have taken \(q\) to be anything; at the end of the article we thought about the pendulum and used \(q=\theta\) the angle.
 
 <p>
-  We start with the Lagrangian \(L(q,\dot q,t)\), and define the action of a path \(q(t)\) to be
+  Given a Lagrangian \(L(q,\dot q,t)\), the action of a path \(q(t)\) is
   \[
   S=\int_{t_0}^{t_1}L\big(q(t),\dot q(t),t\big)dt.
   \]
-  We want to minimize the path, given \(q(t_0)\)
+  We want to find the path \(q(t)\) minimizing the action \(S\), given \(q(t_0)\) and \(q(t_1)\) are fixed. 
+  So let us imagine perturbing the path to \(q(t)+\delta q(t)\), where \(\delta q\) is some small function such that \(\delta q(t_0)=\delta q(t_1)=0\) to make sure the endpoints don't move.
+  Then the time-derivative \(\dot q(t)\) of \(q(t)\) changes to \(\dot q(t)+\delta\dot q(t)\), where \(\delta\dot q(t)\) denotes the derivative of \(\delta q(t)\).
+</p>
+
+<p>
+  Then, the action for the path \(q+\delta q\) is
+  \[
+  S=\int_{t_0}^{t_1}L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)dt.
+  \]
+  We approximated the integrand as 
+  \[
+  L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)\approx L\big(q(t),\dot q(t),t\big)+\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t).
+  \]
+  Therefore, the perturbation \(\delta q\) changes the action by
+  \[
+  \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
+  \]
+  To minimize the integral, we want \(\delta S=0\).
+  By integration by parts,
+  \[
+  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \]
+  Moreover, since \(\delta q(t_0)=\delta q(t_1)=0\) the first term simply vanishes, and so
+  \[
+    \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \]
+  Therefore
+  \[
+  \delta S=\int_{t_0}^{t_1}\frac{\partial L}{\partial q}\delta q(t)dt+\int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
+  \]
+  For this quantity to be 0 for all small perturbations \(\delta q\), we need
+  \[
+  \frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}=0.
+  \]
+  This is the Euler-Lagrange equation!
+</p>
+
+<h3>Predicting where particles go</h3>
+In the previous paragraph, we assumed we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
+<img src="least_action2.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+Let us now modify our problem, so we only know where the starting position \(q(t_0)\) is, not where the end position \(q(t_1)\) will be.
+<img src="least_action3.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+This is closer to what we really want to do; knowing where the particle starts off, we want to predict where the particle will end up. Now, what happens if we try to minimize the action among all such paths?
+
+<p>
+  Our basic approach is the same; to minimize the action integral \(S\), we perturb the path \(q(t)\) to another path \(q(t)+\delta q(t)\) where \(\delta q(t)\) is a small function. But now, we will only assume \(\delta q(t_0)=0\), i.e., that the starting point does not move.
+</p>
+
+<p>
+  The same derivation as before goes through, and we want
+  \[
+  \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
+  \]
+  to be zero. The difference now is that in our integration by parts
+  \[
+  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt,
+  \]
+  the first term need not vanish anymore. Instead, we see 
+  \[
+  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \]
+  The extra term \(\frac{\partial L}{\partial\dot q}(t_1)\delta q(t_1)\) follows along the entire derivation, and so
+  \[
+  \delta S=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)+\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
+  \]
 </p>
 
 </body>
