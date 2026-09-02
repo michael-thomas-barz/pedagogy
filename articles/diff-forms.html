@@ -39,14 +39,15 @@ as good as possible, for small \(\epsilon.\) So, if you change the input to your
 <h3>The gradient</h3> 
 
 <p>
-The analogue of the derivative in multivariable calculus is called the <em>gradient</em>. The gradient is slightly more complicated than the derivative, because we have two inputs to nudge.
-Let's look at the function
+The analogue of the derivative in multivariable calculus is called the <em>gradient</em>. The gradient is slightly more complicated than the derivative, because we have multiple inputs to nudge.
+For example, consider the function
 \[
 F(x,y)=x^2-y^3.\]
-If we nudge the \(x\)-input, then
+This function takes two inputs, an \(x\) and a \(y.\) If we nudge the \(x\)-input, then
 \[F(x + \epsilon, y) = (x+\epsilon)^2 - y^3 \approx F(x, y) + \underline{2x}\epsilon,\]
-and if we nudge the \(y\) input, then
+but if we nudge the \(y\) input, then
 \[F(x, y+\epsilon) = x^2 - (y+\epsilon)^3 \approx F(x, y) \underline{- 3y^2}\epsilon.\] 
+There are two different changes that can happen to the output of our function, depending on which input we nudged; the gradient packages this information into a single vector.
 
 The terms \(2x\) and \(-3y^2\) above are the <em>partial derivatives</em> of \(F\); in general, we have approximations
 \[F(x+\epsilon, y) \approx F(x, y)+\frac{\partial F}{\partial x}(x, y) \cdot \epsilon\]
