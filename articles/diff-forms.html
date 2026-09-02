@@ -792,7 +792,7 @@ To start, we need to break the jump from \(\vec{x}_0\) to \(\vec{x}_1\) down int
 is a path from \(\vec{x}_0\) to \(\vec{x}_1\); this means, for every time \(t\) between 0 and 1, \(\vec{\gamma}(t)\) is some vector, such that \(\vec{\gamma}(0)\) is \(\vec{x}_0\) and \(\vec{\gamma}(1)\) is \(\vec{x}_1.\) 
 </p>
 
-<img src="path-gamma.svg" alt="TikZ graph" style="display:block;
+<img src="path.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             width:100%;
             max-width:450px;
@@ -800,7 +800,7 @@ is a path from \(\vec{x}_0\) to \(\vec{x}_1\); this means, for every time \(t\) 
 
 <p>
 A small step by \(dt\) now looks like going from \(\vec{\gamma}(t)\) to \(\vec{\gamma}(t+dt).\) We can use the derivative of \(\vec{\gamma}\) to approximate
-\[\vec{\gamma}(t+dt) - \vec{\gamma}(t) \approx \vec{\gamma}'(t)dt,\]
+\[\vec{\gamma}(t+dt) \approx \vec{\gamma}(t)+\vec{\gamma}'(t)dt,\]
 where \(\vec{\gamma}'(t)\) is the <em>vector</em> which is found by differentiating the components of \(\vec{\gamma}\); for example, if 
 \[\vec{\gamma}(t) = (1+t, t^3 - t),\]
 then
@@ -1060,7 +1060,7 @@ This is the exact same type of formula that appeared in the fundamental theorem 
 <h3>Digression: work</h3>
 
 <p>
-Why are line integrals so common? One application of them is the concept of <em>work</em> in physics. Even when your line integral doesn't come from physics, pretending it is calculating work can often be helpful for gaining intuition. This is a common trend in mathematics: if the same formula shows up in two contexts, it can often be helpful to use your intuition from the first context to understand the formula's appearance in the second context, even if the two contexts are completely different.
+Why are line integrals so common? One application of them is the concept of <em>work</em> in physics; force is a vector field and work is its line integral. Even when your line integral doesn't come from physics, pretending it is calculating work can often be helpful for gaining intuition. This is a common trend in mathematics: if the same formula shows up in two contexts, it can often be helpful to use your intuition from the first context to understand the formula's appearance in the second context, even if the two contexts are completely different.
 </p>
 
 <p>
@@ -1515,7 +1515,7 @@ In the classical line integrals from earlier, we also started with a vector fiel
 </p>
 
 <p>
-A vector field on \(\mathb{R}^2\), recall, assigns a vector to every point of the plane. Similarly, on a manifold \(M,\) a <em>differential 1-form</em> is a way of assigning a <em>covector</em> to every point of \(M.\) Given a differential 1-form \(\omega\), and a point \(p\) on the manifold \(M,\) we can extract a covector \(\omega(p).\) This means \(\omega(p)\) is some linear operator which turns tangent vectors in \(T_pM\) into numbers.
+A vector field on \(\mathbb{R}^2\), recall, assigns a vector to every point of the plane. Similarly, on a manifold \(M,\) a <em>differential 1-form</em> is a way of assigning a <em>covector</em> to every point of \(M.\) Given a differential 1-form \(\omega\), and a point \(p\) on the manifold \(M,\) we can extract a covector \(\omega(p).\) This means \(\omega(p)\) is some linear operator which turns tangent vectors in \(T_pM\) into numbers.
 </p>
 
 <p>
@@ -1543,7 +1543,7 @@ where \(\gamma\) is any path from \(p\) to \(q,\) and \(df\) is the covector der
 <h3>The fundamental theorem of calculus on the sphere</h3>
 
 <p>
-As a concrete example, let's let \(M\) be the sphere again, and set \(f(x,y,z)=z.\) 
+As a concrete example, let's let \(M\) be the sphere again, and set \(f(x,y,z)=z\), the latitude. 
 </p>
 
 <p>
