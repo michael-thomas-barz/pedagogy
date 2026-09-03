@@ -40,9 +40,9 @@
 <p>
   What is the point of this fancy abstract formalism for mechanics? It has several advantages:
   <ul>
-    <li>it gives a clearer view on conserved quantities;</li>
-    <li>it allows for more general changes of coordinates, which can simplify our problems; and</li>
-    <li>it is a bridge between classical mechanics and quantum mechanics.</li>
+    <li>It gives a clearer view on conserved quantities.</li>
+    <li>It allows for more general changes of coordinates, which can simplify our problems. For example, position and momentum play symmetric roles in this theory.</li>
+    <li>It is a bridge between classical mechanics and quantum mechanics. We hope to expand on this point in a future article.</li>
   </ul>
   Our goal in this article is to show how Hamilton's abstract formalism is natural, both physically and mathematically.
 </p>
@@ -114,15 +114,14 @@ In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the us
 Let us introduce some terminology. We call \(q_i\) the generalized coordinate, and \(\dot q_i\) the generalized velocity.
 We call the derivative \(p_i=\frac{\partial L}{\partial\dot q_i}\) the <em>generalized momentum</em>, and the derivative \(F_i=\frac{\partial L}{\partial q_i}\) the <em>generalized force</em>.
 Then the Euler-Lagrange equation is non other than\[F_i=\frac{dp_i}{dt}.\]
-When \(q=x\) is the cartesian coordinate then \(\dot q=v\) is the usual velocity, and when the Lagrangian is \(L(x,v)=\frac12mv^2-V(x)\) where \(V(x)\) is potential energy, as we saw in our previous <a href="lagrangian.html">article</a>, we see
-\[
-p=\frac{\partial L}{\partial v}=mv
-\]
-is the usual momentum and \(F=\frac{\partial L}{\partial q}\) is the usual force. This is exactly Newton's famous equation!
+As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\) are the usual cartesian coordinates, the momentum \(p_i\) and force \(F_i\) are the usual notions, and \(F_i=\frac{dp_i}{dt}\) is Newton's equation.
+</p>
+<p>
+  In other words, we can view the Euler-Lagrange equation as Newton's equation for general coordinates.
 </p>
 
 <h2>Predicting where particles go</h2>
-In the previous paragraph, we assumed we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
+In the previous paragraph, we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
 <img src="least_action2.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             max-width:90%;
@@ -132,18 +131,18 @@ Let us now modify our problem, so we only know where the starting position \(q(t
             margin:2rem auto;
             max-width:90%;
             height:auto;">
-This is closer to what we really want to do; knowing where the particle starts off, we want to predict where the particle will end up. Now, what happens if we try to minimize the action among all such paths?
+This is closer to what we really want to do; knowing where the particle starts off, we want to predict where the particle will end up. Let's compute how the action \(S\) changes depending on where the end point \(q(t_1)\) is.
 
 <p>
   Our basic approach is the same; to minimize the action integral \(S\), we perturb the path \(q(t)\) to another path \(q(t)+\delta q(t)\) where \(\delta q(t)\) is a small function. But now, we will only assume \(\delta q(t_0)=0\), i.e., that the starting point does not move.
 </p>
 
 <p>
-  The same derivation as before goes through, and we want
+  The same derivation as before goes through, and
   \[
   \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
   \]
-  to be zero. The difference now is that in our integration by parts
+  The difference now is that in our integration by parts
   \[
   \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt,
   \]
@@ -168,11 +167,78 @@ This is closer to what we really want to do; knowing where the particle starts o
 </p>
 
 <p>
-  This means, if we cosnider the action \(S\) as a function of the end position \(q_i=q_i(t_1)\), then
+  This means, if we consider the action \(S\) as a function of the end position \(q_i=q_i(t_1)\), then
   \[
   \frac{\partial S}{\partial q_i}=p_i.
   \]
 </p>
+
+<h3>The action as a function of both time and coordinates</h3>
+
+<p>
+  We could also consider \(S\) as a function of both the end position \(q_i=q_i(t_1)\) and time \(t=t_1\). 
+  That means, given a time \(t_1\) and positions \(q_i\), we solve for the Euler-Lagrange equations with end points \(q_i(t_0)\) and \(q_i(t_1)=q_i\) and compute the action \(S\).
+  Let us compute \(\frac{\partial S}{\partial t}\).
+ </p>
+
+<p>
+  By the multivariable chain rule, the time-derivative of \(S\) is
+  \[
+  \frac{dS}{dt}=\sum_{i=1}^n\frac{\partial S}{\partial q_i}\dot q_i+\frac{\partial S}{\partial t}.
+  \]
+  However, since \(S\) was defined to be the integral of the Lagrangian, \(\frac{dS}{dt}=L\), and as we saw above, \(\frac{\partial S}{\partial q_i}=p_i\). Therefore,
+  \[
+  L=\sum_{i=1}^np_i\dot q_i+\frac{\partial S}{\partial t},
+  \]
+  or,
+  \[
+  \frac{\partial S}{\partial t}=L-\sum_{i=1}^np_i\dot q_i.
+  \]
+  We call the quantity
+  \[
+  -\frac{\partial S}{\partial t}=\sum_{i=1}^np_i\dot q_i-L
+  \]
+  the <em>Hamiltonian</em>, and denote it by \(H\). As we explained <a href="noether.html">a couple weeks ago</a>, \(H\) is the total energy in the system, and is conserved when the Lagrangian \(L\) is time-independent.
+</p>
+We will re-formulate mechanics.
+
+<h2>Euler-Lagrange equations... but with no Lagrangians</h2>
+We now understand the derivatives of \(S\) with respect to \(q_i\) and \(t\). 
+Let's use the language of <a href="diff-forms.html">differential forms</a> to combine all this information into one simple formula:
+\[
+dS=\sum_{i=1}^n\frac{\partial S}{\partial q_i}dq_i+\frac{\partial S}{\partial t}dt=\sum_{i=1}^np_idq_i-Hdt.
+\]
+Now, by the fundamental theorem of calculus,
+\[
+S=\int_\gamma\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
+\]
+This is a path integral, along the path \(\gamma\) from \(t_0\) to \(t_1\) is the path the particle takes: formally, \(\gamma\colon[t_0,t_1]\to\mathbb R^n\times\mathbb R\) is defined by \(\gamma(t)=(q_i(t),t)\).
+
+<!-- <h2>Euler-Lagrange equations... but with no Lagrangians</h2>
+Let's try to phrase the Euler-Lagrange equation in terms of the Hamiltonian
+\[
+H=-\frac{\partial S}{\partial t}.
+\]
+If we remember from last section, we secretly used the Euler-Lagrange equations to derive our formula
+\[
+\frac{\partial S}{\partial q_i}=p_i.
+\]
+So, maybe we can try taking this equation as our starting point and seeing what we can say about the Hamiltonian.
+
+<p>
+  The issue is that this equation is an equation of \(S\), not of \(H\). To get \(H\), let's differentiate by \(t\):
+  \[
+  \frac{\partial}{\partial t}\frac\partial{\partial q_i}S=\frac{\partial p_i}{\partial t}.
+  \]
+  Since partial derivatives commute with each other, the left-hand side is
+  \[
+  \frac{\partial}{\partial t}\frac\partial{\partial q_i}S=\frac\partial{\partial q_i}\frac{\partial S}{\partial t}=-\frac{\partial H}{\partial q_i}.
+  \]
+  So we conclude
+  \[
+  \frac{\partial H_i}{\partial q_i}=-\frac{\partial p_i}{\partial t}.
+  \]
+</p> -->
 
 </body>
 
