@@ -28,6 +28,35 @@ How do you do calculus <em>on the surface of a sphere</em>?
 The goal of this blog post is to explain how the ideas of single variable calculus can be applied to more exotic shapes. This is the start of the field of <em>differential geometry</em>. 
 </p>
 
+<p>
+Along the way, we will also make sense of differential forms. This can help explain why certain manipulations are 'allowed' in single-variable calculus.
+</p>
+
+<p>
+For example, suppose you are trying to solve the differential equation
+\[\frac{dy}{dx} = y.\]
+</p>
+
+<p>
+In a standard calculus course, students are often taught to solve this by multiplying both sides by \(dx,\) turning the equation into
+\[dy = y dx.\] 
+Dividing both sides by \(y\) and integrating, we find
+\[\int\frac{dy}{y} = \int dx,\]
+or 
+\[\ln |y| = x + C.\] 
+And indeed, 
+\[y = Ce^x\]
+is the correct solution to this equation!
+</p>
+
+<p>
+This is somewhat remarkable if you think about it, since in a calculus course \(dx\) is often taught as some notational device. If you tried to divide by \(+\) in 
+\[1 + 1 = 2\]
+to get
+\[1\qquad 1 = \frac{2}{+},\]
+you'd get nonsense! And if you tried to cancel the \(d\)'s in \(dy/dx\) to get \(y/x,\) again it would be wrong. So, what does \(dx\) actually mean, and why can we manipulate it to solve ODEs? 
+</p>
+
 <h2>Derivatives and tangent spaces</h2>
 
 <p>
@@ -1834,6 +1863,330 @@ Observe that
 As a sanity check, this vector does indeed lie in \(T_{\gamma(t)}M,\) because it obeys the equation
 \[2 \cdot 0 \cdot 0 + 2 \cdot \sin(\pi t) \cdot \pi\cos(\pi t) + 2 \cdot (-\cos(\pi t)) \cdot \pi\sin(\pi t) = 2\pi \cos(\pi t)\sin(\pi t) - 2\pi\cos(\pi t)\sin(\pi t) = 0.\] 
 </p>
+
+<p>
+To get a geometric sense of what tangency means, it might be helpful to view the following animation of the path on the sphere, but this time with the tangent vector drawn in.
+</p>
+
+<!-- Sphere path widget with moving tangent vector. Paste this whole block into your page. -->
+<!-- If your page already loads three.js, you can remove the next script tag. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+  #ftcTangentWidgetStandalone {
+    --bg0: #282828;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --fg1: #ebdbb2;
+    --fg3: #bdae93;
+    --gray: #928374;
+    --yellow: #fabd2f;
+    --orange: #fe8019;
+    --blue: #83a598;
+    --mono: "Menlo", "Consolas", monospace;
+
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 12px;
+    font-family: var(--mono);
+    color: var(--fg1);
+  }
+  #ftcTangentWidgetStandalone * { box-sizing: border-box; }
+  #ftcTangentWidgetStandalone .p-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--bg0);
+    border: 1px solid var(--bg2);
+    overflow: hidden;
+    cursor: grab;
+  }
+  #ftcTangentWidgetStandalone .p-stage.dragging { cursor: grabbing; }
+  #ftcTangentWidgetStandalone .p-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #ftcTangentWidgetStandalone .p-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: var(--fg1);
+    background: rgba(40,40,40,0.55);
+    padding: 0 5px;
+    border-radius: 3px;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  #ftcTangentWidgetStandalone .p-controls {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  #ftcTangentWidgetStandalone .p-play {
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 6px 14px;
+    background: var(--bg1);
+    color: var(--fg1);
+    border: 1px solid var(--bg2);
+    cursor: pointer;
+  }
+  #ftcTangentWidgetStandalone .p-play:hover:not(:disabled) {
+    background: var(--bg2);
+  }
+  #ftcTangentWidgetStandalone .p-play:disabled {
+    color: var(--gray);
+    cursor: default;
+    opacity: 0.6;
+  }
+  #ftcTangentWidgetStandalone .p-readout {
+    font-size: 13.5px;
+    color: var(--fg3);
+    min-width: 220px;
+  }
+  #ftcTangentWidgetStandalone .p-readout .val {
+    color: var(--yellow);
+  }
+</style>
+
+<div id="ftcTangentWidgetStandalone">
+  <div class="p-stage">
+    <div class="p-label" id="tangentStandaloneLabelQ">q</div>
+    <div class="p-label" id="tangentStandaloneLabelP">p</div>
+  </div>
+  <div class="p-controls">
+    <button class="p-play" id="tangentStandalonePlayBtn">&#9654; play</button>
+    <span class="p-readout" id="tangentStandaloneReadout">t = 0.00, f(&gamma;(t)) = -1.00</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  const root = document.getElementById('ftcTangentWidgetStandalone');
+  if (!root || typeof THREE === 'undefined') return;
+
+  const stage = root.querySelector('.p-stage');
+  const labelQ = root.querySelector('#tangentStandaloneLabelQ');
+  const labelP = root.querySelector('#tangentStandaloneLabelP');
+  const playBtn = root.querySelector('#tangentStandalonePlayBtn');
+  const readout = root.querySelector('#tangentStandaloneReadout');
+
+  function gamma(t) {
+    return new THREE.Vector3(0, Math.sin(Math.PI * t), -Math.cos(Math.PI * t));
+  }
+  function gammaPrime(t) {
+    return new THREE.Vector3(0, Math.PI * Math.cos(Math.PI * t), Math.PI * Math.sin(Math.PI * t));
+  }
+
+  const NORTH = new THREE.Vector3(0, 0, 1);
+  const SOUTH = new THREE.Vector3(0, 0, -1);
+  const RADIUS = 1.5;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0, 0, 5.6);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  stage.appendChild(renderer.domElement);
+  stage.insertBefore(renderer.domElement, labelQ);
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const sphereGeo = new THREE.SphereGeometry(RADIUS, 64, 48);
+  const sphereMat = new THREE.MeshStandardMaterial({ color: 0x504945, roughness: 0.85 });
+  group.add(new THREE.Mesh(sphereGeo, sphereMat));
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.9);
+  dl.position.set(3, 4, 5);
+  scene.add(dl);
+  const dl2 = new THREE.DirectionalLight(0xffffff, 0.25);
+  dl2.position.set(-4, -2, -3);
+  scene.add(dl2);
+
+  const graticule = new THREE.Group();
+  const gratMat = new THREE.LineBasicMaterial({ color: 0x282828, transparent: true, opacity: 0.3 });
+  const R2 = RADIUS * 1.001;
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const phi = THREE.MathUtils.degToRad(lat);
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const lon = (i / 64) * Math.PI * 2;
+      pts.push(new THREE.Vector3(
+        R2 * Math.cos(phi) * Math.cos(lon),
+        R2 * Math.sin(phi),
+        R2 * Math.cos(phi) * Math.sin(lon)
+      ));
+    }
+    graticule.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), gratMat));
+  }
+  for (let lon = 0; lon < 360; lon += 30) {
+    const theta = THREE.MathUtils.degToRad(lon);
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const phi = -Math.PI / 2 + (i / 64) * Math.PI;
+      pts.push(new THREE.Vector3(
+        R2 * Math.cos(phi) * Math.cos(theta),
+        R2 * Math.sin(phi),
+        R2 * Math.cos(phi) * Math.sin(theta)
+      ));
+    }
+    graticule.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), gratMat));
+  }
+  group.add(graticule);
+
+  const pathPts = [];
+  for (let i = 0; i <= 100; i++) {
+    pathPts.push(gamma(i / 100).multiplyScalar(RADIUS * 1.002));
+  }
+  const pathGeo = new THREE.BufferGeometry().setFromPoints(pathPts);
+  const pathMat = new THREE.LineBasicMaterial({ color: 0xfabd2f });
+  group.add(new THREE.Line(pathGeo, pathMat));
+
+  const poleGeo = new THREE.SphereGeometry(0.05, 16, 12);
+  const poleMat = new THREE.MeshBasicMaterial({ color: 0xebdbb2 });
+  const qMarker = new THREE.Mesh(poleGeo, poleMat);
+  qMarker.position.copy(NORTH).multiplyScalar(RADIUS);
+  group.add(qMarker);
+  const pMarker = new THREE.Mesh(poleGeo, poleMat);
+  pMarker.position.copy(SOUTH).multiplyScalar(RADIUS);
+  group.add(pMarker);
+
+  const ballGeo = new THREE.SphereGeometry(0.075, 20, 16);
+  const ballMat = new THREE.MeshBasicMaterial({ color: 0xfe8019 });
+  const ball = new THREE.Mesh(ballGeo, ballMat);
+  ball.position.copy(gamma(0)).multiplyScalar(RADIUS);
+  group.add(ball);
+
+  const tangentArrow = new THREE.ArrowHelper(
+    gammaPrime(0).normalize(),
+    ball.position.clone(),
+    0.85,
+    0x83a598,
+    0.18,
+    0.10
+  );
+  group.add(tangentArrow);
+
+  {
+    const qTilt = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 4);
+    const qSpin = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI * 0.9);
+    group.quaternion.copy(qSpin.multiply(qTilt));
+  }
+
+  const ROT_SPEED = 0.008;
+  const worldY = new THREE.Vector3(0, 1, 0);
+  const worldX = new THREE.Vector3(1, 0, 0);
+  let dragging = false, lastX = 0, lastY = 0;
+
+  function pointerDown(x, y) {
+    dragging = true;
+    lastX = x;
+    lastY = y;
+    stage.classList.add('dragging');
+  }
+  function pointerMove(x, y) {
+    if (!dragging) return;
+    const dx = x - lastX, dy = y - lastY;
+    const qYaw = new THREE.Quaternion().setFromAxisAngle(worldY, dx * ROT_SPEED);
+    const qPitch = new THREE.Quaternion().setFromAxisAngle(worldX, dy * ROT_SPEED);
+    group.quaternion.premultiply(qYaw).premultiply(qPitch);
+    lastX = x;
+    lastY = y;
+  }
+  function pointerUp() {
+    dragging = false;
+    stage.classList.remove('dragging');
+  }
+
+  stage.addEventListener('mousedown', e => pointerDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => pointerMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', pointerUp);
+  stage.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    pointerDown(t.clientX, t.clientY);
+  }, { passive: true });
+  stage.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    pointerMove(t.clientX, t.clientY);
+  }, { passive: true });
+  stage.addEventListener('touchend', pointerUp);
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    camera.position.z = Math.min(8, Math.max(2.4, camera.position.z + e.deltaY * 0.003));
+  }, { passive: false });
+
+  function updateLabel(el, localPos) {
+    const worldPos = localPos.clone().applyMatrix4(group.matrixWorld);
+    const rotatedDir = localPos.clone().normalize().applyQuaternion(group.quaternion);
+    const behind = rotatedDir.z < -0.08;
+    el.style.opacity = behind ? '0' : '1';
+
+    const ndc = worldPos.clone().project(camera);
+    const rect = stage.getBoundingClientRect();
+    el.style.left = ((ndc.x * 0.5 + 0.5) * rect.width) + 'px';
+    el.style.top = ((1 - (ndc.y * 0.5 + 0.5)) * rect.height) + 'px';
+  }
+
+  function setTime(t) {
+    const p = gamma(t).multiplyScalar(RADIUS);
+    ball.position.copy(p);
+    const tangent = gammaPrime(t);
+    tangentArrow.position.copy(p);
+    tangentArrow.setDirection(tangent.normalize());
+
+    const z = -Math.cos(Math.PI * t);
+    readout.innerHTML = `t = <span class="val">${t.toFixed(2)}</span>, f(&gamma;(t)) = <span class="val">${z.toFixed(2)}</span>`;
+  }
+
+  let animState = null;
+  const DURATION = 2400;
+
+  playBtn.addEventListener('click', () => {
+    animState = { t0: performance.now(), dur: DURATION };
+    playBtn.disabled = true;
+  });
+
+  function stepAnimation() {
+    if (!animState) return;
+    const now = performance.now();
+    let f = (now - animState.t0) / animState.dur;
+    if (f >= 1) f = 1;
+    setTime(f);
+    if (f >= 1) {
+      animState = null;
+      playBtn.disabled = false;
+    }
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    stepAnimation();
+    updateLabel(labelQ, NORTH.clone().multiplyScalar(RADIUS));
+    updateLabel(labelP, SOUTH.clone().multiplyScalar(RADIUS));
+    renderer.render(scene, camera);
+  }
+
+  setTime(0);
+  resize();
+  animate();
+})();
+</script>
 
 <p>
 As we saw earlier, \(df = dz.\) Thus 
