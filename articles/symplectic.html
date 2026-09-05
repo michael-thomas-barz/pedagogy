@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mechanics III: the Hamiltonian</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+</head>
+<body>
+
+<a href="../index.html">← back</a>
+
+<h1>Mechanics III: the Hamiltonian</h1>
+<p class="meta">September 12, 2026</p>
+
+<p>
+Newton gave the first formulation of mechanics, in the 17th century. Newton had several insights: (TODO list) an object's motion is determined by its current position and <em>velocity</em>; an object's position only changes according to its velocity; an object's velocity can only change when a <em>force</em> is applied to it; in this case, the change in velocity is determined by Newton's famous \(F = ma.\) When doing Newtonian mechanics, <em>force</em> is the focus: most of the effort put in to solve a Newtonian mechanics problem is done to think about what forces are acting on which objects, and how strong these forces are.
+</p>
+
+<p>
+  In 1788, Lagrange introduced a <a href="lagrangian.html">more abstract framework for mechanics</a>. 
+  His approach was based on the <em>Lagrangian</em>, and a physical system evolves to minimize the action integral
+  \[
+  S=\int_{t_0}^{t_1}L\big(x(t),v(t),t\big)dt.
+  \]
+  A big advantage of Lagrange's approach was that it enabled us to prove <a href="noether.html">Noether's theorem</a>, giving us a tool to find various conservation laws (like conservation of energy or conservation of momentum).
+</p>
+
+<p>
+  In 1833, Hamilton introduced yet another approach to classical mechanics, which is even more abstract than Lagrange's approach. For him, <em>conservation laws</em> are the most basic concept.
+</p>
+
+<p>
+That is, in Hamilton's approach, we <em>start</em> by writing down some physical quantity which we know should be conserved, and then find some way for physics to evolve which forces that quantity to be conserved. 
+</p>
+
+<p>
+Hamilton's approach is a bit more abstract than Newton's and Lagrange's, but it has two key advantages: it allows the tools of <em>differential geometry</em> to be used to study physics, and it generalizes well to <em>quantum</em> mechanics, where direct analogues of Newtonian or Lagrangian mechanics make less sense.
+</p>
+
+<p>
+Without further ado, let's explore Hamilton's ideas!
+</p>
+
+<h2>Phase spaces</h2>
+
+<p>
+In Hamiltonian mechanics, one tends to think about the shape of all possible configurations of your mechanical system. Let's explore some examples of this. 
+</p>
+
+<p>
+Imagine you have a single particle in 1 dimension. As Newton observed, the two most important properties of this particle are its position and velocity; 
+
+TODO: draw comparison of the motion vs the phase space (so an animation of a particle moving on a line vs that same trajectory plotted in phase space) 
+</p>
+
+<p>
+For a slightly more interesting phase space, imagine a pendulum. todo
+</p>
+
+<h2>Observables</h2>
+
+<p>
+Let \(M\) be the phase space of some physical system. An <em>observable</em> is a function
+\[f : M \to \mathbb{R}.\]
+We think of observables as quantities we can measure. For example, if \(M\) is the phase space of TODO examples
+</p>
+
+<h2>Interlude: vector fields as flows</h2>
+
+<p>
+vector fields as ODEs; flow lines ,etc.
+</p>
+
+<h2>The vector field of an observable</h2>
+
+<h2></h2>
+
+</body>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+</html>
