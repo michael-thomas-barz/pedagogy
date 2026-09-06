@@ -6,7 +6,7 @@
   <title>Hidden Phenomena</title>
   <meta
     name="description"
-    content="Beautiful mathematics beyond the classroom: interactive articles on number theory, calculus, geometry, algebra, and physics."
+    content="Hidden Phenomena uses concrete mathematical problems to reveal interesting phenomena that might otherwise remain hidden from view."
   >
 
   <link rel="stylesheet" href="style.css">
@@ -19,182 +19,91 @@
     onload="renderMathInElement(document.body);">
   </script>
 <script defer src="site.js"></script>
+
+  <style>
+    /* Compact homepage intro. These !important overrides intentionally beat
+       the original hero sizing rules in style.css. */
+    .home-main > .page-shell:first-child {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .hero-section.hero-section-compact {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      margin: 0 !important;
+      padding: 1.5rem 0 1.75rem !important;
+      display: block !important;
+    }
+
+    .hero-copy.hero-copy-compact {
+      max-width: 52rem;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .hero-title.hero-title-compact {
+      margin: 0 0 1rem !important;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.05;
+    }
+
+    .hero-description.hero-description-compact {
+      max-width: 48rem;
+      margin: 0 !important;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .hero-section-compact .hero-actions {
+      margin: 1.25rem 0 0 !important;
+      padding: 0 !important;
+    }
+
+    #latest {
+      margin-top: 0 !important;
+      padding-top: 1.25rem !important;
+    }
+
+    #latest .topic-filter {
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 0 !important;
+    }
+
+    .mailing-list-section {
+      padding: 2.5rem 0;
+    }
+  </style>
 </head>
 
 <body class="home-page">
 <a class="hp-skip" href="#hp-main">Skip to content</a>
-  <header class="site-header">
-    <div class="page-shell">
-      <nav class="site-nav" aria-label="Main navigation">
-        <a class="site-title" href="index.html">HIDDEN PHENOMENA</a>
-
-        <div class="site-nav-links">
-          <a href="#topics">Topics</a>
-          <a href="#start-here">Start Here</a>
-          <a href="about.html">About</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
   <main id="hp-main" tabindex="-1" class="home-main">
     <div class="page-shell">
-      <section class="hero-section">
-        <div class="hero-copy">
-          <p class="hero-eyebrow">Mathematics beyond the classroom</p>
+      <section class="hero-section hero-section-compact">
+        <div class="hero-copy hero-copy-compact">
+          <h1 class="hero-title hero-title-compact">Hidden Phenomena</h1>
 
-          <h1 class="hero-title">
-            Beautiful mathematics you probably won't see in school.
-          </h1>
-
-          <p class="hero-description">
-            Explore surprising ideas from number theory, geometry, calculus,
-            physics, and beyond — with visual and interactive explanations.
+          <p class="hero-description hero-description-compact">
+            One of the most wonderful parts of mathematics is observing the interesting phenomena of the mathematical world.
+            And, historically, it seems humans have found the most interesting phenomena when in pursuit of solutions to concrete
+            mathematical problems. The goal of this blog is to use problems as a way to show off interesting phenomena which,
+            without the problem guiding our attention, would be hidden from view.
           </p>
 
           <div class="hero-actions">
-            <a class="primary-button" href="#start-here">Start exploring</a>
-            <a class="secondary-button" href="#latest">Browse all articles</a>
+            <a class="primary-button" href="#start-here">Don't know where to start? Click here</a>
           </div>
         </div>
       </section>
     </div>
 
-    <section>
+    <section id="latest">
       <div class="page-shell">
         <div class="section-heading-row">
-          <h2>Featured</h2>
-          <span class="section-note">A good example of what Hidden Phenomena is about</span>
-        </div>
-
-        <a class="featured-card" href="articles/monodromy.html">
-          <div class="featured-visual" aria-hidden="true">
-            <svg viewBox="0 0 620 400" role="presentation">
-              <path
-                d="M115 218 C170 76 360 72 485 164 C555 216 485 309 346 300 C205 292 112 233 157 165 C211 84 408 144 464 234 C501 294 374 345 235 300 C126 264 77 229 115 218"
-                fill="none"
-                stroke="#689d6a"
-                stroke-width="18"
-                stroke-linecap="round"
-                opacity="0.9"
-              />
-              <path
-                d="M120 214 C225 238 365 280 464 234"
-                fill="none"
-                stroke="#fabd2f"
-                stroke-width="3"
-                stroke-dasharray="9 10"
-                opacity="0.9"
-              />
-              <circle cx="464" cy="234" r="7" fill="#b16286" />
-            </svg>
-          </div>
-
-          <div class="featured-copy">
-            <div class="article-category">Topology · Calculus</div>
-            <h3>Möbius strips and differential equations</h3>
-            <p>
-              Start with the strange one-sided geometry of a Möbius strip,
-              then watch the same phenomenon reappear when solving differential
-              equations.
-            </p>
-
-            <div class="card-meta">
-              <span class="badge interactive">★ Interactive</span>
-              <span class="badge">Level 2</span>
-              <span class="badge">Visual</span>
-            </div>
-
-            <span class="card-arrow">Read the article →</span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section id="start-here">
-      <div class="page-shell">
-        <div class="section-heading-row">
-          <h2>Start here</h2>
-          <span class="section-note">Three accessible ways into the site</span>
-        </div>
-
-        <div class="start-grid">
-          <a class="start-card" href="articles/lucas.html">
-            <div class="start-card-visual" aria-hidden="true">
-              <div class="pascal-mini">
-                <div>1</div>
-                <div>1&nbsp;&nbsp;1</div>
-                <div>1&nbsp;&nbsp;2&nbsp;&nbsp;1</div>
-                <div>1&nbsp;&nbsp;3&nbsp;&nbsp;3&nbsp;&nbsp;1</div>
-                <div>1&nbsp;&nbsp;4&nbsp;&nbsp;6&nbsp;&nbsp;4&nbsp;&nbsp;1</div>
-                <div>1&nbsp;&nbsp;5&nbsp;&nbsp;10&nbsp;&nbsp;10&nbsp;&nbsp;5&nbsp;&nbsp;1</div>
-              </div>
-            </div>
-
-            <div class="start-card-body">
-              <h3>Fractal patterns hidden inside Pascal's triangle</h3>
-              <p>
-                A familiar combinatorial triangle turns into a self-similar
-                geometric pattern when you look at divisibility.
-              </p>
-              <div class="card-meta">
-                <span class="badge">Number theory</span>
-                <span class="badge">Level 1</span>
-              </div>
-            </div>
-          </a>
-
-          <a class="start-card" href="articles/quadratic-residues.html">
-            <div class="start-card-visual" aria-hidden="true">
-              <div class="mod-clock">
-                <span>0</span>
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <strong>\(\sqrt{-1}?\)</strong>
-              </div>
-            </div>
-
-            <div class="start-card-body">
-              <h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3>
-              <p>
-                Revisit the quadratic formula in modular arithmetic and learn
-                when square roots exist in finite worlds.
-              </p>
-              <div class="card-meta">
-                <span class="badge">Number theory</span>
-                <span class="badge">Level 1</span>
-              </div>
-            </div>
-          </a>
-
-          <a class="start-card" href="articles/gamma.html">
-            <div class="start-card-visual" aria-hidden="true">
-              <div class="gamma-mini">\(3.5! = ?\)</div>
-            </div>
-
-            <div class="start-card-body">
-              <h3>What is the factorial of 3.5?</h3>
-              <p>
-                Euler's approximation trick extends factorials beyond whole
-                numbers — and unexpectedly brings in \(\pi\).
-              </p>
-              <div class="card-meta">
-                <span class="badge">Calculus</span>
-                <span class="badge">Level 2</span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="topics">
-      <div class="page-shell">
-        <div class="section-heading-row">
-          <h2>Explore by topic</h2>
-          <span class="section-note">Filter the archive below</span>
+          <h2>Latest articles</h2>
+          <span class="section-note">Newest first</span>
         </div>
 
         <div class="topic-filter" role="group" aria-label="Filter articles by area">
@@ -204,15 +113,6 @@
           <button type="button" class="filter-btn" data-filter="geometry">Geometry</button>
           <button type="button" class="filter-btn" data-filter="physics">Physics</button>
           <button type="button" class="filter-btn" data-filter="algebra">Algebra</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="latest">
-      <div class="page-shell">
-        <div class="section-heading-row">
-          <h2>Latest articles</h2>
-          <span class="section-note">Newest first</span>
         </div>
 
         <div class="latest-list">
@@ -229,7 +129,7 @@
             <div class="latest-category">Algebra</div>
             <div>
               <h3 class="latest-title"><a href="articles/anima.html">Syzygies and higher groupoids</a></h3>
-              <p class="latest-hook">A route from ordinary equations to the idea that mathematical objects can be equal in more than one way.</p>
+              <p class="latest-hook">In mathematics, sometimes things can be equal for multiple reasons.</p>
             </div>
             <time class="latest-date" datetime="2026-08-29">August 29, 2026</time>
           </article>
@@ -247,7 +147,7 @@
             <div class="latest-category">Physics</div>
             <div>
               <h3 class="latest-title"><a href="articles/lagrangian.html">Mechanics I: nature is lazy</a></h3>
-              <p class="latest-hook">A geometric way to understand motion through the principle of least action.</p>
+              <p class="latest-hook">Deriving the principle of least action, Lagrange's lovely alternative approach to physics.</p>
             </div>
             <time class="latest-date" datetime="2026-08-15">August 15, 2026</time>
           </article>
@@ -256,7 +156,7 @@
             <div class="latest-category">Topology · Calculus</div>
             <div>
               <h3 class="latest-title"><a href="articles/monodromy.html">Möbius strips and differential equations</a></h3>
-              <p class="latest-hook">A one-sided surface and a differential equation turn out to share the same obstruction.</p>
+              <p class="latest-hook">How do strange shapes like Möbius strips show up in more concrete mathematical situations?</p>
             </div>
             <time class="latest-date" datetime="2026-08-08">August 8, 2026</time>
           </article>
@@ -265,7 +165,7 @@
             <div class="latest-category">Number theory</div>
             <div>
               <h3 class="latest-title"><a href="articles/lucas.html">Fractal patterns hidden inside Pascal's triangle</a></h3>
-              <p class="latest-hook">Color Pascal's triangle by divisibility and a fractal suddenly appears.</p>
+              <p class="latest-hook">If you color the entries in Pascal's triangle according to whether they are even or odd, a remarkable pattern appears!</p>
             </div>
             <time class="latest-date" datetime="2026-07-31">July 31, 2026</time>
           </article>
@@ -274,7 +174,7 @@
             <div class="latest-category">Algebra</div>
             <div>
               <h3 class="latest-title"><a href="articles/cubic.html">How to solve cubic and quartic equations II: cubics</a></h3>
-              <p class="latest-hook">Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p>
+              <p class="latest-hook">Using the mathematics of symmetry, we derive the cubic formula.</p>
             </div>
             <time class="latest-date" datetime="2026-07-24">July 24, 2026</time>
           </article>
@@ -283,7 +183,7 @@
             <div class="latest-category">Algebra</div>
             <div>
               <h3 class="latest-title"><a href="articles/quartic.html">How to solve cubic and quartic equations I: quartics</a></h3>
-              <p class="latest-hook">Why equations of degree four still admit a formula in radicals.</p>
+              <p class="latest-hook">Using the mathematics of symmetry, we derive the quartic formula.</p>
             </div>
             <time class="latest-date" datetime="2026-07-17">July 17, 2026</time>
           </article>
@@ -292,7 +192,7 @@
             <div class="latest-category">Calculus</div>
             <div>
               <h3 class="latest-title"><a href="articles/gamma.html">What is the factorial of 3.5?</a></h3>
-              <p class="latest-hook">Extend factorials to non-integers and discover why \(\pi\) appears.</p>
+              <p class="latest-hook">Remarkably, \(\pi\) appears! </p>
             </div>
             <time class="latest-date" datetime="2026-07-10">July 10, 2026</time>
           </article>
@@ -301,7 +201,7 @@
             <div class="latest-category">Number theory · Calculus</div>
             <div>
               <h3 class="latest-title"><a href="articles/dirichlet.html">Infinitely many primes end in a 7</a></h3>
-              <p class="latest-hook">Why there must be infinitely many primes in certain arithmetic progressions.</p>
+              <p class="latest-hook">An explanation of Dirichlet's theorem on primes in arithmetic progressions.</p>
             </div>
             <time class="latest-date" datetime="2026-02-22">February 22, 2026</time>
           </article>
@@ -310,7 +210,7 @@
             <div class="latest-category">Number theory · Analysis</div>
             <div>
               <h3 class="latest-title"><a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a></h3>
-              <p class="latest-hook">How a complex-valued function encodes the mysterious distribution of prime numbers.</p>
+              <p class="latest-hook">How is the Riemann zeta function actually related to the distribution of primes?</p>
             </div>
             <time class="latest-date" datetime="2026-02-13">February 13, 2026</time>
           </article>
@@ -319,7 +219,7 @@
             <div class="latest-category">Number theory</div>
             <div>
               <h3 class="latest-title"><a href="articles/modular.html">Why study Diophantine equations?</a></h3>
-              <p class="latest-hook">Use modular arithmetic to turn difficult integer equations into finite puzzles.</p>
+              <p class="latest-hook">An introduction to our mathematical philosophy.</p>
             </div>
             <time class="latest-date" datetime="2026-02-10">February 10, 2026</time>
           </article>
@@ -328,7 +228,7 @@
             <div class="latest-category">Number theory</div>
             <div>
               <h3 class="latest-title"><a href="articles/primitive.html">What is \(\log(3)\) modulo \(7\)?</a></h3>
-              <p class="latest-hook">Exponentials and logarithms still make sense in modular arithmetic — but with a twist.</p>
+              <p class="latest-hook">Remarkably, logarithms still make sense in modular arithmetic, and are very useful!</p>
             </div>
             <time class="latest-date" datetime="2026-02-07">February 7, 2026</time>
           </article>
@@ -346,7 +246,7 @@
             <div class="latest-category">Number theory · Calculus</div>
             <div>
               <h3 class="latest-title"><a href="articles/hensels.html">Using calculus to do number theory</a></h3>
-              <p class="latest-hook">A discrete analogue of Newton's method lets us lift solutions of congruences.</p>
+              <p class="latest-hook">Using Newton's method from calculus, we can solve a tricky Diophantine equation!</p>
             </div>
             <time class="latest-date" datetime="2026-02-02">February 2, 2026</time>
           </article>
@@ -356,14 +256,95 @@
       </div>
     </section>
 
-    <section>
+    <section id="start-here">
       <div class="page-shell">
-        <div class="newsletter-card">
-          <p class="section-kicker">Keep exploring</p>
-          <h2>Get new mathematical explorations by email.</h2>
-          <p>New articles, interactive explanations, and occasional mathematical puzzles.</p>
-          <div class="ml-embedded" data-form="SnIhXR"></div>
+        <div class="section-heading-row">
+          <h2>Suggested starts</h2>
         </div>
+
+        <div class="start-grid">
+          <a class="start-card" href="articles/quadratic-residues.html">
+            <div class="start-card-visual" aria-hidden="true">
+              <div class="mod-clock">
+                <span>0</span>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <strong>\(\sqrt{-1}?\)</strong>
+              </div>
+            </div>
+
+            <div class="start-card-body">
+              <h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3>
+              <p>
+                What does it mean to solve the equation \(x^2=-1\) modulo \(5\)? 
+              </p>
+              <div class="card-meta">
+                <span class="badge">Number theory</span>
+                <span class="badge">Level 1</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="start-card" href="articles/gamma.html">
+            <div class="start-card-visual" aria-hidden="true">
+              <div class="gamma-mini">\(3.5! = ?\)</div>
+            </div>
+
+            <div class="start-card-body">
+              <h3>What is the factorial of 3.5?</h3>
+              <p>
+                Factorials are typically defined only for whole numbers... but is there some way to make the definition make sense for numbers like 3.5?
+              </p>
+              <div class="card-meta">
+                <span class="badge">Calculus</span>
+                <span class="badge">Level 2</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="start-card" href="articles/monodromy.html">
+            <div class="start-card-visual" aria-hidden="true">
+              <svg viewBox="0 0 320 180" role="presentation">
+                <path
+                  d="M58 104 C82 35 188 34 250 78 C286 103 248 145 178 141 C105 137 56 111 80 76 C108 35 214 66 242 111"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="10"
+                  stroke-linecap="round"
+                  opacity="0.7"
+                />
+                <path
+                  d="M62 102 C118 114 188 134 242 111"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-dasharray="7 7"
+                  opacity="0.9"
+                />
+                <circle cx="242" cy="111" r="5" fill="currentColor" />
+              </svg>
+            </div>
+
+            <div class="start-card-body">
+              <h3>Möbius strips and differential equations</h3>
+              <p>
+              Have you been going around in circles? Well, you might have travelled further than you think!
+              </p>
+              <div class="card-meta">
+                <span class="badge">Topology · Calculus</span>
+                <span class="badge">Level 2</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mailing-list-section">
+      <div class="page-shell">
+        <div class="ml-embedded" data-form="SnIhXR"></div>
       </div>
     </section>
   </main>
@@ -377,7 +358,6 @@
         We are two mathematics PhD students at Princeton, both broadly
         interested in arithmetic geometry.
       </p>
-      <p>© 2026 Hidden Phenomena</p>
     </div>
   </footer>
 
