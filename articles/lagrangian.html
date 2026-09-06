@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Physics</div><h1 class="article-title">Mechanics I: nature is lazy</h1><p class="article-description">A geometric way to understand motion through the principle of least action.</p><div class="article-info"><span class="article-badge">Level 2</span><span class="article-badge">Helpful: Derivatives and integrals</span><span class="article-badge">About 17 min read</span></div><p class="article-date">August 15, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Newton's approach to physics</a></li><li><a href="#hp-section-2">Lagrange's least action principle</a></li><li><a href="#hp-section-3">How to minimize a function</a></li><li><a href="#hp-section-4">The Euler-Lagrange equation</a></li><li><a href="#hp-section-5">The pendulum</a></li><li><a href="#hp-section-6">Conclusion</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Mechanics I: nature is lazy</h1>
-<p class="meta">August 15, 2026</p>
+
 
 <p>
 Physics is usually taught with <em>cause and effect</em>. In Newtonian mechanics, forces cause an object to change its motion. And Newtonian mechanics is an incredibly successful theory of physics, which can explain huge amounts of observations about the world. 
@@ -45,7 +46,7 @@ Lagrange's first insight was that <em>nature is lazy</em>. Nature will always tr
 </p>
 
 
-<h2>Newton's approach to physics</h2>
+<h2 id="hp-section-1">Newton's approach to physics</h2>
 
 <p>
 In Newtonian mechanics, the most important things to know about a particle are its <em>position,</em> <em>velocity,</em> and <em>mass</em>. 
@@ -98,7 +99,7 @@ is often tricky, and -- as any physics undergraduate student will complain -- it
             max-width:90%;
             height:auto;"> -->
 
-<h2>Lagrange's least action principle</h2>
+<h2 id="hp-section-2">Lagrange's least action principle</h2>
 
 <p>
 With Newtonian physics out of the way, let's finally explain Lagrange's approach. As we recall from the introduction, Lagrangian mechanics is based on the idea that nature is "lazy" in the sense that it is as efficient as possible. But what is the metric of efficiency? 
@@ -143,7 +144,7 @@ In this picture, \(\vec x(t)\) is allowed to be anything as long as at the start
 </p>
 
 
-<h2>How to minimize a function</h2>
+<h2 id="hp-section-3">How to minimize a function</h2>
 
 <p>
 But wait... how do we actually minimize a complicated expression like \(S\)? 
@@ -203,7 +204,7 @@ This quadratic has two solutions: \(x_0 = -\frac{1}{3},\) or \(x_0 = 1.\)
 From here, Fermat's principle is of no further help, and you have to examine these points individually to see which -- if either! -- is the minimum. However, note how the derivative has narrowed our search down considerably: instead of trying every real number, we only have to test out two! 
 </p>
 
-<h2>The Euler-Lagrange equation</h2>
+<h2 id="hp-section-4">The Euler-Lagrange equation</h2>
 
 <p>
 Going back to Lagrange, letting \(L(\vec x, \vec v, m)\) be some mystery function, let's try to minimize
@@ -307,7 +308,7 @@ where \(L = T - V.\)
 </p>
 
 
-<h2>The pendulum</h2>
+<h2 id="hp-section-5">The pendulum</h2>
 
 <p>
 To end, we are going to give an example of how to use Lagrangian mechanics to solve a physics problem. 
@@ -389,13 +390,13 @@ i.e.,
 \]
 This is the usual equation for the pendulum! Slightly surprisingly, there is no dependence on the mass \(m\).
 
-<h2>Conclusion</h2>
+<h2 id="hp-section-6">Conclusion</h2>
 
 <p>
 At the moment, Lagrangian mechanics seems to be just a very counterintuitive way to restate Newtonian mechanics. But this reformulation enabled new major discoveries, which we hope you'll explore with us next week!
 </p>
 
-</body>
+
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -411,4 +412,6 @@ At the moment, Lagrangian mechanics seems to be just a very counterintuitive way
 </footer>
 
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/noether.html"><div class="related-category">Physics</div><h3>Mechanics II: symmetry is conservation</h3><p>Why symmetries of a physical system produce conservation laws.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/diff-forms.html"><div class="related-category">Geometry · Calculus</div><h3>Manifolds, differential forms, and multivariable calculus</h3><p>How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

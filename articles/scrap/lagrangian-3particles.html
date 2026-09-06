@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Why is momentum conserved?</title>
 
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../../style.css">
 
   <!-- KaTeX -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../../index.html#topics">Topics</a><a href="../../index.html#start-here">Start Here</a><a href="../../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Why is momentum conserved?</h1><div class="article-info"><span class="article-badge">About 6 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">July 10, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Newton's approach to physics</a></li><li><a href="#hp-section-2">Least action principle</a></li><li><a href="#hp-section-3">How to minimize a function</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Why is momentum conserved?</h1>
-<p class="meta">July 10, 2026</p>
+
 
 <p>
   Nature is lazy and always evolves in the most "efficient" way possible. This is why soap bubbles are spherical--to minimize surface area--and why <a href="https://en.wikipedia.org/wiki/Snell%27s_law">light refracts</a> when traveling through glass.
@@ -34,7 +35,7 @@
   Since Newton's approach to physics already works so well, you may ask why we care about Lagrange's approach. One reason is Emmy Noether's discovery that conservation laws (conservation of energy, momentum, and angular momentum) fall out naturally from Lagrange's approach to mechanics!
 </p>
 
-<h2>Newton's approach to physics</h2>
+<h2 id="hp-section-1">Newton's approach to physics</h2>
 Let's imagine 3 particle with some masses \(m_1,m_2,m_3\) at some positions \(\vec x_1,\vec x_2,\vec x_3\) and having some velocities \(\vec v_1,\vec v_2,\vec v_3\).
 
 <img src="particles.svg" alt="TikZ graph" style="display:block;
@@ -52,7 +53,7 @@ Of course, we also know that
 \]
 Newton would solve these equations to figure out how each particle moves.
 
-<h2>Least action principle</h2>
+<h2 id="hp-section-2">Least action principle</h2>
 
 Let's now try to understand what Lagrange's approach to physics is. Nature being "lazy" means it expends the least energy possible. 
 So he defined a function \(L\), called the <em>Lagrangian</em>, which keeps track of all the energy present in the system. It is
@@ -108,10 +109,10 @@ Our goal is to understand how the positions and velocities of the particles chan
 </p>
 
 
-<h2>How to minimize a function</h2>
+<h2 id="hp-section-3">How to minimize a function</h2>
 How do you minimize a function? Let's say we're trying to minimize the function \(f(x)=x^3-x^2-x+2\).
 
-<img src="minimum.svg" alt="TikZ graph" style="display:block;
+<img src="../minimum.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
             max-width:90%;
             height:auto;">
@@ -155,7 +156,7 @@ would be a little smaller than \(f(x_0)\), which again contradicts \(f(x_0)\) be
   Following the same strategy as for a usual function, let's try nudging each variable.
 </p>
 
-</body>
+
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -166,9 +167,11 @@ would be a little smaller than \(f(x_0)\), which again contradicts \(f(x_0)\) be
 </script>
 <!-- End MailerLite Universal -->
 <footer>
-<a href="../index.html">← back to home page</a>
+<a href="../../index.html">← back to home page</a>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
 
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../../articles/lagrangian.html"><div class="related-category">Physics</div><h3>Mechanics I: nature is lazy</h3><p>A geometric way to understand motion through the principle of least action.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../../articles/noether.html"><div class="related-category">Physics</div><h3>Mechanics II: symmetry is conservation</h3><p>Why symmetries of a physical system produce conservation laws.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../../index.html#latest">Browse all articles</a></p><p><a href="../../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

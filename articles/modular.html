@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Number theory</div><h1 class="article-title">Why study Diophantine equations?</h1><p class="article-description">Use modular arithmetic to turn difficult integer equations into finite puzzles.</p><div class="article-info"><span class="article-badge">Level 1</span><span class="article-badge">Helpful: Integer arithmetic</span><span class="article-badge">About 6 min read</span></div><p class="article-date">February 10, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Divisibility</a></li><li><a href="#hp-section-2">Modular artihmetic</a></li><li><a href="#hp-section-3">Unique Prime Factorization</a></li><li><a href="#hp-section-4">The Chinese Remainder Theorem</a></li><li><a href="#hp-section-5">The Langlands program</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Why study Diophantine equations?</h1>
-<p class="meta">February 10, 2026</p>
+
 
 <p>
 One of the central goals of number theory is to find <em>integer</em> solutions to polynomial equations -- this is called the study of <em>Diophantine</em> equations.
@@ -33,7 +34,7 @@ Historically, the theory of Diophantine equations has led to the discovery of ma
 </p>
 
 
-<h2>Divisibility</h2>
+<h2 id="hp-section-1">Divisibility</h2>
 <p>
 The simplest Diophantine equations are those of the form \(Ax = B\). For example, suppose I ask you to find integer solutions to the equation
 $$5x = 10,$$
@@ -55,7 +56,7 @@ As another example, the equation \(3x = 14\) also has no integer solutions; this
 Studying equations \(Ax = B\) leads one directly to the ideas of divisibility and remainder.
 </p>
 
-<h2>Modular artihmetic</h2>
+<h2 id="hp-section-2">Modular artihmetic</h2>
 
 <p>
 A systematic way of managing divisibility is <em>modular arithmetic</em>. From some point of view, modular arithmetic is just a type of notation; but it is a very useful notation.
@@ -76,7 +77,7 @@ You should think of \(\equiv\) as being a fancy sort of equals sign; in mod 3 ar
 \[27 \equiv 0 \pmod{9}.\]
 </p>
 
-<h2>Unique Prime Factorization</h2>
+<h2 id="hp-section-3">Unique Prime Factorization</h2>
 
 <p>
 After studying Diophantine equations of the form \(Ax = B,\) it is natural to wonder about equations like \(Ax + By = C.\) For example, what integer solutions are there to 
@@ -93,7 +94,7 @@ The equation \(Ax + By = C\) actually dates all the way back to the Greek geomet
 This Diophantine equation might seem a little strange, but it is actually one of the most important in history, for a very simple reason: <em>inventing the Euclidean algorithm is essentially equivalent to inventing unique prime factorization</em>. The integers have unique prime factorizations: every whole number can be written in exactly one way as a product of prime numbers (like \(4725 = 3 \times 3 \times 3 \times 5 \times 5 \times 7 = 3^3 \times 5^2 \times 7\)). Unique prime factorization is a great hidden structure the integers possess, and somehow it is equivalent to knowing how to solve certain Diophantine equations! The link between these two topics is not immediate, but it does become inevitable when one starts thinking more carefully about prime factorization.
 </p>
 
-<h2>The Chinese Remainder Theorem</h2>
+<h2 id="hp-section-4">The Chinese Remainder Theorem</h2>
 
 <p>
 Unique prime factorization has a consequence in modular arithmetic. The equation
@@ -117,7 +118,7 @@ This is an important general principle: any modular arithmetic equation can be w
 This observation, called the <em>Chinese remainder theorem</em> might seem a little strange at first, but it is actually very helpful in practice (as we will illustrate by using it in later articles!). The key point is that usually prime power modular arithmetic is easier to handle, and so it is better to study an equation `one prime power at a time,' instead of studying it with all the prime powers combined together at once.
 </p>
 
-<h2>The Langlands program</h2>
+<h2 id="hp-section-5">The Langlands program</h2>
 
 <p>
 We saw two examples above of Diophantine equations leading to the discovery of some hidden structure in the integers (divisibility and unique prime factorization).
@@ -136,7 +137,7 @@ or
 Just like the equations we saw earlier in this article, these Diophantine equations \(f(x) = Ny\) led to the discovery of great hidden structures in the integers. We hope you'll join us in learning more about these hidden structures!
 </p>
 
-</body>
+
 
 <!-- MailerLite Universal -->
 <script>
@@ -151,5 +152,7 @@ Just like the equations we saw earlier in this article, these Diophantine equati
 <a href="../index.html">← back to home page</a>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
-</html>
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/quadratic-residues.html"><div class="related-category">Number theory</div><h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3><p>When does a number have a square root modulo a prime?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/hensels.html"><div class="related-category">Number theory · Calculus</div><h3>Using calculus to do number theory</h3><p>A discrete analogue of Newton's method lets us lift solutions of congruences.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
+</html>

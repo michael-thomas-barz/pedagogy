@@ -13,13 +13,14 @@
     onload="renderMathInElement(document.body);">
   </script>
 
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Number theory</div><h1 class="article-title">Fractals patterns hidden inside Pascal's triangle</h1><p class="article-description">Color Pascal's triangle by divisibility and a fractal suddenly appears.</p><div class="article-info"><span class="article-badge">Level 1</span><span class="article-badge">Helpful: Arithmetic and binomial coefficients</span><span class="article-badge">About 7 min read</span><span class="article-badge interactive">Interactive</span></div><p class="article-date">July 31, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Binomial coefficients</a></li><li><a href="#hp-section-2">Lucas' theorem</a></li><li><a href="#hp-section-3">The fractal pattern</a></li><li><a href="#hp-section-4">More on Lucas' theorem</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Fractals patterns hidden inside Pascal's triangle</h1>
-<p class="meta">July 31, 2026</p>
+
 
 <p>
 Pascal's triangle is a wonderful pattern, with lots of applications in combinatorics. It looks like this: 
@@ -697,7 +698,7 @@ Notice how the shadings seem to form a pattern, similar to the fractal Sierpinsk
 Why do the digits make this pattern? What can we say about it? For that, we need <em>Lucas' theorem</em>. But before we get to Lucas' theorem, we need to say something about Pascal's triangle.
 </p>
 
-<h2>Binomial coefficients</h2>
+<h2 id="hp-section-1">Binomial coefficients</h2>
 
 <p>The numbers in Pascal's triangle are called <em>binomial coefficients</em>. They arise very often, because of two crucial applications.</p>
 
@@ -824,7 +825,7 @@ We'll remark here that, while we defined the binomial coefficients via a certain
 This way, you don't need to generate rows \(1, 2, ..., n\) of Pascal's triangle just to compute row \((n+1)\) -- you can use this closed form instead.
 </p>
 
-<h2>Lucas' theorem</h2>
+<h2 id="hp-section-2">Lucas' theorem</h2>
 
 <p>
 Édouard Lucas was a ninteenth century French mathematician, who was very interested in number theory. As the binomial coefficients \(\binom{n}{k}\) -- that is, the entries of Pascal's triangle -- arise so often, Lucas was interested in exploring their number theoretic properties. One of the most basic number theoretic properties of binomial coefficients is asking when \(\binom{n}{k}\) is even, and when it is odd. 
@@ -881,7 +882,8 @@ Lucas observed that this depended only on the <em>binary expansions</em> of \(n\
   .bp-error { text-align: center; font-size: 13px; color: var(--gb-orange); font-family: var(--font-sans); }
 </style>
  
-<div id="bp-widget">
+<p class="hp-interactive-label">Try it yourself · Explore Pascal’s triangle</p>
+<div id="bp-widget" data-hp-interactive="true">
   <div class="bp-slide-title" id="bp-title"></div>
   <div id="bp-inputs-wrap"></div>
   <div class="bp-eq" id="bp-eq"></div>
@@ -1034,7 +1036,7 @@ Lucas observed that this depended only on the <em>binary expansions</em> of \(n\
 Lucas observed a pattern: \(\binom{n}{k}\) is <em>even</em> exactly when there is some spot where the binary expansion of \(n\) has a 0, but the binary expansion of \(k\) has a 1. The activity above highlights the bits where this happens; try playing with it to see the pattern for yourself!
 </p>
 
-<h2>The fractal pattern</h2>
+<h2 id="hp-section-3">The fractal pattern</h2>
 
 <p>
 Using Lucas' theorem, let's attempt to understand the pattern in Pascal's triangle colored according to parity, as we saw above. 
@@ -2544,11 +2546,11 @@ Notice how the numbers 8 through 15 are identical to the numbers 0 through 7, bu
 If we think back to Lucas' theorem, changing the first bit of \(n\) from \(0\) to \(1\) will have no impact on whether \(\binom{n}{k}\) is even or odd (see for yourself by playing with the Lucas' theorem widget!). So, these three pieces of Pascal's triangle, colored by parity, end up looking identical! This remarkable self-similarity in binary explains the self-similarity in our colored Pascal's triangle.
 </p>
 
-<h2>More on Lucas' theorem</h2>
+<h2 id="hp-section-4">More on Lucas' theorem</h2>
 
 While we think the colorful pattern of Pascal's triangle is pretty cool, that's not all Lucas' theorem is good for. In general, Lucas' theorem allows one to understand the value of \(\binom{n}{k}\) <em>modulo a prime \(p\)</em>. Knowing how to do this can be important even in quite advanced mathematical applications: in the recent research article <a href="https://arxiv.org/pdf/2604.20054">Non-abelian \(p\)-curvature and a non-abelian Katz's formula</a>, one of the maintainers of this hidden-phenomena blog had to use Lucas' theorem in research on differential equations and non-abelian Hodge theory!
 
-</body>
+
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -2563,4 +2565,6 @@ While we think the colorful pattern of Pascal's triangle is pretty cool, that's 
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/quadratic-residues.html"><div class="related-category">Number theory</div><h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3><p>When does a number have a square root modulo a prime?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/gamma.html"><div class="related-category">Calculus</div><h3>What is the factorial of 3.5?</h3><p>Extend factorials to non-integers and discover why \(\pi\) appears.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

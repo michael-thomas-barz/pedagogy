@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 8 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Least action principle: yet again</a></li><li><a href="#hp-section-2">Predicting where particles go</a></li><li><a href="#hp-section-3">Euler-Lagrange equations... but with no Lagrangians</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Mechanics III: the Hamiltonian</h1>
-<p class="meta">September 12, 2026</p>
+
 
 <p>
   Newton gave the first formulation of mechanics, in the 17th century. For him, <em>force</em> was the most basic concept, and a physical system evolves according to the equation \(F=ma\).
@@ -51,7 +52,7 @@
   <a href="noether.html">Last week</a> we derived conservation of energy from the Euler-Lagrange equation.
 </p> -->
 
-<h2>Least action principle: yet again</h2>
+<h2 id="hp-section-1">Least action principle: yet again</h2>
 Let's quickly review <a href="lagrangian.html">Lagrangian mechanics</a>. We start with the a certain function, known as the Lagrangian,
 \[
 L(q_1,\dots,q_n,\dot q_1,\dots,\dot q_n,t),
@@ -120,7 +121,7 @@ As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\
   In other words, we can view the Euler-Lagrange equation as Newton's equation for general coordinates.
 </p>
 
-<h2>Predicting where particles go</h2>
+<h2 id="hp-section-2">Predicting where particles go</h2>
 In the previous paragraph, we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
 <img src="least_action2.svg" alt="TikZ graph" style="display:block;
             margin:2rem auto;
@@ -200,22 +201,12 @@ This is closer to what we really want to do; knowing where the particle starts o
   \]
   the <em>Hamiltonian</em>, and denote it by \(H\). As we explained <a href="noether.html">a couple weeks ago</a>, \(H\) is the total energy in the system, and is conserved when the Lagrangian \(L\) is time-independent.
 </p>
-We will re-formulate mechanics.
+Our goal is to take Lagrangian mechanics--formulated in terms of \(L\), \(q_i\), and \(\dot q_i\)--and reformulate it in terms of \(H\), \(q_i\), and \(p_i\).
+Correspondingly, let us view \(H=H(q,p,t)\) as a <em>function of \(q_i\), \(p_i\), and \(t\)</em>, instead of as a function of \(q_i\), \(\dot q_i\), and \(t\).
 
-<h2>Euler-Lagrange equations... but with no Lagrangians</h2>
-We now understand the derivatives of \(S\) with respect to \(q_i\) and \(t\). 
-Let's use the language of <a href="diff-forms.html">differential forms</a> to combine all this information into one simple formula:
-\[
-dS=\sum_{i=1}^n\frac{\partial S}{\partial q_i}dq_i+\frac{\partial S}{\partial t}dt=\sum_{i=1}^np_idq_i-Hdt.
-\]
-Now, by the fundamental theorem of calculus,
-\[
-S=\int_\gamma\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
-\]
-This is a path integral, along the path \(\gamma\) from \(t_0\) to \(t_1\) is the path the particle takes: formally, \(\gamma\colon[t_0,t_1]\to\mathbb R^n\times\mathbb R\) is defined by \(\gamma(t)=(q_i(t),t)\).
+<h2 id="hp-section-3">Euler-Lagrange equations... but with no Lagrangians</h2>
 
-<!-- <h2>Euler-Lagrange equations... but with no Lagrangians</h2>
-Let's try to phrase the Euler-Lagrange equation in terms of the Hamiltonian
+<!-- Let's try to phrase the Euler-Lagrange equation in terms of the Hamiltonian
 \[
 H=-\frac{\partial S}{\partial t}.
 \]
@@ -240,7 +231,35 @@ So, maybe we can try taking this equation as our starting point and seeing what 
   \]
 </p> -->
 
-</body>
+We now understand the derivatives of \(S\) with respect to \(q_i\) and \(t\). 
+Let's use the language of <a href="diff-forms.html">differential forms</a> to combine all this information into one simple formula:
+\[
+dS=\sum_{i=1}^n\frac{\partial S}{\partial q_i}dq_i+\frac{\partial S}{\partial t}dt=\sum_{i=1}^np_idq_i-Hdt.
+\]
+<p>
+Now, by the fundamental theorem of calculus,
+\[
+S=\int_\gamma\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
+\]
+This is a path integral, along the path \(\gamma\) from \(t_0\) to \(t_1\) is the path the particle takes: formally, \(\gamma\colon[t_0,t_1]\to\mathbb R^n\times\mathbb R\) is defined by \(\gamma(t)=(q_i(t),t)\).
+</p>
+
+<p>
+  Of course, by definition, this equation simply says
+  \[
+  S=\int_{t_0}^{t_1}\bigg(\sum_{i=1}^np_i(t)\frac d{dt}q_i(t)-H(q(t),p(t),t)\bigg)dt,
+  \]
+  which is nothing but the definition of the action integral plus the identity \(H=\sum_{i=1}^np_i\dot q_i-L\). 
+  However, this formulation allows us to consider a more general variational principle.
+</p>
+
+<h3>Variational principle in terms of differential forms</h3>
+If we perturb \(q_i\) by some small amount \(\delta q_i\), the total derivative of \(S\) changes by
+\[
+\delta S=\sum_{i=1}^np_id(q_i+\delta q_i)-\frac{\partial H}{\partial q_i}dt
+\]
+
+
 
 <!-- MailerLite Universal -->
 <script>
@@ -256,4 +275,6 @@ So, maybe we can try taking this equation as our starting point and seeing what 
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/noether.html"><div class="related-category">Physics</div><h3>Mechanics II: symmetry is conservation</h3><p>Why symmetries of a physical system produce conservation laws.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/diff-forms.html"><div class="related-category">Geometry · Calculus</div><h3>Manifolds, differential forms, and multivariable calculus</h3><p>How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

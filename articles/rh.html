@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Number theory · Analysis</div><h1 class="article-title">What does the Riemann zeta function have to do with the distribution of the primes?</h1><p class="article-description">How a complex-valued function encodes the mysterious distribution of prime numbers.</p><div class="article-info"><span class="article-badge">Level 3</span><span class="article-badge">Helpful: Infinite series and complex numbers</span><span class="article-badge">About 23 min read</span></div><p class="article-date">February 13, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Enter: the Riemann zeta function</a></li><li><a href="#hp-section-2">Summing \(\frac{1}{2} + \frac{1}{3} + \frac{1}{5} + \cdots\)</a></li><li><a href="#hp-section-3">Riemann's explicit formula</a></li><li><a href="#hp-section-4">Digression: Factoring functions</a></li><li><a href="#hp-section-5">Back to counting primes</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>What does the Riemann zeta function have to do with the distribution of the primes?</h1>
-<p class="meta">February 13, 2026</p>
+
 
 <p>
 One of the oldest theorems in mathematics is that there are infinitely many primes. Euclid (the geometer!) proved this around 300 BCE, and for centuries afterwards the story ended there. There are infinitely many primes -- so what else is there to ask about them?
@@ -45,7 +46,7 @@ Euler was interested in the corresponding question for primes: is
 the sum of the reciprocals of all the primes, infinite or finite?
 </p>
 
-<h2>Enter: the Riemann zeta function</h2>
+<h2 id="hp-section-1">Enter: the Riemann zeta function</h2>
 
 <p>
 To compute the infinite sum
@@ -113,7 +114,7 @@ Thus, the Euler product formula can be written as
 The Euler product formula is a way of <em>encoding unique prime factorization in calculus</em>, if you recall how its explanation required unique prime factorization. This is important because it is therefore a <em>bridge</em> between number theory and calculus; summing infinite series (like computing \(1/2 + 1/3 + 1/5 + 1/7 + \cdots,\) the sum of the reciprocals of the primes) is a calculus problem, but primes are number theoretic objects, so to solve our infinite sum over primes we need to use such a bridge.
 </p>
 
-<h2>Summing \(\frac{1}{2} + \frac{1}{3} + \frac{1}{5} + \cdots\)</h2>
+<h2 id="hp-section-2">Summing \(\frac{1}{2} + \frac{1}{3} + \frac{1}{5} + \cdots\)</h2>
 
 <p>
 But how do we actually cross our bridge, now that it exists? The right hand side of the Euler product formula involves an infinite <em>product</em> over all primes; but our problem is about a <em>sum</em> over the primes. As we saw in <a href="primitive.html">What is \(\log(3)\) modulo \(7\)?</a>, logarithms are the standard tool to convert products into sums. 
@@ -219,7 +220,7 @@ In fact, if you're slightly more careful in the above arguments, then you can us
 so that the partial sums grow logarithmically) to show that the partial sums of \(\sum_p 1/p\) grow like \(\log\log(n).\) The double logarithm function does go to infinity, but it does so <em>incredibly</em> slowly, which is why it's hard to numerically see the divergence of the sum.
 </p>
 
-<h2>Riemann's explicit formula</h2>
+<h2 id="hp-section-3">Riemann's explicit formula</h2>
 
 <p>
 However, even Euler's result is not the final word on how frequent the primes are. In 1792, Gauss, by looking at incredibly long tables of primes, conjectured that
@@ -302,7 +303,7 @@ or equivalently
 This equation has a \(\zeta(s)\) on the left hand side, and a \(\pi(x)\) on the right hand side. How do we solve for the \(\pi(x)\)? To do this, let's first explain how to rewrite \(\zeta(s)\) in a way which makes solving this equation a little easier.
 </p>
 
-<h2>Digression: Factoring functions</h2>
+<h2 id="hp-section-4">Digression: Factoring functions</h2>
 
 <p>
 If \(f(x)\) is a quadratic polynomial whose zeroes are at 2 and 3, we know
@@ -355,7 +356,7 @@ This famous identity, called the <em>Basel sum</em>, was one of Euler's proudest
 Hadamard and Weierstrass later made Euler's concept of factoring functions completely mathematically sound, and so for essentially all the mathematical functions which arise in reality, you can do this factoring trick. We will now factor \(\zeta(s)\) this way. 
 </p>
 
-<h2>Back to counting primes</h2>
+<h2 id="hp-section-5">Back to counting primes</h2>
 
 <p>
 Before our detour, we had derived the identity
@@ -486,7 +487,7 @@ Thus the <em>best case scenario</em>, in which Gauss's approximation
 \[\pi(x) \approx \operatorname{Li}(x)\]
 is as good as possible, is when every \(\rho\) has \(s = 0.5\) exactly, lying in the exact middle of the interval \([0, 1].\) The famous <em>Riemann hypothesis</em> is the conjecture that every \(\rho\) does have \(s = 0.5\) exactly. Unfortunately, it seems to be very hard to prove, and nobody has yet found a reason why all the zeroes have \(s = 0.5\) exactly! 
 </p>
-</body>
+
 
 <!-- MailerLite Universal -->
 <script>
@@ -502,4 +503,6 @@ is as good as possible, is when every \(\rho\) has \(s = 0.5\) exactly, lying in
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/dirichlet.html"><div class="related-category">Number theory · Calculus</div><h3>Infinitely many primes end in a 7</h3><p>Why there must be infinitely many primes in certain arithmetic progressions.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/gamma.html"><div class="related-category">Calculus</div><h3>What is the factorial of 3.5?</h3><p>Extend factorials to non-integers and discover why \(\pi\) appears.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

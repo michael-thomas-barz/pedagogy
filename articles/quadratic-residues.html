@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Number theory</div><h1 class="article-title">What is \(\sqrt{-1}\) modulo \(5\)?</h1><p class="article-description">When does a number have a square root modulo a prime?</p><div class="article-info"><span class="article-badge">Level 1</span><span class="article-badge">Helpful: Remainders and prime numbers</span><span class="article-badge">About 13 min read</span><span class="article-badge interactive">Interactive</span></div><p class="article-date">February 3, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Legendre symbols</a></li><li><a href="#hp-section-2">An example</a></li><li><a href="#hp-section-3">Future directions</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>What is \(\sqrt{-1}\) modulo \(5\)?</h1>
-<p class="meta">February 3, 2026</p>
+
 
 <p>
 In <a href="modular.html">Why study Diophantine equations?</a>, we discussed studying polynomial equations in modular arithmetic. One of the first equations encountered in high school algebra is the quadratic equation
@@ -365,7 +366,7 @@ Legendre observed an amazing pattern:
 So, Legendre observed that the primes \(p\) such that \(a\) is a square modulo \(p\) only depend on the residue of \(p\) modulo some other number! Moreover, in this example of \(p=5,\) note that \(5\) is a perfect square modulo \(p\) exactly when \(p\) is a perfect square modulo \(5.\)
 </p>
 
-<h2>Legendre symbols</h2>
+<h2 id="hp-section-1">Legendre symbols</h2>
 
 <p>
 To formalize his laws, Legendre introduced the <em>quadratic residue symbol</em>. The definition is very simple:
@@ -407,7 +408,7 @@ This is exactly the observation Legendre made about when \(5\) is a square modul
 You might wonder how Gauss got involved. The answer is that, while Legendre conjectured the law of quadratic reciprocity -- and even got very close to a proof! -- Gauss was ultimately the person to prove quadratic reciprocity, and explain why it held (instead of simply observing it held in different examples). Gauss proved quadratic reciprocity in his famous book <em>Disquisitiones Arithmeticae</em>, in which he also laid the foundations of modern number theory. The law of quadratic reciprocity is named after Gauss in honor of his contributions towards it.
 </p>
 
-<h2>An example</h2>
+<h2 id="hp-section-2">An example</h2>
 
 <p>
 Gauss' law of quadratic reciprocity can be used to give a quick algorithm for deciding whether a number \(a\) is a square modulo a prime number \(p.\) Before giving this algorithm, we observe the following fundamental identity:
@@ -458,7 +459,7 @@ Combining everything, we see
 so \(463\) is a square modulo \(1031\)! In fact, even though we now know \(463\) is a square, we have no idea what it's square root is (it turns out to be \(325\)).
 </p>
 
-<h2>Future directions</h2>
+<h2 id="hp-section-3">Future directions</h2>
 <p>
 Today we explored solutions to quadratic equations in modular arithmetic. What if we instead look at cubic equations, such as \(x^3-x-1 \equiv 0\pmod{p}\)? By trying every residue with a calculator, you can check \(x^3-x-1\equiv0\pmod p\) has a solution when
 \[
@@ -498,7 +499,7 @@ f(q) &= q - q^2 - q^3 + q^6 + q^8 - q^{13} - q^{16} + q^{23} \\
 You might notice from this larger expansion that \(q^{23}\) has coefficient 1, which isn't \(0, 2,\) or \(-1.\) It turns out \(23\) behaves a little strangely, because of a phenomena called <em>ramification</em>, which appears often in the theory of Diophantine equations. Ramification usually screws up patterns in number theory, but only for a finite number of exceptions; and the exceptions can all be found with some computation.
 </p>
 
-</body>
+
 
 
 <!-- MailerLite Universal -->
@@ -514,5 +515,7 @@ You might notice from this larger expansion that \(q^{23}\) has coefficient 1, w
 <a href="../index.html">← back to home page</a>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
-</html>
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/primitive.html"><div class="related-category">Number theory</div><h3>What is \(\log(3)\) modulo \(7\)?</h3><p>Exponentials and logarithms still make sense in modular arithmetic — but with a twist.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/modular.html"><div class="related-category">Number theory</div><h3>Why study Diophantine equations?</h3><p>Use modular arithmetic to turn difficult integer equations into finite puzzles.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
+</html>

@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Number theory · Calculus</div><h1 class="article-title">Infinitely many primes end in a 7</h1><p class="article-description">Why there must be infinitely many primes in certain arithmetic progressions.</p><div class="article-info"><span class="article-badge">Level 3</span><span class="article-badge">Helpful: Primes, infinite series, and complex numbers</span><span class="article-badge">About 20 min read</span></div><p class="article-date">February 22, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">300BC: What was Euclid's proof, though?</a></li><li><a href="#hp-section-2">1737: What did Euler do?</a></li><li><a href="#hp-section-3">1837: Enter Dirichlet</a></li><li><a href="#hp-section-4">Digression: a little bit of discrete Fourier theory</a></li><li><a href="#hp-section-5">Back to Dirichlet's argument</a></li><li><a href="#hp-section-6">Dirichlet's full theorem</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Infinitely many primes end in a 7</h1>
-<p class="meta">February 22, 2026</p>
+
 
 <p>
 Euclid (the geometer!) found a wonderful proof that there are infinitely many primes. But later mathematicians, even ones as illustrious as Euler, still revisited this result to give new proofs! What is the point of proving a theorem you already know is true?
@@ -41,7 +42,7 @@ For example, there are many prime numbers ending in a 7:
 7,17,37,47,67,97,107,127,137,157,167,197,227,\cdots,\]
 but how do we know there are infinitely many? It turns our Euclid's strategy doesn't generalize well, but Euler's strategy does! Dirichlet was able to push Euler's strategy further and prove the sequence never terminates.
 
-<h2>300BC: What was Euclid's proof, though?</h2>
+<h2 id="hp-section-1">300BC: What was Euclid's proof, though?</h2>
 
 <p>
 To begin, we give Euclid's proof that infinitely many primes exist, and then show how you can use the same strategy to prove a related theorem.
@@ -62,7 +63,7 @@ Then, find the smallest prime factor \(q\) of \(N.\) This prime factor \(q\) mus
 Euclid's argument is very elementary, and a really nice proof of the infinitude of the primes. You might have seen it before, because it is so quick that it's still repeated to this day! 
 </p>
 
-<h2>1737: What did Euler do?</h2>
+<h2 id="hp-section-2">1737: What did Euler do?</h2>
 
 <p>
 In our <a href="rh.html">last article</a>, on the Riemann zeta function, we explained how Euler found a new proof of the infinitude of the primes. Euler proved a slightly stronger statement: he showed the sum
@@ -131,7 +132,7 @@ See <a href="rh.html">our article on the Riemann hypothesis</a> for more details
 But the upshot is we now know \(\sum_p 1/p=+\infty,\) and so there are infinitely many primes! This was Euler's proof of the infinitude of the primes. 
 </p>
 
-<h2>1837: Enter Dirichlet</h2>
+<h2 id="hp-section-3">1837: Enter Dirichlet</h2>
 
 <p>
 Dirichlet was interested in a slightly more precise question: are there infinitely many primes \(p\) such that 
@@ -169,7 +170,7 @@ where a term like \(1/25\) appears (because its denominator involves only \(5^2\
 Because these terms were so hard to control, Dirichlet thought of doing something else; we now call his trick a <em>discrete Fourier transform</em>. To explain his great strategy, we first illustrate it in a simpler context.
 </p>
 
-<h2>Digression: a little bit of discrete Fourier theory</h2>
+<h2 id="hp-section-4">Digression: a little bit of discrete Fourier theory</h2>
 
 <p>
 Fourier theory is now understood as a way of <em>decomposing functions in terms of functions with simple symmetries</em>. Traditional Fourier theory involves decomposing functions as sums of sine waves; these sine waves have a certain symmetry in that they are <em>periodic</em>.
@@ -224,7 +225,7 @@ we want to compute. We won't be able to compute this directly; instead, we will 
 After that, we will find some way to recover the original sum we care about from the modified sum. Thus we never have to study this tricky sum directly; instead, we break it up into two much easier to understand pieces!
 </p>
 
-<h2>Back to Dirichlet's argument</h2>
+<h2 id="hp-section-5">Back to Dirichlet's argument</h2>
 
 <p>
 Every prime number (except the prime number 2, which likes to be unique) is congruent to either 1 or 3 modulo 4. Dirichlet thought that this dichotomy of primes modulo 4 was similar to the even-odd function dichotomy explained above. So, Dirichlet's strategy was simple: introduce the 3 mod 4 primes in, but <em>weight them differently</em>, and hope to then do some Fourier analysis to extract out the \(1\) modulo 4 primes from the total.
@@ -330,7 +331,7 @@ This is great! We now see that, in particular, there have to be infinitely many 
 Thus, by taking adapting Euler's method of proof, Dirichlet managed to prove a much stronger theorem, which cannot be proven using Euclid's original method.
 </p>
 
-<h2>Dirichlet's full theorem</h2>
+<h2 id="hp-section-6">Dirichlet's full theorem</h2>
 
 <p>
 Dirichlet's full theorem asserts the following: if \(a, n\) are two positive integers having no common prime factors, then there are always infinitely many primes \(p\) such that \(p \equiv a \pmod{n}.\) 
@@ -372,7 +373,7 @@ was nonzero. In general the infinite sums you get involve some additions and som
 This second issue can be resolved in a number of ways, but all involve some amount of more advanced number theory than we discussed here. Still, we hope you appreciate seeing the proof strategy of Dirichlet's theorem! 
 </p>
 
-</body>
+
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -389,4 +390,6 @@ This second issue can be resolved in a number of ways, but all involve some amou
 
 
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/rh.html"><div class="related-category">Number theory · Analysis</div><h3>The Riemann hypothesis (or, how to earn $1 million)</h3><p>How a complex-valued function encodes the mysterious distribution of prime numbers.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/quadratic-residues.html"><div class="related-category">Number theory</div><h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3><p>When does a number have a square root modulo a prime?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

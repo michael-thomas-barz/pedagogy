@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Algebra</div><h1 class="article-title">Syzygies and higher groupoids</h1><p class="article-description">A route from ordinary equations to the idea that mathematical objects can be equal in more than one way.</p><div class="article-info"><span class="article-badge">Level 4</span><span class="article-badge">Helpful: Algebra; group theory for the advanced asides</span><span class="article-badge">About 30 min read</span><span class="article-badge interactive">Interactive</span></div><p class="article-date">August 29, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Equivalence relations</a></li><li><a href="#hp-section-2">The formal definition of an equivalence relation</a></li><li><a href="#hp-section-3">Groupoids</a></li><li><a href="#hp-section-4">Groupoid-based mathematics</a></li><li><a href="#hp-section-5">The inadequacy of groupoids</a></li><li><a href="#hp-section-6">\(\infty\)-groupoids; or, anima</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Syzygies and higher groupoids</h1>
-<p class="meta">August 29, 2026</p>
+
 
 <p>
 You might have heard about \(\infty\)-category theory before. This is a subject which seems to have captured the popular imagination to some extent, despite not being used by most mathematicians. However, \(\infty\)-category theory is growing, and many fields -- including our own beloved arithmetic geometry! -- are finding it more and more useful to incorporate it. 
@@ -44,7 +45,7 @@ One can compare this to the advent of calculus. In a first course on calculus, y
 With that in mind, let's get to some examples! 
 </p>
 
-<h2>Equivalence relations</h2>
+<h2 id="hp-section-1">Equivalence relations</h2>
 
 <p>
 In mathematics, it is common to <em>quotient</em> a set by an <em>equivalence relation</em>. Roughly, this means declaring two different things to be equal.
@@ -239,7 +240,7 @@ but we want to declare
 to represent how different instruction strings encode the same square. 
 </p>
 
-<h2>The formal definition of an equivalence relation</h2>
+<h2 id="hp-section-2">The formal definition of an equivalence relation</h2>
 
 <p>
 Generally, an <em>equivalence relation</em> on a set \(X\) is the data of a <em>subset</em> \(E \subseteq X\times X,\) obeying some conditions we'll state in a moment. For now, to get a sense of what this means, let's revisit the square example; as we said before, there we have
@@ -271,7 +272,7 @@ For reflexivity, we demand that, for every \(x \in X,\) (this symbol means \(x\)
 For symmetry, we say that if \((x, y) \in E,\) then \((y, x) \in E\) as well. For transitivity, we say that if \((x, y)\in E\) and \((y, z) \in E,\) then \((x, z) \in E\) as well. 
 </p>
 
-<h2>Groupoids</h2>
+<h2 id="hp-section-3">Groupoids</h2>
 
 <p>
 Equivalence relations are an incredibly common, and useful, mathematical construct. However, over time, it was realized that they have a certain defect, which can make them inconvenient in some applications.
@@ -378,7 +379,7 @@ For the last compatibility, recall that \(\iota\) is supposed to implement symme
 This is because, if \(e\) is some reason that \(x \sim y,\) then \(\iota(e)\) is the symmetric reason that \(y\sim x.\) Thus, when we apply transitivity to these two to get a reason that \(x\sim x,\) we shouldn't expect anything exciting to happen: \(e\) and \(\iota(e)\) are 'the same reason,' but just with opposite source and target, and so composing them should never result in anything interesting.
 </p>
 
-<h3>An advanced example: action groupoids</h3>
+<h3 class="hp-deeper">An advanced example: action groupoids</h3>
 
 <p>
 This subsection is intended for people who know a little group theory; those who don't can safely skip it. 
@@ -417,7 +418,7 @@ Finally, the transitivity operation \(\mu\) is given by
 The primary difference between the set-theoretic quotient \(X/G\) and the action groupoid \([X/G]\) is that the action groupoid can remember that two elements might be in the same orbit for <em>multiple reasons</em>. That is, two points \(x, x' \in X\) lie in the same \(G\)-orbit whenever there is some \(g \in G\) so that \(x' = g \cdot x.\) We think of this element \(g\) as being a <em>reason</em> that \(x, x'\) lie in the same orbit; group actions can have stabilizers, though, and so there can be distinct reasons that two points lie in the same orbit. The action groupoid is very good at encoding these distinct reasons! 
 </p>
 
-<h2>Groupoid-based mathematics</h2>
+<h2 id="hp-section-4">Groupoid-based mathematics</h2>
 
 <p>
 Once you are convinced of the utility of groupoids, it can be tempting to re-define various basic mathematical objects, but trying to replace any <em>equivalence relations</em> involved with <em>groupoids</em>. 
@@ -616,7 +617,7 @@ But even functions are groupoid maps \(\mathbb{R}/\{\pm 1\} \to \mathbb{R}_{\ope
 So, even functions do not have any restriction about sending zero to zero. Thus, if you want to understand functions obeying some symmetry, like even or odd functions, groupoids are the way to go! In fact, one of the first 'concrete situations' where mathematicians needed groupoids were in the study of <em>modular curves</em>. As we mentioned above, modular forms -- an important part of modern number theory -- are defined as functions obeying a certain invariance property. Similarly to even and odd functions, this invariance property can be phrased as \(G\)-equivariance for the hyperbolic plane and some complicated group \(G.\) The resulting quotient space of the hyperbolic plane is called a <em>modular curve</em>, and to understand modular curves completely, one needs to remember the <em>orbifold</em> or <em>stacky</em> points -- that is, the points which are equal to themselves for multiple reasons under the quotient!
 </p>
 
-<h2>The inadequacy of groupoids</h2>
+<h2 id="hp-section-5">The inadequacy of groupoids</h2>
 
 <p>
 The longer you do certain types of algebraic geometry or algebraic topology, the more convinced you might be that groupoids occupy a fundamental role in mathematics. This lead to mathematicians trying to redo various mathematical concepts, but replacing all the <em>sets</em> involved in their definition with groupoids. 
@@ -630,7 +631,7 @@ For example, algebraic geometers replaced the sets used in the definition of a <
 But if you take groupoid-based mathematics seriously enough, groupoids then seem inadequate because they are based on sets! And this inadequacy is not purely academic, although the trouble you run into is hard to explain without assuming some more advanced algebra background. The next subheading gives a 'concrete' situation where the fact that groupoids are defined using sets instead of groupoids causes trouble, though a reader unfamiliar with abstract algebra can safely skim or skip that section.
 </p>
 
-<h3>An advanced example: syzygies</h3>
+<h3 class="hp-deeper">An advanced example: syzygies</h3>
 
 <p>
 Let \(M\) be a \(\mathbb{C}[x,y]\)-module. Consider the quotient \(M/xM.\) Quotients are a prime signal that you should use groupoids, and indeed something quite nice happens if you model this quotient as a groupoid.
@@ -682,7 +683,7 @@ If you try to reformulate the definition of groupoid, but replacing the two sets
 The final definition of 2-groupoid is actually quite a bit subtle, because there are many many equivalent-but-not-obviously-equivalent ways to define 2-groupoids. 
 </p>
 
-<h2>\(\infty\)-groupoids; or, anima</h2>
+<h2 id="hp-section-6">\(\infty\)-groupoids; or, anima</h2>
 
 <p>
 You might have noticed something: 2-groupoids were defined because groupoids are not groupoid-y enough; their definition involves sets. But 2-groupoids are also not 2-groupoid-y: their definition involves ordinary groupoids. 
@@ -733,4 +734,6 @@ Grothendieck's homotopy hypothesis is the assertion (which, depending on how you
 <a href="../index.html">← back to home page</a>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/monodromy.html"><div class="related-category">Topology · Calculus</div><h3>Möbius strips and differential equations</h3><p>A one-sided surface and a differential equation turn out to share the same obstruction.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

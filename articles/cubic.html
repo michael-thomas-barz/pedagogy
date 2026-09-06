@@ -18,13 +18,14 @@
                 margin-inline-start: 2rem;
         }
 </style>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Algebra</div><h1 class="article-title">How to solve cubic and quartic equations II: cubics</h1><p class="article-description">Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p><div class="article-info"><span class="article-badge">Level 2</span><span class="article-badge">Helpful: Quadratic equations and complex numbers</span><span class="article-badge">About 26 min read</span></div><p class="article-date">July 24, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Quadratic equations: yet again</a></li><li><a href="#hp-section-2">To the cubic</a></li><li><a href="#hp-section-3">The quadratic part of the cubic formula</a></li><li><a href="#hp-section-4">The cube root in the cubic formula</a></li><li><a href="#hp-section-5">Using the cubic formula in practice</a></li><li><a href="#hp-section-6">Closing remarks</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>How to solve cubic and quartic equations II: cubics</h1>
-<p class="meta">July 24, 2026</p>
+
 
 <p>
 <a href="quartic.html">Last week</a>, we saw how to reduce the quartic equation to the cubic equation.
@@ -38,7 +39,7 @@ x^3+6x^2+9x+3=0?
 In mathematics, when you cannot solve a problem, it is helpful to compare it to a problem you already know how to solve. So, we are going to start by revisiting the quadratic formula.
 </p>
 
-<h2>Quadratic equations: yet again</h2>
+<h2 id="hp-section-1">Quadratic equations: yet again</h2>
 
 There are (at least!) two different ways to solve the quadratic equation
 \[
@@ -119,7 +120,7 @@ In our final square root formula, we wrote
 The positive/negative ambiguity in the square root on the right hand side is reflected in the positive/negative ambiguity in the expression \(\alpha-\beta\) on the left hand side: depending on which root we call \(\alpha\) and which we call \(\beta,\) the expression \(\alpha - \beta\) could take on two possible values, which are negatives of each other, just like how the square root can be either positive or negative. 
 </p>
 
-<h2>To the cubic</h2>
+<h2 id="hp-section-2">To the cubic</h2>
 
 <p>
 We now want to derive a <em>cubic</em> formula, to solve equations
@@ -138,7 +139,7 @@ It turns out that one can always reduce a cubic equation to one of the form
 just by choosing \(h\) right. 
 </p>
 
-<details> 
+<details class="hp-aside"> 
 <summary>To see a derivation, you can click <span style="color:orange">here</span>, but it's just the same algebra we used for completing the square.</summary>
         <div class="details-content" style="color:orange">
 <p>
@@ -191,7 +192,7 @@ The solutions to this cubic are \(y=0\), \(y=\sqrt{2},\) and \(y=-\sqrt{2}.\) So
 In the quadratic case, we figured out what quantity to take the square root of by trying to find some quantity which was multiplied by \(-1\) when we permuted the roots. Our game plan for the cubic will be to first figure out what quantity we should take the square root of, then figure out what we will take the cube root of. 
 </p>
 
-<h2>The quadratic part of the cubic formula</h2>
+<h2 id="hp-section-3">The quadratic part of the cubic formula</h2>
 
 <p>
 To find the square root part in the cubic formula, we need to find some function of \(\alpha, \beta,\) and \(\gamma\) that isn't symmetric, but only in a mild way: relabelling the roots should at worst replace this quantity with its negative.
@@ -295,7 +296,7 @@ If you go through the algebra to do this explicitly, you can compute
 \[D^2 = -4p^3 - 27q^2.\] 
 </p>
 
-<details>
+<details class="hp-aside">
         <summary>
 You can see the full derivation by clicking <span style="color: orange;">here</span>, but it consists entirely of routine-yet-tedious algebra, and hence you don't lose anything by skipping it.</summary>
         <div style="color:orange;" class ="details-content">
@@ -349,7 +350,7 @@ In particular, if we <em>choose one of the values of that square root, then we e
 However, we haven't gotten rid of all the symmetries: while the root swapping symmetries go away, above we saw that those two `cycle the roots' symmetries don't change \(D\) at all. Thus, we now have <em>three</em> valid permutations of \(\alpha, \beta, \gamma\) remaining.
 </p>
 
-<h2>The cube root in the cubic formula</h2>
+<h2 id="hp-section-4">The cube root in the cubic formula</h2>
 
 <p>
 The cubic formula also has to involve a cube root. So, let's ask ourselves: which quantity should we be taking the cube root of? 
@@ -435,7 +436,7 @@ With a healthy amount of algebra, we can realize this goal, and write
 \[A^3 = -\frac{27}{2}q - \frac{3i\sqrt{3}}{2}D.\]
 </p>
 
-<details>
+<details class="hp-aside">
         <summary>You can click <span style="color:orange">here</span> to see this full computation.</summary>
 
         <div class="details-content" style="color:orange;">
@@ -450,7 +451,7 @@ With a healthy amount of algebra, we can realize this goal, and write
 
         </p>
 
-        <details>
+        <details class="hp-aside">
         <summary>As it is symmetric, we can <span style="color:#8ec07c;">rewrite</span> it in terms of \(p\) and \(q\) as 
 \[
 \alpha^3 + \beta^3 + \gamma^3 +6\alpha\beta\gamma= -9q.
@@ -507,7 +508,7 @@ Observe also that, while \(u\) and \(v\) are <em>individually</em> asymmetric, t
 \[u + v = \alpha^2(\beta + \gamma) + \beta^2(\alpha + \gamma) + \gamma^2(\alpha + \beta)\]
 </p>
 
-<details>
+<details class="hp-aside">
         <summary>Thus, we can <span style="color:#8ec07c;">rewrite</span> \(u+v\) in terms of \(p\) and \(q\) as 
         \[u+v = 3q.\]</summary>
         <div style="color:#8ec07c" class="details-content">
@@ -557,7 +558,7 @@ Fortunately, while \(A\) and \(B\) alone are not symmetric, the product \(AB\) <
 which is manifestly symmetric.
 </p>
 
-<details>
+<details class="hp-aside">
         <summary><span style="color:orange;">Rewriting</span> this in terms of \(p\) and \(q,\) we find
                 \[AB = -3\omega p.\]</summary>
         <div style="color:orange;" class="details-content">
@@ -607,7 +608,7 @@ These are the three solutions to our cubic! Rewritten to eliminate \(B,\) we get
 We remark that the system of equations we solved here may remind you of the discrete Fourier transform, which we discussed in <a href="dirichlet.html">Infinitely many primes end in a 7</a>. And indeed, secretly the reason that this system of equations was so quick to solve was because of its relation to this discrete Fourier transform. 
 </p>
 
-<h2>Using the cubic formula in practice</h2>
+<h2 id="hp-section-5">Using the cubic formula in practice</h2>
 
 <p>
 As our derivation of the cubic formula occupied many steps, let's use it on an explicit example now, just to make sure we understand what's going on. Let's solve the cubic equation
@@ -671,7 +672,7 @@ To go back to the equation \(x^3+6x^2+9x+3=0\) we recall we used the change of v
 We remark that there are, in general, two possible choices of \(D\) (the two different square roots) and three possible choices of \(A\) (the three different cube roots). This means there are \(2 \cdot 3 = 6\) possible choices we could have made; these choices correspond to the 6 different permutations of our roots. If we had chosen \(D = -9\) earlier, or if we had used a different cube root of \(27\omega^2,\) then we would have gotten the same roots, but we'd have assigned the labels \(\alpha,\beta,\) and \(\gamma\) differently.
 </p>
 
-<h2>Closing remarks</h2>
+<h2 id="hp-section-6">Closing remarks</h2>
 
 <p>
 We have now derived the cubic formula, and checked that it worked on a concrete cubic polynomial. 
@@ -693,7 +694,7 @@ Galois theory is a vast generalization of the fundamental theorem of symmetric p
 To develop Galois theory, one also needs to understand symmetries in a more tangible way. This leads to the concept of a <em>group</em>, a mathematical formalization of symmetry. A key insight of mathematics is that having the correct language to discuss an idea can often greatly simplify your work; for example, having the language of the polar form of a complex number made it much easier for us to compute the cube root of \(\omega^2\) earlier. The concept of a group has proven to be an incredibly useful language for describing symmetry, and having it is what gives Galois theory its power.
 </p>
 
-</body>
+
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -709,4 +710,6 @@ To develop Galois theory, one also needs to understand symmetries in a more tang
 </footer>
 
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/quartic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations I: quartics</h3><p>Why equations of degree four still admit a formula in radicals.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/anima.html"><div class="related-category">Algebra</div><h3>Syzygies and higher groupoids</h3><p>A route from ordinary equations to the idea that mathematical objects can be equal in more than one way.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

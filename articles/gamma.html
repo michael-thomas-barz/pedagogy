@@ -1,382 +1,1073 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>What is the factorial of 3.5?</title>
-
-  <link rel="stylesheet" href="../style.css">
-
-  <!-- KaTeX -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   What is the factorial of 3.5? — Hidden Phenomena
+  </title>
+  <meta content="How Euler extended the factorial beyond whole numbers, why pi appears, and what this has to do with high-dimensional balls." name="description"/>
+  <!-- Your existing site stylesheet (it already imports KaTeX CSS). -->
+  <link href="../style.css" rel="stylesheet"/>
+  <!-- Match the KaTeX 0.16.9 version used by style.css. -->
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js">
+  </script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+  <!--
+    Article-layout additions. These intentionally build on the existing
+    Hidden Phenomena colors and Monaco typography instead of replacing them.
+    If you like the layout, these rules can later move into style.css.
+  -->
+ <script defer src="../site.js"></script>
 </head>
-<body>
-
-<a href="../index.html">← back</a>
-
-<h1>What is the factorial of 3.5?</h1>
-<p class="meta">July 10, 2026</p>
-
-<p>
-How many ways are there for Alice (A), Bob (B), and Charlie (C) to line up in a line? Any 3 of them could be first in line, but then only 2 of them remain to be second in line and only 1 remains to be third in line. 
-So there are 6 possibilities total: ABC, ACB, BAC, BCA, CAB, and CBA.
-</p>
-
-<p>
-  If Alice had more friends -- let's say her friend group had \(n\) people in total -- there would be \[n\times(n-1)\times\cdots\times2\times1\] ways for all of them to line up. We denote this product by \(n!\), the <em>factorial</em> of \(n.\) The factorial grows very rapidly; for example, in a group of 10 people, there would be
-  \[
-  10!=10\times9\times8\times7\times6\times5\times4\times3\times2\times1=3,628,800
-  \]
-  ways to line up. That's over 3 million possibilities!
-</p>
-
-<p>
-Observe that
-\[n! = n \cdot (n-1)!.\]
-This is an incredibly useful property of the factorial function.
-</p>
-
-<h2>The factorial of 3.5, take one</h2>
-
-<p>
-  So far, we only know how to evaluate the function \(n!\) for integer values of \(n\). But wouldn't it be wonderful if we were able to fill in the graph, and tell you what \(3.5!\) means?
-</p>
-
-<div class="graph-toggle" style="text-align:center; margin: 2rem 0;">
-  <img id="graph-image" src="factorial.svg" alt="Graph of n factorial at integer points" style="max-width:100%; height:auto;">
-  <div style="margin-top: 0.75rem;">
-    <button id="graph-toggle-btn" type="button" onclick="toggleGraph()">fill in the points</button>
+ <body class="article-page-body">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+  <div aria-hidden="true" class="reading-progress" id="reading-progress">
   </div>
-</div>
- 
-<script>
-  function toggleGraph() {
-    var img = document.getElementById('graph-image');
-    var btn = document.getElementById('graph-toggle-btn');
-    if (img.src.indexOf('factorial.svg') !== -1) {
-      img.src = 'gamma.svg';
-      img.alt = 'Graph of the Gamma function, Gamma(x+1), on the interval from 1 to 4';
-      btn.textContent = 'factorial';
-    } else {
-      img.src = 'factorial.svg';
-      img.alt = 'Graph of n factorial at integer points';
-      btn.textContent = 'fill in the points';
-    }
+  <header class="site-header">
+   <div class="page-shell">
+    <nav aria-label="Main navigation" class="site-nav">
+     <a class="site-title" href="../index.html">
+      HIDDEN PHENOMENA
+     </a>
+     <div class="site-nav-links">
+      <a href="../index.html#topics">
+       Topics
+      </a>
+      <a href="../index.html#start-here">
+       Start Here
+      </a>
+      <a href="../about.html">
+       About
+      </a>
+     </div>
+    </nav>
+   </div>
+  </header>
+  <main id="hp-main" tabindex="-1">
+   <div class="page-shell">
+    <header class="article-hero">
+     <div class="article-category">
+      Calculus · Number Theory
+     </div>
+     <h1 class="article-title">
+      What is the factorial of 3.5?
+     </h1>
+     <p class="article-description">
+      Factorials count arrangements of whole numbers of objects.
+          So what could \(3.5!\) possibly mean?
+     </p>
+     <div class="article-info">
+      <span class="article-badge">
+       Level 2
+      </span>
+      <span class="article-badge">
+       ~18 min
+      </span>
+      <span class="article-badge">
+       Algebra helpful
+      </span>
+      <span class="article-badge interactive">
+       ★ Interactive
+      </span>
+     </div>
+     <div class="article-date">
+      July 10, 2026
+     </div>
+    </header>
+    <div class="article-layout">
+     <aside>
+      <nav aria-label="On this page" class="article-toc"><details class="hp-toc-details" open><summary>On this page</summary>
+       <ol>
+        <li>
+         <a href="#take-one">
+          The factorial of 3.5
+         </a>
+        </li>
+        <li>
+         <a href="#counting">
+          More complicated counting
+         </a>
+        </li>
+        <li>
+         <a href="#euler">
+          Enter Euler
+         </a>
+        </li>
+        <li>
+         <a href="#reflection">
+          Euler's reflection formula
+         </a>
+        </li>
+        <li>
+         <a href="#take-two">
+          The answer
+         </a>
+        </li>
+        <li>
+         <a href="#balls">
+          High-dimensional balls
+         </a>
+        </li>
+        <li>
+         <a href="#gamma">
+          The Gamma function
+         </a>
+        </li>
+       </ol>
+      </details></nav>
+     </aside>
+     <article class="article-content">
+      <p>
+       How many ways are there for Alice (A), Bob (B), and Charlie (C) to
+            line up in a line? Any 3 of them could be first in line, but then
+            only 2 of them remain to be second in line and only 1 remains to be
+            third in line. So there are 6 possibilities total: ABC, ACB, BAC,
+            BCA, CAB, and CBA.
+      </p>
+      <p>
+       If Alice had more friends -- let's say her friend group had \(n\)
+            people in total -- there would be
+      </p>
+      \[
+            n\times(n-1)\times\cdots\times2\times1
+          \]
+      <p>
+       ways for all of them to line up. We denote this product by \(n!\),
+            the factorial of \(n.\) The factorial grows very rapidly; for
+            example, in a group of 10 people, there would be
+      </p>
+      \[
+            10!=10\times9\times8\times7\times6\times5\times4\times3\times2\times1
+            =3,628,800
+          \]
+      <p>
+       ways to line up. That's over 3 million possibilities!
+      </p>
+      <p>
+       Observe that
+      </p>
+      \[
+            n! = n \cdot (n-1)!.
+          \]
+      <p>
+       This is an incredibly useful property of the factorial function.
+      </p>
+      <section id="take-one">
+       <h2>
+        The factorial of 3.5, take one
+       </h2>
+       <p>
+        So far, we only know how to evaluate the function \(n!\) for
+              integer values of \(n\). But wouldn't it be wonderful if we were
+              able to fill in the graph, and tell you what \(3.5!\) means?
+       </p>
+       <div class="interactive-block">
+        <div class="interactive-header">
+         <div class="interactive-label">
+          Try it yourself
+         </div>
+         <h3 class="interactive-title">
+          What should happen between the integer factorials?
+         </h3>
+        </div>
+        <div class="interactive-content">
+         <img alt="Graph of n factorial at integer points" id="graph-image" src="factorial.svg"/>
+        </div>
+        <div class="interactive-controls">
+         <button class="interactive-button" id="graph-toggle-btn" type="button">
+          fill in the points
+         </button>
+         <span class="interactive-instructions" id="graph-note">
+          The dots show \(n!\) at whole-number inputs.
+         </span>
+        </div>
+       </div>
+       <p>
+        We want some way of filling in the graph which retains the
+              fundamental property of factorial, that
+              \(x!=x\cdot(x-1)!\). Using this property, we can deduce
+       </p>
+       \[
+              3.5!=3.5\times2.5\times1.5!,
+            \]
+       <p>
+        but it doesn't seem like we can figure out what \(1.5!\) should
+              mean. Certainly we want it to be somewhere between \(1!=1\) and
+              \(2!=2\), but which value specifically?
+       </p>
+       <div class="callout key-idea">
+        <div class="callout-title">
+         Key question
+        </div>
+        <p>
+         Drawing a curve through the known points is easy. The real
+                problem is finding a meaningful continuation of factorial that
+                still respects its fundamental identity.
+        </p>
+       </div>
+       <p>
+        For this, let us take a slight detour and think about binomial
+              coefficients.
+       </p>
+      </section>
+      <section id="counting">
+       <h2>
+        More complicated counting
+       </h2>
+       <p>
+        Recall that factorials are used to help solve a counting problem:
+              factorials count the number of ways of arranging \(n\) items in a
+              line. We're now going to solve a slightly harder counting problem.
+       </p>
+       <p>
+        I have four neighbors: Sophie, Michael, Ines, and Xiaoyu. I want
+              to choose two of them to ask for help moving into my new
+              apartment. How many ways are there to do this? If you enumerate
+              all the possible pairings, there are six different groups of two
+              I can form from four people:
+       </p>
+       <div aria-label="Six pairs of neighbors" class="pair-grid">
+        <div>
+         Sophie and Michael
+        </div>
+        <div>
+         Sophie and Ines
+        </div>
+        <div>
+         Sophie and Xiaoyu
+        </div>
+        <div>
+         Ines and Michael
+        </div>
+        <div>
+         Xiaoyu and Ines
+        </div>
+        <div>
+         Michael and Xiaoyu
+        </div>
+       </div>
+       <p>
+        In general, we write \(\binom{n}{k}\) (pronounced "\(n\) choose
+              \(k\)") to mean "the number of ways to choose \(k\) things from a
+              group of \(n\) things." For example, \(\binom{4}{2} = 6,\)
+              because above we saw that when you have four friends, there are
+              exactly six different ways to choose two of them.
+       </p>
+       <p>
+        How would we compute \(\binom{6}{3}\)? Well, I have 6 friends,
+              and I want to choose 3 of them. There are 6 ways to choose the
+              first friend; 5 ways to choose the second; and 4 ways to choose
+              the third. Thus it seems at first that we should multiply
+              \(6 \times 5 \times 4\) to get our answer.
+       </p>
+       <p>
+        Unfortunately, this is slightly too big. For example, we computed
+              \(\binom{4}{2} = 6\) above, but if we tried using this reasoning,
+              then we'd get the value \(4 \times 3 = 12\) (four ways to pick
+              our first friend, and three ways to pick the second). What's
+              going wrong?
+       </p>
+       <p>
+        The problem is that "Ines and Sophie" and "Sophie and Ines" is
+              the same pair of people, but when we did \(4 \times 3,\) we
+              counted those as two different pairs. So, we need to divide
+              \(12\) by \(2,\) to correct for the double counting: we then
+              find
+       </p>
+       \[
+              \binom{4}{2} = \frac{4 \times 3}{2} = 6.
+            \]
+       <p>
+        Going back to \(\binom{6}{3},\) we now see that
+              \(6 \times 5 \times 4\) will overcount the number of ways to
+              select 3 friends from a group of 6; but how much will it
+              overcount by?
+       </p>
+       <p>
+        Think about a possible triple of friends, like Alice (A), Bob
+              (B), and Charlie (C) from the start of this post. We could
+              arrange them as ABC, ACB, BAC, BCA, CAB, or CBA, as we saw in
+              the beginning; this is \(3! = 6\) ways to arrange them. Thus,
+              when doing \(6 \times 5 \times 4,\) we will count the "Alice,
+              Bob, Charlie" trio a total of six times.
+       </p>
+       <p>
+        So, as each trio gets counted six times when it should only be
+              counted once, to get the true value of \(\binom{6}{3}\) we need
+              to divide by \(3!\), leaving us with
+       </p>
+       \[
+              \binom{6}{3} = \frac{6 \times 5 \times 4}{3!} = 20.
+            \]
+       <p>
+        In general, we have
+       </p>
+       \[
+              \binom{10}{4}
+              = \frac{10 \times 9 \times 8 \times 7}{4!},
+            \]
+
+            \[
+              \binom{7}{2}
+              = \frac{7 \times 6}{2!},
+            \]
+       <p>
+        and
+       </p>
+       \[
+              \binom{n}{k}
+              =
+              \frac{
+                n \times (n-1) \times \cdots \times (n-(k-1))
+              }{k!}.
+            \]
+       <p>
+        This last, and most general, formula, can be a bit hard to parse
+              at first, so it might be helpful to ponder the special cases
+       </p>
+       \[
+              \binom{n}{2}
+              =
+              \frac{n \times (n-1)}{2!}
+            \]
+       <p>
+        and
+       </p>
+       \[
+              \binom{n}{3}
+              =
+              \frac{n \times (n-1) \times (n-2)}{3!}.
+            \]
+       <p>
+        Many sources write the formula for \(\binom{n}{k}\) in a funnier
+              way, using even more factorials.
+       </p>
+       <p>
+        For example, a standard textbook would write
+       </p>
+       \[
+              \binom{n}{2}
+              =
+              \frac{n!}{2! \times (n-2)!}.
+            \]
+       <p>
+        Why is that the same as our formula? Well, observe that
+       </p>
+       \[
+              n! = n \times (n-1) \times (n-2)!,
+            \]
+       <p>
+        and so
+       </p>
+       \[
+              \binom{n}{2}
+              =
+              \frac{n!}{2! \times (n-2)!}
+              =
+              \frac{n \times (n-1) \times (n-2)!}
+                   {2! \times (n-2)!}
+              =
+              \frac{n \times (n-1)}{2!},
+            \]
+       <p>
+        where in the last step we cancelled out the \((n-2)!\) term
+              from the numerator and denominator, to get our original formula
+              for \(\binom{n}{2}.\) Similarly, one can use this cancellation
+              trick to show
+       </p>
+       \[
+              \binom{n}{3}
+              =
+              \frac{n!}{3! \times (n-3)!},
+            \]
+       <p>
+        or even
+       </p>
+       \[
+              \binom{n}{k}
+              =
+              \frac{n!}{k! \times (n-k)!}.
+            \]
+       <p>
+        The formula
+              \[
+                \binom{n}{k}
+                =
+                \frac{n!}{k! \times (n-k)!}
+              \]
+              is computationally inferior to
+              \[
+                \binom{n}{k}
+                =
+                \frac{
+                  n \times (n-1) \times \cdots \times (n-(k-1))
+                }{k!},
+              \]
+              because in the first formula, you might accidentally do a lot of
+              extra work when computing \(n!\) and \((n-k)!\) which will end
+              up cancelling out anyways.
+       </p>
+       <p>
+        However, the "fully factorial-ied" formula does have one
+              benefit: from it, we can see the symmetry
+       </p>
+       \[
+              \binom{n}{k}
+              =
+              \frac{n!}{k! \times (n-k)!}
+              =
+              \frac{n!}{(n-k)! \times k!}
+              =
+              \frac{n!}{(n-k)! \times (n-(n-k))!}
+              =
+              \binom{n}{n-k}.
+            \]
+       <p>
+        That is,
+       </p>
+       \[
+              \binom{n}{k} = \binom{n}{n-k}.
+            \]
+       <div class="callout challenge">
+        <div class="callout-title">
+         Challenge
+        </div>
+        <p>
+         Can you explain \(\binom{n}{k}=\binom{n}{n-k}\)
+                directly, without using the factorial formula?
+        </p>
+       </div>
+       <p>
+        As a challenge, you can try thinking of a combinatorial
+              explanation of this fact. But this will end our digression on
+              binomial coefficients.
+       </p>
+      </section>
+      <div aria-hidden="true" class="section-break">
+      </div>
+      <section id="euler">
+       <h2>
+        Enter Euler
+       </h2>
+       <p>
+        Euler exploited the identity
+              \[
+                \binom{n}{k} = \binom{n}{n-k}
+              \]
+              to define factorials for arbitrary numbers, allowing him to
+              compute \(3.5!.\) Let's see how.
+       </p>
+       <p>
+        Observe first that the formula
+       </p>
+       \[
+              \binom{n}{k}
+              =
+              \frac{
+                n \times (n-1) \times \cdots \times (n-(k-1))
+              }{k!}
+            \]
+       <p>
+        still makes sense even when \(n\) is completely arbitrary. For
+              example,
+       </p>
+       \[
+              \binom{3.5}{2}
+              =
+              \frac{3.5 \times 2.5}{2}
+              =
+              \frac{35}{8},
+            \]
+       <p>
+        and
+       </p>
+       \[
+              \binom{\pi}{3}
+              =
+              \frac{\pi(\pi-1)(\pi-2)}{3!}.
+            \]
+       <p>
+        So, if we follow our noses and use the identities from above,
+              we might expect that
+       </p>
+       \[
+              \binom{3.5}{2} = \binom{3.5}{1.5}.
+            \]
+       <p>
+        So, whatever \(\binom{3.5}{1.5}\) means, it ought to be equal
+              to \(35/8.\) Unfortunately, it is rather problematic to
+              evaluate something like \(\binom{x}{1.5}.\) Note that
+       </p>
+       \[
+              \binom{x}{2}
+              =
+              \frac{x \times (x-1)}{2!},
+            \]
+       <p>
+        where we have two total terms in the product on top, and
+       </p>
+       \[
+              \binom{x}{3}
+              =
+              \frac{x \times (x-1) \times (x-2)}{3!},
+            \]
+       <p>
+        where we have three total terms in the product on the top.
+       </p>
+       <p>
+        So, for \(\binom{x}{1.5},\) we'd somehow want to have a product
+              of \(1.5\) terms on the top, but that doesn't seem to make sense.
+              What do we do next?
+       </p>
+       <p>
+        Euler was a master of calculus. And, as we saw in
+        <a href="hensels.html">
+         Using calculus to do number theory
+        </a>
+        ,
+              the core idea of calculus is approximation. So, Euler was really
+              a master of approximation; he knew exactly what approximations
+              he could get away with making when solving a problem, and he
+              always knew how precise his approximations were.
+       </p>
+       <p>
+        Let's think about the formula
+       </p>
+       \[
+              \binom{n}{k}
+              =
+              \frac{
+                n \times (n-1) \times \cdots \times (n-(k-1))
+              }{k!}
+            \]
+       <p>
+        again. Can we get any good approximations for this?
+       </p>
+       <p>
+        When \(n\) is a lot bigger than \(k\), we can; for example,
+              observe that
+       </p>
+       \[
+              \binom{1000}{3}
+              =
+              \frac{1000 \times 999 \times 998}{3!},
+            \]
+       <p>
+        and
+       </p>
+       \[
+              1000 \times 999 \times 998
+              \approx
+              1000 \times 1000 \times 1000
+              =
+              1000^3.
+            \]
+       <p>
+        Similarly, we can approximate
+       </p>
+       \[
+              \binom{n}{k}
+              \approx
+              \frac{n^k}{k!},
+            \]
+       <p>
+        and the larger \(n\) is compared to \(k,\) the better this
+              approximation will be.
+       </p>
+       <div class="callout key-idea">
+        <div class="callout-title">
+         Key idea
+        </div>
+        <p>
+         The great thing about the approximation
+                \(\binom{n}{k}\approx n^k/k!\) is that \(n^k\) still makes
+                sense when \(k\) isn't a whole number.
+        </p>
+       </div>
+       <p>
+        For example, even though we don't know what
+              \(\binom{3.5}{1.5}\) means, we can hope that
+       </p>
+       \[
+              \binom{3.5}{1.5}
+              \approx
+              \frac{(3.5)^{1.5}}{(1.5)!}.
+            \]
+       <p>
+        Using that
+              \(\binom{3.5}{1.5} = \binom{3.5}{2} = 35/8,\)
+              and rearranging, we can hope that
+       </p>
+       \[
+              (1.5)!
+              \approx
+              \frac{8}{35} \times 3.5^{1.5}.
+            \]
+       <p>
+        But remember: the approximation
+              \[
+                \binom{n}{k}\approx\frac{n^k}{k!}
+              \]
+              is only good when \(n\) is a lot bigger than \(k.\) As \(3.5\)
+              isn't that much bigger than \(1.5,\) this approximation to
+              \((1.5)!\) likely isn't great (in fact, it's wrong at the very
+              first digit after the decimal point; you can check this yourself
+              at the end of the article, once you learn the true value of
+              \((1.5)!\)).
+       </p>
+       <p>
+        Euler, master of approximation, knew this approximation was
+              pretty bad. But he also knew how to make it better: use the
+              expression
+       </p>
+       \[
+              \frac{(n+1.5)^{1.5}}{\binom{n+1.5}{n}},
+            \]
+       <p>
+        where \(n\) is very large. Remember that, because
+              \(\binom{n+1.5}{n}\) has the whole number \(n\) on the bottom,
+              we know how to compute it; and using our identities, we have
+       </p>
+       \[
+              \frac{(n+1.5)^{1.5}}{\binom{n+1.5}{n}}
+              =
+              \frac{(n+1.5)^{1.5}}{\binom{n+1.5}{1.5}}
+              \approx
+              \frac{(n+1.5)^{1.5}}
+                   {\frac{(n+1.5)^{1.5}}{(1.5)!}}
+              =
+              (1.5)!.
+            \]
+       <p>
+        So, Euler defined \(x!\) to be the limit of
+       </p>
+       \[
+              \frac{(n+x)^x}{\binom{n+x}{n}}
+            \]
+       <p>
+        as \(n\) grows infinitely large.
+       </p>
+       <p>
+        In other words, Euler imagined defining \(x!\) for an arbitrary
+              value of \(x\) to be the limit
+       </p>
+       \[
+              \lim_{n\to\infty}
+              \frac{(n+x)^x}{\binom{n+x}{n}}.
+            \]
+       <p>
+        Observe that replacing the numerator \((n+x)^x\) of the formula
+              with \(n^x\) doesn't change anything: for large \(n,\) the
+              numbers \(n^x\) and \((n+x)^x\) are basically the same. This
+              gives the final form of Euler's formula for the factorial:
+       </p>
+       <div class="big-result">
+        <div class="big-result-label">
+         Euler's continuation of factorial
+        </div>
+        \[
+                x!
+                =
+                \lim_{n\to\infty}
+                \frac{n^x}{\binom{n+x}{n}}
+                =
+                \lim_{n\to\infty}
+                \frac{n^x\cdot n!}
+                     {(n+x)(n-1+x)\cdots(1+x)}.
+              \]
+       </div>
+       <p>
+        The formula works not only for all real numbers \(x\), but for
+              any complex number as well! So we now know what \(3.5!\) is, but
+              also \((-0.7)!\) and \((2-0.3i)!\). Unfortunately, it's still
+              pretty tricky to compute this limit! So, how do we?
+       </p>
+      </section>
+      <section id="reflection">
+       <h2>
+        Euler's reflection formula
+       </h2>
+       <p>
+        Euler observed a very nice relationship between \(x!\) and
+              \((-x)!\).
+       </p>
+       <p>
+        Observe that in the numerator of
+       </p>
+       \[
+              x!\cdot(-x)!
+              =
+              \lim_{n\to\infty}
+              \frac{n^x\cdot n!}
+                   {(n+x)(n-1+x)\cdots(1+x)}
+              \cdot
+              \frac{n^{-x}\cdot n!}
+                   {(n-x)(n-1-x)\cdots(1-x)},
+            \]
+       <p>
+        the terms \(n^x\) and \(n^{-x}\) cancel, becoming \(n^0=1.\)
+              We can also simplify the denominator a bit: because
+              \((a-b)(a+b)=a^2-b^2,\) we have
+       </p>
+       \[
+              (n+x)(n-x)=n^2-x^2,
+            \]
+
+            \[
+              (n-1+x)(n-1-x)=(n-1)^2-x^2,
+            \]
+       <p>
+        etc., so that
+       </p>
+       \[
+              x!\cdot(-x)!
+              =
+              \lim_{n\to\infty}
+              \frac{(n!)^2}
+                   {(n^2-x^2)((n-1)^2-x^2)\cdots(1^2-x^2)}.
+            \]
+       <p>
+        The product can be re-grouped as
+              \(\frac{1^2}{1^2-x^2}\cdots\frac{n^2}{n^2-x^2}\), so
+              the limit equals the infinite product
+       </p>
+       \[
+              x!\cdot(-x)!
+              =
+              \frac{1}{1-\frac{x^2}{1^2}}
+              \cdot
+              \frac{1}{1-\frac{x^2}{2^2}}
+              \cdot
+              \frac{1}{1-\frac{x^2}{3^2}}
+              \cdots.
+            \]
+       <p>
+        On the other hand, in
+        <a href="rh.html">
+         The Riemann hypothesis (or, how to earn $1 million)
+        </a>
+        we explained that Euler had, previously to his investigations of
+              the factorial, discovered the remarkable identity
+       </p>
+       \[
+              \sin(x)
+              =
+              x
+              \bigg(1-\frac{x^2}{\pi^2}\bigg)
+              \bigg(1-\frac{x^2}{2^2\pi^2}\bigg)
+              \bigg(1-\frac{x^2}{3^2\pi^2}\bigg)
+              \cdots.
+            \]
+       <p>
+        As a reminder, the basic reason for this product is that
+              \(\sin(x)\) has zeroes at \(0,\pm\pi,\pm2\pi,\cdots\).
+       </p>
+       <p>
+        Substituting this formula for \(\sin\) into our formula for
+              \(x!\cdot(-x)!,\) we see
+       </p>
+       <div class="big-result">
+        <div class="big-result-label">
+         Euler's reflection formula
+        </div>
+        \[
+                x!\cdot(-x)!
+                =
+                \frac{\pi x}{\sin(\pi x)}.
+              \]
+        <p>
+         A function that began as a way of counting arrangements has
+                somehow acquired both \(\pi\) and the sine function.
+        </p>
+       </div>
+      </section>
+      <section id="take-two">
+       <h2>
+        The factorial of 3.5, take two
+       </h2>
+       <p>
+        Let's now use Euler's reflection formula to compute \(3.5!\).
+              By substituting \(x!=x\cdot(x-1)!\) we can re-write the formula
+              as
+       </p>
+       \[
+              (x-1)!\cdot(-x)!
+              =
+              \frac{\pi}{\sin(\pi x)}.
+            \]
+       <p>
+        At \(x=0.5\) we conclude
+       </p>
+       \[
+              (-0.5)!\cdot(-0.5)!
+              =
+              \frac{\pi}{\sin(0.5\pi)}
+              =
+              \pi,
+            \]
+       <p>
+        so
+       </p>
+       \[
+              (-0.5)!=\sqrt{\pi}.
+            \]
+       <p>
+        Somehow \(\pi\) appears in the formula for the factorial! Now
+       </p>
+       <div class="big-result">
+        <div class="big-result-label">
+         The answer
+        </div>
+        \[
+                3.5!
+                =
+                3.5\cdot2.5\cdot1.5\cdot0.5\cdot(-0.5)!
+                =
+                \frac{105}{16}\sqrt{\pi}
+                \approx 11.63.
+              \]
+        <p>
+         This is indeed between \(3!=6\) and \(4!=24\).
+        </p>
+       </div>
+      </section>
+      <div aria-hidden="true" class="section-break">
+      </div>
+      <section id="balls">
+       <h2>
+        Volumes of balls in high dimensions
+       </h2>
+       <p>
+        You may ask: it's cool you can extend the factorial, but why is
+              it useful? One of the many places it appears is in the volume of
+              balls in arbitrary dimensions.
+       </p>
+       <p>
+        We all know and love that, in 2-dimensions, a circle of radius
+              \(r\) has area \(\pi r^2\). Going to 3-dimensions, the volume of
+              a ball has a similar-looking formula,
+              \(\frac43\pi r^3\). But what happens in dimensions 4 and higher?
+              What is the 'size' of a radius \(r\) high-dimensional ball?
+       </p>
+       <p>
+        It turns out that, in dimension \(n,\) the volume of a ball of
+              radius \(r\) is
+       </p>
+       <div class="big-result">
+        <div class="big-result-label">
+         Volume of an n-dimensional ball
+        </div>
+        \[
+                \frac{\pi^{n/2}}{(\frac n2)!}r^n.
+              \]
+       </div>
+       <p>
+        When \(n=2\), the case of a circle, we recover
+       </p>
+       \[
+              \frac{\pi^1}{1!}r^2=\pi r^2.
+            \]
+       <p>
+        When \(n=3\), we recover
+       </p>
+       \[
+              \frac{\pi^{3/2}}{(3/2)!}r^3
+              =
+              \frac{\pi^{3/2}}
+                   {\frac32\cdot\frac12\cdot\sqrt\pi}r^3
+              =
+              \frac43\pi r^3.
+            \]
+       <p>
+        In higher dimensions, the volumes become:
+       </p>
+       \[
+              \frac12\pi^2r^4,
+              \frac8{15}\pi^2r^5,
+              \frac16\pi^3r^6,
+              \frac{16}{105}\pi^3r^7,
+              \cdots.
+            \]
+       <p>
+        Notice that the last volume comes from our computation of
+              \(3.5!\) above.
+       </p>
+       <p>
+        A funny consequence of our formula is that balls occupy less and
+              less space as the dimension increases. A ball of radius \(r\)
+              always sits in a box of width \(2r\) which has volume
+              \((2r)^n\). That means the proportion of the box occupied by the
+              ball is
+       </p>
+       \[
+              \frac{\pi^{n/2}}{2^n(\frac n2)!}.
+            \]
+       <p>
+        Since the factorial function rapidly increases, this rapidly
+              decreases. For example in dimension 8 the ball only occupies
+              1.5% of the box, and in dimension 24 the sphere only occupies
+              0.00000001% of the box.
+       </p>
+       <p>
+        It is remarkable that nevertheless the optimal sphere packing in
+              these dimensions occupy 25.3% and 0.19% of space, respectively.
+              Although those numbers seem small, look at how much they improve
+              upon the naive packing!
+       </p>
+      </section>
+      <section id="gamma">
+       <h2>
+        One last piece of terminology
+       </h2>
+       <p>
+        As one final remark, we will say that usually sources treating
+              the factorial instead describe the "Gamma function,"
+       </p>
+       \[
+              \Gamma(x) := (x-1)!.
+            \]
+       <p>
+        It's annoying that the \(\Gamma\) function is shifted from the
+              factorial function, so we avoided using the term \(\Gamma\) in
+              this article to prevent confusion, but if you want to find a
+              textbook account of this mathematics, you should search for
+              "\(\Gamma\) function."
+       </p>
+      </section>
+     </article>
+    </div>
+   </div>
+   <section class="related-section">
+    <div class="page-shell">
+     <h2 class="related-heading">
+      Where next?
+     </h2>
+     <div class="related-grid">
+      <a class="related-card" href="hensels.html">
+       <div class="related-category">
+        Calculus · Number Theory
+       </div>
+       <h3>
+        Using calculus to do number theory
+       </h3>
+       <p>
+        See another surprising place where approximation solves an exact
+              problem about whole numbers.
+       </p>
+       <span class="related-arrow">
+        →
+       </span>
+      </a>
+      <a class="related-card" href="lucas.html">
+       <div class="related-category">
+        Number Theory · Visual
+       </div>
+       <h3>
+        Fractal patterns hidden inside Pascal's triangle
+       </h3>
+       <p>
+        Keep exploring binomial coefficients and discover an unexpected
+              self-similar pattern.
+       </p>
+       <span class="related-arrow">
+        →
+       </span>
+      </a>
+     </div>
+    </div>
+   </section>
+  </main>
+  <section class="article-newsletter">
+   <div class="page-shell">
+    <div class="newsletter-card">
+     <p class="section-kicker">
+      Keep exploring
+     </p>
+     <h2>
+      Get new mathematical explorations by email.
+     </h2>
+     <p>
+      New articles, interactive explanations, and occasional mathematical puzzles.
+     </p>
+     <div class="ml-embedded" data-form="SnIhXR">
+     </div>
+    </div>
+   </div>
+  </section>
+  <footer class="site-footer">
+   <div class="page-shell site-footer-inner">
+    <a href="../index.html">
+     ← Hidden Phenomena
+    </a>
+    <span>
+     Beautiful mathematics beyond the classroom.
+    </span>
+   </div>
+  </footer>
+  <script>
+   (function () {
+  var progressBar = document.getElementById('reading-progress');
+
+  function updateReadingProgress() {
+    var y = window.scrollY || document.documentElement.scrollTop;
+    var total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = total > 0 ? (y / total) * 100 : 0;
+    if (progressBar) progressBar.style.width = pct + '%';
   }
-</script>
 
-<p>
-  We want some way of filling in the graph which retains the fundamental property of factorial, that 
-  \(x!=x\cdot(x-1)!\).
-  Using this property, we can deduce
-  \[
-  3.5!=3.5\times2.5\times1.5!,
-  \]
-  but it doesn't seem like we can figure out what \(1.5!\) should mean. Certainly we want it to be somewhere between \(1!=1\) and \(2!=2\), but which value specifically?
-</p>
+  window.addEventListener('scroll', updateReadingProgress, { passive: true });
+  updateReadingProgress();
 
-<p>
-For this, let us take a slight detour and think about <em>binomial coefficients</em>.
-</p>
+  var sections = document.querySelectorAll('.article-content section[id]');
+  var tocLinks = document.querySelectorAll('.article-toc a');
 
-<h2>More complicated counting</h2>
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        tocLinks.forEach(function (link) { link.classList.remove('active'); });
+        var active = document.querySelector('.article-toc a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      });
+    }, { rootMargin: '-20% 0px -68% 0px' });
 
-<p>
-Recall that factorials are used to help solve a counting problem: factorials count the number of ways of arranging \(n\) items in a line. We're now going to solve a slightly harder counting problem.
-</p>
+    sections.forEach(function (section) { observer.observe(section); });
+  }
 
-<p>
-I have four neighbors: Sophie, Michael, Ines, and Xiaoyu. I want to choose two of them to ask for help moving into my new apartment. How many ways are there to do this? 
+  var graphImage = document.getElementById('graph-image');
+  var graphButton = document.getElementById('graph-toggle-btn');
+  var graphNote = document.getElementById('graph-note');
 
-If you enumerate all the possible pairings, there are <em>six</em> different groups of two I can form from four people:</p>
-<table border="1" cellpadding="8" cellspacing="0">
-  <tr>
-    <td>Sophie and Michael</td>
-    <td>Sophie and Ines</td>
-    <td>Sophie and Xiaoyu</td>
-  </tr>
-  <tr>
-    <td>Ines and Michael</td>
-    <td>Xiaoyu and Ines</td>
-    <td>Michael and Xiaoyu</td>
-  </tr>
-</table>
+  if (graphImage && graphButton) {
+    graphButton.addEventListener('click', function () {
+      var showingFactorial = graphImage.getAttribute('src') === 'factorial.svg';
 
-<p>
-In general, we write \(\binom{n}{k}\) (pronounced "\(n\) choose \(k\)") to mean "the number of ways to choose \(k\) things from a group of \(n\) things." For example, \(\binom{4}{2} = 6,\) because above we saw that when you have four friends, there are exactly six different ways to choose two of them.
-</p>
-
-<p>
-How would we compute \(\binom{6}{3}\)? Well, I have 6 friends, and I want to choose 3 of them. There are 6 ways to choose the first friend; 5 ways to choose the second; and 4 ways to choose the third. Thus it seems at first that we should multiply \(6 \times 5 \times 4\) to get our answer.
-</p>
-
-<p>
-Unfortuantely, this is slightly too big. For example, we computed \(\binom{4}{2} = 6\) above, but if we tried using this reasoning, then we'd get the value \(4 \times 3 = 12\) (four ways to pick our first friend, and three ways to pick the second). What's going wrong?
-</p>
-
-<p>
-The problem is that "Ines and Sophie" and "Sophie and Ines" is the same pair of people, but when we did \(4 \times 3,\) we counted those as two <em>different</em> pairs. So, we need to divide \(12\) by \(2,\) to correct for the double counting: we then find
-\[\binom{4}{2} = \frac{4 \times 3}{2} = 6.\] 
-</p>
-
-<p>
-Going back to \(\binom{6}{3},\) we now see that \(6 \times 5 \times 4\) will overcount the number of ways to select 3 friends from a group of 6; but how much will it overcount by? 
-</p>
-
-<p>
-Think about a possible triple of friends, like Alice (A), Bob (B), and Charlie (C) from the start of this post. We could arrange them as ABC, ACB, BAC, BCA, CAB, or CBA, as we saw in the beginning; this is \(3! = 6\) ways to arrange them. Thus, when doing \(6 \times 5 \times 4,\) we will count the "Alice, Bob, Charlie" trio a total of six times. So, as each trio gets counted six times when it should only be counted once, to get the true value of \(\binom{6}{3}\) we need to divide by \(3!\), leaving us with
-\[\binom{6}{3} = \frac{6 \times 5 \times 4}{3!} = 20.\]
-</p>
-
-<p>
-In general, we have
-\[\binom{10}{4} = \frac{10 \times 9 \times 8 \times 7}{4!},\]
-\[\binom{7}{2} = \frac{7 \times 6}{2!},\]
-and 
-\[\binom{n}{k} = \frac{n \times (n-1) \times \cdots \times (n - (k-1))}{k!}.\] 
-</p>
-
-<p>
-This last, and most general, formula, can be a bit hard to parse at first, so it might be helpful to ponder the special cases
-\[\binom{n}{2} = \frac{n \times (n-1)}{2!}\]
-and
-\[\binom{n}{3} = \frac{n \times (n-1) \times (n-2)}{3!}.\]
-</p>
-
-<p>
-Many sources write the formula for \(\binom{n}{k}\) in a funnier way, using even more factorials. For example, a standard textbook would write
-\[\binom{n}{2} = \frac{n!}{2! \times (n-2)!}.\]
-Why is that the same as our formula? Well, observe that
-\[n! = n \times (n-1) \times (n-2)!,\]
-and so
-\[\binom{n}{2} = \frac{n!}{2! \times (n-2)!} = \frac{n \times (n-1) \times (n-2)!}{2! \times (n-2)!} = \frac{n \times (n-1)}{2!},\]
-where in the last step we cancelled out the \((n-2)!\) term from the numerator and denominator, to get our original formula for \(\binom{n}{2}.\) Similarly, one can use this cancellation trick to show
-\[\binom{n}{3} = \frac{n!}{3! \times (n-3)!},\]
-or even
-\[\binom{n}{k} = \frac{n!}{k! \times (n-k)!}.\]
-</p>
-
-<p>
-The formula
-\[\binom{n}{k} = \frac{n!}{k! \times (n-k)!}\]
-is computationally inferior to
-\[\binom{n}{k} = \frac{n \times (n-1) \times \cdots \times (n - (k-1))}{k!},\]
-because in the first formula, you might accidentally so a lot of extra work when computing \(n!\) and \((n-k)!\) which will end up cancelling out anyways. However, the "fully factorial-ied" formula does have one benefit: from it, we can see the symmetry
-\[\binom{n}{k} = \frac{n!}{k! \times (n-k)!} = \frac{n!}{(n-k)! \times k!} = \frac{n!}{(n-k)! \times (n - (n-k))!} = \binom{n}{n-k}.\]
-That is,
-\[\binom{n}{k} = \binom{n}{n-k}.\]
-</p>
-
-<p>
-As a challenge, you can try thinking of a combinatorial explanation of this fact. But this will end our digression on binomial coefficients.
-</p>
-
-<h2>Enter Euler</h2>
-
-<p>
-Euler exploited the identity
-\[\binom{n}{k} = \binom{n}{n-k}\]
-to define factorials for arbitrary numbers, allowing him to compute \(3.5!.\) Let's see how.
-</p>
-
-<p>
-Observe first that the formula
-\[\binom{n}{k} = \frac{n \times (n-1) \times \cdots \times (n - (k-1))}{k!}\]
-still makes sense even when \(n\) is <em>completely arbitrary</em>. For example,
-\[\binom{3.5}{2} = \frac{3.5 \times 2.5}{2} = \frac{35}{8},\]
-and
-\[\binom{\pi}{3} = \frac{\pi(\pi - 1)(\pi - 2)}{3!}.\]
-</p>
-
-<p>
-So, if we follow our noses and use the identities from above, we might expect that
-\[\binom{3.5}{2} = \binom{3.5}{1.5}.\]
-So, whatever \(\binom{3.5}{1.5}\) means, it ought to be equal to \(35/8.\) Unfortunately, it is rather problematic to evaluate something like \(\binom{x}{1.5}.\) Note that
-\[\binom{x}{2} = \frac{x \times (x-1)}{2!},\]
-where we have <em>two</em> total terms in the product on top, and
-\[\binom{x}{3} = \frac{x \times (x-1) \times (x-2)}{3!},\]
-where we have <em>three</em> total terms in the product on the top.
-
-So, for \(\binom{x}{1.5},\) we'd somehow want to have a product of \(1.5\) terms on the top, but that doesn't seem to make sense. What do we do next?
-</p>
-
-<p>
-Euler was a master of calculus. And, as we saw in <a href="hensels.html">Using calculus to do number theory</a>, the core idea of calculus is <em>approximation</em>. So, Euler was really a master of approximation; he knew exactly what approximations he could get away with making when solving a problem, and he always knew how precise his approximations were.
-</p>
-
-<p>
-Let's think about the formula 
-\[\binom{n}{k} = \frac{n \times (n-1) \times \cdots \times (n-(k-1))}{k!}\]
-again. Can we get any good approximations for this?
-</p>
-
-<p>
-When \(n\) is a lot bigger than \(k\), we can; for example, observe that
-\[\binom{1000}{3} = \frac{1000 \times 999 \times 998}{3!},\]
-and
-\[1000 \times 999 \times 998 \approx 1000 \times 1000 \times 1000 = 1000^3.\]
-Similarly, we can approximate
-\[\binom{n}{k} \approx \frac{n^k}{k!},\]
-and the larger \(n\) is compared to \(k,\) the better this approximation will be.
-</p>
-
-<p>
-The great thing about this approximation is that \(n^k\) <em>makes sense even when \(k\) isn't a whole number</em>.
-</p>
-
-<p>
-For example, even though we don't know what \(\binom{3.5}{1.5}\) means, we can hope that
-\[\binom{3.5}{1.5} \approx \frac{(3.5)^{1.5}}{(1.5)!}.\]
-Using that \(\binom{3.5}{1.5} = \binom{3.5}{2} = 35/8,\) and rearranging, we can hope that
-\[(1.5)! \approx \frac{8}{35} \times 3.5^{1.5}.\] 
-</p>
-
-<p>
-But remember: the approximation 
-\[\binom{n}{k} \approx \frac{n^k}{k!}\]
-is only good when \(n\) is a lot bigger than \(k.\) As \(3.5\) isn't that much bigger than \(1.5,\) this approximation to \((1.5)!\) likely isn't great (in fact, it's wrong at the very first digit after the decimal point; you can check this yourself at the end of the article, once you learn the true value of \((1.5)!\)). 
-</p>
-
-<p>
-Euler, master of approximation, knew this approximation was pretty bad. But he also knew how to make it better: use the expression
-\[\frac{(n+1.5)^{1.5}}{\binom{n+1.5}{n}},\]
-where \(n\) is very large. Remember that, because \(\binom{n+1.5}{n}\) has the whole number \(n\) on the bottom, we know how to compute it; and using our identities, we have
-\[\frac{(n+1.5)^{1.5}}{\binom{n+1.5}{n}} = \frac{(n+1.5)^{1.5}}{\binom{n+1.5}{1.5}} \approx \frac{(n+1.5)^{1.5}}{\frac{(n+1.5)^{1.5}}{(1.5)!}} = (1.5)!.\] 
-</p>
-
-<p>
-So, Euler <em>defined</em> \(x!\) to be the limit of 
-  \[
-  \frac{(n+x)^x}{\binom{n+x}{n}}
-  \]
-  as \(n\) grows infinitely large. 
-</p>
-
-<p>
-  In other words, Euler imagined defining \(x!\) for an arbitrary value of \(x\) to be the limit
-  \[
-  \lim_{n\to\infty}\frac{(n+x)^x}{\binom{n+x}{n}}.
-  \]
-</p>
-
-<p>
-  Observe that replacing the numerator \((n+x)^x\) of the formula with \(n^x\) doesn't change anything: for large \(n,\) the numbers \(n^x\) and \((n+x)^x\) are basically the same. This gives the final form of Euler's formula for the factorial:
-  \[
-  x!=\lim_{n\to\infty}\frac{n^x}{{n+x\choose n}}=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}.
-  \]
-  The formula works not only for all real numbers \(x\), but for any complex number as well! So we now know what \(3.5!\) is, but also \((-0.7)!\) and \((2-0.3i)!\). Unfortunately, it's still pretty tricky to compute this limit! So, how do we?
-  </p>
-
-  <h2>Euler's reflection formula</h2>
-
-  <p>
-    Euler observed a very nice relationship between \(x!\) and \((-x)!\). Observe that in the numerator of
-    \[
-    x!\cdot(-x)!=\lim_{n\to\infty}\frac{n^x\cdot n!}{(n+x)(n-1+x)\cdots(1+x)}\cdot\frac{n^{-x}\cdot n!}{(n-x)(n-1-x)\cdots(1-x)},
-    \]
-    the terms \(n^x\) and \(n^{-x}\) cancel, becoming \(n^0 = 1.\) We can also simplify the denominator a bit: because \((a-b)(a+b) = a^2-b^2,\) we have
-    \[(n+x)(n-x) = n^2 - x^2,\]
-    \[(n-1+x)(n-1-x) = (n-1)^2 - x^2,\] 
-    etc., so that
-\[
-x!\cdot(-x)!=\lim_{n\to\infty}\frac{(n!)^2}{(n^2-x^2)((n-1)^2-x^2)\cdots(1^2-x^2)}.
-\]
-The product can be re-grouped as \(\frac{1^2}{1^2-x^2}\cdots\frac{n^2}{n^2-x^2}\), so the limit equals the infinite product
-\[
-x!\cdot(-x)!=\frac1{1-\frac{x^2}{1^2}}\cdot\frac1{1-\frac{x^2}{2^2}}\cdot \frac1{1-\frac{x^2}{3^2}}\cdots.
-\]
-On the other hand, in <a href="rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> we explained that Euler had, previously to his investigations of the factorial, discovered the remarkable identity
-\[
-\sin(x)=x\bigg(1-\frac{x^2}{\pi^2}\bigg)\bigg(1-\frac{x^2}{2^2\pi^2}\bigg)\bigg(1-\frac{x^2}{3^2\pi^2}\bigg)\cdots.
-\]
-As a reminder, the basic reason for this product is that \(\sin(x)\) has zeroes at \(0,\pm\pi,\pm2\pi,\cdots\). Substituting this formula for \(\sin\) into our formula for \(x! \cdot (-x)!,\) we see
-\[
-x!\cdot(-x)!=\frac{\pi x}{\sin(\pi x)},
-\]
-which is known as <em>Euler's reflection formula</em>.
-  </p>
-
-  <h2>The factorial of 3.5, take two</h2>
-
-  <p>
-    Let's now use Euler's reflection formula to compute \(3.5!\). By substituting \(x!=x\cdot(x-1)!\) we can re-write the formula as 
-    \[
-    (x-1)!\cdot(-x)!=\frac{\pi}{\sin(\pi x)}.
-    \]
-    At \(x=0.5\) we conclude
-    \[
-    (-0.5)!\cdot(-0.5)!=\frac{\pi}{\sin(0.5\pi)}=\pi,
-    \]
-    so
-    \[
-    (-0.5)!=\sqrt{\pi}.\]
-  Somehow \(\pi\) appears in the formula for the factorial! Now
-  \[
-  3.5!=3.5\cdot2.5\cdot1.5\cdot0.5\cdot(-0.5)!=\frac{105}{16}\sqrt{\pi}.\]
-  This is around 11.63, which is indeed between \(3!=6\) and \(4!=24\).
-  </p>
-
-  <h2>Volumes of balls in high dimensions</h2>
-  You may ask: it's cool you can extend the factorial, but why is it useful? One of the many places it appears is in the volume of balls in arbitrary dimensions.
-
-  <p>
-  We all know and love that, in 2-dimensions, a circle of radius \(r\) has area \(\pi r^2\). Going to 3-dimensions, the volume of a ball has a similar-looking formula, \(\frac43\pi r^3\). 
-  But what happens in dimensions 4 and higher? What is the 'size' of a radius \(r\) high-dimensional ball?
-  </p>
-
-  <p>
-    It turns out that, in dimension \(n,\) the volume of a ball of radius \(r\) is
-    \[
-    \frac{\pi^{n/2}}{(\frac n2)!}r^n.
-    \]
-    When \(n=2\), the case of a circle, we recover
-    \[
-    \frac{\pi^1}{1!}r^2=\pi r^2.
-    \]
-    When \(n=3\), we recover
-    \[
-    \frac{\pi^{3/2}}{(3/2)!}r^3=\frac{\pi^{3/2}}{\frac32\cdot\frac12\cdot\sqrt\pi}r^3=\frac43\pi r^3.
-    \]
-    In higher dimensions, the volumes become:
-    \[
-    \frac12\pi^2r^4,\frac8{15}\pi^2r^5,\frac16\pi^3r^6,\frac{16}{105}\pi^3r^7,\cdots.
-    \]
-    Notice that the last volume comes from our computation of \(3.5!\) above.
-  </p>
-
-  <p>
-    A funny consequence of our formula is that balls occupy less and less space as the dimension increases. A ball of radius \(r\) always sits in a box of width \(2r\) which has volume \((2r)^n\).
-    That means the proportion of the box occupied by the ball is
-    \[
-    \frac{\pi^{n/2}}{2^n(\frac n2)!}.
-    \]
-    Since the factorial function rapidly increases, this rapidly decreases. For example in dimension 8 the ball only occupies 1.5% of the box, and in dimension 24 the sphere only occupies 0.00000001% of the box.
-    It is remarkable that nevertheless the optimal sphere packing in these dimensions occupy 25.3% and 0.19% of space, respectively. Although those numbers seem small, look at how much they improve upon the naive packing!
-    </p>
-
-    <p>
-As one final remark, we will say that usually sources treating the factorial instead describe the "Gamma function,"
-\[\Gamma(x) := (x-1)!.\]
-It's annoying that the \(\Gamma\) function is shifted from the factorial function, so we avoided using the term \(\Gamma\) in this article to prevent confusion, but if you want to find a textbook account of this mathematics, you should search for "\(\Gamma\) function." 
-    </p>
-
-</body>
-<!-- MailerLite Universal -->
-<script>
-    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-    ml('account', '2110982');
-</script>
-<!-- End MailerLite Universal -->
-<footer>
-<a href="../index.html">← back to home page</a>
-<div class="ml-embedded" data-form="SnIhXR"></div>
-</footer>
-
-
+      if (showingFactorial) {
+        graphImage.setAttribute('src', 'gamma.svg');
+        graphImage.setAttribute('alt', 'Graph of the Gamma function, Gamma(x+1), filling in the factorial values');
+        graphButton.textContent = 'show integer points only';
+        if (graphNote) graphNote.textContent = 'A smooth continuation appears. The rest of the article explains why this is the right one.';
+      } else {
+        graphImage.setAttribute('src', 'factorial.svg');
+        graphImage.setAttribute('alt', 'Graph of n factorial at integer points');
+        graphButton.textContent = 'fill in the points';
+        if (graphNote) graphNote.textContent = 'The dots show n! at whole-number inputs.';
+      }
+    });
+  }
+})();
+  </script>
+  <!-- MailerLite Universal -->
+  <script>
+   (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+.push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+ml('account', '2110982');
+  </script>
+  <!-- End MailerLite Universal -->
+ </body>
 </html>

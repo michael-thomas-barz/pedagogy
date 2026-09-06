@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Algebra</div><h1 class="article-title">How to solve cubic and quartic equations I: quartics</h1><p class="article-description">Why equations of degree four still admit a formula in radicals.</p><div class="article-info"><span class="article-badge">Level 2</span><span class="article-badge">Helpful: Quadratic equations</span><span class="article-badge">About 16 min read</span></div><p class="article-date">July 17, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Thinking about the quadratic formula</a></li><li><a href="#hp-section-2">Vieta's formulas</a></li><li><a href="#hp-section-3">Vieta's formulas beyond quadratic equations</a></li><li><a href="#hp-section-4">Quartic equations</a></li><li><a href="#hp-section-5">Quintics and beyond</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>How to solve cubic and quartic equations I: quartics</h1>
-<p class="meta">July 17, 2026</p>
+
 
 <p>
 We all know and love the quadratic formula. It says that the solutions to \(ax^2+bx+c=0\) are
@@ -52,7 +53,7 @@ using only radicals (things like \(\sqrt{5}, \sqrt[3]{2}, \sqrt[4]{7},\) etc.), 
 But enough with the preamble; let's get into solving some equations! 
 </p>
 
-<h2>Thinking about the quadratic formula</h2>
+<h2 id="hp-section-1">Thinking about the quadratic formula</h2>
 
 <p>
 If we want to find a solution to the cubic or the quartic, it's useful to first ask how one might go about <em>inventing</em> the quadratic formula. And before we do that, it's worth asking: what does the quadratic formula even do, really? 
@@ -85,7 +86,7 @@ People often joke that mathematicians are lazy, because this is incredibly commo
 </p>
 
 
-<h2>Vieta's formulas</h2>
+<h2 id="hp-section-2">Vieta's formulas</h2>
 
 <p>
 We now have some understanding of what the quadratic formula <em>is</em>: it's a tool for turning quadratic equations into square root problems. But how does one actually <em>invent</em> the quadratic formula? For this, we turn to an idea of Vieta.
@@ -189,7 +190,7 @@ by the equation
 \[x^2 + \frac{b}{a}x + \frac{c}{a} = 0.\]
 </p>
 
-<h2>Vieta's formulas beyond quadratic equations</h2>
+<h2 id="hp-section-3">Vieta's formulas beyond quadratic equations</h2>
 
 <p>
 What happens if we try solving more complicated equations with Vieta's formulas? To see, let's start with a cubic equation
@@ -223,7 +224,7 @@ This means that, just by looking at our cubic equation, we can deduce the value 
 To solve the cubic equation, we need to break the symmetry somehow, just as we did for the quadratic equation. This is a bit trickier than breaking the symmetry for the quadratic equation; next week, we'll explain a more systematic way of looking at the symmetries of \(\alpha,\beta,\) and \(\gamma,\) which will help us solve the cubic. But for now, we're going to explain how to solve <em>quartic</em> equations, assuming we already know how to solve cubics.
 </p>
 
-<h2>Quartic equations</h2>
+<h2 id="hp-section-4">Quartic equations</h2>
 
 <p>
 In 1540, the Italian mathematician Lodovico de Ferrari discovered something remarkable: just as one can use the quadratic formula to reduce solving equations
@@ -324,7 +325,7 @@ so by solving the relevant quadratic equation again we can compute \(\alpha+\del
 We end this section with a remark for experts in group theory: secretly, the 'exceptional homomorphism' \(S_4 \to S_3\) of symmetric groups was responsible for the resolvent cubic. Can you see why?
     </p>
   
-<h2>Quintics and beyond</h2>
+<h2 id="hp-section-5">Quintics and beyond</h2>
 
 <p>
 For a long time, people unsuccessfully tried to extend Cardano and Ferrari's method to solve quintic equations. The problem remained unsolved for over 300 years, but in the 19th century Galois (our friend from the introduction!) proved that there doesn't exist a general formula for the solutions to quintic equations and beyond!
@@ -346,7 +347,7 @@ Galois tragically died at the age of 20, after being shot and killed in a duel. 
 While it took around a decade, eventually the mathematical world realized how important Galois' work was. The famous mathematician Hermann Weyl wrote that "[Galois'] letter, if judged by the novelty and profundity of ideas it contains, is perhaps the most substantial piece of writing in the whole literature of mankind." 
 </p>
 
-</body>
+
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -362,4 +363,6 @@ While it took around a decade, eventually the mathematical world realized how im
 </footer>
 
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/primitive.html"><div class="related-category">Number theory</div><h3>What is \(\log(3)\) modulo \(7\)?</h3><p>Exponentials and logarithms still make sense in modular arithmetic — but with a twist.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

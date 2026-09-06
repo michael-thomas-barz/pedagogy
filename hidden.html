@@ -200,10 +200,14 @@
     .series-display { font-size: 0.65rem; }
   }
 </style>
+<link rel="stylesheet" href="style.css">
+<script defer src="site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page hp-demo">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="index.html#topics">Topics</a><a href="index.html#start-here">Start Here</a><a href="about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Interactive exploration</div><h1 class="article-title">Monodromy of √z</h1><div class="article-info"><span class="article-badge interactive">Interactive</span></div></header><div class="hp-layout hp-no-toc"><div class="hp-prose">
 
-<h1>Monodromy of √z</h1>
+
 <p class="subtitle">Analytic continuation of the square root around the branch point z = 0</p>
 
 <div class="main-layout">
@@ -599,7 +603,8 @@ drawBoth();
 </script>
 
 <!-- Möbius Strip Non-Orientability Widget — Gruvbox Theme -->
-<div id="mobius-orient-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
+<p class="hp-interactive-label">Try it yourself · Follow an orientation around the strip</p>
+<div id="mobius-orient-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;" data-hp-interactive="true">
   <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Non-Orientability</p>
   <canvas id="mobius-orient-canvas" width="400" height="300" style="display:block; border-radius: 4px; background: #1d2021;"></canvas>
   <div style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 12px;">
@@ -997,5 +1002,7 @@ drawBoth();
 })();
 </script>
 
-</body>
+
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="articles/diff-forms.html"><div class="related-category">Geometry · Calculus</div><h3>Manifolds, differential forms, and multivariable calculus</h3><p>Explore calculus on curved surfaces and discover the meaning of differential forms.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="index.html#latest">Browse all articles</a></p><p><a href="about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

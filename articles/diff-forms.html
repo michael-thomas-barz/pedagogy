@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Geometry · Calculus</div><h1 class="article-title">Manifolds, differential forms, and multivariable calculus</h1><p class="article-description">How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p><div class="article-info"><span class="article-badge">Level 3</span><span class="article-badge">Helpful: Single-variable calculus</span><span class="article-badge">About 34 min read</span><span class="article-badge interactive">Interactive</span></div><p class="article-date">September 5, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Derivatives and tangent spaces</a></li><li><a href="#hp-section-2">The fundamental theorem of calculus</a></li><li><a href="#hp-section-3">Line integrals on manifolds</a></li><li><a href="#hp-section-4">Differential 2-forms</a></li><li><a href="#hp-section-5">The derivative of a 1-form</a></li><li><a href="#hp-section-6">Differential forms</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Manifolds, differential forms, and multivariable calculus</h1>
-<p class="meta">September 5, 2026</p>
+
 
 <p>
 How do you do calculus <em>on the surface of a sphere</em>?  
@@ -57,7 +58,7 @@ to get
 you'd get nonsense! And if you tried to cancel the \(d\)'s in \(dy/dx\) to get \(y/x,\) again it would be wrong. So, what does \(dx\) actually mean, and why can we manipulate it to solve ODEs? 
 </p>
 
-<h2>Derivatives and tangent spaces</h2>
+<h2 id="hp-section-1">Derivatives and tangent spaces</h2>
 
 <p>
 The first concept of single variable calculus is the <em>derivative</em>. It tells you how to <em>approximate</em> your function; more precisely, the derivative \(f'(x)\) is defined as the number making the approximation
@@ -758,7 +759,7 @@ so we could have also written
   That's because the fundamental aspect of derivatives is what it does to other vectors, which is what a covector is.
 </p>
 
-<h2>The fundamental theorem of calculus</h2>
+<h2 id="hp-section-2">The fundamental theorem of calculus</h2>
 
 <p>
 The derivative is defined to help us calculate how the output of our function changes when we make a small change in the input. But what do we do when we need to figure out how the output of our function changes after we make a <em>big</em> change in put? 
@@ -906,7 +907,8 @@ There is one more thing we mention: vectors have length and direction. Unfortuna
   }
   #vfWidget .vf-placeholder { color: var(--gray); font-style: italic; }
 </style>
-<div id="vfWidget">
+<p class="hp-interactive-label">Try it yourself · Explore a vector field</p>
+<div id="vfWidget" data-hp-interactive="true">
   <div class="vf-stage">
     <canvas></canvas>
   </div>
@@ -1205,9 +1207,10 @@ Fortunately, we can break any path into a series of approximately straight line 
     text-align: center;
   }
 </style>
-</head>
-<body>
-<div id="workWidget">
+
+
+<p class="hp-interactive-label">Try it yourself · Step through a line integral</p>
+<div id="workWidget" data-hp-interactive="true">
   <div class="w-stage"><canvas></canvas></div>
   <div class="w-caption"></div>
   <div class="w-nav">
@@ -1522,7 +1525,7 @@ where \(\gamma\) is the path the object moves along.
 In particular, line integrals show up in physics all the time!
 </p>
 
-<h2>Line integrals on manifolds</h2>
+<h2 id="hp-section-3">Line integrals on manifolds</h2>
 
 <p>
 Let \(M\) be a manifold -- for example, the sphere from earlier. What should a line integral on \(M\) mean? 
@@ -1651,9 +1654,10 @@ This path is drawn in the widget below; you can use your mouse to change the vie
   }
   #ftcPathWidget .p-readout .val { color: var(--yellow); }
 </style>
-</head>
-<body>
-<div id="ftcPathWidget">
+
+
+<p class="hp-interactive-label">Try it yourself · Follow a path on the sphere</p>
+<div id="ftcPathWidget" data-hp-interactive="true">
   <div class="p-stage">
     <div class="p-label" id="labelQ">q</div>
     <div class="p-label" id="labelP">p</div>
@@ -1952,7 +1956,8 @@ To get a geometric sense of what tangency means, it might be helpful to view the
   }
 </style>
 
-<div id="ftcTangentWidgetStandalone">
+<p class="hp-interactive-label">Try it yourself · Watch the tangent vector</p>
+<div id="ftcTangentWidgetStandalone" data-hp-interactive="true">
   <div class="p-stage">
     <div class="p-label" id="tangentStandaloneLabelQ">q</div>
     <div class="p-label" id="tangentStandaloneLabelP">p</div>
@@ -2197,7 +2202,7 @@ And indeed,
 as well, just like the fundamental theorem of calculus predicts!
 </p>
 
-<h2>Differential 2-forms</h2>
+<h2 id="hp-section-4">Differential 2-forms</h2>
 
 <p>
 In the last section, we saw differential 1-forms: these turn tangent vectors into numbers, and we can use them to make line integrals.
@@ -2322,7 +2327,8 @@ Let's start with a simple example: imagine the water was flowing at a constant v
   }
 </style>
 
-<div id="flowDrainWidget">
+<p class="hp-interactive-label">Try it yourself · Change the drain’s angle</p>
+<div id="flowDrainWidget" data-hp-interactive="true">
   <div class="fd-stage" aria-label="A rectangular drain in a downward water flow. Drag vertically to tilt the drain.">
     <canvas></canvas>
     <div class="fd-hint">drag up/down to tilt</div>
@@ -2677,7 +2683,8 @@ and
   }
 </style>
 
-<div id="surfaceFluxWidget3D">
+<p class="hp-interactive-label">Try it yourself · Explore a surface integral</p>
+<div id="surfaceFluxWidget3D" data-hp-interactive="true">
   <div class="sf-stage" aria-label="3-dimensional surface integral widget showing a fluid flow field and a drain surface. Drag to move the camera.">
     <div class="sf-hint">drag to rotate • scroll to zoom</div>
   </div>
@@ -3203,7 +3210,7 @@ embedded in \(M,\) we can define
 \[\int_{\sigma} \omega = \int_0^1\int_0^1 \omega(\sigma(s,t))\left(\frac{\partial\sigma}{\partial s}(s,t), \frac{\partial\sigma}{\partial t}(s, t)\right) \, ds dt.\]
 </p>
 
-<h2>The derivative of a 1-form</h2>
+<h2 id="hp-section-5">The derivative of a 1-form</h2>
 
 <p>
 Our first 'concrete' example of a differential 1-form was the derivative of a function. Can we produce differential 2-forms by differentiating 1-forms?
@@ -3329,7 +3336,8 @@ This expression is a bit of a mess! There are four terms, some of which we add a
   }
 </style>
 
-<div id="localStokesWidgetV3">
+<p class="hp-interactive-label">Try it yourself · Step through the boundary terms</p>
+<div id="localStokesWidgetV3" data-hp-interactive="true">
   <div class="ls-stage" aria-label="Widget showing the local terms in Stokes' theorem on a tiny square.">
     <svg viewBox="0 0 700 440" role="img" aria-label="Tiny square with four labeled vertices and local boundary-term annotations"></svg>
   </div>
@@ -3615,7 +3623,8 @@ An incredible cancellation occurs when we put a few of these small regions next 
   }
 </style>
 
-<div id="stokesGridWidgetV4">
+<p class="hp-interactive-label">Try it yourself · See the interior terms cancel</p>
+<div id="stokesGridWidgetV4" data-hp-interactive="true">
   <div class="sg-stage" aria-label="A two-by-two grid illustrating local terms and cancellation in Stokes' theorem.">
     <svg viewBox="0 0 760 480" role="img" aria-label="Two by two grid with labeled vertices and cancelling local terms"></svg>
   </div>
@@ -4096,7 +4105,7 @@ Sometimes people abbreviate this to
 where \(\partial\sigma\) means "boundary of \(\sigma\)" -- that is, the four sides \(a,b,c,d,\) but with \(a\) and \(b\) are positively oriented, and \(c, d\) are negatively oriented. 
 </p>
 
-<h2>Differential forms</h2>
+<h2 id="hp-section-6">Differential forms</h2>
 
 <p>
 In general, a <em>differential \(k\)-form</em> on a manifold \(M\) is some gadget which takes in \(k\) different tangent vectors and spits out a number, obeying some axioms (saying that it should be linear in each argument, and 'alternating' -- meaning if you swap any two consecutive arguments, the outputted number is negated). 
@@ -4140,4 +4149,6 @@ These ideas are the beginnings of the field of <em>differential geometry</em>. I
 <a href="../index.html">← back to home page</a>
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/monodromy.html"><div class="related-category">Topology · Calculus</div><h3>Möbius strips and differential equations</h3><p>A one-sided surface and a differential equation turn out to share the same obstruction.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/lagrangian.html"><div class="related-category">Physics</div><h3>Mechanics I: nature is lazy</h3><p>A geometric way to understand motion through the principle of least action.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

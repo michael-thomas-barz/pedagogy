@@ -4,161 +4,426 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hidden Phenomena</title>
+  <meta
+    name="description"
+    content="Beautiful mathematics beyond the classroom: interactive articles on number theory, calculus, geometry, algebra, and physics."
+  >
+
   <link rel="stylesheet" href="style.css">
-  <style>
-    .category-filter {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5em;
-      margin: 1.25em 0;
-    }
-    .filter-btn {
-      font: inherit;
-      font-size: 0.9em;
-      padding: 0.35em 0.9em;
-      border: 1px solid currentColor;
-      border-radius: 999px;
-      background: transparent;
-      color: inherit;
-      cursor: pointer;
-      opacity: 0.6;
-      transition: opacity 0.15s ease, background 0.15s ease;
-    }
-    .filter-btn:hover {
-      opacity: 1;
-    }
-    .filter-btn.is-active {
-      opacity: 1;
-      background: currentColor;
-    }
-    .filter-btn.is-active {
-      color: inherit;
-    }
-    .filter-btn.is-active {
-      background: rgba(128, 128, 128, 0.2);
-    }
-    .article-list li[hidden] {
-      display: none;
-    }
-    .no-results {
-      opacity: 0.7;
-      font-style: italic;
-    }
-  </style>
- <!-- KaTeX -->
+
+  <!-- KaTeX -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
-
+<script defer src="site.js"></script>
 </head>
-<body>
 
-<h1>Hidden Phenomena</h1>
-<p>These articles describe various interesting mathematical phenomena. 
-  If you're not sure where to start, we recommend <a href="articles/monodromy.html">Möbius strips and differential equations</a> or <a href="articles/quadratic-residues.html">What is \(\sqrt{-1}\) modulo \(5\)?</a>.</p>
+<body class="home-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+  <header class="site-header">
+    <div class="page-shell">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="site-title" href="index.html">HIDDEN PHENOMENA</a>
 
-<hr>
+        <div class="site-nav-links">
+          <a href="#topics">Topics</a>
+          <a href="#start-here">Start Here</a>
+          <a href="about.html">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<div class="category-filter" role="group" aria-label="Filter articles by area">
-  <button type="button" class="filter-btn is-active" data-filter="all">All</button>
-  <button type="button" class="filter-btn" data-filter="number-theory">Number theory</button>
-  <button type="button" class="filter-btn" data-filter="analysis">Calculus</button>
-  <button type="button" class="filter-btn" data-filter="physics">Physics</button>
-  <button type="button" class="filter-btn" data-filter="algebra">Algebra</button>
-</div>
+  <main id="hp-main" tabindex="-1" class="home-main">
+    <div class="page-shell">
+      <section class="hero-section">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Mathematics beyond the classroom</p>
 
-<ul class="article-list">
-  <li data-categories="analysis">
-          <a href="articles/diff-forms.html">Manifolds, differential forms, and multivariable calculus</a> September 5, 2026</a>
-  </li>
-  <li data-categories="algebra"> 
-          <a href="articles/anima.html">Syzygies and higher groupoids</a> August 29, 2026
-  </li>
-  <li data-categories="physics"> 
-          <a href="articles/noether.html">Mechanics II: symmetry is conservation</a> August 21, 2026
-  </li>
-  <li data-categories="physics">
-          <a href="articles/lagrangian.html">Mechanics I: nature is lazy</a> August 15, 2026
-  </li>
-        <li data-categories="analysis">
-          <a href="articles/monodromy.html">Möbius strips and differential equations</a> August 8, 2026
-  </li>
-  <li data-categories="number-theory">
-          <a href="articles/lucas.html">Fractal patterns hidden inside Pascal's triangle</a> July 31, 2026
-  </li>
-        <li data-categories="algebra">
-          <a href="articles/cubic.html">How to solve cubic and quartic equations II: cubics</a> July 24, 2026
-  </li>
-        <li data-categories="algebra">
-          <a href="articles/quartic.html">How to solve cubic and quartic equations I: quartics</a> July 17, 2026
-  </li>
-        <li data-categories="analysis">
-          <a href="articles/gamma.html">What is the factorial of 3.5?</a> July 10, 2026
-  </li>
-        <li data-categories="number-theory analysis">
-          <a href="articles/dirichlet.html">Infinitely many primes end in a 7</a> February 22, 2026
-  </li>
-   <li data-categories="number-theory analysis">
-          <a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a> February 13, 2026
-  </li>
-        <li data-categories="number-theory">
+          <h1 class="hero-title">
+            Beautiful mathematics you probably won't see in school.
+          </h1>
 
-          <a href="articles/modular.html">Why study Diophantine equations?</a> <span>February 10, 2026</span>
-  </li>
-  <li data-categories="number-theory">
-          <a href="articles/primitive.html">What is \(\log(3)\) modulo \(7\)?</a> <span>February 7, 2026</span>
-  </li>
-  <li data-categories="number-theory">
-          <a href="articles/quadratic-residues.html">What is \(\sqrt{-1}\) modulo \(5\)?</a> <span>February 3, 2026</span>
-  </li>
-  <li data-categories="number-theory analysis">
-          <a href="articles/hensels.html">Using calculus to do number theory</a> <span>February 2, 2026</span>
-  </li>
-</ul>
-<p class="no-results" hidden>No articles in this area yet.</p>
+          <p class="hero-description">
+            Explore surprising ideas from number theory, geometry, calculus,
+            physics, and beyond — with visual and interactive explanations.
+          </p>
 
-<footer>
-        <p>This webpage is maintained by <a href="https://michael.dog/">Michael Barz</a> and <a href="https://kentajsuzuki.github.io/">Kenta Suzuki</a>. We are two mathematics PhD students at Princeton, both broadly interested in arithmetic geometry.</p>
-</footer>
+          <div class="hero-actions">
+            <a class="primary-button" href="#start-here">Start exploring</a>
+            <a class="secondary-button" href="#latest">Browse all articles</a>
+          </div>
+        </div>
+      </section>
+    </div>
 
-</body>
-<!-- MailerLite Universal -->
-<script>
+    <section>
+      <div class="page-shell">
+        <div class="section-heading-row">
+          <h2>Featured</h2>
+          <span class="section-note">A good example of what Hidden Phenomena is about</span>
+        </div>
+
+        <a class="featured-card" href="articles/monodromy.html">
+          <div class="featured-visual" aria-hidden="true">
+            <svg viewBox="0 0 620 400" role="presentation">
+              <path
+                d="M115 218 C170 76 360 72 485 164 C555 216 485 309 346 300 C205 292 112 233 157 165 C211 84 408 144 464 234 C501 294 374 345 235 300 C126 264 77 229 115 218"
+                fill="none"
+                stroke="#689d6a"
+                stroke-width="18"
+                stroke-linecap="round"
+                opacity="0.9"
+              />
+              <path
+                d="M120 214 C225 238 365 280 464 234"
+                fill="none"
+                stroke="#fabd2f"
+                stroke-width="3"
+                stroke-dasharray="9 10"
+                opacity="0.9"
+              />
+              <circle cx="464" cy="234" r="7" fill="#b16286" />
+            </svg>
+          </div>
+
+          <div class="featured-copy">
+            <div class="article-category">Topology · Calculus</div>
+            <h3>Möbius strips and differential equations</h3>
+            <p>
+              Start with the strange one-sided geometry of a Möbius strip,
+              then watch the same phenomenon reappear when solving differential
+              equations.
+            </p>
+
+            <div class="card-meta">
+              <span class="badge interactive">★ Interactive</span>
+              <span class="badge">Level 2</span>
+              <span class="badge">Visual</span>
+            </div>
+
+            <span class="card-arrow">Read the article →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="start-here">
+      <div class="page-shell">
+        <div class="section-heading-row">
+          <h2>Start here</h2>
+          <span class="section-note">Three accessible ways into the site</span>
+        </div>
+
+        <div class="start-grid">
+          <a class="start-card" href="articles/lucas.html">
+            <div class="start-card-visual" aria-hidden="true">
+              <div class="pascal-mini">
+                <div>1</div>
+                <div>1&nbsp;&nbsp;1</div>
+                <div>1&nbsp;&nbsp;2&nbsp;&nbsp;1</div>
+                <div>1&nbsp;&nbsp;3&nbsp;&nbsp;3&nbsp;&nbsp;1</div>
+                <div>1&nbsp;&nbsp;4&nbsp;&nbsp;6&nbsp;&nbsp;4&nbsp;&nbsp;1</div>
+                <div>1&nbsp;&nbsp;5&nbsp;&nbsp;10&nbsp;&nbsp;10&nbsp;&nbsp;5&nbsp;&nbsp;1</div>
+              </div>
+            </div>
+
+            <div class="start-card-body">
+              <h3>Fractal patterns hidden inside Pascal's triangle</h3>
+              <p>
+                A familiar combinatorial triangle turns into a self-similar
+                geometric pattern when you look at divisibility.
+              </p>
+              <div class="card-meta">
+                <span class="badge">Number theory</span>
+                <span class="badge">Level 1</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="start-card" href="articles/quadratic-residues.html">
+            <div class="start-card-visual" aria-hidden="true">
+              <div class="mod-clock">
+                <span>0</span>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <strong>\(\sqrt{-1}?\)</strong>
+              </div>
+            </div>
+
+            <div class="start-card-body">
+              <h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3>
+              <p>
+                Revisit the quadratic formula in modular arithmetic and learn
+                when square roots exist in finite worlds.
+              </p>
+              <div class="card-meta">
+                <span class="badge">Number theory</span>
+                <span class="badge">Level 1</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="start-card" href="articles/gamma.html">
+            <div class="start-card-visual" aria-hidden="true">
+              <div class="gamma-mini">\(3.5! = ?\)</div>
+            </div>
+
+            <div class="start-card-body">
+              <h3>What is the factorial of 3.5?</h3>
+              <p>
+                Euler's approximation trick extends factorials beyond whole
+                numbers — and unexpectedly brings in \(\pi\).
+              </p>
+              <div class="card-meta">
+                <span class="badge">Calculus</span>
+                <span class="badge">Level 2</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="topics">
+      <div class="page-shell">
+        <div class="section-heading-row">
+          <h2>Explore by topic</h2>
+          <span class="section-note">Filter the archive below</span>
+        </div>
+
+        <div class="topic-filter" role="group" aria-label="Filter articles by area">
+          <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+          <button type="button" class="filter-btn" data-filter="number-theory">Number theory</button>
+          <button type="button" class="filter-btn" data-filter="analysis">Calculus</button>
+          <button type="button" class="filter-btn" data-filter="geometry">Geometry</button>
+          <button type="button" class="filter-btn" data-filter="physics">Physics</button>
+          <button type="button" class="filter-btn" data-filter="algebra">Algebra</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="latest">
+      <div class="page-shell">
+        <div class="section-heading-row">
+          <h2>Latest articles</h2>
+          <span class="section-note">Newest first</span>
+        </div>
+
+        <div class="latest-list">
+          <article class="latest-item" data-categories="analysis geometry">
+            <div class="latest-category">Geometry · Calculus</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/diff-forms.html">Manifolds, differential forms, and multivariable calculus</a></h3>
+              <p class="latest-hook">How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p>
+            </div>
+            <time class="latest-date" datetime="2026-09-05">September 5, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="algebra">
+            <div class="latest-category">Algebra</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/anima.html">Syzygies and higher groupoids</a></h3>
+              <p class="latest-hook">A route from ordinary equations to the idea that mathematical objects can be equal in more than one way.</p>
+            </div>
+            <time class="latest-date" datetime="2026-08-29">August 29, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="physics">
+            <div class="latest-category">Physics</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/noether.html">Mechanics II: symmetry is conservation</a></h3>
+              <p class="latest-hook">Why symmetries of a physical system produce conservation laws.</p>
+            </div>
+            <time class="latest-date" datetime="2026-08-21">August 21, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="physics">
+            <div class="latest-category">Physics</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/lagrangian.html">Mechanics I: nature is lazy</a></h3>
+              <p class="latest-hook">A geometric way to understand motion through the principle of least action.</p>
+            </div>
+            <time class="latest-date" datetime="2026-08-15">August 15, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="analysis geometry">
+            <div class="latest-category">Topology · Calculus</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/monodromy.html">Möbius strips and differential equations</a></h3>
+              <p class="latest-hook">A one-sided surface and a differential equation turn out to share the same obstruction.</p>
+            </div>
+            <time class="latest-date" datetime="2026-08-08">August 8, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory">
+            <div class="latest-category">Number theory</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/lucas.html">Fractal patterns hidden inside Pascal's triangle</a></h3>
+              <p class="latest-hook">Color Pascal's triangle by divisibility and a fractal suddenly appears.</p>
+            </div>
+            <time class="latest-date" datetime="2026-07-31">July 31, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="algebra">
+            <div class="latest-category">Algebra</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/cubic.html">How to solve cubic and quartic equations II: cubics</a></h3>
+              <p class="latest-hook">Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p>
+            </div>
+            <time class="latest-date" datetime="2026-07-24">July 24, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="algebra">
+            <div class="latest-category">Algebra</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/quartic.html">How to solve cubic and quartic equations I: quartics</a></h3>
+              <p class="latest-hook">Why equations of degree four still admit a formula in radicals.</p>
+            </div>
+            <time class="latest-date" datetime="2026-07-17">July 17, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="analysis">
+            <div class="latest-category">Calculus</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/gamma.html">What is the factorial of 3.5?</a></h3>
+              <p class="latest-hook">Extend factorials to non-integers and discover why \(\pi\) appears.</p>
+            </div>
+            <time class="latest-date" datetime="2026-07-10">July 10, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory analysis">
+            <div class="latest-category">Number theory · Calculus</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/dirichlet.html">Infinitely many primes end in a 7</a></h3>
+              <p class="latest-hook">Why there must be infinitely many primes in certain arithmetic progressions.</p>
+            </div>
+            <time class="latest-date" datetime="2026-02-22">February 22, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory analysis">
+            <div class="latest-category">Number theory · Analysis</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/rh.html">The Riemann hypothesis (or, how to earn $1 million)</a></h3>
+              <p class="latest-hook">How a complex-valued function encodes the mysterious distribution of prime numbers.</p>
+            </div>
+            <time class="latest-date" datetime="2026-02-13">February 13, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory">
+            <div class="latest-category">Number theory</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/modular.html">Why study Diophantine equations?</a></h3>
+              <p class="latest-hook">Use modular arithmetic to turn difficult integer equations into finite puzzles.</p>
+            </div>
+            <time class="latest-date" datetime="2026-02-10">February 10, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory">
+            <div class="latest-category">Number theory</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/primitive.html">What is \(\log(3)\) modulo \(7\)?</a></h3>
+              <p class="latest-hook">Exponentials and logarithms still make sense in modular arithmetic — but with a twist.</p>
+            </div>
+            <time class="latest-date" datetime="2026-02-07">February 7, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory">
+            <div class="latest-category">Number theory</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/quadratic-residues.html">What is \(\sqrt{-1}\) modulo \(5\)?</a></h3>
+              <p class="latest-hook">When does a number have a square root modulo a prime?</p>
+            </div>
+            <time class="latest-date" datetime="2026-02-03">February 3, 2026</time>
+          </article>
+
+          <article class="latest-item" data-categories="number-theory analysis">
+            <div class="latest-category">Number theory · Calculus</div>
+            <div>
+              <h3 class="latest-title"><a href="articles/hensels.html">Using calculus to do number theory</a></h3>
+              <p class="latest-hook">A discrete analogue of Newton's method lets us lift solutions of congruences.</p>
+            </div>
+            <time class="latest-date" datetime="2026-02-02">February 2, 2026</time>
+          </article>
+        </div>
+
+        <p class="no-results" hidden>No articles in this area yet.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="page-shell">
+        <div class="newsletter-card">
+          <p class="section-kicker">Keep exploring</p>
+          <h2>Get new mathematical explorations by email.</h2>
+          <p>New articles, interactive explanations, and occasional mathematical puzzles.</p>
+          <div class="ml-embedded" data-form="SnIhXR"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="home-footer" id="about">
+    <div class="page-shell home-footer-inner">
+      <p class="about-blurb">
+        Hidden Phenomena is maintained by
+        <a href="https://michael.dog/">Michael Barz</a> and
+        <a href="https://kentajsuzuki.github.io/">Kenta Suzuki</a>.
+        We are two mathematics PhD students at Princeton, both broadly
+        interested in arithmetic geometry.
+      </p>
+      <p>© 2026 Hidden Phenomena</p>
+    </div>
+  </footer>
+
+  <!-- MailerLite Universal -->
+  <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
     .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
     n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
     (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
     ml('account', '2110982');
-</script>
-<!-- End MailerLite Universal -->
-<script>
-(function () {
-  var buttons = document.querySelectorAll('.filter-btn');
-  var items = document.querySelectorAll('.article-list li');
-  var noResults = document.querySelector('.no-results');
+  </script>
+  <!-- End MailerLite Universal -->
 
-  buttons.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      buttons.forEach(function (b) { b.classList.remove('is-active'); });
-      btn.classList.add('is-active');
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll('.filter-btn');
+      var items = document.querySelectorAll('.latest-item');
+      var noResults = document.querySelector('.no-results');
 
-      var filter = btn.getAttribute('data-filter');
-      var visibleCount = 0;
+      function applyFilter(filter) {
+        var visibleCount = 0;
 
-      items.forEach(function (li) {
-        var cats = (li.getAttribute('data-categories') || '').split(' ');
-        var show = filter === 'all' || cats.indexOf(filter) !== -1;
-        li.hidden = !show;
-        if (show) visibleCount++;
+        buttons.forEach(function (button) {
+          button.classList.toggle(
+            'is-active',
+            button.getAttribute('data-filter') === filter
+          );
+        });
+
+        items.forEach(function (item) {
+          var categories = (item.getAttribute('data-categories') || '').split(' ');
+          var show = filter === 'all' || categories.indexOf(filter) !== -1;
+          item.hidden = !show;
+          if (show) visibleCount += 1;
+        });
+
+        noResults.hidden = visibleCount !== 0;
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          applyFilter(button.getAttribute('data-filter'));
+          document.getElementById('latest').scrollIntoView({ behavior: 'smooth' });
+        });
       });
-
-      noResults.hidden = visibleCount !== 0;
-    });
-  });
-})();
-</script>
-<footer>
-<div class="ml-embedded" data-form="SnIhXR"></div>
-</footer>
+    })();
+  </script>
+</body>
 </html>

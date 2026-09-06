@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Physics</div><h1 class="article-title">Mechanics II: symmetry is conservation</h1><p class="article-description">Why symmetries of a physical system produce conservation laws.</p><div class="article-info"><span class="article-badge">Level 3</span><span class="article-badge">Helpful: Derivatives and the least action principle</span><span class="article-badge">About 22 min read</span></div><p class="article-date">August 21, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Towards Noether's theorem: continuous symmetries</a></li><li><a href="#hp-section-2">Why is energy conserved?</a></li><li><a href="#hp-section-3">Why is momentum conserved?</a></li><li><a href="#hp-section-4">Why is angular momentum conserved?</a></li><li><a href="#hp-section-5">Conclusion: Lie groups</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Mechanics II: symmetry is conservation</h1>
-<p class="meta">August 21, 2026</p>
+
 
 <p>
 Physical systems tend to obey <em>conservation laws</em>. A conservation law is just an assertion that, in some physical system, some quantity never changes, no matter how the system evolves. 
@@ -183,7 +184,7 @@ In other words, if your particle moves closer to the center of rotation, then it
     Emmy Noether discovered that conserved quantities exactly correspond to continuous symmetries of the physical system, thereby answering this question!
   </p>
 
-<h2>Towards Noether's theorem: continuous symmetries</h2>
+<h2 id="hp-section-1">Towards Noether's theorem: continuous symmetries</h2>
 
 <p>
 Noeher's theorem tells us that every <em>continuous symmetry</em> of a physical system causes a conservation law. But what is a continuous symmetry? 
@@ -254,7 +255,7 @@ Noether tells us that each of these symmetries corresponds to a conserved quanti
   Let's explore how continuous symmetries really correspond to conserved quantities. We will start with conservation of energy.
 </p>
 
-<h2>Why is energy conserved?</h2>
+<h2 id="hp-section-2">Why is energy conserved?</h2>
 
 <p>
   <a href="lagrangian.html">Last week</a>, we discussed Lagrange's approach to mechanics. Let's understand why energy is conserved from this perspective.
@@ -378,7 +379,7 @@ For example, when there is friction, our Lagrangian is of the form \(L=e^{ct}L'\
 </p>
 
 
-<h2>Why is momentum conserved?</h2>
+<h2 id="hp-section-3">Why is momentum conserved?</h2>
 
 <p>
 In the last section, we assumed that the Lagrangian is time-independent, and we analyzed what happens when we change time infinitesimally. 
@@ -458,7 +459,7 @@ This is exactly Newton's third law: every action has an equal and opposite react
 </p>
 
 
-<h2>Why is angular momentum conserved?</h2>
+<h2 id="hp-section-4">Why is angular momentum conserved?</h2>
 
 The last conservation law--the conservation of angular momentum--is more involved, so we won't go through the full derivation.
 But the basic idea remains the same. Let's suppose our Lagrangian
@@ -479,7 +480,7 @@ Using the Euler-Lagrange equations, the left-hand-side can be re-written as \(\f
 \]
 i.e., \(C\) is a conserved quantity. We call this quantity (really, a vector) \(C\) the <em>angular momentum</em>.
 
-<h2>Conclusion: Lie groups</h2>
+<h2 id="hp-section-5">Conclusion: Lie groups</h2>
 
 Noether's big insight was that continuous symmetries correspond to conservation laws.
  That means, whereas Newton needed to rely on some cleverness to discover conserved quantities, we can instead just hunt for symmetries of our physical system.
@@ -572,7 +573,7 @@ Because this holds for every choice of \(\vec{\omega},\) we find that
 is a conserved quantity; this conserved quantity is the angular momentum.
 </p>
 
- </body>
+ 
 <!-- MailerLite Universal -->
 <script>
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
@@ -588,4 +589,6 @@ is a conserved quantity; this conserved quantity is the angular momentum.
 </footer>
 
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/lagrangian.html"><div class="related-category">Physics</div><h3>Mechanics I: nature is lazy</h3><p>A geometric way to understand motion through the principle of least action.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/diff-forms.html"><div class="related-category">Geometry · Calculus</div><h3>Manifolds, differential forms, and multivariable calculus</h3><p>How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>

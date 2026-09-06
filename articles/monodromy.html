@@ -12,13 +12,14 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body);">
   </script>
+<script defer src="../site.js"></script>
 </head>
-<body>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Topology · Calculus</div><h1 class="article-title">Möbius strips and differential equations</h1><p class="article-description">A one-sided surface and a differential equation turn out to share the same obstruction.</p><div class="article-info"><span class="article-badge">Level 3</span><span class="article-badge">Helpful: Complex numbers and differential equations</span><span class="article-badge">About 21 min read</span><span class="article-badge interactive">Interactive</span></div><p class="article-date">August 8, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">The Möbius strip</a></li><li><a href="#hp-section-2">A problem in differential equations</a></li><li><a href="#hp-section-3">Monodromy</a></li><li><a href="#hp-section-4">Revisiting uniqueness</a></li><li><a href="#hp-section-5">Return of the Möbius strip</a></li></ol></details></nav><div class="hp-prose">
 
-<a href="../index.html">← back</a>
 
-<h1>Möbius strips and differential equations</h1>
-<p class="meta">August 8, 2026</p>
+
 
 <p>
 Algebraic topology is a field of mathematics which is usually presented as the study of certain amusing shapes, like the Klein bottle or Möbius strip. But this presentation perhaps fails to convey just how vital algebraic topology is to almost all areas of modern mathematics. 
@@ -32,7 +33,7 @@ To give the reader a taste of this importance, in today's post we will start by 
 So, what is the Möbius strip, and what funny property does it have?
 </p>
 
-<h2>The Möbius strip</h2>
+<h2 id="hp-section-1">The Möbius strip</h2>
 
 <!-- <p>
 Turning math problems into geometry problems sometimes leaves you with very strange shapes. It turns out that the shape relevant to our problem will be the Möbius strip! So, before getting into our differential equation, let's take some time to explore the Möbius strip. 
@@ -278,7 +279,8 @@ This suggests it should be pretty easy to find two sides of any surface: pick on
 Here's a little animation of this; we start with a notion of up at one point (illustrated by an upwards pointing vector), and then move the vector around to nearby points, to give them a consistent notion of up.
 </p>
 <!-- Möbius Strip Local Orientability Widget — Gruvbox Theme -->
-<div id="mobius-local-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
+<p class="hp-interactive-label">Try it yourself · Explore the Möbius strip</p>
+<div id="mobius-local-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;" data-hp-interactive="true">
   <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Local Orientability</p>
   <canvas id="mobius-local-canvas" width="400" height="300" style="display:block; border-radius: 4px; background: #1d2021;"></canvas>
   <div style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 12px;">
@@ -599,7 +601,8 @@ We made a small animation to see this; after the animation plays, you can drag t
 </p>
 
 <!-- Möbius Strip Non-Orientability Widget — Gruvbox Theme -->
-<div id="mobius-orient-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;">
+<p class="hp-interactive-label">Try it yourself · Follow an orientation around the strip</p>
+<div id="mobius-orient-widget" style="font-family: 'Georgia', serif; background: #282828; border: 2px solid #504945; border-radius: 6px; padding: 16px; display: inline-block; text-align: center; max-width: 420px;" data-hp-interactive="true">
   <p style="color: #a89984; font-size: 13px; margin: 0 0 8px 0; letter-spacing: 0.05em; text-transform: uppercase;">Non-Orientability</p>
   <canvas id="mobius-orient-canvas" width="400" height="300" style="display:block; border-radius: 4px; background: #1d2021;"></canvas>
   <div style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 12px;">
@@ -1001,7 +1004,7 @@ We made a small animation to see this; after the animation plays, you can drag t
 This is why we cannot define a notion of up or down on the Möbius strip; while in small patches it makes sense, if you travel all around the Möbius strip you'll end up reversing your notion of up and down! This is why people say a Möbius strip has only one side; while at every point on the strip, it looks like there's a `top' and a `bottom,' if you go around the entire strip you'll find that the top and bottom switch roles. If you have a Möbius strip made out of paper, you can observe this in the real world: trace your finger around a Möbius strip, and you'll find that if your finger started off on `top' of the strip, it will end on the `bottom.'
 </p>
 
-<h2>A problem in differential equations</h2>
+<h2 id="hp-section-2">A problem in differential equations</h2>
 
 <p>
 With the Möbius strip introduced, let's turn to a problem of calculus.
@@ -1928,7 +1931,7 @@ So now we have a solution to
 which obeys \(f(1) = 1,\) and makes sense in the <em>union</em> of the blue and purple circles: in the purple circle use the new formula, in the blue circle use the old formula, and on the overlap the two formulas give the same answer, so it doesn't matter which you use!
 </p>
 
-<h2>Monodromy</h2>
+<h2 id="hp-section-3">Monodromy</h2>
 
 <p>
 Let's recap what just happened: we found a solution to 
@@ -2269,7 +2272,7 @@ But if you click on a point in the overlap of the <em>red</em> and <em>blue</em>
 What's happening? To understand this, let's first try understanding why our two different formulas on the purple and blue circle agreed in the first place.
 </p>
 
-<h2>Revisiting uniqueness</h2>
+<h2 id="hp-section-4">Revisiting uniqueness</h2>
 
 <p>
 Ordinary differential equations have a strong <em>local uniqueness</em> theorem: any two solutions of an equation like
@@ -2583,7 +2586,7 @@ Here, we run into a problem: we have no common initial condition! The solution o
 The trouble here is that the local uniqueness theorem for differential equations requires you to know one common value in order to conclude that the two solutions coincide -- but there's no common value we can use for the red and blue disks.
 </p>
 
-<h2>Return of the Möbius strip</h2>
+<h2 id="hp-section-5">Return of the Möbius strip</h2>
 
 <p>
 Recall that, at the start of this article, we highlighted a funny property of the Möbius strip: while you could always <em>locally</em> orient it, globally you cannot label one side as up and one side as down. If you try to label one side as up, and then you move continuously around the Möbius strip, you'll end up labelling that same side as down! 
@@ -2730,8 +2733,8 @@ At first, you might think that if you attach a 2-dimensional plane (the space of
       .figure-controls { flex-direction: column; align-items: flex-start; gap: 7px; }
     }
   </style>
-</head>
-<body>
+
+
 
 <figure class="figure-card">
   <div class="legend">
@@ -3123,8 +3126,8 @@ This twisting is quite hard to visualize in 3-dimensions. To get a sense of what
       .figure-controls { align-items: flex-start; flex-direction: column; gap: 7px; }
     }
   </style>
-</head>
-<body>
+
+
 
 <figure class="figure-card">
   <div class="canvas-wrap">
@@ -3505,7 +3508,7 @@ This geometric approach to differential equations -- that is, thinking about the
 The Möbius strip, and related wacky shapes, were not just invented for amusement (though amusing they are): they have helpful mathematical purposes.
 </p>
 
-</body>
+
 
 <!-- MailerLite Universal -->
 <script>
@@ -3521,4 +3524,6 @@ The Möbius strip, and related wacky shapes, were not just invented for amusemen
 <div class="ml-embedded" data-form="SnIhXR"></div>
 </footer>
 
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/diff-forms.html"><div class="related-category">Geometry · Calculus</div><h3>Manifolds, differential forms, and multivariable calculus</h3><p>How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Continue beyond the quadratic formula and see how cubic equations can be solved explicitly.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
 </html>
