@@ -52,8 +52,8 @@
   <a href="noether.html">Last week</a> we derived conservation of energy from the Euler-Lagrange equation.
 </p> -->
 
-<h2 id="hp-section-1">Least action principle: yet again</h2>
-Let's quickly review <a href="lagrangian.html">Lagrangian mechanics</a>. We start with the a certain function, known as the Lagrangian,
+<h2 id="hp-section-1">Least action principle: a review</h2>
+<p>Let's quickly review <a href="lagrangian.html">Lagrangian mechanics</a>. We start with the a certain function, known as the Lagrangian,
 \[
 L(q_1,\dots,q_n,\dot q_1,\dots,\dot q_n,t),
 \]
@@ -65,6 +65,8 @@ L(q,\dot q,t),
 where \(q\) should be understood to be shorthand for \(q_1,\dots,q_n\).
 In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the usual cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
  But we could have taken \(q\) to be anything; at the end of the article we thought about the pendulum and used \(q=\theta\) the angle.
+</p>
+
 
 <p>
   Given a Lagrangian \(L(q,\dot q,t)\), the action of a path \(q(t)\) is
@@ -89,20 +91,11 @@ In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the us
   \[
   \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
   \]
-  To minimize the integral, we want \(\delta S=0\).
-  By integration by parts,
+  To minimize the integral, we want \(\delta S=0\). By an integration by parts,
   \[
-  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt
   \]
-  Moreover, since \(\delta q(t_0)=\delta q(t_1)=0\) the first term simply vanishes, and so
-  \[
-    \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
-  \]
-  Therefore
-  \[
-  \delta S=\int_{t_0}^{t_1}\frac{\partial L}{\partial q}\delta q(t)dt+\int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
-  \]
-  For this quantity to be 0 for all small perturbations \(\delta q\), we need
+  and for this quantity to be 0 for all small perturbations \(\delta q\), we need
   \[
   \frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}=0.
   \]
@@ -121,143 +114,342 @@ As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\
   In other words, we can view the Euler-Lagrange equation as Newton's equation for general coordinates.
 </p>
 
-<h2 id="hp-section-2">Predicting where particles go</h2>
-In the previous paragraph, we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
-<img src="least_action2.svg" alt="TikZ graph" style="display:block;
-            margin:2rem auto;
-            max-width:90%;
-            height:auto;">
-Let us now modify our problem, so we only know where the starting position \(q(t_0)\) is, not where the end position \(q(t_1)\) will be.
-<img src="least_action3.svg" alt="TikZ graph" style="display:block;
-            margin:2rem auto;
-            max-width:90%;
-            height:auto;">
-This is closer to what we really want to do; knowing where the particle starts off, we want to predict where the particle will end up. Let's compute how the action \(S\) changes depending on where the end point \(q(t_1)\) is.
-
+<h2>Re-formulating mechanics in terms of energy</h2>
 <p>
-  Our basic approach is the same; to minimize the action integral \(S\), we perturb the path \(q(t)\) to another path \(q(t)+\delta q(t)\) where \(\delta q(t)\) is a small function. But now, we will only assume \(\delta q(t_0)=0\), i.e., that the starting point does not move.
+In <a href="noether.html">our article on Noether's theorem</a>, we considered the function
+\[
+H=\sum_{i=1}^np_i\dot q_i-L,
+\]
+which we called energy, or in our context, the <em>Hamiltonian</em>. Then its time-derivative is
+\[
+\frac{dH}{dt}=\sum_{i=1}^n(\dot p_i\dot q_i+p_i\ddot q_i)-\frac{dL}{dt}.
+\]
+Moreover, by the multi-variable chain rule,
+\[
+\frac{dL}{dt}=\sum_{i=1}^n\bigg(\frac{\partial L}{\partial q_i}\dot q_i+\frac{\partial L}{\partial \dot q_i}\ddot q_i\bigg)+\frac{\partial L}{\partial t}=\sum_{i=1}^n\big(F_i\dot q_i+p_i\ddot q_i\big)+\frac{\partial L}{\partial t}.
+\]
+Using the Euler-Lagrange equation, that \(F_i=\dot p_i\), we see
+\[
+\frac{dH}{dt}=-\frac{\partial L}{\partial t}.
+\]
+In other words, the Hamiltonian \(H\) is conserved exactly when the Lagrangian \(L\) is time-independent.
 </p>
-
 <p>
-  The same derivation as before goes through, and
-  \[
-  \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
-  \]
-  The difference now is that in our integration by parts
-  \[
-  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt,
-  \]
-  the first term need not vanish anymore. Instead, we see 
-  \[
-  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
-  \]
-  The extra term \(\frac{\partial L}{\partial\dot q}(t_1)\delta q(t_1)\) follows along the entire derivation, and so
-  \[
-  \delta S=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)+\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
-  \]
-  When \(q(t)\) satisfies the Euler-Lagrange equation the integral vanishes and
-  \[
-  \delta S=p(t_1)\delta q(t_1).
-  \]
-  Here, \(p=\frac{\partial L}{\partial\dot q}\) denotes the generalized momentum.
-  With \(n\) degrees of freedom, we similarly have
-  \[
-  \delta S=\sum_{i=1}^np_i(t_1)\delta q_i(t_1),
-  \]
-  where \(p_i=\frac{\partial L}{\partial\dot q_i}\). 
-</p>
-
-<p>
-  This means, if we consider the action \(S\) as a function of the end position \(q_i=q_i(t_1)\), then
-  \[
-  \frac{\partial S}{\partial q_i}=p_i.
-  \]
-</p>
-
-<h3>The action as a function of both time and coordinates</h3>
-
-<p>
-  We could also consider \(S\) as a function of both the end position \(q_i=q_i(t_1)\) and time \(t=t_1\). 
-  That means, given a time \(t_1\) and positions \(q_i\), we solve for the Euler-Lagrange equations with end points \(q_i(t_0)\) and \(q_i(t_1)=q_i\) and compute the action \(S\).
-  Let us compute \(\frac{\partial S}{\partial t}\).
- </p>
-
-<p>
-  By the multivariable chain rule, the time-derivative of \(S\) is
-  \[
-  \frac{dS}{dt}=\sum_{i=1}^n\frac{\partial S}{\partial q_i}\dot q_i+\frac{\partial S}{\partial t}.
-  \]
-  However, since \(S\) was defined to be the integral of the Lagrangian, \(\frac{dS}{dt}=L\), and as we saw above, \(\frac{\partial S}{\partial q_i}=p_i\). Therefore,
-  \[
-  L=\sum_{i=1}^np_i\dot q_i+\frac{\partial S}{\partial t},
-  \]
-  or,
-  \[
-  \frac{\partial S}{\partial t}=L-\sum_{i=1}^np_i\dot q_i.
-  \]
-  We call the quantity
-  \[
-  -\frac{\partial S}{\partial t}=\sum_{i=1}^np_i\dot q_i-L
-  \]
-  the <em>Hamiltonian</em>, and denote it by \(H\). As we explained <a href="noether.html">a couple weeks ago</a>, \(H\) is the total energy in the system, and is conserved when the Lagrangian \(L\) is time-independent.
-</p>
 Our goal is to take Lagrangian mechanics--formulated in terms of \(L\), \(q_i\), and \(\dot q_i\)--and reformulate it in terms of \(H\), \(q_i\), and \(p_i\).
 Correspondingly, let us view \(H=H(q,p,t)\) as a <em>function of \(q_i\), \(p_i\), and \(t\)</em>, instead of as a function of \(q_i\), \(\dot q_i\), and \(t\).
+</p>
 
-<h2 id="hp-section-3">Euler-Lagrange equations... but with no Lagrangians</h2>
+<!-- <h2 id="hp-section-3">Euler-Lagrange equations... but with no Lagrangians</h2> -->
 
-<!-- Let's try to phrase the Euler-Lagrange equation in terms of the Hamiltonian
-\[
-H=-\frac{\partial S}{\partial t}.
-\]
-If we remember from last section, we secretly used the Euler-Lagrange equations to derive our formula
-\[
-\frac{\partial S}{\partial q_i}=p_i.
-\]
-So, maybe we can try taking this equation as our starting point and seeing what we can say about the Hamiltonian.
-
+<h3>Euler-Lagrange equations... but with no Lagrangians</h3>
 <p>
-  The issue is that this equation is an equation of \(S\), not of \(H\). To get \(H\), let's differentiate by \(t\):
-  \[
-  \frac{\partial}{\partial t}\frac\partial{\partial q_i}S=\frac{\partial p_i}{\partial t}.
-  \]
-  Since partial derivatives commute with each other, the left-hand side is
-  \[
-  \frac{\partial}{\partial t}\frac\partial{\partial q_i}S=\frac\partial{\partial q_i}\frac{\partial S}{\partial t}=-\frac{\partial H}{\partial q_i}.
-  \]
-  So we conclude
-  \[
-  \frac{\partial H_i}{\partial q_i}=-\frac{\partial p_i}{\partial t}.
-  \]
-</p> -->
-
-We now understand the derivatives of \(S\) with respect to \(q_i\) and \(t\). 
-Let's use the language of <a href="diff-forms.html">differential forms</a> to combine all this information into one simple formula:
+The Euler-Lagrange equations were derived by minimizing the action integral
 \[
-dS=\sum_{i=1}^n\frac{\partial S}{\partial q_i}dq_i+\frac{\partial S}{\partial t}dt=\sum_{i=1}^np_idq_i-Hdt.
+S=\int_{t_0}^{t_1}L(q,\dot q, t)dt.
 \]
-<p>
-Now, by the fundamental theorem of calculus,
+Let us re-write the formula as \(L=\sum_{i=1}^np_i\dot q_i-H\), so
 \[
-S=\int_\gamma\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
+S=\int\bigg(\sum_{i=1}^np_i\dot q_idt-Hdt\bigg).
 \]
-This is a path integral, along the path \(\gamma\) from \(t_0\) to \(t_1\) is the path the particle takes: formally, \(\gamma\colon[t_0,t_1]\to\mathbb R^n\times\mathbb R\) is defined by \(\gamma(t)=(q_i(t),t)\).
+As we discussed <a href="diff-forms.html">last week</a>, we could alternatively write \(\dot q_idt=dq_i\), so that
+\[
+S=\int\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
+\]
 </p>
 
 <p>
-  Of course, by definition, this equation simply says
+  For a moment, let's simplify notation by supposing \(n=1\), and let's take a variation \(q\to q+\delta q\) where \(\delta q(t_0)=\delta q(t_1)=0\). This correspondingly gives a variation \(p\to p+\delta p\). The action integral
   \[
-  S=\int_{t_0}^{t_1}\bigg(\sum_{i=1}^np_i(t)\frac d{dt}q_i(t)-H(q(t),p(t),t)\bigg)dt,
+  S=\int_{t_0}^{t_1}\big(pdq-Hdt\big)
   \]
-  which is nothing but the definition of the action integral plus the identity \(H=\sum_{i=1}^np_i\dot q_i-L\). 
-  However, this formulation allows us to consider a more general variational principle.
+  changes to
+  \[
+  S=\int_{t_0}^{t_1}\bigg((p+\delta p)d(q+\delta q)-H\big(q(t)+\delta q(t),p(t)+\delta p(t),t\big)dt\bigg),
+  \]
+  so the change in \(S\) is
+  \[
+  \delta S=\int_{t_0}^{t_1}\bigg(p d(\delta q)+\delta p\cdot dq-\frac{\partial H}{\partial p}\delta p\cdot dt-\frac{\partial H}{\partial q}\delta q\cdot dt\bigg).
+  \]
+  Let's split the integral into parts which involve \(\delta p\) and parts which involve \(\delta q\):
+  \[
+  \delta S=\int_{t_0}^{t_1}\bigg(\delta p\cdot dq-\frac{\partial H}{\partial p}\delta p\cdot dt\bigg)+\int_{t_0}^{t_1}\bigg(p d(\delta q)-\frac{\partial H}{\partial q}\delta q\cdot dt\bigg).
+  \]
+  For the second integral, we may apply an integration by parts,
+  \[
+  \int_{t_0}^{t_1}p d(\delta q)=\bigg[p\delta q\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\delta q\cdot dp=-\int_{t_0}^{t_1}\delta q\cdot dp.
+  \]
+  Thus, finally,
+  \[
+  \delta S=\int_{t_0}^{t_1}\delta p\bigg(dq-\frac{\partial H}{\partial p}\cdot dt\bigg)-\int_{t_0}^{t_1}\delta q\bigg(dp+\frac{\partial H}{\partial q}\cdot dt\bigg).
+  \]
+  The easiest way to make this quantity always zero is to let
+  \[
+  dq=\frac{\partial H}{\partial p}\cdot dt,\ \ dp=-\frac{\partial H}{\partial q}\cdot dt,
+  \]
+  i.e.,
+  \[
+  \frac{\partial H}{\partial p}=\dot q,\ \ \frac{\partial H}{\partial q}=-\dot p.
+  \]
+  More generally, when there are \(n\) coordinates,
+   \[
+  \boxed{\frac{\partial H}{\partial p_i}=\dot q_i,\ \ \frac{\partial H}{\partial q_i}=-\dot p_i}.
+  \]
+  These are called Hamilton's equations. 
 </p>
 
-<h3>Variational principle in terms of differential forms</h3>
+<p>
+  Of course, since \(\delta p\) and \(\delta q\) are not independent, we have not quite fully justified Hamilton's equations. We will more rigorously prove these identities in the next section, but for now, let's explore the implications.
+</p>
+
+<p>
+What have we accomplished? We have replaced \(n\) second-order differential equations,
+\[
+\frac d{dt}\frac{\partial L}{\partial \dot q_i}=\frac{\partial L}{\partial q_i},
+\]
+with \(2n\) first-order differential equations
+\[
+  \frac{\partial H}{\partial p_i}=\dot q_i,\ \ \frac{\partial H}{\partial q_i}=-\dot p_i.
+\]
+Moreover, our differential equations have become more symmetric. If we exchange \(p_i\) and \(q_i\), the differential equations almost don't change!
+</p>
+
+<!-- <h3>Variational principle in terms of differential forms</h3>
 If we perturb \(q_i\) by some small amount \(\delta q_i\), the total derivative of \(S\) changes by
 \[
 \delta S=\sum_{i=1}^np_id(q_i+\delta q_i)-\frac{\partial H}{\partial q_i}dt
+\] -->
+
+<h3>An example</h3>
+<p>
+Suppose we are in standard cartesian coordinates, so \(q_i=\vec x_i\) are the positions and \(\dot q_i=\vec v_i\) are the velocities. Write the potential energy as \(V(\vec x)\), so \(\frac{\partial V}{\partial\vec x_i}=-\vec F_i\) is the force and the Lagrangian is
+\[
+L=\sum_{i=1}^n\frac12m_i\|\vec v_i\|^2-V(\vec x).
+\]</p>
+
+<p>
+  Then, as we discussed in our <a href="lagrangian.html">article on Lagrangian mechanics</a>, the Euler-Lagrange equations
+  \[
+  \frac{\partial L}{\partial\vec x_i}=\frac{d}{dt}\frac{\partial L}{\partial \vec v_i}
+  \]
+  simply says
+  \[
+  \vec F_i=m_i\frac{d^2\vec x_i}{dt^2},
+  \]
+  a second-order differential equation.
+</p>
+
+<p>
+  On the other hand, the Hamiltonian is
+  \[
+  H=\sum_{i=1}^n\frac1{2m_i}\|\vec p_i\|^2-V(\vec x)
+  \]
+  where \(\vec p_i=m_i\vec v_i\), so
+  \[
+  \frac{\partial H}{\partial\vec p_i}=\frac1{m_i}\vec p_i=\frac{d\vec x_i}{dt},
+  \]
+  and
+  \[
+  \frac{\partial H}{\partial\vec x_i}=-\vec F_i=-\frac{d\vec p_i}{dt}.
+  \]
+  In other words, we now have \(2n\) first-order differential equations
+  \[
+  \vec p_i=m_i\frac{d\vec x_i}{dt},\ \ \vec F_i=\frac{d\vec p_i}{dt}.
+  \]
+</p>
+
+<h2>Hamilton's equations, via differential forms</h2>
+<p>
+Next, let's derive Hamilton's equations more rigorously. We will use <a href="diff-forms.html">differential forms</a>, so that the total derivative of the Lagrangian is
+\[
+dL=\sum_{i=1}^n\frac{\partial L}{\partial q_i}dq_i+\sum_{i=1}^n\frac{\partial L}{\partial\dot q_i}d\dot q_i+\frac{\partial L}{\partial t}dt.
 \]
+By definition of generalized momenta, together with the Euler-Lagrange equation, we can re-write this as
+\[
+dL=\sum_{i=1}^n\dot p_idq_i+\sum_{i=1}^np_id\dot q_i+\frac{\partial L}{\partial t}dt.
+\]
+This expresses \(dL\) in terms of \(dq_i\) and \(d\dot q_i\). But let's now try to express \(dH\) in terms of \(dq_i\) and \(dp_i\).
+</p>
+
+<p>
+  We may compute,
+  \[
+  dH=\sum_{i=1}^nd(p_i\dot q_i)-dL=\sum_{i=1}^n(p_id\dot q_i+\dot q_idp_i)-\sum_{i=1}^n\dot p_idq_i-\sum_{i=1}^np_id\dot q_i-\frac{\partial L}{\partial t}dt
+  \]
+  Two terms cancel, and
+  \[
+  dH=\sum_{i=1}^n\big(\dot q_idp_i-\dot p_idq_i\big)-\frac{\partial L}{\partial t}dt.
+  \]
+  Comparing this with
+  \[
+  dH=\sum_{i=1}^n\big(\frac{\partial H}{\partial p_i}dp_i+\frac{\partial H}{\partial q_i}dq_i\big)+\frac{\partial H}{\partial t}dt,
+  \]
+  we conclude Hamilton's equations. We further note that
+  \[
+  \frac{\partial H}{\partial t}=-\frac{\partial L}{\partial t}=\frac{dH}{dt},
+  \]
+  which has the consequence that \(H(q,p,t)\) is a conserved quantity exactly when \(H\) is time-independent.
+</p>
+
+<p>
+  By the way, the equation \(\frac{\partial H}{\partial t}=-\frac{\partial L}{\partial t}\) is funny; the partial derivative of \(H\) is taken with respect to the variables \(q\), \(p\), and \(t\), whereas the partial derivative of \(L\) is taken with respect to the variables \(q\), \(\dot q\), and \(t\).
+</p>
+
+<h2>Conserved quantities... yet again</h2>
+<p>
+From now on, for simplicity, let's assume the Hamiltonian \(H\) is time-independent. Now, let's try to understand conserved quantities from the Hamiltonian perspective. Take a function \(F(q,p)\). Then the multi-variable chain rule tells us
+\[
+\frac{d}{dt}F\big(q(t),p(t)\big)=\sum_{i=1}^n\bigg(\frac{\partial F}{\partial q_i}\dot q_i+\frac{\partial F}{\partial p_i}\dot p_i\bigg).
+\]
+So \(F\) being conserved exactly when this sum is zero. Let us re-write the sum using Hamilton's equations, as 
+\[
+\frac{d}{dt}F\big(q(t),p(t)\big)=\sum_{i=1}^n\bigg(\frac{\partial F}{\partial q_i}\frac{\partial H}{\partial p_i}-\frac{\partial F}{\partial p_i}\frac{\partial H}{\partial q_i}\bigg).
+\]
+Let's just generally define, for two functions \(f\) and \(g\), the <em>Poisson bracket</em>
+\[
+\boxed{\{f,g\}:=\sum_{i=1}^n\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg)}.
+\]
+Then we just discovered
+\[
+\frac{dF}{dt}=\{H,F\},
+\]
+and that \(F\) is conserved exactly when \(\{H,F\}=0\).
+</p>
+
+<p>
+  In fact, the equation \(\frac{dF}{dt}=\{H,F\}\) is just Hamilton's equations, when specialized to \(F=p_i\) or \(F=q_i\).
+</p>
+
+<h3>More about the Poisson bracket</h3>
+<p>
+  The Poisson bracket has many nice properties:
+  <details class="hp-aside"> 
+<summary>anti-symmetry: \(\{g,f\}=-\{f,g\}\).</summary>
+        <div class="details-content" style="color:orange">
+<p>
+Because
+\[
+\frac{\partial g}{\partial p_i}\frac{\partial f}{\partial q_i}-\frac{\partial g}{\partial q_i}\frac{\partial f}{\partial p_i}=-\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg).
+\]
+</p>
+        </div>
+</details> 
+<details class="hp-aside"> 
+<summary>\(\{f,f\}=0\).</summary>
+        <div class="details-content" style="color:orange">
+<p>
+Either because 
+\[
+\frac{\partial f}{\partial p_i}\frac{\partial f}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial f}{\partial p_i}=0,
+\]
+or use the first property that \(\{f,f\}=-\{f,f\}\).
+</p>
+        </div>
+</details> 
+<details class="hp-aside"> 
+<summary>bilinearity: \(\{f,g+h\}=\{f,g\}+\{f,h\}\) and \(\{f,cg\}=c\{f,g\}\) for any scalar \(c.\)</summary>
+        <div class="details-content" style="color:orange">
+<p>
+Because derivatives are linear.
+</p>
+        </div>
+</details> 
+<details class="hp-aside"> 
+<summary>Leibniz rule: \(\{f,gh\}=g\{f,h\}+h\{f,g\}\).</summary>
+        <div class="details-content" style="color:orange">
+<p>
+By the product rule,
+\[
+\frac{\partial f}{\partial p_i}\frac{\partial(gh)}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial(gh)}{\partial p_i}
+=g\bigg(\frac{\partial f}{\partial p_i}\frac{\partial h}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial h}{\partial p_i}\bigg)+h\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg).
+\]
+</p>
+        </div>
+</details> 
+<details class="hp-aside"> 
+<summary>Jacobi identity: \(\{f,\{g,h\}\}+\{g,\{h,f\}\}+\{h,\{f,g\}\}=0\).</summary>
+        <div class="details-content" style="color:orange">
+<p>
+This proof is the most painful. Let's say \(n=1\) for simplicity. One way is to say
+\[
+\{f,\{g,h\}\}=\bigg\{f,\frac{\partial g}{\partial p}\frac{\partial h}{\partial q}-\frac{\partial g}{\partial q}\frac{\partial h}{\partial p}\bigg\},
+\]
+then apply the Leibniz rule to say
+\[
+\{f,\{g,h\}\}=\big\{f,\frac{\partial g}{\partial p}\big\}\frac{\partial h}{\partial q}+\big\{f,\frac{\partial h}{\partial q}\big\}\frac{\partial g}{\partial p}-\big\{f,\frac{\partial g}{\partial q}\big\}\frac{\partial h}{\partial p}-\big\{f,\frac{\partial h}{\partial p}\big\}\frac{\partial g}{\partial q}
+\]
+On the other hand,
+\[
+\{\{f,g\},h\}=\frac\partial{\partial p}\{f,g\}\frac{\partial h}{\partial q}-\frac\partial{\partial q}\{f,g\}\frac{\partial h}{\partial p}.
+\]
+By a version of the product rule, we see 
+\[
+\frac\partial{\partial p}\{f,g\}=\big\{\frac{\partial f}{\partial p},g\big\}+\big\{f,\frac{\partial g}{\partial p}\big\},\ \ \frac\partial{\partial q}\{f,g\}=\big\{\frac{\partial f}{\partial q},g\big\}+\big\{f,\frac{\partial g}{\partial q}\big\}.
+\]
+Substituting into our earlier expression,
+\[
+\{\{f,g\},h\}=\big\{\frac{\partial f}{\partial p},g\big\}\frac{\partial h}{\partial q}+\big\{f,\frac{\partial g}{\partial p}\big\}\frac{\partial h}{\partial q}-\big\{\frac{\partial f}{\partial q},g\big\}\frac{\partial h}{\partial p}-\big\{f,\frac{\partial g}{\partial q}\big\}\frac{\partial h}{\partial p}.
+\]
+Similarly, swapping the roles of \(g\) and \(h\), we see
+\[
+\{\{f,h\},g\}=\big\{\frac{\partial f}{\partial p},h\big\}\frac{\partial g}{\partial q}+\big\{f,\frac{\partial h}{\partial p}\big\}\frac{\partial g}{\partial q}-\big\{\frac{\partial f}{\partial q},h\big\}\frac{\partial g}{\partial p}-\big\{f,\frac{\partial h}{\partial q}\big\}\frac{\partial g}{\partial p}.
+\]
+When we add these expressions, many terms cancel, and
+\[
+\{f,\{g,h\}\}+\{\{f,h\},g\}-\{\{f,g\},h\}=\big\{\frac{\partial f}{\partial p},g\big\}\frac{\partial h}{\partial q}-\big\{\frac{\partial f}{\partial q},g\big\}\frac{\partial h}{\partial p}-\big\{\frac{\partial f}{\partial p},h\big\}\frac{\partial g}{\partial q}+\big\{\frac{\partial f}{\partial q},h\big\}\frac{\partial g}{\partial p}.
+\]
+The right-hand-side can be further expanded out using the definition of the Poisson bracket and will equal 0.
+</p>
+        </div>
+</details> 
+</p>
+
+<p>
+Let's explore what each of these properties mean in terms of conserved quantities, by substituting \(f=H\).  The second identity says
+\[
+\{H,H\}=0,
+\]
+so \(H\) is a conserved quantity. The bilinearity says
+\[
+\{H,g+h\}=\{H,g\}+\{H,h\}
+\]
+and
+\[
+\{H,cg\}=c\{H,g\}
+\]
+so if both \(g\) and \(h\) are conserved quantities (i.e., \(\{H,g\}=\{H,h\}=0\)), so are \(f+g\) and \(cg\).
+</p>
+
+<p>
+  The Leibniz rule says that if \(g\) and \(h\) are conserved, then
+\[
+\{H,gh\}=g\{H,h\}+h\{H,g\}=g\cdot0+h\cdot0=0,
+\]
+so \(gh\) is also conserved. Finally, the Jacobi identity says
+\[
+\{H,\{g,h\}\}=\{g,\{H,h\}\}-\{h,\{H,g\}\}
+\]
+so if \(g\) and \(h\) are conserved, so is \(\{g,h\}\). This last property is the most non-obvious; even if \(g\) is conserved, we don't know whether \(\frac{\partial g}{\partial p_i}\) or \(\frac{\partial g}{\partial q _i}\) are conserved.
+However, combining them in a mysterious way produces a conserved quantity.
+</p>
+
+
+
+<!-- <p>
+Therefore, we can try to re-formulate everything in terms of the Poisson bracket. For example, since
+\[
+\{p_i,f\}=\frac{\partial f}{\partial q_i}
+\]
+and
+\[
+\{f,q_i\}=\frac{\partial f}{\partial p_i},
+\]
+Hamilton's equations simply become
+\[
+\{H,p_i\}=\dot p_i,\ \ \{H,q_i\}=\dot q_i.
+\]
+</p> -->
+
+
 
 
 
