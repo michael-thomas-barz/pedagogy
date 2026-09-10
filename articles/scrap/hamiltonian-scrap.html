@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mechanics III: the Hamiltonian</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 8 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Least action principle: yet again</a></li><li><a href="#hp-section-2">Predicting where particles go</a></li><li><a href="#hp-section-3">Euler-Lagrange equations... but with no Lagrangians</a></li></ol></details></nav><div class="hp-prose">
+
+
+
+
+<p>
+  Newton gave the first formulation of mechanics, in the 17th century. For him, <em>force</em> was the most basic concept, and a physical system evolves according to the equation \(F=ma\).
+</p>
+
+<p>
+  In 1788, Lagrange introduced a <a href="lagrangian.html">more abstract framework for mechanics</a>. 
+  His approach was based on the <em>Lagrangian</em>, and a physical system evolves to minimize the action integral
+  \[
+  S=\int_{t_0}^{t_1}L\big(x(t),v(t),t\big)dt.
+  \]
+  A big advantage of Lagrange's approach was that it enabled us to prove <a href="noether.html">Noether's theorem</a>, giving us a tool to find various conservation laws.
+</p>
+
+<p>
+  In 1833, Hamilton introduced yet another approach to classical mechanics, which is even more abstract than Lagrange's approach. For him, <em>energy</em> is the most basic concept.
+</p>
+
+<p>
+  What is the point of this fancy abstract formalism for mechanics? It has several advantages:
+  <ul>
+    <li>It gives a clearer view on conserved quantities.</li>
+    <li>It allows for more general changes of coordinates, which can simplify our problems. For example, position and momentum play symmetric roles in this theory.</li>
+    <li>It is a bridge between classical mechanics and quantum mechanics. We hope to expand on this point in a future article.</li>
+  </ul>
+  Our goal in this article is to show how Hamilton's abstract formalism is natural, both physically and mathematically.
+</p>
+
+<!-- <p>
+  <a href="noether.html">Last week</a> we derived conservation of energy from the Euler-Lagrange equation.
+</p> -->
+
+<h2 id="hp-section-1">Least action principle: yet again</h2>
+Let's quickly review <a href="lagrangian.html">Lagrangian mechanics</a>. We start with the a certain function, known as the Lagrangian,
+\[
+L(q_1,\dots,q_n,\dot q_1,\dots,\dot q_n,t),
+\]
+which depends on coordinates \(q_1,\dots,q_n\), the <em>generalized velocity</em> \(\dot q_1,\dots,\dot q_n\), and time \(t\). 
+Throughout the article, to simplify notation we will often simply write
+\[
+L(q,\dot q,t),
+\]
+where \(q\) should be understood to be shorthand for \(q_1,\dots,q_n\).
+In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the usual cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
+ But we could have taken \(q\) to be anything; at the end of the article we thought about the pendulum and used \(q=\theta\) the angle.
+
+<p>
+  Given a Lagrangian \(L(q,\dot q,t)\), the action of a path \(q(t)\) is
+  \[
+  S=\int_{t_0}^{t_1}L\big(q(t),\dot q(t),t\big)dt.
+  \]
+  We want to find the path \(q(t)\) minimizing the action \(S\), given \(q(t_0)\) and \(q(t_1)\) are fixed. 
+  So let us imagine perturbing the path to \(q(t)+\delta q(t)\), where \(\delta q\) is some small function such that \(\delta q(t_0)=\delta q(t_1)=0\) to make sure the endpoints don't move.
+  Then the time-derivative \(\dot q(t)\) of \(q(t)\) changes to \(\dot q(t)+\delta\dot q(t)\), where \(\delta\dot q(t)\) denotes the derivative of \(\delta q(t)\).
+</p>
+
+<p>
+  Then, the action for the path \(q+\delta q\) is
+  \[
+  S=\int_{t_0}^{t_1}L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)dt.
+  \]
+  We approximated the integrand as 
+  \[
+  L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)\approx L\big(q(t),\dot q(t),t\big)+\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t).
+  \]
+  Therefore, the perturbation \(\delta q\) changes the action by
+  \[
+  \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
+  \]
+  To minimize the integral, we want \(\delta S=0\).
+  By integration by parts,
+  \[
+  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \]
+  Moreover, since \(\delta q(t_0)=\delta q(t_1)=0\) the first term simply vanishes, and so
+  \[
+    \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \]
+  Therefore
+  \[
+  \delta S=\int_{t_0}^{t_1}\frac{\partial L}{\partial q}\delta q(t)dt+\int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
+  \]
+  For this quantity to be 0 for all small perturbations \(\delta q\), we need
+  \[
+  \frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}=0.
+  \]
+  This is the Euler-Lagrange equation!
+</p>
+
+<h3>Generalized coordinates</h3>
+
+<p>
+Let us introduce some terminology. We call \(q_i\) the generalized coordinate, and \(\dot q_i\) the generalized velocity.
+We call the derivative \(p_i=\frac{\partial L}{\partial\dot q_i}\) the <em>generalized momentum</em>, and the derivative \(F_i=\frac{\partial L}{\partial q_i}\) the <em>generalized force</em>.
+Then the Euler-Lagrange equation is non other than\[F_i=\frac{dp_i}{dt}.\]
+As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\) are the usual cartesian coordinates, the momentum \(p_i\) and force \(F_i\) are the usual notions, and \(F_i=\frac{dp_i}{dt}\) is Newton's equation.
+</p>
+<p>
+  In other words, we can view the Euler-Lagrange equation as Newton's equation for general coordinates.
+</p>
+
+<h2 id="hp-section-2">Predicting where particles go</h2>
+In the previous paragraph, we minimized the action \(S\) among all ways for a physical system can develop from the starting position \(q(t_0)\) to the end position \(q(t_1)\).
+<img src="least_action2.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+Let us now modify our problem, so we only know where the starting position \(q(t_0)\) is, not where the end position \(q(t_1)\) will be.
+<img src="least_action3.svg" alt="TikZ graph" style="display:block;
+            margin:2rem auto;
+            max-width:90%;
+            height:auto;">
+This is closer to what we really want to do; knowing where the particle starts off, we want to predict where the particle will end up. Let's compute how the action \(S\) changes depending on where the end point \(q(t_1)\) is.
+
+<p>
+  Our basic approach is the same; to minimize the action integral \(S\), we perturb the path \(q(t)\) to another path \(q(t)+\delta q(t)\) where \(\delta q(t)\) is a small function. But now, we will only assume \(\delta q(t_0)=0\), i.e., that the starting point does not move.
+</p>
+
+<p>
+  The same derivation as before goes through, and
+  \[
+  \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
+  \]
+  The difference now is that in our integration by parts
+  \[
+  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\bigg[\frac{\partial L}{\partial \dot q}\delta q(t)\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt,
+  \]
+  the first term need not vanish anymore. Instead, we see 
+  \[
+  \int_{t_0}^{t_1}\frac{\partial L}{\partial \dot q}\delta\dot q(t)dt=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)-\int_{t_0}^{t_1}\frac d{dt}\frac{\partial L}{\partial \dot q}\delta q(t)dt.
+  \]
+  The extra term \(\frac{\partial L}{\partial\dot q}(t_1)\delta q(t_1)\) follows along the entire derivation, and so
+  \[
+  \delta S=\frac{\partial L}{\partial \dot q}\big(q(t_1),\dot q(t_1),t_1\big)\delta q(t_1)+\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt.
+  \]
+  When \(q(t)\) satisfies the Euler-Lagrange equation the integral vanishes and
+  \[
+  \delta S=p(t_1)\delta q(t_1).
+  \]
+  Here, \(p=\frac{\partial L}{\partial\dot q}\) denotes the generalized momentum.
+  With \(n\) degrees of freedom, we similarly have
+  \[
+  \delta S=\sum_{i=1}^np_i(t_1)\delta q_i(t_1),
+  \]
+  where \(p_i=\frac{\partial L}{\partial\dot q_i}\). 
+</p>
+
+<p>
+  This means, if we consider the action \(S\) as a function of the end position \(q_i=q_i(t_1)\), then
+  \[
+  \frac{\partial S}{\partial q_i}=p_i.
+  \]
+</p>
+
+<h3>The action as a function of both time and coordinates</h3>
+
+<p>
+  We could also consider \(S\) as a function of both the end position \(q_i=q_i(t_1)\) and time \(t=t_1\). 
+  That means, given a time \(t_1\) and positions \(q_i\), we solve for the Euler-Lagrange equations with end points \(q_i(t_0)\) and \(q_i(t_1)=q_i\) and compute the action \(S\).
+  Let us compute \(\frac{\partial S}{\partial t}\).
+ </p>
+
+<p>
+  By the multivariable chain rule, the time-derivative of \(S\) is
+  \[
+  \frac{dS}{dt}=\sum_{i=1}^n\frac{\partial S}{\partial q_i}\dot q_i+\frac{\partial S}{\partial t}.
+  \]
+  However, since \(S\) was defined to be the integral of the Lagrangian, \(\frac{dS}{dt}=L\), and as we saw above, \(\frac{\partial S}{\partial q_i}=p_i\). Therefore,
+  \[
+  L=\sum_{i=1}^np_i\dot q_i+\frac{\partial S}{\partial t},
+  \]
+  or,
+  \[
+  \frac{\partial S}{\partial t}=L-\sum_{i=1}^np_i\dot q_i.
+  \]
+  We call the quantity
+  \[
+  -\frac{\partial S}{\partial t}=\sum_{i=1}^np_i\dot q_i-L
+  \]
+  the <em>Hamiltonian</em>, and denote it by \(H\). As we explained <a href="noether.html">a couple weeks ago</a>, \(H\) is the total energy in the system, and is conserved when the Lagrangian \(L\) is time-independent.
+</p>
+Our goal is to take Lagrangian mechanics--formulated in terms of \(L\), \(q_i\), and \(\dot q_i\)--and reformulate it in terms of \(H\), \(q_i\), and \(p_i\).
+Correspondingly, let us view \(H=H(q,p,t)\) as a <em>function of \(q_i\), \(p_i\), and \(t\)</em>, instead of as a function of \(q_i\), \(\dot q_i\), and \(t\).
+
+<h2 id="hp-section-3">Euler-Lagrange equations... but with no Lagrangians</h2>
+
+<!-- Let's try to phrase the Euler-Lagrange equation in terms of the Hamiltonian
+\[
+H=-\frac{\partial S}{\partial t}.
+\]
+If we remember from last section, we secretly used the Euler-Lagrange equations to derive our formula
+\[
+\frac{\partial S}{\partial q_i}=p_i.
+\]
+So, maybe we can try taking this equation as our starting point and seeing what we can say about the Hamiltonian.
+
+<p>
+  The issue is that this equation is an equation of \(S\), not of \(H\). To get \(H\), let's differentiate by \(t\):
+  \[
+  \frac{\partial}{\partial t}\frac\partial{\partial q_i}S=\frac{\partial p_i}{\partial t}.
+  \]
+  Since partial derivatives commute with each other, the left-hand side is
+  \[
+  \frac{\partial}{\partial t}\frac\partial{\partial q_i}S=\frac\partial{\partial q_i}\frac{\partial S}{\partial t}=-\frac{\partial H}{\partial q_i}.
+  \]
+  So we conclude
+  \[
+  \frac{\partial H_i}{\partial q_i}=-\frac{\partial p_i}{\partial t}.
+  \]
+</p> -->
+
+We now understand the derivatives of \(S\) with respect to \(q_i\) and \(t\). 
+Let's use the language of <a href="diff-forms.html">differential forms</a> to combine all this information into one simple formula:
+\[
+dS=\sum_{i=1}^n\frac{\partial S}{\partial q_i}dq_i+\frac{\partial S}{\partial t}dt=\sum_{i=1}^np_idq_i-Hdt.
+\]
+<p>
+Now, by the fundamental theorem of calculus,
+\[
+S=\int_\gamma\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
+\]
+This is a path integral, along the path \(\gamma\) from \(t_0\) to \(t_1\) is the path the particle takes: formally, \(\gamma\colon[t_0,t_1]\to\mathbb R^n\times\mathbb R\) is defined by \(\gamma(t)=(q_i(t),t)\).
+</p>
+
+<p>
+  Of course, by definition, this equation simply says
+  \[
+  S=\int_{t_0}^{t_1}\bigg(\sum_{i=1}^np_i(t)\frac d{dt}q_i(t)-H(q(t),p(t),t)\bigg)dt,
+  \]
+  which is nothing but the definition of the action integral plus the identity \(H=\sum_{i=1}^np_i\dot q_i-L\). 
+</p>
+
+<p>
+  Now, let's take a variation \(q\to q+\delta q\) where \(\delta q(t_0)=\delta q(t_1)=0\), and correspondingly, a variation \(p\to p+\delta p\). The action integral
+  \[
+  S=\int\big(pdq-Hdt\big)
+  \]
+  changes to
+  \[
+  S=\int\bigg((p+\delta p)d(q+\delta q)-H\big(q(t)+\delta q(t),p(t)+\delta p(t),t\big)dt\bigg),
+  \]
+  so the change in \(S\) is
+  \[
+  \delta S=\int\big(p d(\delta q)+\big)
+  \]
+</p>
+
+<!-- <h3>Variational principle in terms of differential forms</h3>
+If we perturb \(q_i\) by some small amount \(\delta q_i\), the total derivative of \(S\) changes by
+\[
+\delta S=\sum_{i=1}^np_id(q_i+\delta q_i)-\frac{\partial H}{\partial q_i}dt
+\] -->
+
+
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/noether.html"><div class="related-category">Physics</div><h3>Mechanics II: symmetry is conservation</h3><p>Why symmetries of a physical system produce conservation laws.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/diff-forms.html"><div class="related-category">Geometry · Calculus</div><h3>Manifolds, differential forms, and multivariable calculus</h3><p>How do you do calculus on the surface of a sphere, and what does \(dx\) really mean?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
+</html>
