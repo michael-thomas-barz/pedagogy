@@ -16,7 +16,11 @@
 </head>
 <body class="article-page-body hp-page">
 <a class="hp-skip" href="#hp-main">Skip to content</a>
-<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 8 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label=""><details class="hp-toc-details" open><summary></summary><ol><li><a href="#hp-section-1">Least action principle: yet again</a></li><li><a href="#hp-section-2">Predicting where particles go</a></li><li><a href="#hp-section-3">Euler-Lagrange equations... but with no Lagrangians</a></li></ol></details></nav><div class="hp-prose">
+        <main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero">
+    <a class="article-back-button" href="../index.html">← Back</a>
+
+
+    <h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 8 min read</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label=""><details class="hp-toc-details" open><summary></summary><ol><li><a href="#hp-section-1">Review of Lagrangian mechanics</a></li><li><a href="#hp-section-2">Mechanics, in terms of energy</a></li><li><a href="#hp-section-3">Hamilton's equations, via differential forms</a></li><li><a href="#hp-section-4">Conserved quantities</a></li></ol></details></nav><div class="hp-prose">
 
 
 <p>
@@ -117,7 +121,7 @@ As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\
   In other words, we can view the Euler-Lagrange equation as Newton's equation but in more general coordinates.
 </p>
 
-<h2>Re-formulating mechanics in terms of energy</h2>
+<h2 id="hp-section-2">Mechanics, in terms of energy</h2>
 <p>
 In <a href="noether.html">our article on Noether's theorem</a>, we considered the function
 \[
@@ -280,7 +284,7 @@ where \(V(\vec x)\) is the potential energy of your system.
 </p>
 -->
 
-<h2>Hamilton's equations, via differential forms</h2>
+<h2 id="hp-section-3">Hamilton's equations, via differential forms</h2>
 <p>
 In this section, we satisfy the mathematicians by giving a more complete justification for Hamilton's equations. We will use the language of <a href="diff-forms.html">differential forms</a>.
 </p>
@@ -334,7 +338,7 @@ Comparing the \(dt\) terms, we also deduce
   which was the key to conservation of energy!
 </p>
 
-<h2>Conserved quantities... yet again</h2>
+<h2 id="hp-section-4">Conserved quantities</h2>
 <p>
 From now on, for simplicity, let's assume the Hamiltonian \(H\) is time-independent. Let's try to understand conserved quantities from the Hamiltonian perspective. Take a function \(F(q,p)\). Then the multi-variable chain rule tells us
 \[
