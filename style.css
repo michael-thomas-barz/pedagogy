@@ -1279,3 +1279,366 @@ body.hp-page { display: block; max-width: none; margin: 0; padding: 0; font: 15p
 @media (max-width: 900px) { .article-layout .article-toc { max-height: none; } }
 
 .hp-prose > .hp-interactive-label { margin: 2rem 0 .8rem; color: var(--link); font-size: .78rem; font-weight: 700; letter-spacing: .02em; }
+
+/* =========================================================
+   Hidden Phenomena — Feedback widget
+   ========================================================= */
+
+:root {
+  --hp-bg0: #282828;
+  --hp-bg1: #3c3836;
+  --hp-bg2: #504945;
+
+  --hp-fg0: #fbf1c7;
+  --hp-fg1: #ebdbb2;
+  --hp-fg4: #a89984;
+
+  --hp-green: #b8bb26;
+  --hp-red: #fb4934;
+}
+
+
+/* ---------------------------------------------------------
+   Floating Feedback button
+   --------------------------------------------------------- */
+
+.hp-feedback-trigger {
+  position: fixed;
+  right: 24px;
+  bottom: 22px;
+  z-index: 9998;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border: 1px solid var(--hp-bg2);
+  border-radius: 8px;
+
+  background: var(--hp-bg0);
+  color: var(--hp-fg1);
+
+  font: inherit;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.25);
+
+  transition:
+    border-color 120ms ease,
+    color 120ms ease,
+    transform 120ms ease;
+}
+
+.hp-feedback-trigger:hover {
+  color: var(--hp-green);
+  border-color: var(--hp-green);
+  transform: translateY(-1px);
+}
+
+.hp-feedback-trigger:focus-visible {
+  outline: 2px solid var(--hp-green);
+  outline-offset: 3px;
+}
+
+
+/* ---------------------------------------------------------
+   Dialog
+   --------------------------------------------------------- */
+
+.hp-feedback-dialog {
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(760px, calc(100vh - 32px));
+
+  box-sizing: border-box;
+
+  padding: 0;
+
+  border: 1px solid var(--hp-bg2);
+  border-radius: 12px;
+
+  background: var(--hp-bg0);
+  color: var(--hp-fg1);
+
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+}
+
+.hp-feedback-dialog::backdrop {
+  background: rgba(29, 32, 33, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+.hp-feedback-inner {
+  padding: 26px;
+}
+
+
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
+
+.hp-feedback-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 6px;
+}
+
+.hp-feedback-title {
+  margin: 0;
+
+  color: var(--hp-fg0);
+
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.hp-feedback-subtitle {
+  margin: 7px 0 22px;
+
+  color: var(--hp-fg4);
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.hp-feedback-close {
+  flex: 0 0 auto;
+
+  padding: 1px 4px;
+
+  border: 0;
+
+  background: transparent;
+  color: var(--hp-fg4);
+
+  font: inherit;
+  font-size: 23px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.hp-feedback-close:hover {
+  color: var(--hp-fg0);
+}
+
+.hp-feedback-close:focus-visible {
+  outline: 2px solid var(--hp-green);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+
+/* ---------------------------------------------------------
+   Form fields
+   --------------------------------------------------------- */
+
+.hp-feedback-field {
+  margin-bottom: 18px;
+}
+
+.hp-feedback-label {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: var(--hp-fg1);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hp-feedback-email-note {
+  color: var(--hp-fg4);
+  font-weight: 400;
+}
+
+
+/* ---------------------------------------------------------
+   Feedback textarea
+   --------------------------------------------------------- */
+
+.hp-feedback-textarea {
+  width: 100%;
+  min-height: 220px;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  border: 1px solid var(--hp-bg2);
+  border-radius: 7px;
+
+  background: var(--hp-bg1);
+  color: var(--hp-fg0);
+
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.55;
+
+  resize: vertical;
+  outline: none;
+
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.hp-feedback-textarea:focus {
+  border-color: var(--hp-green);
+  box-shadow: 0 0 0 1px var(--hp-green);
+}
+
+.hp-feedback-textarea::placeholder {
+  color: #928374;
+}
+
+
+/* ---------------------------------------------------------
+   Optional email field
+   --------------------------------------------------------- */
+
+.hp-feedback-email {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 12px;
+
+  border: 1px solid var(--hp-bg2);
+  border-radius: 7px;
+
+  background: var(--hp-bg1);
+  color: var(--hp-fg0);
+
+  font: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.hp-feedback-email:focus {
+  border-color: var(--hp-green);
+  box-shadow: 0 0 0 1px var(--hp-green);
+}
+
+.hp-feedback-email::placeholder {
+  color: #928374;
+}
+
+
+/* ---------------------------------------------------------
+   Footer / submit button
+   --------------------------------------------------------- */
+
+.hp-feedback-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-top: 22px;
+}
+
+.hp-feedback-status {
+  min-height: 20px;
+
+  margin: 0;
+
+  color: var(--hp-fg4);
+
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.hp-feedback-status[data-state="success"] {
+  color: var(--hp-green);
+}
+
+.hp-feedback-status[data-state="error"] {
+  color: var(--hp-red);
+}
+
+.hp-feedback-submit {
+  flex: 0 0 auto;
+
+  padding: 10px 15px;
+
+  border: 1px solid var(--hp-green);
+  border-radius: 7px;
+
+  background: var(--hp-green);
+  color: var(--hp-bg0);
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.hp-feedback-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.hp-feedback-submit:focus-visible {
+  outline: 2px solid var(--hp-fg0);
+  outline-offset: 3px;
+}
+
+.hp-feedback-submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+
+/* ---------------------------------------------------------
+   Mobile
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .hp-feedback-trigger {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .hp-feedback-dialog {
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+  }
+
+  .hp-feedback-inner {
+    padding: 20px;
+  }
+
+  .hp-feedback-textarea {
+    min-height: 190px;
+  }
+
+  .hp-feedback-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hp-feedback-submit {
+    width: 100%;
+  }
+}
+
