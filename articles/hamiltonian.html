@@ -16,13 +16,11 @@
 </head>
 <body class="article-page-body hp-page">
 <a class="hp-skip" href="#hp-main">Skip to content</a>
-<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 8 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Least action principle: yet again</a></li><li><a href="#hp-section-2">Predicting where particles go</a></li><li><a href="#hp-section-3">Euler-Lagrange equations... but with no Lagrangians</a></li></ol></details></nav><div class="hp-prose">
-
-
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 8 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label=""><details class="hp-toc-details" open><summary></summary><ol><li><a href="#hp-section-1">Least action principle: yet again</a></li><li><a href="#hp-section-2">Predicting where particles go</a></li><li><a href="#hp-section-3">Euler-Lagrange equations... but with no Lagrangians</a></li></ol></details></nav><div class="hp-prose">
 
 
 <p>
-  Newton gave the first formulation of mechanics, in the 17th century. For him, <em>force</em> was the most basic concept, and a physical system evolves according to the equation \(F=ma\).
+Newton gave the first formulation of mechanics, in the 17th century. Newton had several insights: an object's motion is determined by its current position and <em>velocity</em>; an object's position only changes according to its velocity; an object's velocity can only change when a <em>force</em> is applied to it; in this case, the change in velocity is determined by Newton's famous \(F = ma.\) When doing Newtonian mechanics, <em>force</em> is the focus: most of the effort put in to solve a Newtonian mechanics problem is done to think about what forces are acting on which objects, and how strong these forces are.
 </p>
 
 <p>
@@ -35,17 +33,19 @@
 </p>
 
 <p>
-  In 1833, Hamilton introduced yet another approach to classical mechanics, which is even more abstract than Lagrange's approach. For him, <em>energy</em> is the most basic concept.
+  In 1833, Hamilton introduced yet another approach to classical mechanics, which is even more abstract than Lagrange's approach. For him, <em>conservation laws</em> are the most basic concept.
 </p>
 
 <p>
-  What is the point of this fancy abstract formalism for mechanics? It has several advantages:
-  <ul>
-    <li>It gives a clearer view on conserved quantities.</li>
-    <li>It allows for more general changes of coordinates, which can simplify our problems. For example, position and momentum play symmetric roles in this theory.</li>
-    <li>It is a bridge between classical mechanics and quantum mechanics. We hope to expand on this point in a future article.</li>
-  </ul>
-  Our goal in this article is to show how Hamilton's abstract formalism is natural, both physically and mathematically.
+That is, in Hamilton's approach, we <em>start</em> by writing down some physical quantity which we know should be conserved, and then find some way for physics to evolve which forces that quantity to be conserved. 
+</p>
+
+<p>
+Hamilton's approach is a bit more abstract than Newton's and Lagrange's, but it has two key advantages: it allows the tools of <em>differential geometry</em> to be used to study physics, and it generalizes well to <em>quantum</em> mechanics, where direct analogues of Newtonian or Lagrangian mechanics make less sense.
+</p>
+
+<p>
+Hamilton's formalism might seem abstract, but it turned out to be key to developing quantum mechanics. We hope to elaborate on the connection to quantum in a later article, but for now our focus will be on exploring Hamilton's approach to classical mechanics. With that spiel, let's jump right into things!
 </p>
 
 <!-- <p>
@@ -58,32 +58,35 @@
 L(q_1,\dots,q_n,\dot q_1,\dots,\dot q_n,t),
 \]
 which depends on coordinates \(q_1,\dots,q_n\), the <em>generalized velocity</em> \(\dot q_1,\dots,\dot q_n\), and time \(t\). 
-Throughout the article, to simplify notation we will often simply write
+Throughout the article, to simplify notation we will denote the Lagrangian by 
 \[
 L(q,\dot q,t),
 \]
 where \(q\) should be understood to be shorthand for \(q_1,\dots,q_n\).
-In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the usual cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
- But we could have taken \(q\) to be anything; at the end of the article we thought about the pendulum and used \(q=\theta\) the angle.
+In our previous <a href="lagrangian.html">article</a> we usually took \(q\) to be the usual cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
+ But we could have taken \(q\) to be anything; for example, at the end of that article we thought about a pendulum and used \(q=\theta\) the angle the pendulum was at, instead of its literal \(x\)-coordinate. In physics, choosing the right coordinate system can often greatly simplify the mathematics involved -- in that pendulum example, the math is much simpler if you use \(\theta\) as your coordinate instead of tracking the \((x, y)\) coordinates of the position. 
 </p>
 
 
 <p>
-  Given a Lagrangian \(L(q,\dot q,t)\), the action of a path \(q(t)\) is
+Given a Lagrangian \(L(q,\dot q,t)\), the <em>action</em> of a path \(q(t),\) starting at time \(t_0\) and ending at time \(t_1,\) is
   \[
   S=\int_{t_0}^{t_1}L\big(q(t),\dot q(t),t\big)dt.
   \]
-  We want to find the path \(q(t)\) minimizing the action \(S\), given \(q(t_0)\) and \(q(t_1)\) are fixed. 
-  So let us imagine perturbing the path to \(q(t)+\delta q(t)\), where \(\delta q\) is some small function such that \(\delta q(t_0)=\delta q(t_1)=0\) to make sure the endpoints don't move.
+
+  Lagrange's key observation is that nature takes the path which <em>minimizes</em> the above action integral, given that the endpoints \(q(t_0)\) and \(q(t_1)\) are fixed.
+</p>
+<p>
+Fermat's principle, commonly used in calculus, allows you to detect minima and maxima by looking at how your function changes under small perturbations. Let's perturb our path to get \(q(t)+\delta q(t)\), where \(\delta q\) is some small function such that \(\delta q(t_0)=\delta q(t_1)=0\) to make sure the endpoints don't move.
   Then the time-derivative \(\dot q(t)\) of \(q(t)\) changes to \(\dot q(t)+\delta\dot q(t)\), where \(\delta\dot q(t)\) denotes the derivative of \(\delta q(t)\).
 </p>
 
 <p>
-  Then, the action for the path \(q+\delta q\) is
+  Thus the action for the path \(q+\delta q\) is now
   \[
-  S=\int_{t_0}^{t_1}L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)dt.
+  S + \delta S=\int_{t_0}^{t_1}L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)dt.
   \]
-  We approximated the integrand as 
+  We can approximate the integrand as
   \[
   L\big(q(t)+\delta q(t),\dot q(t)+\delta\dot q(t),t\big)\approx L\big(q(t),\dot q(t),t\big)+\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t).
   \]
@@ -91,7 +94,7 @@ In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the us
   \[
   \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}\delta q(t)+\frac{\partial L}{\partial \dot q}\delta\dot q(t)\bigg)dt.
   \]
-  To minimize the integral, we want \(\delta S=0\). By an integration by parts,
+  By Fermat's principle, for our original path to be a critical point of the action, we need \(\delta S=0\). Integrating by parts,
   \[
   \delta S=\int_{t_0}^{t_1}\bigg(\frac{\partial L}{\partial q}-\frac d{dt}\frac{\partial L}{\partial \dot q}\bigg)\delta q(t)dt
   \]
@@ -105,13 +108,13 @@ In our previous <a href="lagrangian.html">article</a> we took \(q\) to be the us
 <h3>Generalized coordinates</h3>
 
 <p>
-Let us introduce some terminology. We call \(q_i\) the generalized coordinate, and \(\dot q_i\) the generalized velocity.
+Let us introduce some terminology. We call \(q_i\) the <em>generalized coordinate</em>, and \(\dot q_i\) the <em>generalized velocity</em>.
 We call the derivative \(p_i=\frac{\partial L}{\partial\dot q_i}\) the <em>generalized momentum</em>, and the derivative \(F_i=\frac{\partial L}{\partial q_i}\) the <em>generalized force</em>.
-Then the Euler-Lagrange equation is non other than\[F_i=\frac{dp_i}{dt}.\]
-As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\) are the usual cartesian coordinates, the momentum \(p_i\) and force \(F_i\) are the usual notions, and \(F_i=\frac{dp_i}{dt}\) is Newton's equation.
+Then the Euler-Lagrange equation is now simply \[F_i=\frac{dp_i}{dt}.\] 
+As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\) are the usual cartesian coordinates, the momentum \(p_i\) and force \(F_i\) are the usual notions, and \(F_i=\frac{dp_i}{dt}\) is Newton's famous equation.
 </p>
 <p>
-  In other words, we can view the Euler-Lagrange equation as Newton's equation for general coordinates.
+  In other words, we can view the Euler-Lagrange equation as Newton's equation but in more general coordinates.
 </p>
 
 <h2>Re-formulating mechanics in terms of energy</h2>
@@ -124,7 +127,7 @@ which we called energy, or in our context, the <em>Hamiltonian</em>. Then its ti
 \[
 \frac{dH}{dt}=\sum_{i=1}^n(\dot p_i\dot q_i+p_i\ddot q_i)-\frac{dL}{dt}.
 \]
-Moreover, by the multi-variable chain rule,
+The multi-variable chain rule tells us
 \[
 \frac{dL}{dt}=\sum_{i=1}^n\bigg(\frac{\partial L}{\partial q_i}\dot q_i+\frac{\partial L}{\partial \dot q_i}\ddot q_i\bigg)+\frac{\partial L}{\partial t}=\sum_{i=1}^n\big(F_i\dot q_i+p_i\ddot q_i\big)+\frac{\partial L}{\partial t}.
 \]
@@ -132,11 +135,17 @@ Using the Euler-Lagrange equation, that \(F_i=\dot p_i\), we see
 \[
 \frac{dH}{dt}=-\frac{\partial L}{\partial t}.
 \]
-In other words, the Hamiltonian \(H\) is conserved exactly when the Lagrangian \(L\) is time-independent.
+In other words, the Hamiltonian \(H\) is conserved exactly when the Lagrangian \(L\) is time-independent. Again rephrasing, if your Lagrangian is symmetric with respect to time, then the resulting motion will obey conservation of energy.
 </p>
 <p>
-Our goal is to take Lagrangian mechanics--formulated in terms of \(L\), \(q_i\), and \(\dot q_i\)--and reformulate it in terms of \(H\), \(q_i\), and \(p_i\).
-Correspondingly, let us view \(H=H(q,p,t)\) as a <em>function of \(q_i\), \(p_i\), and \(t\)</em>, instead of as a function of \(q_i\), \(\dot q_i\), and \(t\).
+Hamilton's idea was to take Lagrangian mechanics--formulated in terms of \(L,\) \(q_i\), and \(\dot q_i\)--and reformulate it in terms of \(H\), \(q_i\), and \(p_i\). 
+
+
+This makes energy \(H\), position \(q_i,\) and momentum \(p_i\) the key concepts of the theory. Correspondingly, let us view \(H=H(q,p,t)\) as a <em>function of \(q_i\), \(p_i\), and \(t\)</em>, instead of as a function of \(q_i\), \(\dot q_i\), and \(t\).
+</p>
+
+<p>
+At first, it is not clear that changing coordinates from \(L, q, \dot{q}\) to \(H, q, p\) is that helpful -- but remember, in physics and mathematics, often choosing the right coordinate system can save you lots of work for a small initial cost! Let's explore why Hamilton wanted to make this change.
 </p>
 
 <!-- <h2 id="hp-section-3">Euler-Lagrange equations... but with no Lagrangians</h2> -->
@@ -151,20 +160,20 @@ Let us re-write the formula as \(L=\sum_{i=1}^np_i\dot q_i-H\), so
 \[
 S=\int\bigg(\sum_{i=1}^np_i\dot q_idt-Hdt\bigg).
 \]
-As we discussed <a href="diff-forms.html">last week</a>, we could alternatively write \(\dot q_idt=dq_i\), so that
+We can rewrite \(\dot{q}_i \, dt\) as \(dq_i\) (using the language of differential forms described <a href="diff-forms.html">last week</a>), so that
 \[
 S=\int\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
 \]
 </p>
 
 <p>
-  For a moment, let's simplify notation by supposing \(n=1\), and let's take a variation \(q\to q+\delta q\) where \(\delta q(t_0)=\delta q(t_1)=0\). This correspondingly gives a variation \(p\to p+\delta p\). The action integral
+  For a moment, let's simplify notation by supposing \(n=1\), and let's take a variation \(q\to q+\delta q\) where \(\delta q(t_0)=\delta q(t_1)=0\). This induces a variation \(p\to p+\delta p\) of our momentum, since the momentum is determined by the path. The action integral
   \[
   S=\int_{t_0}^{t_1}\big(pdq-Hdt\big)
   \]
   changes to
   \[
-  S=\int_{t_0}^{t_1}\bigg((p+\delta p)d(q+\delta q)-H\big(q(t)+\delta q(t),p(t)+\delta p(t),t\big)dt\bigg),
+  S + \delta S=\int_{t_0}^{t_1}\bigg((p+\delta p)d(q+\delta q)-H\big(q(t)+\delta q(t),p(t)+\delta p(t),t\big)dt\bigg),
   \]
   so the change in \(S\) is
   \[
@@ -174,19 +183,21 @@ S=\int\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
   \[
   \delta S=\int_{t_0}^{t_1}\bigg(\delta p\cdot dq-\frac{\partial H}{\partial p}\delta p\cdot dt\bigg)+\int_{t_0}^{t_1}\bigg(p d(\delta q)-\frac{\partial H}{\partial q}\delta q\cdot dt\bigg).
   \]
-  For the second integral, we may apply an integration by parts,
+  Let's focus on the term \(pd(\delta q)\) for now. We can integrate it by parts to find 
   \[
   \int_{t_0}^{t_1}p d(\delta q)=\bigg[p\delta q\bigg]_{t_0}^{t_1}-\int_{t_0}^{t_1}\delta q\cdot dp=-\int_{t_0}^{t_1}\delta q\cdot dp.
   \]
-  Thus, finally,
+  Plugging this back into our original formula, we get
   \[
   \delta S=\int_{t_0}^{t_1}\delta p\bigg(dq-\frac{\partial H}{\partial p}\cdot dt\bigg)-\int_{t_0}^{t_1}\delta q\bigg(dp+\frac{\partial H}{\partial q}\cdot dt\bigg).
   \]
-  The easiest way to make this quantity always zero is to let
+  Remember that, by Fermat's principle, for the path \(q\) to be a critical point of the action integral, we need \(\delta S\) to always vanish. The only way that this integral vanishes for every choice of \(\delta q\) is when
   \[
-  dq=\frac{\partial H}{\partial p}\cdot dt,\ \ dp=-\frac{\partial H}{\partial q}\cdot dt,
+  dq=\frac{\partial H}{\partial p}\cdot dt\]
+  and
+  \[dp=-\frac{\partial H}{\partial q}\cdot dt.
   \]
-  i.e.,
+  Rewriting this to avoid the language of differential forms, we find
   \[
   \frac{\partial H}{\partial p}=\dot q,\ \ \frac{\partial H}{\partial q}=-\dot p.
   \]
@@ -194,23 +205,27 @@ S=\int\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
    \[
   \boxed{\frac{\partial H}{\partial p_i}=\dot q_i,\ \ \frac{\partial H}{\partial q_i}=-\dot p_i}.
   \]
-  These are called Hamilton's equations. 
+  These are called <em>Hamilton's equations</em>.
 </p>
 
 <p>
-  Of course, since \(\delta p\) and \(\delta q\) are not independent, we have not quite fully justified Hamilton's equations. We will more rigorously prove these identities in the next section, but for now, let's explore the implications.
+  A digression for mathematicians: since \(\delta p\) and \(\delta q\) are not independent quantities, we have not fully justified Hamilton's equations. We will more rigorously prove these identities in the next section, but for now, let's just explore the implications.
 </p>
 
 <p>
-What have we accomplished? We have replaced \(n\) second-order differential equations,
+The first advantage to Hamilton's new \(H, q, p\) coordinates is that the <em>second-order equation</em> 
 \[
-\frac d{dt}\frac{\partial L}{\partial \dot q_i}=\frac{\partial L}{\partial q_i},
+\frac d{dt}\frac{\partial L}{\partial \dot q_i}=\frac{\partial L}{\partial q_i}
 \]
-with \(2n\) first-order differential equations
+is replaced by the two first-order differential equations
 \[
   \frac{\partial H}{\partial p_i}=\dot q_i,\ \ \frac{\partial H}{\partial q_i}=-\dot p_i.
 \]
-Moreover, our differential equations have become more symmetric. If we exchange \(p_i\) and \(q_i\), the differential equations almost don't change!
+Differential equations are really hard -- and the higher the order of your equation, the harder it is. Mathematically, the two systems of equations are encoding the exact same thing, but first-order equations are easier to manipulate algebraically, and hence slightly preferable.
+</p>
+
+<p>
+Moreover, our differential equations have become more symmetric: if we exchange \(p_i\) and \(q_i\), the differential equations almost don't change! This suggests that momentum and position are more related than you'd first expect.
 </p>
 
 <!-- <h3>Variational principle in terms of differential forms</h3>
@@ -219,19 +234,22 @@ If we perturb \(q_i\) by some small amount \(\delta q_i\), the total derivative 
 \delta S=\sum_{i=1}^np_id(q_i+\delta q_i)-\frac{\partial H}{\partial q_i}dt
 \] -->
 
+<!--
+
 <h3>An example</h3>
 <p>
-Suppose we are in standard cartesian coordinates, so \(q_i=\vec x_i\) are the positions and \(\dot q_i=\vec v_i\) are the velocities. Write the potential energy as \(V(\vec x)\), so \(\frac{\partial V}{\partial\vec x_i}=-\vec F_i\) is the force and the Lagrangian is
+In a standard classical mechanics setup, you might let \(q_i = \vec{x}_i\) be Cartesian coordinates representing the positions of some system of particles; then \(\dot{q}_i = \vec{v}_i\) gives the velocity. The Lagrangian for this system is 
 \[
-L=\sum_{i=1}^n\frac12m_i\|\vec v_i\|^2-V(\vec x).
+L=\sum_{i=1}^n\frac12m_i\|\vec v_i\|^2-V(\vec x),
 \]</p>
+where \(V(\vec x)\) is the potential energy of your system. 
 
 <p>
-  Then, as we discussed in our <a href="lagrangian.html">article on Lagrangian mechanics</a>, the Euler-Lagrange equations
+  We saw this setup in our <a href="lagrangian.html">article on Lagrangian mechanics</a>, where we found that the Euler-Lagrange equation 
   \[
   \frac{\partial L}{\partial\vec x_i}=\frac{d}{dt}\frac{\partial L}{\partial \vec v_i}
   \]
-  simply says
+  just says
   \[
   \vec F_i=m_i\frac{d^2\vec x_i}{dt^2},
   \]
@@ -257,58 +275,80 @@ L=\sum_{i=1}^n\frac12m_i\|\vec v_i\|^2-V(\vec x).
   \]
 </p>
 
+<p>
+
+</p>
+-->
+
 <h2>Hamilton's equations, via differential forms</h2>
 <p>
-Next, let's derive Hamilton's equations more rigorously. We will use <a href="diff-forms.html">differential forms</a>, so that the total derivative of the Lagrangian is
+In this section, we satisfy the mathematicians by giving a more complete justification for Hamilton's equations. We will use the language of <a href="diff-forms.html">differential forms</a>.
+</p>
+
+<p>
+We're going to compute the differential \(dH\) in two different ways. The simplest way is to just observe that, from the definition of differentials,
+  \[
+  dH=\sum_{i=1}^n\left(\frac{\partial H}{\partial p_i}dp_i+\frac{\partial H}{\partial q_i}dq_i\right)+\frac{\partial H}{\partial t}dt.
+  \]
+</p>
+
+<p>
+However, the formula
+\[H = \sum_{i=1}^n p_i\dot{q}_i - L\]
+allows us to compute
+\[dH = \sum_{i=1}^n d(p_i\dot{q}_i) - dL.\]
+The product rule says
+\[d(p_i\dot{q}_i) = p_i d\dot{q}_i + \dot{q}_i dp_i,\]
+and 
 \[
 dL=\sum_{i=1}^n\frac{\partial L}{\partial q_i}dq_i+\sum_{i=1}^n\frac{\partial L}{\partial\dot q_i}d\dot q_i+\frac{\partial L}{\partial t}dt.
 \]
-By definition of generalized momenta, together with the Euler-Lagrange equation, we can re-write this as
+We can simplify this a little, using the Euler-Lagrange equations to write
 \[
 dL=\sum_{i=1}^n\dot p_idq_i+\sum_{i=1}^np_id\dot q_i+\frac{\partial L}{\partial t}dt.
 \]
-This expresses \(dL\) in terms of \(dq_i\) and \(d\dot q_i\). But let's now try to express \(dH\) in terms of \(dq_i\) and \(dp_i\).
 </p>
 
 <p>
-  We may compute,
+Putting this together, 
   \[
   dH=\sum_{i=1}^nd(p_i\dot q_i)-dL=\sum_{i=1}^n(p_id\dot q_i+\dot q_idp_i)-\sum_{i=1}^n\dot p_idq_i-\sum_{i=1}^np_id\dot q_i-\frac{\partial L}{\partial t}dt
   \]
-  Two terms cancel, and
+  The \(p_id\dot{q}_i\) terms cancel, and so 
   \[
-  dH=\sum_{i=1}^n\big(\dot q_idp_i-\dot p_idq_i\big)-\frac{\partial L}{\partial t}dt.
+  dH=\sum_{i=1}^n\left(\dot q_idp_i-\dot p_idq_i\right)-\frac{\partial L}{\partial t}dt.
   \]
-  Comparing this with
+  Comparing this with our earlier expression
   \[
-  dH=\sum_{i=1}^n\big(\frac{\partial H}{\partial p_i}dp_i+\frac{\partial H}{\partial q_i}dq_i\big)+\frac{\partial H}{\partial t}dt,
+  dH=\sum_{i=1}^n\left(\frac{\partial H}{\partial p_i}dp_i+\frac{\partial H}{\partial q_i}dq_i\right)+\frac{\partial H}{\partial t}dt,
   \]
-  we conclude Hamilton's equations. We further note that
-  \[
-  \frac{\partial H}{\partial t}=-\frac{\partial L}{\partial t}=\frac{dH}{dt},
-  \]
-  which has the consequence that \(H(q,p,t)\) is a conserved quantity exactly when \(H\) is time-independent.
+we conclude Hamilton's equations: comparing the \(dp_i\) terms we get
+\[\frac{\partial H}{\partial p_i} = \dot{q}_i,\]
+\[\frac{\partial H}{\partial q_i} = -\dot{p}_i.\] 
 </p>
 
 <p>
-  By the way, the equation \(\frac{\partial H}{\partial t}=-\frac{\partial L}{\partial t}\) is funny; the partial derivative of \(H\) is taken with respect to the variables \(q\), \(p\), and \(t\), whereas the partial derivative of \(L\) is taken with respect to the variables \(q\), \(\dot q\), and \(t\).
+Comparing the \(dt\) terms, we also deduce
+  \[
+  \frac{\partial H}{\partial t}=-\frac{\partial L}{\partial t},\]
+  which was the key to conservation of energy!
 </p>
 
 <h2>Conserved quantities... yet again</h2>
 <p>
-From now on, for simplicity, let's assume the Hamiltonian \(H\) is time-independent. Now, let's try to understand conserved quantities from the Hamiltonian perspective. Take a function \(F(q,p)\). Then the multi-variable chain rule tells us
+From now on, for simplicity, let's assume the Hamiltonian \(H\) is time-independent. Let's try to understand conserved quantities from the Hamiltonian perspective. Take a function \(F(q,p)\). Then the multi-variable chain rule tells us
 \[
 \frac{d}{dt}F\big(q(t),p(t)\big)=\sum_{i=1}^n\bigg(\frac{\partial F}{\partial q_i}\dot q_i+\frac{\partial F}{\partial p_i}\dot p_i\bigg).
 \]
-So \(F\) being conserved exactly when this sum is zero. Let us re-write the sum using Hamilton's equations, as 
+So, \(F\) is conserved exactly when this sum is zero. Let us re-write the sum using Hamilton's equations as 
 \[
 \frac{d}{dt}F\big(q(t),p(t)\big)=\sum_{i=1}^n\bigg(\frac{\partial F}{\partial q_i}\frac{\partial H}{\partial p_i}-\frac{\partial F}{\partial p_i}\frac{\partial H}{\partial q_i}\bigg).
 \]
-Let's just generally define, for two functions \(f\) and \(g\), the <em>Poisson bracket</em>
+We generally define, for two functions \(f\) and \(g\), their <em>Poisson bracket</em> to be
 \[
 \boxed{\{f,g\}:=\sum_{i=1}^n\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg)}.
 \]
-Then we just discovered
+Thus
 \[
 \frac{dF}{dt}=\{H,F\},
 \]
@@ -316,17 +356,11 @@ and that \(F\) is conserved exactly when \(\{H,F\}=0\).
 </p>
 
 <p>
-  In fact, the equation \(\frac{dF}{dt}=\{H,F\}\) is just Hamilton's equations, when specialized to \(F=p_i\) or \(F=q_i\).
-</p>
-
-<h3>More about the Poisson bracket</h3>
-<p>
-  The Poisson bracket has many nice properties:
+At first, it might seem that introducing the Poisson bracket doesn't bring any real advantage: we have just rewritten the equation you need to study to determine if \(F\) is a conserved quantity or not. However, the Poisson bracket has some incredible algebraic properties which make it easier to study; we list the properties below, and you can click on a property to see a proof of it.
   <details class="hp-aside"> 
 <summary>anti-symmetry: \(\{g,f\}=-\{f,g\}\).</summary>
         <div class="details-content" style="color:orange">
 <p>
-Because
 \[
 \frac{\partial g}{\partial p_i}\frac{\partial f}{\partial q_i}-\frac{\partial g}{\partial q_i}\frac{\partial f}{\partial p_i}=-\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg).
 \]
@@ -414,42 +448,447 @@ so \(H\) is a conserved quantity. The bilinearity says
 \]
 and
 \[
-\{H,cg\}=c\{H,g\}
+\{H,cg\}=c\{H,g\},
 \]
-so if both \(g\) and \(h\) are conserved quantities (i.e., \(\{H,g\}=\{H,h\}=0\)), so are \(f+g\) and \(cg\).
+so if both \(g\) and \(h\) are conserved quantities (i.e., \(\{H,g\}=\{H,h\}=0\)), then \(f+g\) and \(cg\) are conserved as well.
 </p>
 
 <p>
-  The Leibniz rule says that if \(g\) and \(h\) are conserved, then
+  The Leibniz rule says that if \(g\) and \(h\) are conserved, then \(gh\) is also conserved, because 
 \[
-\{H,gh\}=g\{H,h\}+h\{H,g\}=g\cdot0+h\cdot0=0,
+\{H,gh\}=g\{H,h\}+h\{H,g\}=g\cdot0+h\cdot0=0.
 \]
-so \(gh\) is also conserved. Finally, the Jacobi identity says
+Finally, the Jacobi identity says
 \[
 \{H,\{g,h\}\}=\{g,\{H,h\}\}-\{h,\{H,g\}\}
 \]
-so if \(g\) and \(h\) are conserved, so is \(\{g,h\}\). This last property is the most non-obvious; even if \(g\) is conserved, we don't know whether \(\frac{\partial g}{\partial p_i}\) or \(\frac{\partial g}{\partial q _i}\) are conserved.
-However, combining them in a mysterious way produces a conserved quantity.
+so if \(g\) and \(h\) are conserved, then so is \(\{g,h\}\). The first few properties are pretty simple, but this Jacobi identity is really surprising: the Poisson bracket gives us a very interesting way to take two conserved quantities and build a new one! 
 </p>
 
+<p>
+There are some situations where the Poisson bracket can build very nice conserved quantities. As an example, let's consider the 2D isotropic harmonic oscillator; this is the physical system of a particle moving in 2-dimensional space, experiencing some force always pulling it towards the origin (think of a 2-dimensional version of the solar system: the origin is like the sun, and the particle is a planet). The trajectories are ellipses, as illustrated in the below diagram (we warn that this fact is often counterintuitive to physics students, so you might want to ponder the animation for a moment, and think about how a velocity always pointing towards the origin can modify your velocity in such a way that you keep orbiting in an ellipse).
+</p>
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Hidden Phenomena · Oscillator</title>
+  <style>
+    html { color-scheme: dark; background: #1d2021; }
+    body { margin: 0; padding: 24px 16px; color: #ebdbb2; }
+    @media (max-width: 450px) { body { padding: 8px; } }
+  </style>
+</head>
+<body>
+<!-- Paste this entire block into an article. No external files or libraries. -->
+<div class="hp-iso-oscillator-widget"></div>
+<script>
+(() => {
+  "use strict";
+  const mount = document.currentScript.previousElementSibling;
+  const uid = "hp-iso-" + Math.random().toString(36).slice(2, 10);
+  mount.setAttribute("data-hp-iso", uid);
 
-<!-- <p>
-Therefore, we can try to re-formulate everything in terms of the Poisson bracket. For example, since
-\[
-\{p_i,f\}=\frac{\partial f}{\partial q_i}
-\]
-and
-\[
-\{f,q_i\}=\frac{\partial f}{\partial p_i},
-\]
-Hamilton's equations simply become
-\[
-\{H,p_i\}=\dot p_i,\ \ \{H,q_i\}=\dot q_i.
-\]
-</p> -->
+  mount.innerHTML = `
+    <style>
+      [data-hp-iso="${uid}"] {
+        /* Gruvbox dark: change these variables to adjust the palette. */
+        --hp-bg: #1d2021;
+        --hp-panel: #282828;
+        --hp-border: #504945;
+        --hp-text: #ebdbb2;
+        --hp-muted: #a89984;
+        --hp-orbit: #d5c4a1;
+        --hp-particle: #fbf1c7;
+        --hp-velocity: #b8bb26;
+        --hp-force: #fb4934;
+        --hp-accent: #83a598;
+        display: block;
+        width: 100%;
+        max-width: 760px;
+        margin: 1.5rem auto;
+        color: var(--hp-text);
+        font-family: Georgia, Cambria, "Times New Roman", serif;
+      }
+      [data-hp-iso="${uid}"] *,
+      [data-hp-iso="${uid}"] *::before,
+      [data-hp-iso="${uid}"] *::after { box-sizing: border-box; }
+      [data-hp-iso="${uid}"] .hp-card {
+        background: var(--hp-panel);
+        border: 1px solid var(--hp-border);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      [data-hp-iso="${uid}"] .hp-head { padding: 18px 20px 10px; }
+      [data-hp-iso="${uid}"] .hp-title {
+        color: var(--hp-text);
+        font: 400 1.18rem/1.35 Georgia, Cambria, "Times New Roman", serif;
+        margin: 0 0 6px;
+      }
+      [data-hp-iso="${uid}"] .hp-subtitle,
+      [data-hp-iso="${uid}"] .hp-note {
+        color: var(--hp-muted);
+        font: 400 .9rem/1.55 Georgia, Cambria, "Times New Roman", serif;
+        margin: 0;
+      }
+      [data-hp-iso="${uid}"] .hp-green { color: var(--hp-velocity); }
+      [data-hp-iso="${uid}"] .hp-red { color: var(--hp-force); }
+      [data-hp-iso="${uid}"] .hp-canvas-wrap { padding: 4px 12px 0; }
+      [data-hp-iso="${uid}"] canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        background: var(--hp-bg);
+        border-radius: 10px;
+      }
+      [data-hp-iso="${uid}"] .hp-controls {
+        display: grid;
+        grid-template-columns: 80px minmax(0, 1fr);
+        align-items: center;
+        gap: 20px;
+        padding: 16px 20px 10px;
+        font: 400 13px/1.4 system-ui, -apple-system, sans-serif;
+      }
+      [data-hp-iso="${uid}"] .hp-toggle {
+        appearance: none;
+        width: 80px;
+        min-height: 42px;
+        padding: 8px 12px;
+        margin: 0;
+        border: 1px solid var(--hp-border);
+        border-radius: 8px;
+        background: var(--hp-bg);
+        color: var(--hp-text);
+        font: inherit;
+        cursor: pointer;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      [data-hp-iso="${uid}"] .hp-toggle:hover { border-color: var(--hp-velocity); }
+      [data-hp-iso="${uid}"] .hp-toggle:focus-visible,
+      [data-hp-iso="${uid}"] input:focus-visible {
+        outline: 2px solid var(--hp-accent);
+        outline-offset: 4px;
+      }
+      [data-hp-iso="${uid}"] .hp-speed { display: block; min-width: 0; }
+      [data-hp-iso="${uid}"] .hp-speed-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        color: var(--hp-muted);
+      }
+      [data-hp-iso="${uid}"] output {
+        color: var(--hp-text);
+        font-variant-numeric: tabular-nums;
+      }
+      [data-hp-iso="${uid}"] input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        display: block;
+        width: 100%;
+        height: 30px;
+        margin: 3px 0 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+      [data-hp-iso="${uid}"] input[type="range"]::-webkit-slider-runnable-track {
+        height: 5px;
+        border-radius: 8px;
+        background: var(--hp-border);
+      }
+      [data-hp-iso="${uid}"] input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 17px;
+        height: 17px;
+        margin-top: -6px;
+        border: 2px solid var(--hp-bg);
+        border-radius: 50%;
+        background: var(--hp-velocity);
+      }
+      [data-hp-iso="${uid}"] input[type="range"]::-moz-range-track {
+        height: 5px;
+        border-radius: 8px;
+        background: var(--hp-border);
+      }
+      [data-hp-iso="${uid}"] input[type="range"]::-moz-range-thumb {
+        width: 13px;
+        height: 13px;
+        border: 2px solid var(--hp-bg);
+        border-radius: 50%;
+        background: var(--hp-velocity);
+      }
+      [data-hp-iso="${uid}"] .hp-note { padding: 0 20px 16px; font-size: .81rem; }
+    </style>
 
+    <div class="hp-card">
+      <div class="hp-head">
+     </div>
+      <div class="hp-canvas-wrap">
+        <canvas width="720" height="540" role="img"
+          aria-label="A particle moves counterclockwise around a fixed ellipse. Its green velocity arrow is tangent to the path; its red force arrow points toward the center.">
+          A fixed elliptical orbit, with velocity tangent to the orbit and force directed toward its center.
+        </canvas>
+      </div>
+      <div class="hp-controls">
+        <button class="hp-toggle" type="button">Pause</button>
+        <label class="hp-speed" for="${uid}-speed">
+          <span class="hp-speed-label">
+            <span>Playback speed</span>
+            <output for="${uid}-speed">1.00×</output>
+          </span>
+          <input id="${uid}-speed" type="range" min="0.25" max="3"
+            step="0.05" value="1" aria-valuetext="1 times normal speed">
+        </label>
+      </div>
+    </div>
+  `;
 
+  const canvas = mount.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+  const slider = mount.querySelector("input");
+  const output = mount.querySelector("output");
+  const toggle = mount.querySelector("button");
+  if (!ctx) {
+    mount.querySelector(".hp-note").textContent = "This browser does not support the canvas animation.";
+    slider.disabled = toggle.disabled = true;
+    return;
+  }
+
+  // Fixed physical system (unit mass). Playback speed is deliberately separate.
+  const A = 1.28, B = 0.78, OMEGA = 0.95, TAU = 2 * Math.PI;
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let playing = !motionPreference.matches;
+  let playbackSpeed = 1, phase = 0, lastTime = null, frameId = null;
+  let inView = true, width = 0, height = 0, scale = 1, colors = {};
+  let resizeObserver = null, intersectionObserver = null;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    if (width <= 0 || height <= 0) return;
+    const dpr = Math.min(3, window.devicePixelRatio || 1);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(canvas.width / width, 0, 0, canvas.height / height, 0, 0);
+    // Equal x/y scales preserve the ellipse and leave room for arrows and labels.
+    scale = Math.min(width / (2.9 * A), height / (3.7 * B));
+    const css = getComputedStyle(mount);
+    for (const name of ["bg", "border", "muted", "orbit", "particle", "velocity", "force"]) {
+      colors[name] = css.getPropertyValue("--hp-" + name).trim();
+    }
+    draw();
+  }
+
+  function point(angle) {
+    return { x: width / 2 + scale * A * Math.cos(angle),
+             y: height / 2 - scale * B * Math.sin(angle) };
+  }
+
+  function line(x1, y1, x2, y2, color, lineWidth = 1) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+
+  function text(label, x, y, color, align = "center", size = 15) {
+    ctx.save();
+    ctx.font = `${size}px Georgia, Cambria, serif`;
+    ctx.textAlign = align;
+    ctx.textBaseline = "middle";
+    // A background-colored outline keeps labels readable over the orbit.
+    ctx.strokeStyle = colors.bg;
+    ctx.lineWidth = 4;
+    ctx.lineJoin = "round";
+    ctx.strokeText(label, x, y);
+    ctx.fillStyle = color;
+    ctx.fillText(label, x, y);
+    ctx.restore();
+  }
+
+  function vector(base, vx, vy, displayScale, color, label) {
+    // Constant display scales: lengths stay proportional to physical magnitudes.
+    const dx = scale * displayScale * vx;
+    const dy = -scale * displayScale * vy;
+    const length = Math.hypot(dx, dy);
+    if (length < 0.001) return;
+    const ux = dx / length, uy = dy / length;
+    const tip = { x: base.x + dx, y: base.y + dy };
+    const head = Math.min(11, length * 0.28);
+    ctx.save();
+    ctx.lineCap = "round";
+    line(base.x, base.y, tip.x - head * 0.65 * ux, tip.y - head * 0.65 * uy, color, 2.6);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(tip.x, tip.y);
+    ctx.lineTo(tip.x - head * ux - head * 0.44 * uy, tip.y - head * uy + head * 0.44 * ux);
+    ctx.lineTo(tip.x - head * ux + head * 0.44 * uy, tip.y - head * uy - head * 0.44 * ux);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    const nx = -uy, ny = ux;
+    const align = nx > 0.25 ? "left" : nx < -0.25 ? "right" : "center";
+    const size = width < 450 ? 13 : 15;
+    let tx = base.x + dx * 0.60 + nx * 15;
+    let ty = base.y + dy * 0.60 + ny * 15;
+    ctx.font = `${size}px Georgia, Cambria, serif`;
+    const tw = ctx.measureText(label).width;
+    const left = align === "right" ? tw : align === "center" ? tw / 2 : 0;
+    const right = align === "left" ? tw : align === "center" ? tw / 2 : 0;
+    tx = Math.max(10 + left, Math.min(width - 10 - right, tx));
+    ty = Math.max(14, Math.min(height - 14, ty));
+    text(label, tx, ty, color, align, size);
+  }
+
+  function draw() {
+    if (width <= 0 || height <= 0) return;
+    ctx.clearRect(0, 0, width, height);
+    const cx = width / 2, cy = height / 2;
+    line(20, cy, width - 20, cy, colors.border);
+    line(cx, 20, cx, height - 20, colors.border);
+    text("x", width - 18, cy + 17, colors.muted);
+    text("y", cx + 15, 19, colors.muted);
+
+    ctx.strokeStyle = colors.orbit;
+    ctx.lineWidth = 1.4;
+    ctx.globalAlpha = 0.55;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, scale * A, scale * B, 0, 0, TAU);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Analytic trail: independent of refresh rate and playback speed.
+    for (let i = 0; i < 36; i++) {
+      const p0 = point(phase - 0.9 + 0.9 * i / 36);
+      const p1 = point(phase - 0.9 + 0.9 * (i + 1) / 36);
+      ctx.globalAlpha = 0.1 + 0.8 * i / 36;
+      line(p0.x, p0.y, p1.x, p1.y, colors.orbit, 2.5);
+    }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = colors.orbit;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3, 0, TAU);
+    ctx.fill();
+    text("O", cx - 13, cy + 18, colors.muted);
+
+    const c = Math.cos(phase), s = Math.sin(phase), p = point(phase);
+    vector(p, -OMEGA * A * s, OMEGA * B * c, 0.50, colors.velocity, "velocity");
+    vector(p, -(OMEGA ** 2) * A * c, -(OMEGA ** 2) * B * s, 0.55, colors.force, "force");
+    ctx.fillStyle = colors.particle;
+    ctx.strokeStyle = colors.bg;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, width < 450 ? 5.5 : 7, 0, TAU);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  function tick(now) {
+    frameId = null;
+    if (!mount.isConnected) { cleanup(); return; }
+    if (!playing || !inView || document.hidden) { lastTime = null; return; }
+    if (lastTime !== null) {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      phase = (phase + OMEGA * dt * playbackSpeed) % TAU;
+    }
+    lastTime = now;
+    draw();
+    frameId = requestAnimationFrame(tick);
+  }
+
+  function syncPlayback() {
+    if (frameId !== null) cancelAnimationFrame(frameId);
+    frameId = null;
+    lastTime = null;
+    toggle.textContent = playing ? "Pause" : "Play";
+    toggle.setAttribute("aria-label", playing ? "Pause animation" : "Play animation");
+    if (playing && inView && !document.hidden) frameId = requestAnimationFrame(tick);
+  }
+
+  slider.addEventListener("input", () => {
+    playbackSpeed = Number(slider.value);
+    output.textContent = playbackSpeed.toFixed(2) + "×";
+    slider.setAttribute("aria-valuetext", playbackSpeed + " times normal speed");
+  });
+  toggle.addEventListener("click", () => { playing = !playing; syncPlayback(); });
+
+  function motionChanged(event) {
+    if (event.matches) { playing = false; syncPlayback(); }
+  }
+  function cleanup() {
+    if (frameId !== null) cancelAnimationFrame(frameId);
+    resizeObserver?.disconnect();
+    intersectionObserver?.disconnect();
+    window.removeEventListener("resize", resize);
+    document.removeEventListener("visibilitychange", syncPlayback);
+    motionPreference.removeEventListener("change", motionChanged);
+  }
+
+  window.addEventListener("resize", resize);
+  document.addEventListener("visibilitychange", syncPlayback);
+  motionPreference.addEventListener("change", motionChanged);
+  if ("ResizeObserver" in window) {
+    resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
+  }
+  if ("IntersectionObserver" in window) {
+    intersectionObserver = new IntersectionObserver(entries => {
+      inView = entries[0].isIntersecting;
+      syncPlayback();
+    });
+    intersectionObserver.observe(mount);
+  }
+  resize();
+  syncPlayback();
+})();
+</script>
+
+<p>
+As our position coordinates, we can use \(x\) and \(y,\) the Cartesian coordinates of the particle. We will denote the momentum by \(p_x\) and \(p_y.\) The Hamiltonian is then 
+\[H = \frac{p_x^2+p_y^2}{2m} + \frac{m\omega^2}{2}(x^2+y^2),\]
+where \(m\) is the mass of the particle, and \(\omega\) is its angular frequency of rotation.
+</p>
+
+<p>
+Using the Poisson bracket, we can find a very non-obvious conserved quantity. Let's start with some `obvious' conserved quantities of this motion. The first is \(H\) itself. However, we can also break \(H\) into the sum
+\[H = E_x + E_y,\]
+where
+\[E_x = \frac{p_x^2}{2m} + \frac{m\omega^2x^2}{2},\]
+\[E_y = \frac{p_y^2}{2m} + \frac{m\omega^2y^2}{2},\]
+and each of \(E_x, E_y\) will be conserved quantities (you can think that our Hamiltonian could be representing one particle in 2-dimensions, or two particles in 1-dimension; in this two particle picture, each particle independently has conservation of energy, explaining why our total energy breaks up into a sum of two conserved quantities). 
+</p>
+
+<p>
+The rotational symmetry of \(H\) leads to conservation of angular momentum
+\[A = xp_y - yp_x.\]
+The Poisson bracket \(\{E_x, A\}\) is then a new conserved quantity. What quantity is it?
+</p>
+
+<p>
+Well,
+\[\{E_x, A\} = \frac{\partial E_x}{\partial x}\frac{\partial A}{\partial p_x} - \frac{\partial E_x}{\partial p_x}\frac{\partial A}{\partial x}.\]
+Evaluating those derivatives, this simplifies to
+\[\{E_x, A\} = -\frac{1}{m}(p_xp_y+m^2\omega^2xy).\] 
+</p>
+
+<p>
+This new conserved quantity is not at all an obvious symmetry of our system! It is one component of the <em>Fradkin tensor</em>; in our article on Noether's theorem, we discussed how conservation laws come from symmetries. In this case, the Fradkin tensor comes from a very non-obvious symmetry of this Hamiltonian which was first discovered by the physicist David Fradkin. Using the Poisson bracket, one can very easily discovery this remarkable hidden phenomena!
+</p>
+
+</body>
+</html>
 
 
 

@@ -18,13 +18,6 @@
 <a class="hp-skip" href="#hp-main">Skip to content</a>
 <header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 3 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Phase spaces</a></li><li><a href="#hp-section-2">Observables</a></li><li><a href="#hp-section-3">Interlude: vector fields as flows</a></li><li><a href="#hp-section-4">The vector field of an observable</a></li></ol></details></nav><div class="hp-prose">
 
-
-
-
-<p>
-Newton gave the first formulation of mechanics, in the 17th century. Newton had several insights: (TODO list) an object's motion is determined by its current position and <em>velocity</em>; an object's position only changes according to its velocity; an object's velocity can only change when a <em>force</em> is applied to it; in this case, the change in velocity is determined by Newton's famous \(F = ma.\) When doing Newtonian mechanics, <em>force</em> is the focus: most of the effort put in to solve a Newtonian mechanics problem is done to think about what forces are acting on which objects, and how strong these forces are.
-</p>
-
 <p>
   In 1788, Lagrange introduced a <a href="lagrangian.html">more abstract framework for mechanics</a>. 
   His approach was based on the <em>Lagrangian</em>, and a physical system evolves to minimize the action integral
@@ -34,21 +27,6 @@ Newton gave the first formulation of mechanics, in the 17th century. Newton had 
   A big advantage of Lagrange's approach was that it enabled us to prove <a href="noether.html">Noether's theorem</a>, giving us a tool to find various conservation laws (like conservation of energy or conservation of momentum).
 </p>
 
-<p>
-  In 1833, Hamilton introduced yet another approach to classical mechanics, which is even more abstract than Lagrange's approach. For him, <em>conservation laws</em> are the most basic concept.
-</p>
-
-<p>
-That is, in Hamilton's approach, we <em>start</em> by writing down some physical quantity which we know should be conserved, and then find some way for physics to evolve which forces that quantity to be conserved. 
-</p>
-
-<p>
-Hamilton's approach is a bit more abstract than Newton's and Lagrange's, but it has two key advantages: it allows the tools of <em>differential geometry</em> to be used to study physics, and it generalizes well to <em>quantum</em> mechanics, where direct analogues of Newtonian or Lagrangian mechanics make less sense.
-</p>
-
-<p>
-Without further ado, let's explore Hamilton's ideas!
-</p>
 
 <h2 id="hp-section-1">Phase spaces</h2>
 
