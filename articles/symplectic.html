@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mechanics III: the Hamiltonian</title>
+  <title>Symplectic geometry -- and how it relates to the Hamiltonian</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -16,53 +16,3538 @@
 </head>
 <body class="article-page-body hp-page">
 <a class="hp-skip" href="#hp-main">Skip to content</a>
-<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Mechanics III: the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 3 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Phase spaces</a></li><li><a href="#hp-section-2">Observables</a></li><li><a href="#hp-section-3">Interlude: vector fields as flows</a></li><li><a href="#hp-section-4">The vector field of an observable</a></li></ol></details></nav><div class="hp-prose">
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Symplectic geometry -- and how it relates to the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 3 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Phase spaces</a></li><li><a href="#hp-section-2">Observables</a></li><li><a href="#hp-section-3">Interlude: vector fields as flows</a></li><li><a href="#hp-section-4">The vector field of an observable</a></li></ol></details></nav><div class="hp-prose">
 
 <p>
-  In 1788, Lagrange introduced a <a href="lagrangian.html">more abstract framework for mechanics</a>. 
-  His approach was based on the <em>Lagrangian</em>, and a physical system evolves to minimize the action integral
-  \[
-  S=\int_{t_0}^{t_1}L\big(x(t),v(t),t\big)dt.
-  \]
-  A big advantage of Lagrange's approach was that it enabled us to prove <a href="noether.html">Noether's theorem</a>, giving us a tool to find various conservation laws (like conservation of energy or conservation of momentum).
-</p>
-
-
-<h2 id="hp-section-1">Phase spaces</h2>
-
-<p>
-In Hamiltonian mechanics, one tends to think about the shape of all possible configurations of your mechanical system. Let's explore some examples of this. 
+Last week, we introduced Hamiltonian mechanics -- another perspective on classical mechanics. This week, we want to recast Hamiltonian mechanics in a more geometric language. This geometric language ends up being very interesting and useful even beyond its original applications in physics, so even if you didn't read last week's article, you still might enjoy this one!
 </p>
 
 <p>
-Imagine you have a single particle in 1 dimension. As Newton observed, the two most important properties of this particle are its position and velocity; 
+TODO: I think the introduction needs to pop more
+</p>
 
-TODO: draw comparison of the motion vs the phase space (so an animation of a particle moving on a line vs that same trajectory plotted in phase space) 
+<h2>Phase spaces</h2>
+
+<p>
+In mathematics, one often deals with very strange shapes. This is because it is often helpful to think about the <em>phase space</em> of some physical system; this is a geometric object representing all possible states of the system. 
 </p>
 
 <p>
-For a slightly more interesting phase space, imagine a pendulum. todo
+As a simple example, imagine you have a single particle in 1 dimension. As Newton observed, the two most important properties of this particle are its position and momentum (the forces acting on your particle are also pretty important, but we'll get to them later). 
 </p>
-
-<h2 id="hp-section-2">Observables</h2>
 
 <p>
-Let \(M\) be the phase space of some physical system. An <em>observable</em> is a function
-\[f : M \to \mathbb{R}.\]
-We think of observables as quantities we can measure. For example, if \(M\) is the phase space of TODO examples
+The <em>phase space</em> of this physical system (of a particle in 1-dimension) is a <em>two dimensional space</em>, where the coordinates on your two-dimensional space capture the position and momentum. This concept can be a bit tricky to grasp at first, so a reader new to phase spaces might want to ponder the widget below. In the left panel, you'll see our particle moving around on a 1-dimensional line; in the right panel, you'll see the corresponding motion in phase space. Remember: the particle is only moving in 1-dimension -- the right picture is somewhat `artificial,' in that it is only something we draw to help us understand the 1-dimensional motion of the particle depicted on the left. In the widget below, the particle has mass 1 kilogram, so it's momentum is just 1 kilogram times its velocity.
 </p>
 
-<h2 id="hp-section-3">Interlude: vector fields as flows</h2>
+<script>
+(() => {
+  const host = document.currentScript;
+
+  const root = document.createElement("div");
+  root.className = "hp-phase-space-widget";
+
+  root.innerHTML = `
+    <style>
+      .hp-phase-space-widget {
+        --bg: #282828;
+        --bg1: #3c3836;
+        --bg2: #504945;
+        --fg: #ebdbb2;
+        --muted: #a89984;
+        --yellow: #fabd2f;
+        --orange: #fe8019;
+        --aqua: #8ec07c;
+
+        width: 100%;
+        max-width: 850px;
+        margin: 1.5rem auto;
+        color: var(--fg);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+                     Consolas, "Liberation Mono", monospace;
+      }
+
+      .hp-phase-space-widget * {
+        box-sizing: border-box;
+      }
+
+      .hp-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .hp-panel {
+        background: var(--bg);
+        border: 1px solid var(--bg2);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .hp-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px 8px;
+        border-bottom: 1px solid var(--bg1);
+      }
+
+      .hp-label {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .hp-sub {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .hp-stage {
+        padding: 8px 10px 12px;
+      }
+
+      .hp-phase-space-widget svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .hp-controls {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+
+        background: var(--bg);
+        border: 1px solid var(--bg2);
+        border-radius: 10px;
+        padding: 9px 11px;
+      }
+
+      .hp-controls button {
+        min-height: 38px;
+        padding: 0 13px;
+
+        border: 1px solid var(--bg2);
+        border-radius: 7px;
+        background: var(--bg1);
+        color: var(--fg);
+
+        font: inherit;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .hp-controls button:hover {
+        border-color: var(--muted);
+      }
+
+      .hp-speed {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        flex: 1 1 210px;
+
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .hp-speed input {
+        width: 100%;
+        accent-color: var(--yellow);
+      }
+
+      .hp-readout {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 650px) {
+        .hp-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hp-readout {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+    </style>
+
+    <div class="hp-grid">
+
+      <!-- PHYSICAL SPACE -->
+      <section class="hp-panel">
+        <div class="hp-head">
+          <span class="hp-label">physical space</span>
+          <span class="hp-sub">position x</span>
+        </div>
+
+        <div class="hp-stage">
+          <svg viewBox="0 0 360 220">
+
+            <text
+              x="180" y="34"
+              text-anchor="middle"
+              fill="#a89984"
+              font-size="11">
+            </text>
+
+            <!-- line -->
+            <line
+              x1="42" y1="112"
+              x2="318" y2="112"
+              stroke="#665c54"
+              stroke-width="2"
+            />
+
+            <!-- midpoint -->
+            <line
+              x1="180" y1="100"
+              x2="180" y2="124"
+              stroke="#928374"
+              stroke-width="1.5"
+            />
+
+            <text x="180" y="142"
+                  text-anchor="middle"
+                  fill="#928374"
+                  font-size="10">0</text>
+
+            <text x="42" y="142"
+                  text-anchor="middle"
+                  fill="#928374"
+                  font-size="10">−A</text>
+
+            <text x="318" y="142"
+                  text-anchor="middle"
+                  fill="#928374"
+                  font-size="10">+A</text>
+
+            <!-- position line -->
+            <line
+              class="hp-position-line"
+              x1="180" y1="112"
+              x2="318" y2="112"
+              stroke="#fabd2f"
+              stroke-width="3"
+              stroke-linecap="round"
+              opacity="0.35"
+            />
+
+            <!-- particle -->
+            <circle
+              class="hp-particle-halo"
+              cx="318" cy="112"
+              r="11"
+              fill="#fabd2f"
+              opacity="0.13"
+            />
+
+            <circle
+              class="hp-particle"
+              cx="318" cy="112"
+              r="6.5"
+              fill="#fabd2f"
+            />
+
+            <!-- velocity arrow -->
+            <line
+              class="hp-velocity-arrow"
+              x1="318" y1="82"
+              x2="318" y2="82"
+              stroke="#8ec07c"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+
+            <polygon
+              class="hp-velocity-head"
+              points="318,82 318,82 318,82"
+              fill="#8ec07c"
+            />
+
+            <text
+              class="hp-x-text"
+              x="180" y="184"
+              text-anchor="middle"
+              fill="#ebdbb2"
+              font-size="12">
+              x = 1.00
+            </text>
+
+            <text
+              class="hp-v-text"
+              x="180" y="202"
+              text-anchor="middle"
+              fill="#8ec07c"
+              font-size="11">
+              v = 0.00
+            </text>
+
+          </svg>
+        </div>
+      </section>
+
+
+      <!-- PHASE SPACE -->
+      <section class="hp-panel">
+        <div class="hp-head">
+          <span class="hp-label">phase space</span>
+          <span class="hp-sub">state = (x, p)</span>
+        </div>
+
+        <div class="hp-stage">
+          <svg viewBox="0 0 360 220">
+
+            <!-- axes -->
+            <line
+              x1="48" y1="110"
+              x2="320" y2="110"
+              stroke="#665c54"
+              stroke-width="1.4"
+            />
+
+            <line
+              x1="184" y1="26"
+              x2="184" y2="196"
+              stroke="#665c54"
+              stroke-width="1.4"
+            />
+
+            <text
+              x="323" y="106"
+              fill="#a89984"
+              font-size="11">
+              x
+            </text>
+
+            <text
+              x="191" y="30"
+              fill="#a89984"
+              font-size="11">
+              p
+            </text>
+
+            <!-- full orbit -->
+            <ellipse
+              cx="184"
+              cy="110"
+              rx="116"
+              ry="70"
+              fill="none"
+              stroke="#665c54"
+              stroke-width="1.5"
+            />
+
+            <!-- CURRENT STATE ONLY -->
+            <circle
+              class="hp-phase-halo"
+              cx="300"
+              cy="110"
+              r="10"
+              fill="#fe8019"
+              opacity="0.14"
+            />
+
+            <circle
+              class="hp-phase-dot"
+              cx="300"
+              cy="110"
+              r="6"
+              fill="#fe8019"
+            />
+
+            <text
+              x="184"
+              y="214"
+              text-anchor="middle"
+              fill="#a89984"
+              font-size="10">
+            </text>
+
+          </svg>
+        </div>
+      </section>
+
+    </div>
+
+
+    <div class="hp-controls">
+
+      <button class="hp-toggle" type="button">
+        Pause
+      </button>
+
+      <button class="hp-reset" type="button">
+        Reset
+      </button>
+
+      <label class="hp-speed">
+        <span>speed</span>
+
+        <input
+          class="hp-speed-input"
+          type="range"
+          min="0.2"
+          max="2.5"
+          value="1"
+          step="0.1"
+        >
+
+        <span class="hp-speed-label">
+          1.0×
+        </span>
+      </label>
+
+      <div class="hp-readout">
+        (x, v) = (1.00, 0.00)
+      </div>
+
+    </div>
+  `;
+
+  host.parentNode.insertBefore(root, host);
+
+  const particle =
+    root.querySelector(".hp-particle");
+
+  const particleHalo =
+    root.querySelector(".hp-particle-halo");
+
+  const positionLine =
+    root.querySelector(".hp-position-line");
+
+  const velocityArrow =
+    root.querySelector(".hp-velocity-arrow");
+
+  const velocityHead =
+    root.querySelector(".hp-velocity-head");
+
+  const xText =
+    root.querySelector(".hp-x-text");
+
+  const vText =
+    root.querySelector(".hp-v-text");
+
+  const phaseDot =
+    root.querySelector(".hp-phase-dot");
+
+  const phaseHalo =
+    root.querySelector(".hp-phase-halo");
+
+  const toggle =
+    root.querySelector(".hp-toggle");
+
+  const reset =
+    root.querySelector(".hp-reset");
+
+  const speedInput =
+    root.querySelector(".hp-speed-input");
+
+  const speedLabel =
+    root.querySelector(".hp-speed-label");
+
+  const readout =
+    root.querySelector(".hp-readout");
+
+
+  let theta = 0;
+  let speed = 1;
+  let running = true;
+
+  let lastTime = performance.now();
+
+
+  function formatNumber(n) {
+    if (Math.abs(n) < 0.005) n = 0;
+    return n.toFixed(2);
+  }
+
+
+  function render() {
+
+    // Simple harmonic oscillator:
+    //
+    //     x = cos(t)
+    //     v = -sin(t)
+    //
+    // so the phase-space trajectory is a closed ellipse.
+
+    const x = Math.cos(theta);
+    const v = -Math.sin(theta);
+
+
+    /* --------------------------------
+       PHYSICAL SPACE
+       -------------------------------- */
+
+    const particleX =
+      180 + 138 * x;
+
+    particle.setAttribute(
+      "cx",
+      particleX
+    );
+
+    particleHalo.setAttribute(
+      "cx",
+      particleX
+    );
+
+    positionLine.setAttribute(
+      "x2",
+      particleX
+    );
+
+
+    /* velocity arrow */
+
+    const arrowY = 82;
+    const arrowScale = 31;
+
+    const arrowStart =
+      particleX;
+
+    const arrowEnd =
+      particleX + arrowScale * v;
+
+    velocityArrow.setAttribute(
+      "x1",
+      arrowStart
+    );
+
+    velocityArrow.setAttribute(
+      "x2",
+      arrowEnd
+    );
+
+    velocityArrow.setAttribute(
+      "y1",
+      arrowY
+    );
+
+    velocityArrow.setAttribute(
+      "y2",
+      arrowY
+    );
+
+
+    const direction =
+      v >= 0 ? 1 : -1;
+
+    velocityHead.setAttribute(
+      "points",
+      `
+        ${arrowEnd},${arrowY}
+        ${arrowEnd - direction * 8},${arrowY - 4.5}
+        ${arrowEnd - direction * 8},${arrowY + 4.5}
+      `
+    );
+
+
+    xText.textContent =
+      `x = ${formatNumber(x)}`;
+
+    vText.textContent =
+      `v = ${formatNumber(v)}`;
+
+
+    /* --------------------------------
+       PHASE SPACE
+       -------------------------------- */
+
+    const phaseX =
+      184 + 116 * x;
+
+    const phaseY =
+      110 - 70 * v;
+
+    phaseDot.setAttribute(
+      "cx",
+      phaseX
+    );
+
+    phaseDot.setAttribute(
+      "cy",
+      phaseY
+    );
+
+    phaseHalo.setAttribute(
+      "cx",
+      phaseX
+    );
+
+    phaseHalo.setAttribute(
+      "cy",
+      phaseY
+    );
+
+
+    readout.textContent =
+      `(x, v) = (${formatNumber(x)}, ${formatNumber(v)})`;
+  }
+
+
+  function animate(now) {
+
+    const dt =
+      Math.min(
+        (now - lastTime) / 1000,
+        0.05
+      );
+
+    lastTime = now;
+
+    if (running) {
+      theta +=
+        dt * 1.45 * speed;
+
+      theta %=
+        2 * Math.PI;
+    }
+
+    render();
+
+    requestAnimationFrame(
+      animate
+    );
+  }
+
+
+  toggle.addEventListener(
+    "click",
+    () => {
+
+      running =
+        !running;
+
+      toggle.textContent =
+        running
+          ? "Pause"
+          : "Play";
+
+      lastTime =
+        performance.now();
+    }
+  );
+
+
+  reset.addEventListener(
+    "click",
+    () => {
+
+      theta = 0;
+
+      render();
+    }
+  );
+
+
+  speedInput.addEventListener(
+    "input",
+    () => {
+
+      speed =
+        Number(speedInput.value);
+
+      speedLabel.textContent =
+        `${speed.toFixed(1)}×`;
+    }
+  );
+
+
+  render();
+
+  requestAnimationFrame(
+    animate
+  );
+
+})();
+</script>
 
 <p>
-vector fields as ODEs; flow lines ,etc.
+If you watch this animation for long enough, you might notice how our particle always stays on an ellipse. This is because of <em>conservation of energy</em>: the kinetic energy plus the potential energy is always constant.
 </p>
 
-<h2 id="hp-section-4">The vector field of an observable</h2>
+<p>
+The motion shown above is the motion of a <em>harmonic oscillator</em> -- in other words, the motion of a particle attached to an oscillating spring. The kinetic energy is, as always, 
+\[\frac{1}{2}mv^2,\]
+where \(m\) is the mass and \(v\) is velocity. The potential energy is \(\frac{1}{2}kx^2,\) where \(x\) is the position and \(k\) is the <em>spring constant</em>, which depends on how stiff your spring is. 
+</p>
 
-<h2></h2>
+<p>
+Using that momentum \(p\) is given by \(mv,\) we can rewrite kinetic energy as \(\frac{1}{2m}p^2.\) Therefore conservation of energy tells us that
+\[\frac{1}{2m} \cdot p^2 + \frac{k}{2} \cdot x^2 = E,\]
+for some constant \(E\) (the total energy of the system). But remember: \(m\) and \(k\) are just some constants, and if you graph
+\[Ap^2 + Bx^2 = C\]
+in the \((p, x)\) coordinate plane, you'll always get an ellipse! 
+</p>
+
+<p>
+Perhaps this example convinces you of the utility of phase space: the conservation of energy can be re-discovered in phase space as the observation that our particle always remains confined to an ellipse!
+</p>
+
+<h3>Incorporating force</h3>
+
+<p>
+Newton told us that, to understand the motion of a particle, you need to know three things: its current position, its current velocity, and what forces are acting on it.
+</p>
+
+<p>
+As we explained last week, Hamilton realized that there's a slightly different way to understand motion: record the current position and momentum, and then enforce a <em>conservation law</em>. Remarkably, enforcing the conservation law is enough to understand how the motion will evolve over time.
+</p>
+
+<p>
+In honor of Hamilton's achievement, the total energy of a physical system is called the Hamiltonian. When our phase space is a manifold \(M,\) the Hamiltonian is a function
+\[H : M \to \mathbb{R}.\]
+In other words, the Hamiltonian takes as input a point on phase space, and outputs a real number.
+</p>
+
+<p>
+In the harmonic oscillator example from above, our manifold \(M\) was the 2-dimensional space of pairs \((x, p)\) (position \(x\) and momentum \(p\)), and our Hamiltonian was
+\[H(x, p) = \frac{1}{2m}p^2 + \frac{k}{2}x^2.\]
+Observe that all the 'physics' goes into constructing \(M\) and choosing the Hamiltonian: we needed to know that \(kx^2/2\) was the potential energy of our system in order to define \(H.\)
+</p>
+
+<p>
+From here, Hamilton gives us a way to turn \(H\) into a <em>differential equation</em> -- solving this differential equation tells us how our particle will evolve over time. But before discussing how we can turn \(H\) into a differential equation, let's zoom out for a minute, and discuss ODEs on manifolds in general.
+</p>
+
+<h2 id="hp-section-1">ODEs on manifolds</h2>
+
+<p>
+A <em>vector field</em> on a manifold \(M\) is a choice of tangent vector at each point of \(M.\) The geometric way to talk about ODEs is to talk about <em>flows along vector fields</em>: these are paths where, at every point in the path, the velocity is given by the vector field. 
+</p>
+
+<p>
+This definition of flow might seem complicated, but we're going to go through it more slowly in a second. For now, look at this widget showing a vector field on a sphere; the widget also animated a few particles flowing along this vector field. Below this widget on the sphere, we have a second widget, going more slowly through an example of flowing along a vector field.
+</p>
+
+<script>
+(() => {
+  const host = document.currentScript;
+
+  /* ============================================================
+     CREATE WIDGET
+     ============================================================ */
+
+  const root = document.createElement("div");
+  root.className = "hp-sphere-3d-widget";
+
+  root.innerHTML = `
+    <style>
+      .hp-sphere-3d-widget {
+        --bg: #282828;
+        --bg1: #3c3836;
+        --bg2: #504945;
+        --fg: #ebdbb2;
+        --muted: #a89984;
+        --yellow: #fabd2f;
+
+        width: 100%;
+        max-width: 850px;
+        margin: 1.5rem auto;
+
+        color: var(--fg);
+
+        font-family:
+          ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Monaco,
+          Consolas,
+          "Liberation Mono",
+          monospace;
+      }
+
+      .hp-sphere-3d-widget * {
+        box-sizing: border-box;
+      }
+
+      .hp3d-panel {
+        overflow: hidden;
+
+        background: var(--bg);
+
+        border:
+          1px solid
+          var(--bg2);
+
+        border-radius: 10px;
+      }
+
+      .hp3d-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        padding:
+          11px 14px
+          8px;
+
+        border-bottom:
+          1px solid
+          var(--bg1);
+      }
+
+      .hp3d-title {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .hp3d-equation {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .hp3d-scene-wrap {
+        position: relative;
+
+        width: 100%;
+
+        aspect-ratio:
+          16 / 10;
+
+        background: var(--bg);
+
+        overflow: hidden;
+      }
+
+      .hp3d-mount {
+        position: absolute;
+        inset: 0;
+      }
+
+      .hp3d-mount canvas {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        cursor: grab;
+
+        touch-action: none;
+      }
+
+      .hp3d-mount canvas:active {
+        cursor: grabbing;
+      }
+
+      .hp3d-help,
+      .hp3d-status {
+        position: absolute;
+        top: 12px;
+
+        padding:
+          5px 8px;
+
+        border:
+          1px solid
+          var(--bg2);
+
+        border-radius:
+          6px;
+
+        background:
+          rgba(
+            40,
+            40,
+            40,
+            0.90
+          );
+
+        color:
+          var(--muted);
+
+        font-size:
+          10px;
+
+        line-height:
+          1.65;
+
+        pointer-events:
+          none;
+
+        user-select:
+          none;
+      }
+
+      .hp3d-status {
+        left: 12px;
+      }
+
+      .hp3d-help {
+        right: 12px;
+
+        text-align:
+          right;
+      }
+
+      .hp3d-controls {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+        flex-wrap: wrap;
+
+        padding:
+          9px 11px;
+
+        border-top:
+          1px solid
+          var(--bg1);
+      }
+
+      .hp3d-controls button {
+        min-height: 40px;
+
+        padding:
+          0 13px;
+
+        border:
+          1px solid
+          var(--bg2);
+
+        border-radius:
+          7px;
+
+        background:
+          var(--bg1);
+
+        color:
+          var(--fg);
+
+        font: inherit;
+        font-size: 12px;
+
+        cursor: pointer;
+      }
+
+      .hp3d-controls button:hover {
+        border-color:
+          var(--muted);
+      }
+
+      .hp3d-controls button:focus-visible,
+      .hp3d-controls input:focus-visible {
+        outline:
+          2px solid
+          var(--yellow);
+
+        outline-offset:
+          2px;
+      }
+
+      .hp3d-speed {
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        min-width: 180px;
+        flex: 1 1 220px;
+
+        color:
+          var(--muted);
+
+        font-size:
+          11px;
+      }
+
+      .hp3d-speed input {
+        width: 100%;
+
+        accent-color:
+          var(--yellow);
+      }
+
+      .hp3d-note {
+        padding:
+          0 14px
+          12px;
+
+        color:
+          var(--muted);
+
+        font-size:
+          11px;
+
+        line-height:
+          1.5;
+      }
+
+      @media
+        (max-width: 520px) {
+
+        .hp3d-head {
+          align-items:
+            flex-start;
+
+          flex-direction:
+            column;
+        }
+
+        .hp3d-help {
+          display: none;
+        }
+      }
+    </style>
 
 
+    <section class="hp3d-panel">
+
+      <div class="hp3d-head">
+
+        <span class="hp3d-title">
+          vector field on the sphere
+        </span>
+
+        <span class="hp3d-equation">
+          V(x,y,z) = (−y, x, 0)
+        </span>
+
+      </div>
+
+
+      <div class="hp3d-scene-wrap">
+
+        <div class="hp3d-mount"></div>
+
+        <div class="hp3d-status">
+          loading 3D scene…
+        </div>
+
+        <div class="hp3d-help">
+          drag · orbit<br>
+          scroll · zoom<br>
+          right-drag · pan
+        </div>
+
+      </div>
+
+
+      <div class="hp3d-controls">
+
+        <button
+          class="hp3d-toggle"
+          type="button">
+          Pause
+        </button>
+
+        <button
+          class="hp3d-reset"
+          type="button">
+          Reset camera
+        </button>
+
+
+        <label class="hp3d-speed">
+
+          <span>
+            speed
+          </span>
+
+          <input
+            class="hp3d-speed-input"
+            type="range"
+            min="0.2"
+            max="2.5"
+            step="0.1"
+            value="1"
+            aria-label="Animation speed"
+          >
+
+          <span class="hp3d-speed-value">
+            1.0×
+          </span>
+
+        </label>
+
+      </div>
+
+
+      <div class="hp3d-note">
+        Drag anywhere on the scene to move the camera.
+        The arrows are tangent vectors on the sphere;
+        the moving particles are flowing along 
+        the vector field.
+      </div>
+
+    </section>
+  `;
+
+  host.parentNode.insertBefore(
+    root,
+    host
+  );
+
+
+  /* ============================================================
+     START 3D APP
+     ============================================================ */
+
+  (async () => {
+
+    const mount =
+      root.querySelector(
+        ".hp3d-mount"
+      );
+
+    const status =
+      root.querySelector(
+        ".hp3d-status"
+      );
+
+    const toggle =
+      root.querySelector(
+        ".hp3d-toggle"
+      );
+
+    const reset =
+      root.querySelector(
+        ".hp3d-reset"
+      );
+
+    const speedInput =
+      root.querySelector(
+        ".hp3d-speed-input"
+      );
+
+    const speedValue =
+      root.querySelector(
+        ".hp3d-speed-value"
+      );
+
+
+    /* ============================================================
+       LOAD THREE.JS
+       ============================================================ */
+
+    let THREE;
+    let OrbitControls;
+
+    try {
+
+      THREE =
+        await import(
+          "https://cdn.jsdelivr.net/npm/three@0.180.0/+esm"
+        );
+
+      const controlsModule =
+        await import(
+          "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js/+esm"
+        );
+
+      OrbitControls =
+        controlsModule.OrbitControls;
+
+    } catch (error) {
+
+      console.error(
+        error
+      );
+
+      status.textContent =
+        "3D library failed to load";
+
+      return;
+    }
+
+
+    /* ============================================================
+       SCENE
+       ============================================================ */
+
+    const scene =
+      new THREE.Scene();
+
+    scene.background =
+      new THREE.Color(
+        0x282828
+      );
+
+
+    /* ============================================================
+       CAMERA
+       ============================================================ */
+
+    const camera =
+      new THREE.PerspectiveCamera(
+        42,
+        1,
+        0.1,
+        100
+      );
+
+    /*
+      Mathematically, z is our
+      vertical axis.
+    */
+
+    camera.up.set(
+      0,
+      0,
+      1
+    );
+
+    const initialCameraPosition =
+      new THREE.Vector3(
+        3.2,
+        3.4,
+        2.2
+      );
+
+    camera.position.copy(
+      initialCameraPosition
+    );
+
+
+    /* ============================================================
+       RENDERER
+       ============================================================ */
+
+    const renderer =
+      new THREE.WebGLRenderer({
+        antialias: true
+      });
+
+    renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
+      )
+    );
+
+    renderer.outputColorSpace =
+      THREE.SRGBColorSpace;
+
+    renderer.domElement.style.width =
+      "100%";
+
+    renderer.domElement.style.height =
+      "100%";
+
+    renderer.domElement.style.display =
+      "block";
+
+    renderer.domElement.setAttribute(
+      "aria-label",
+      "Interactive three-dimensional sphere with a tangent vector field"
+    );
+
+    mount.appendChild(
+      renderer.domElement
+    );
+
+
+    /* ============================================================
+       CAMERA CONTROLS
+       ============================================================ */
+
+    const controls =
+      new OrbitControls(
+        camera,
+        renderer.domElement
+      );
+
+    controls.target.set(
+      0,
+      0,
+      0
+    );
+
+    controls.enableDamping =
+      true;
+
+    controls.dampingFactor =
+      0.06;
+
+    controls.enablePan =
+      true;
+
+    controls.enableZoom =
+      true;
+
+    controls.enableRotate =
+      true;
+
+    controls.minDistance =
+      2.2;
+
+    controls.maxDistance =
+      9;
+
+    controls.update();
+
+
+    /* ============================================================
+       LIGHTING
+       ============================================================ */
+
+    const hemisphereLight =
+      new THREE.HemisphereLight(
+        0xebdbb2,
+        0x1d2021,
+        1.3
+      );
+
+    scene.add(
+      hemisphereLight
+    );
+
+
+    const keyLight =
+      new THREE.DirectionalLight(
+        0xfbf1c7,
+        2.3
+      );
+
+    keyLight.position.set(
+      -3,
+      -4,
+      5
+    );
+
+    scene.add(
+      keyLight
+    );
+
+
+    const fillLight =
+      new THREE.DirectionalLight(
+        0x83a598,
+        0.65
+      );
+
+    fillLight.position.set(
+      4,
+      2,
+      0
+    );
+
+    scene.add(
+      fillLight
+    );
+
+
+    /* ============================================================
+       SPHERE
+       ============================================================ */
+
+    const sphere =
+      new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+          1,
+          72,
+          48
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+          color:
+            0x3c3836,
+
+          roughness:
+            0.82,
+
+          metalness:
+            0
+        })
+      );
+
+    scene.add(
+      sphere
+    );
+
+
+    /* ============================================================
+       HELPER: ADD LINE
+       ============================================================ */
+
+    function addLine(
+      points,
+      material
+    ) {
+
+      const geometry =
+        new THREE.BufferGeometry()
+          .setFromPoints(
+            points
+          );
+
+      const line =
+        new THREE.Line(
+          geometry,
+          material
+        );
+
+      scene.add(
+        line
+      );
+
+      return line;
+    }
+
+
+    /* ============================================================
+       SPHERICAL GRID
+       ============================================================ */
+
+    const gridMaterial =
+      new THREE.LineBasicMaterial({
+
+        color:
+          0x7c6f64,
+
+        transparent:
+          true,
+
+        opacity:
+          0.45
+      });
+
+
+    const surfaceOffset =
+      1.004;
+
+
+    /*
+      Latitude circles
+    */
+
+    for (
+      const degrees of
+      [-60, -30, 0, 30, 60]
+    ) {
+
+      const latitude =
+        THREE.MathUtils.degToRad(
+          degrees
+        );
+
+      const radius =
+        Math.cos(
+          latitude
+        ) *
+        surfaceOffset;
+
+      const z =
+        Math.sin(
+          latitude
+        ) *
+        surfaceOffset;
+
+      const points =
+        [];
+
+      for (
+        let i = 0;
+        i <= 160;
+        i++
+      ) {
+
+        const angle =
+          i /
+          160 *
+          Math.PI *
+          2;
+
+        points.push(
+          new THREE.Vector3(
+
+            radius *
+            Math.cos(angle),
+
+            radius *
+            Math.sin(angle),
+
+            z
+          )
+        );
+      }
+
+      addLine(
+        points,
+        gridMaterial
+      );
+    }
+
+
+    /*
+      Longitude circles
+    */
+
+    for (
+      let degrees = 0;
+      degrees < 180;
+      degrees += 30
+    ) {
+
+      const longitude =
+        THREE.MathUtils.degToRad(
+          degrees
+        );
+
+      const points =
+        [];
+
+      for (
+        let i = 0;
+        i <= 160;
+        i++
+      ) {
+
+        const latitude =
+          -Math.PI / 2 +
+          i /
+          160 *
+          Math.PI;
+
+        const radius =
+          Math.cos(
+            latitude
+          ) *
+          surfaceOffset;
+
+        points.push(
+          new THREE.Vector3(
+
+            radius *
+            Math.cos(
+              longitude
+            ),
+
+            radius *
+            Math.sin(
+              longitude
+            ),
+
+            Math.sin(
+              latitude
+            ) *
+            surfaceOffset
+          )
+        );
+      }
+
+      addLine(
+        points,
+        gridMaterial
+      );
+    }
+
+
+    /* ============================================================
+       VECTOR FIELD
+       ============================================================ */
+
+    /*
+      Field:
+
+          V(x,y,z) = (-y,x,0)
+
+      It is tangent because
+
+          (x,y,z) · (-y,x,0) = 0.
+    */
+
+    function vectorField(
+      point
+    ) {
+
+      return new THREE.Vector3(
+        -point.y,
+         point.x,
+         0
+      );
+    }
+
+
+    const arrowGroup =
+      new THREE.Group();
+
+    scene.add(
+      arrowGroup
+    );
+
+
+    for (
+      const latitudeDegrees of
+      [-60, -30, 0, 30, 60]
+    ) {
+
+      const latitude =
+        THREE.MathUtils.degToRad(
+          latitudeDegrees
+        );
+
+
+      for (
+        let longitudeDegrees = 0;
+        longitudeDegrees < 360;
+        longitudeDegrees += 30
+      ) {
+
+        const longitude =
+          THREE.MathUtils.degToRad(
+            longitudeDegrees
+          );
+
+
+        const cosLatitude =
+          Math.cos(
+            latitude
+          );
+
+
+        const point =
+          new THREE.Vector3(
+
+            cosLatitude *
+            Math.cos(
+              longitude
+            ),
+
+            cosLatitude *
+            Math.sin(
+              longitude
+            ),
+
+            Math.sin(
+              latitude
+            )
+          );
+
+
+        const vector =
+          vectorField(
+            point
+          );
+
+
+        const magnitude =
+          vector.length();
+
+
+        if (
+          magnitude <
+          0.04
+        ) {
+          continue;
+        }
+
+
+        vector.normalize();
+
+
+        /*
+          Lift arrow just above
+          the sphere surface.
+        */
+
+        const origin =
+          point
+            .clone()
+            .multiplyScalar(
+              1.035
+            );
+
+
+        const length =
+          0.15 +
+          0.11 *
+          magnitude;
+
+
+        const arrow =
+          new THREE.ArrowHelper(
+
+            vector,
+
+            origin,
+
+            length,
+
+            0x8ec07c,
+
+            0.065,
+
+            0.038
+          );
+
+
+        arrowGroup.add(
+          arrow
+        );
+      }
+    }
+
+
+    /* ============================================================
+       ZEROES AT NORTH/SOUTH POLES
+       ============================================================ */
+
+    const zeroMaterial =
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0xfb4934,
+
+        roughness:
+          0.5
+      });
+
+
+    for (
+      const z of
+      [-1.04, 1.04]
+    ) {
+
+      const marker =
+        new THREE.Mesh(
+
+          new THREE.SphereGeometry(
+            0.045,
+            22,
+            16
+          ),
+
+          zeroMaterial
+        );
+
+
+      marker.position.set(
+        0,
+        0,
+        z
+      );
+
+
+      scene.add(
+        marker
+      );
+    }
+
+
+    /* ============================================================
+       ROTATION AXIS
+       ============================================================ */
+
+    const axisMaterial =
+      new THREE.LineBasicMaterial({
+
+        color:
+          0x928374,
+
+        transparent:
+          true,
+
+        opacity:
+          0.45
+      });
+
+
+    addLine(
+      [
+        new THREE.Vector3(
+          0,
+          0,
+          -1.45
+        ),
+
+        new THREE.Vector3(
+          0,
+          0,
+          1.45
+        )
+      ],
+      axisMaterial
+    );
+
+
+    /* ============================================================
+       INTEGRAL CURVE PARTICLES
+       ============================================================ */
+
+    const orbitMaterial =
+      new THREE.LineBasicMaterial({
+
+        color:
+          0x665c54,
+
+        transparent:
+          true,
+
+        opacity:
+          0.30
+      });
+
+
+    const particleSpecs = [
+
+      {
+        latitude:
+          -0.58,
+
+        phase:
+          0.15,
+
+        color:
+          0xfe8019
+      },
+
+      {
+        latitude:
+          0,
+
+        phase:
+          2.15,
+
+        color:
+          0xfabd2f
+      },
+
+      {
+        latitude:
+          0.58,
+
+        phase:
+          4.05,
+
+        color:
+          0x8ec07c
+      }
+    ];
+
+
+    const particles =
+      particleSpecs.map(
+        spec => {
+
+          /*
+            Draw its integral curve.
+          */
+
+          const radius =
+            Math.cos(
+              spec.latitude
+            ) *
+            1.045;
+
+          const z =
+            Math.sin(
+              spec.latitude
+            ) *
+            1.045;
+
+
+          const orbitPoints =
+            [];
+
+
+          for (
+            let i = 0;
+            i <= 160;
+            i++
+          ) {
+
+            const angle =
+              i /
+              160 *
+              Math.PI *
+              2;
+
+
+            orbitPoints.push(
+              new THREE.Vector3(
+
+                radius *
+                Math.cos(
+                  angle
+                ),
+
+                radius *
+                Math.sin(
+                  angle
+                ),
+
+                z
+              )
+            );
+          }
+
+
+          addLine(
+            orbitPoints,
+            orbitMaterial
+          );
+
+
+          /*
+            Particle itself.
+          */
+
+          const mesh =
+            new THREE.Mesh(
+
+              new THREE.SphereGeometry(
+                0.055,
+                24,
+                18
+              ),
+
+              new THREE.MeshStandardMaterial({
+
+                color:
+                  spec.color,
+
+                roughness:
+                  0.45
+              })
+            );
+
+
+          scene.add(
+            mesh
+          );
+
+
+          return {
+            ...spec,
+            mesh
+          };
+        }
+      );
+
+
+    /* ============================================================
+       ANIMATION
+       ============================================================ */
+
+    let running =
+      !(
+        window.matchMedia &&
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches
+      );
+
+
+    let speed =
+      1;
+
+
+    let time =
+      0;
+
+
+    let lastTime =
+      performance.now();
+
+
+    if (
+      !running
+    ) {
+
+      toggle.textContent =
+        "Play";
+    }
+
+
+    function updateParticles() {
+
+      for (
+        const particle of
+        particles
+      ) {
+
+        const angle =
+          particle.phase +
+          time;
+
+
+        const radius =
+          Math.cos(
+            particle.latitude
+          ) *
+          1.055;
+
+
+        particle.mesh.position.set(
+
+          radius *
+          Math.cos(
+            angle
+          ),
+
+          radius *
+          Math.sin(
+            angle
+          ),
+
+          Math.sin(
+            particle.latitude
+          ) *
+          1.055
+        );
+      }
+    }
+
+
+    /* ============================================================
+       RESIZE
+       ============================================================ */
+
+    function resize() {
+
+      const rect =
+        mount.getBoundingClientRect();
+
+
+      const width =
+        Math.max(
+          1,
+          rect.width
+        );
+
+
+      const height =
+        Math.max(
+          1,
+          rect.height
+        );
+
+
+      renderer.setSize(
+        width,
+        height,
+        false
+      );
+
+
+      camera.aspect =
+        width /
+        height;
+
+
+      camera.updateProjectionMatrix();
+    }
+
+
+    if (
+      typeof ResizeObserver !==
+      "undefined"
+    ) {
+
+      const observer =
+        new ResizeObserver(
+          resize
+        );
+
+      observer.observe(
+        mount
+      );
+
+    } else {
+
+      window.addEventListener(
+        "resize",
+        resize
+      );
+    }
+
+
+    resize();
+
+
+    /* ============================================================
+       CONTROLS
+       ============================================================ */
+
+    toggle.addEventListener(
+      "click",
+      () => {
+
+        running =
+          !running;
+
+
+        toggle.textContent =
+          running
+            ? "Pause"
+            : "Play";
+
+
+        lastTime =
+          performance.now();
+      }
+    );
+
+
+    reset.addEventListener(
+      "click",
+      () => {
+
+        camera.up.set(
+          0,
+          0,
+          1
+        );
+
+
+        camera.position.copy(
+          initialCameraPosition
+        );
+
+
+        controls.target.set(
+          0,
+          0,
+          0
+        );
+
+
+        controls.update();
+      }
+    );
+
+
+    speedInput.addEventListener(
+      "input",
+      () => {
+
+        speed =
+          Math.max(
+            0.2,
+            Math.min(
+              2.5,
+              Number(
+                speedInput.value
+              ) || 1
+            )
+          );
+
+
+        speedValue.textContent =
+          speed.toFixed(1) +
+          "×";
+      }
+    );
+
+
+    /* ============================================================
+       RENDER LOOP
+       ============================================================ */
+
+    status.textContent =
+      "interactive 3D";
+
+
+    function animate(
+      now
+    ) {
+
+      const dt =
+        Math.min(
+
+          (
+            now -
+            lastTime
+          ) /
+          1000,
+
+          0.05
+        );
+
+
+      lastTime =
+        now;
+
+
+      if (
+        running
+      ) {
+
+        time +=
+          dt *
+          speed;
+
+
+        time %=
+          Math.PI *
+          2;
+      }
+
+
+      updateParticles();
+
+      controls.update();
+
+
+      renderer.render(
+        scene,
+        camera
+      );
+
+
+      requestAnimationFrame(
+        animate
+      );
+    }
+
+
+    updateParticles();
+
+    requestAnimationFrame(
+      animate
+    );
+
+  })();
+
+})();
+</script>
+
+<script>
+(() => {
+  const script = document.currentScript;
+
+  const C = {
+    bg0:    "#282828",
+    bg1:    "#32302f",
+    bg2:    "#3c3836",
+    bg3:    "#504945",
+    fg:     "#ebdbb2",
+    fg2:    "#d5c4a1",
+    gray:   "#928374",
+    orange: "#fe8019",
+    yellow: "#fabd2f",
+    green:  "#b8bb26"
+  };
+
+  /* -------------------------------------------------------
+     Mount
+  ------------------------------------------------------- */
+
+  const root = document.createElement("div");
+
+  if (script?.parentNode) {
+    script.parentNode.insertBefore(root, script);
+  } else {
+    document.body.appendChild(root);
+  }
+
+  root.innerHTML = `
+    <style>
+      .hp-flow-widget {
+        width: min(940px, 100%);
+        margin: 2rem auto;
+        color: ${C.fg};
+        font-family:
+          ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Monaco,
+          Consolas,
+          "Liberation Mono",
+          monospace;
+      }
+
+      .hp-flow-card {
+        overflow: hidden;
+        border: 1px solid ${C.bg3};
+        border-radius: 18px;
+        background: ${C.bg0};
+      }
+
+      .hp-flow-header {
+        min-height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px 28px 10px;
+        text-align: center;
+      }
+
+      .hp-flow-title {
+        max-width: 850px;
+        color: ${C.fg};
+        font: clamp(20px, 2.7vw, 29px)/1.22
+              Georgia, "Times New Roman", serif;
+      }
+
+      .hp-flow-stage {
+        position: relative;
+        margin: 0 14px;
+        aspect-ratio: 16 / 9;
+        min-height: 350px;
+        overflow: hidden;
+        border: 1px solid ${C.bg3};
+        border-radius: 14px;
+        background: ${C.bg1};
+      }
+
+      .hp-flow-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .hp-flow-controls {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 15px;
+        padding: 13px 18px 15px;
+      }
+
+      .hp-flow-btn {
+        appearance: none;
+        min-height: 38px;
+        padding: 8px 13px;
+        border: 1px solid ${C.bg3};
+        border-radius: 9px;
+        background: ${C.bg1};
+        color: ${C.fg2};
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .hp-flow-btn:hover {
+        background: ${C.bg2};
+        border-color: ${C.gray};
+        color: ${C.fg};
+      }
+
+      .hp-flow-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .hp-flow-dot {
+        width: 9px;
+        height: 9px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: ${C.bg3};
+        cursor: pointer;
+        transition:
+          transform .15s ease,
+          background .15s ease;
+      }
+
+      .hp-flow-dot.active {
+        transform: scale(1.35);
+        background: ${C.orange};
+      }
+
+      .hp-flow-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0 21px 16px;
+        color: ${C.gray};
+        font-size: 11px;
+        letter-spacing: .06em;
+      }
+
+      .hp-brand {
+        color: ${C.fg2};
+      }
+
+      .hp-brand::before {
+        content: "◯";
+        margin-right: 7px;
+        color: ${C.orange};
+      }
+
+      @media (max-width: 620px) {
+        .hp-flow-stage {
+          min-height: 300px;
+          margin: 0 8px;
+        }
+
+        .hp-flow-header {
+          min-height: 70px;
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .hp-flow-controls {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .hp-flow-btn {
+          font-size: 11px;
+          padding: 7px 9px;
+        }
+
+        .hp-flow-footer {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+      }
+    </style>
+
+    <div class="hp-flow-widget">
+      <div class="hp-flow-card">
+
+        <div class="hp-flow-header">
+          <div class="hp-flow-title"></div>
+        </div>
+
+        <div class="hp-flow-stage">
+          <canvas class="hp-flow-canvas"></canvas>
+        </div>
+
+        <div class="hp-flow-controls">
+          <button type="button"
+                  class="hp-flow-btn hp-prev">
+            ← Previous
+          </button>
+
+          <div class="hp-flow-dots">
+            <button type="button"
+                    class="hp-flow-dot"
+                    aria-label="A point flowing"></button>
+
+            <button type="button"
+                    class="hp-flow-dot"
+                    aria-label="But why is it a flow?"></button>
+
+            <button type="button"
+                    class="hp-flow-dot"
+                    aria-label="Look at the tangent vector"></button>
+
+            <button type="button"
+                    class="hp-flow-dot"
+                    aria-label="Compare with the vector field"></button>
+
+            <button type="button"
+                    class="hp-flow-dot"
+                    aria-label="They are exactly the same"></button>
+          </div>
+
+          <button type="button"
+                  class="hp-flow-btn hp-next">
+            Next →
+          </button>
+        </div>
+
+        <div class="hp-flow-footer">
+          <span class="hp-brand">Hidden Phenomena</span>
+          <span>FLOW OF A VECTOR FIELD</span>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  const canvas = root.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const title = root.querySelector(".hp-flow-title");
+  const prev = root.querySelector(".hp-prev");
+  const next = root.querySelector(".hp-next");
+
+  const dots = [
+    ...root.querySelectorAll(".hp-flow-dot")
+  ];
+
+  const titles = [
+    "A point flowing",
+
+    "But why is it a flow?",
+
+    "Look at the tangent vector to the trajectory",
+
+    "Compare with the value of the vector field at that point",
+
+    "They are exactly the same! This is why we have a flow."
+  ];
+
+  let slide = 0;
+  let slideStart = performance.now();
+
+  /* -------------------------------------------------------
+     Mathematical example
+
+     Rotational vector field.
+
+     Trajectories are circles.
+  ------------------------------------------------------- */
+
+  const omega = 0.58;
+
+  function field(x, y) {
+    return {
+      x: -omega * y,
+      y:  omega * x
+    };
+  }
+
+  const radius = 1.72;
+  const theta0 = 0.18;
+
+  function trajectory(t) {
+    const theta = theta0 + omega * t;
+
+    return {
+      x: radius * Math.cos(theta),
+      y: radius * Math.sin(theta)
+    };
+  }
+
+  const LOOP_TIME = 3000;
+
+  /*
+    We freeze the animation here for the final
+    three slides.
+  */
+
+  const FREEZE_TIME = 2.05;
+
+  /* -------------------------------------------------------
+     Plot coordinates
+  ------------------------------------------------------- */
+
+  const XMIN = -3.3;
+  const XMAX =  3.3;
+  const YMIN = -2.7;
+  const YMAX =  2.7;
+
+  let W = 1;
+  let H = 1;
+  let DPR = 1;
+
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+
+    DPR = Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+    canvas.width =
+      Math.round(r.width * DPR);
+
+    canvas.height =
+      Math.round(r.height * DPR);
+
+    W = r.width;
+    H = r.height;
+
+    ctx.setTransform(
+      DPR, 0,
+      0, DPR,
+      0, 0
+    );
+  }
+
+  function sx(x) {
+    return (
+      (x - XMIN) /
+      (XMAX - XMIN)
+    ) * W;
+  }
+
+  function sy(y) {
+    return H -
+      (
+        (y - YMIN) /
+        (YMAX - YMIN)
+      ) * H;
+  }
+
+  function scaleX() {
+    return W / (XMAX - XMIN);
+  }
+
+  function scaleY() {
+    return H / (YMAX - YMIN);
+  }
+
+  /* -------------------------------------------------------
+     Drawing helpers
+  ------------------------------------------------------- */
+
+  function arrow(
+    x1,
+    y1,
+    x2,
+    y2,
+    color,
+    width = 1.5,
+    head = 5
+  ) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+
+    const angle =
+      Math.atan2(dy, dx);
+
+    ctx.save();
+
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+
+    ctx.beginPath();
+
+    ctx.moveTo(x2, y2);
+
+    ctx.lineTo(
+      x2 - head *
+        Math.cos(
+          angle - Math.PI / 6
+        ),
+      y2 - head *
+        Math.sin(
+          angle - Math.PI / 6
+        )
+    );
+
+    ctx.lineTo(
+      x2 - head *
+        Math.cos(
+          angle + Math.PI / 6
+        ),
+      y2 - head *
+        Math.sin(
+          angle + Math.PI / 6
+        )
+    );
+
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawAxes() {
+    const ox = sx(0);
+    const oy = sy(0);
+
+    ctx.save();
+
+    ctx.strokeStyle =
+      "rgba(213,196,161,.30)";
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(15, oy);
+    ctx.lineTo(W - 15, oy);
+
+    ctx.moveTo(ox, 15);
+    ctx.lineTo(ox, H - 15);
+
+    ctx.stroke();
+
+    arrow(
+      W - 33,
+      oy,
+      W - 17,
+      oy,
+      C.gray,
+      1,
+      5
+    );
+
+    arrow(
+      ox,
+      33,
+      ox,
+      17,
+      C.gray,
+      1,
+      5
+    );
+
+    ctx.font =
+      "italic 15px Georgia";
+
+    ctx.fillStyle = C.fg2;
+
+    ctx.fillText(
+      "x",
+      W - 31,
+      oy - 9
+    );
+
+    ctx.fillText(
+      "y",
+      ox + 9,
+      28
+    );
+
+    ctx.restore();
+  }
+
+  function drawVectorField() {
+    const cols =
+      Math.max(
+        14,
+        Math.floor(W / 52)
+      );
+
+    const rows =
+      Math.max(
+        10,
+        Math.floor(H / 49)
+      );
+
+    for (
+      let j = 0;
+      j <= rows;
+      j++
+    ) {
+      for (
+        let i = 0;
+        i <= cols;
+        i++
+      ) {
+        const x =
+          XMIN + 0.3 +
+          (XMAX - XMIN - 0.6) *
+          i / cols;
+
+        const y =
+          YMIN + 0.3 +
+          (YMAX - YMIN - 0.6) *
+          j / rows;
+
+        const v = field(x, y);
+
+        const mag =
+          Math.hypot(
+            v.x,
+            v.y
+          );
+
+        if (mag < 0.08) {
+          continue;
+        }
+
+        const ux =
+          v.x / mag;
+
+        const uy =
+          v.y / mag;
+
+        const len =
+          Math.min(
+            24,
+            12 + 3 * mag
+          );
+
+        const X = sx(x);
+        const Y = sy(y);
+
+        const dx =
+          ux * len;
+
+        const dy =
+          -uy * len;
+
+        arrow(
+          X - dx * 0.48,
+          Y - dy * 0.48,
+
+          X + dx * 0.48,
+          Y + dy * 0.48,
+
+          "rgba(184,187,38,.47)",
+
+          1.2,
+          4
+        );
+      }
+    }
+  }
+
+  function drawPoint(
+    p,
+    size = 6.5
+  ) {
+    const x = sx(p.x);
+    const y = sy(p.y);
+
+    ctx.save();
+
+    const glow =
+      ctx.createRadialGradient(
+        x,
+        y,
+        0,
+        x,
+        y,
+        20
+      );
+
+    glow.addColorStop(
+      0,
+      "rgba(254,128,25,.40)"
+    );
+
+    glow.addColorStop(
+      1,
+      "rgba(254,128,25,0)"
+    );
+
+    ctx.fillStyle = glow;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,
+      y,
+      20,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle = C.orange;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,
+      y,
+      size,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawTrajectory(
+    t0,
+    t1,
+    color = C.orange,
+    width = 3
+  ) {
+    const samples = 100;
+
+    ctx.save();
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.beginPath();
+
+    for (
+      let i = 0;
+      i <= samples;
+      i++
+    ) {
+      const t =
+        t0 +
+        (t1 - t0) *
+        i / samples;
+
+      const p =
+        trajectory(t);
+
+      const x = sx(p.x);
+      const y = sy(p.y);
+
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    }
+
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawGhosts(t) {
+    ctx.save();
+
+    for (
+      let i = 4;
+      i >= 1;
+      i--
+    ) {
+      const p =
+        trajectory(
+          Math.max(
+            0,
+            t - i * 0.08
+          )
+        );
+
+      ctx.globalAlpha =
+        0.11 * (5 - i);
+
+      ctx.fillStyle =
+        C.orange;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        sx(p.x),
+        sy(p.y),
+        3.2,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  /* -------------------------------------------------------
+     Frozen point + vector direction
+  ------------------------------------------------------- */
+
+  function frozenGeometry() {
+    const p =
+      trajectory(
+        FREEZE_TIME
+      );
+
+    const v =
+      field(
+        p.x,
+        p.y
+      );
+
+    const px =
+      sx(p.x);
+
+    const py =
+      sy(p.y);
+
+    let dx =
+      v.x * scaleX();
+
+    let dy =
+      -v.y * scaleY();
+
+    const mag =
+      Math.hypot(
+        dx,
+        dy
+      );
+
+    dx /= mag;
+    dy /= mag;
+
+    return {
+      p,
+      px,
+      py,
+      dx,
+      dy
+    };
+  }
+
+  /*
+    Draw a reasonably long section of the orbit around
+    the frozen point, so the viewer can actually see the
+    tangent direction.
+  */
+
+  function drawFrozenTrajectory() {
+    drawTrajectory(
+      FREEZE_TIME - 1.10,
+      FREEZE_TIME + 1.10,
+      C.orange,
+      3
+    );
+
+    drawPoint(
+      trajectory(FREEZE_TIME),
+      7
+    );
+  }
+
+  /* -------------------------------------------------------
+     Slide 3a
+
+     Tangent only.
+  ------------------------------------------------------- */
+
+  function drawTangentOnly() {
+    drawFrozenTrajectory();
+
+    const {
+      px,
+      py,
+      dx,
+      dy
+    } = frozenGeometry();
+
+    /*
+      First draw a faint tangent line through the point.
+
+      This visually says "tangent to the curve", rather
+      than just putting an arbitrary arrow there.
+    */
+
+    ctx.save();
+
+    ctx.strokeStyle =
+      "rgba(254,128,25,.42)";
+
+    ctx.lineWidth = 1.6;
+
+    ctx.setLineDash([
+      6,
+      6
+    ]);
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      px - dx * 88,
+      py - dy * 88
+    );
+
+    ctx.lineTo(
+      px + dx * 112,
+      py + dy * 112
+    );
+
+    ctx.stroke();
+
+    ctx.restore();
+
+    /*
+      Then the actual tangent vector.
+    */
+
+    const L =
+      Math.min(
+        100,
+        W * 0.12
+      );
+
+    arrow(
+      px,
+      py,
+
+      px + dx * L,
+      py + dy * L,
+
+      C.orange,
+
+      6,
+      11
+    );
+  }
+
+  /* -------------------------------------------------------
+     Slide 3b
+
+     Compare the two vectors.
+
+     We offset the field vector very slightly so the viewer
+     can actually see TWO arrows before we identify them.
+  ------------------------------------------------------- */
+
+  function drawComparison() {
+    drawFrozenTrajectory();
+
+    const {
+      px,
+      py,
+      dx,
+      dy
+    } = frozenGeometry();
+
+    const nx = -dy;
+    const ny = dx;
+
+    const L =
+      Math.min(
+        100,
+        W * 0.12
+      );
+
+    /*
+      Orange: tangent vector.
+    */
+
+    arrow(
+      px,
+      py,
+
+      px + dx * L,
+      py + dy * L,
+
+      C.orange,
+
+      5,
+      10
+    );
+
+    /*
+      Yellow: field vector.
+
+      Shifted sideways by a few pixels solely so that both
+      vectors are visible for comparison.
+    */
+
+    const offset = 11;
+
+    arrow(
+      px + nx * offset,
+      py + ny * offset,
+
+      px + nx * offset +
+        dx * L,
+
+      py + ny * offset +
+        dy * L,
+
+      C.yellow,
+
+      4,
+      9
+    );
+
+    /*
+      Small highlight around the point emphasizes:
+      "we are evaluating the field RIGHT HERE."
+    */
+
+    ctx.save();
+
+    ctx.strokeStyle =
+      C.yellow;
+
+    ctx.lineWidth = 1.4;
+
+    ctx.globalAlpha = 0.75;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      px,
+      py,
+      14,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  /* -------------------------------------------------------
+     Slide 3c
+
+     Now make the two vectors coincide exactly.
+
+     Orange outer arrow + yellow inner arrow means:
+     there aren't two directions anymore — they are the
+     same vector.
+  ------------------------------------------------------- */
+
+  function drawEquality() {
+    drawFrozenTrajectory();
+
+    const {
+      px,
+      py,
+      dx,
+      dy
+    } = frozenGeometry();
+
+    const L =
+      Math.min(
+        100,
+        W * 0.12
+      );
+
+    /*
+      Tangent vector, thick outer layer.
+    */
+
+    arrow(
+      px,
+      py,
+
+      px + dx * L,
+      py + dy * L,
+
+      C.orange,
+
+      8,
+      13
+    );
+
+    /*
+      Field vector, directly on top.
+    */
+
+    arrow(
+      px,
+      py,
+
+      px + dx * L,
+      py + dy * L,
+
+      C.yellow,
+
+      3.2,
+      9
+    );
+
+    /*
+      A subtle ring gives the endpoint of the conceptual
+      argument some visual emphasis without adding words.
+    */
+
+    ctx.save();
+
+    ctx.strokeStyle =
+      "rgba(235,219,178,.42)";
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      px,
+      py,
+      17,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  /* -------------------------------------------------------
+     Animation
+  ------------------------------------------------------- */
+
+  function draw(now) {
+    ctx.clearRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    ctx.fillStyle = C.bg1;
+
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    drawAxes();
+    drawVectorField();
+
+    /*
+      Slide 1:
+      just the moving point.
+    */
+
+    if (slide === 0) {
+      const elapsed =
+        (
+          now -
+          slideStart
+        ) % LOOP_TIME;
+
+      const t =
+        elapsed / 1000;
+
+      drawGhosts(t);
+
+      drawPoint(
+        trajectory(t)
+      );
+    }
+
+    /*
+      Slide 2:
+      the point traces the trajectory.
+    */
+
+    else if (slide === 1) {
+      const elapsed =
+        (
+          now -
+          slideStart
+        ) % LOOP_TIME;
+
+      const t =
+        elapsed / 1000;
+
+      drawTrajectory(
+        0,
+        t
+      );
+
+      drawPoint(
+        trajectory(t)
+      );
+    }
+
+    /*
+      Slide 3a:
+      freeze + tangent.
+    */
+
+    else if (slide === 2) {
+      drawTangentOnly();
+    }
+
+    /*
+      Slide 3b:
+      compare tangent with field value.
+    */
+
+    else if (slide === 3) {
+      drawComparison();
+    }
+
+    /*
+      Slide 3c:
+      overlay them exactly.
+    */
+
+    else if (slide === 4) {
+      drawEquality();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  /* -------------------------------------------------------
+     Navigation
+  ------------------------------------------------------- */
+
+  function setSlide(n) {
+    slide =
+      (
+        n +
+        titles.length
+      ) %
+      titles.length;
+
+    slideStart =
+      performance.now();
+
+    title.textContent =
+      titles[slide];
+
+    dots.forEach(
+      (dot, i) => {
+        dot.classList.toggle(
+          "active",
+          i === slide
+        );
+      }
+    );
+
+    next.textContent =
+      slide === titles.length - 1
+        ? "Restart ↻"
+        : "Next →";
+  }
+
+  prev.addEventListener(
+    "click",
+    () => {
+      setSlide(
+        slide - 1
+      );
+    }
+  );
+
+  next.addEventListener(
+    "click",
+    () => {
+      if (
+        slide ===
+        titles.length - 1
+      ) {
+        setSlide(0);
+      } else {
+        setSlide(
+          slide + 1
+        );
+      }
+    }
+  );
+
+  dots.forEach(
+    (dot, i) => {
+      dot.addEventListener(
+        "click",
+        () => {
+          setSlide(i);
+        }
+      );
+    }
+  );
+
+  /* -------------------------------------------------------
+     Resize
+  ------------------------------------------------------- */
+
+  const ro =
+    new ResizeObserver(
+      resize
+    );
+
+  ro.observe(canvas);
+
+  resize();
+  setSlide(0);
+
+  requestAnimationFrame(draw);
+})();
+</script>
+
+<h2 id="hp-section-2">Turning Hamiltonians into vector fields</h2>
+
+<p>
+In the last section, we saw how vector fields can be used to geometrize ordinary differential equations. So, what are Hamilton's equations of motion in terms of vector fields?
+</p>
+
+<p>
+That is, suppose we have a phase space \(M\) of a physical system, and a Hamiltonian \(H : M \to \mathbb{R}\) on that physical system. How can we turn the Hamiltonian \(H\) into some vector field \(X_H\) that describes the motion of a particle whose energy is given by \(H\)? 
+</p>
+
+<p>
+The first observation is that the vector field \(X_H\) should depend only on the 1-form \(dH,\) and not on the function \(H.\) This is because the Hamiltonian is the sum of kinetic energy and potential energy -- but potential energy is only meaningful <em>up to a constant</em>. For example, gravitational potential energy is equal to \(mgh,\) where \(m\) is your mass, \(g\) is the acceleration due to gravity (some constant), and \(h\) is your <em>height</em>. But height isn't a meaningful concept -- height above sea level? height above the ground? height above the center of the Earth?
+</p>
+
+<p>
+In order to make sense of height, you have to make an arbitrary choice of where to measure from; depending on what choice you make, this leads to some ambiguity in the meaning of potential energy, and hence creates an ambiguity in the total energy \(H.\) The 1-form \(dH\) (which is a fancy version of the derivative) eliminates this ambiguity. 
+</p>
+
+<p>
+Rephrasing our question, we now ask: given a 1-form \(dH,\) how can we turn it into a vector field \(X_H\)? 
+</p>
+
+<p>
+Jacobi always said that, if you're stuck on a math problem, oyou should <em>invert</em>. So, let's go backwards for a second: starting with a vector field \(V,\) how might we turn it into a 1-form? 
+</p>
+
+<p>
+This question is easier to answer. If you're an expert, we'll just say that linear maps \(TM \to T^*M\) are the same as 2-forms on \(M.\) Breaking this down more concretely, remember that a 1-form \(\alpha\) on \(M\) is some gadget which takes as input a tangent vector \(W\) and outputs a number. 
+</p>
+
+<p>
+Recall that a 2-form \(\omega\) on \(M\) was a certain object that took as input <em>two</em> tangent vectors, and outputted a number. If we <em>fix</em> a specific 2-form \(\omega,\) then we can turn any vector field \(V\) into a 1-form \(\alpha\): just define
+\[\alpha(W) := \omega(V, W).\] 
+</p>
+
+<p>
+But this was the opposite of what we wanted to do: we started with a vector field and outputted a 1-form, whereas we really want to start with the 1-form \(dH\) and output a vector field \(X_H.\) Fortunately, the operation described above is sometimes invertible, allowing us to go backwards: whenever \(\omega\) is a <em>symplectic 2-form</em> (this means \(\omega\) is 'closed and non-degenerate', but if you don't know differential geometry you should ignore this and just think 'symplectic means we can invert'), we can invert this correspondence, in the sense that every 1-form \(\alpha\) arises from a <em>unique</em> vector field \(V.\) We then define \(X_H\) as the unique vector field making
+\[dH(W) = \omega(X_H, W)\]
+true. 
+</p>
+
+<p>
+In other words, <em>if we equip our phase space \(M\) with a symplectic 2-form \(\omega,\) then we can turn Hamiltonian functions into vector fields</em>. Flowing along those vector fields then tells us how our physical system will evolve!
+</p>
+
+<h3>An example</h3>
+
+<p>
+The above discussion was a little abstract, so let's go through it in the concrete example of the harmonic oscillator. 
+</p>
+
+<p>
+Remember that our phase space was the 2-dimensional space with coordinates \((x, p)\) (position and momentum), and our Hamiltonian was
+\[H(x, p) = \frac{1}{2m}p^2 + \frac{k}{2}x^2,\]
+where \(m\) and \(k\) were arbitrary constants (mass and the spring stiffness).
+</p>
+
+<p>
+To turn this into a vector field \(X_H,\) we need one more piece of information: a symplectic form on \(M.\) What should our symplectic form be? To find the right symplectic form in this example, we're going to cheat a little by using Hamilton's equations to figure out what \(X_H\) is, and then reverse engineer \(\omega\) afterwards; we'll say a bit more about the general situation later.
+</p>
+
+<p>
+Hamilton's equations tell us that, whatever the final motion is, it should obey
+\[x'(t) = \frac{\partial H}{\partial p},\]
+\[p'(t) = -\frac{\partial H}{\partial x}.\] 
+</p>
+
+<p>
+In other words, if we have a curve \(t \mapsto (x(t), p(t))\) in our phase space that corresponds to the motion of some physical system, then the derivative of that curve at time \(t\) should be the vector
+\[\left(\frac{\partial H}{\partial p}, -\frac{\partial H}{\partial x}\right).\] 
+</p>
+
+<p>
+This means the vector field \(X_H\) should be 
+\[X_H = \left(\frac{\partial H}{\partial p}, -\frac{\partial H}{\partial x}\right),\]
+because the derivative of the flow of a particle along a vector field is supposed to be the vector field itself. 
+</p>
+
+<p>
+With a little computational skill in differential geometry, from this expression for \(X_H,\) and the expression
+\[dH = \frac{\partial H}{\partial p} dp + \frac{\partial H}{\partial x} dx,\]
+one can derive that the symplectic form \(\omega\) is the 2-form
+\[\omega = dx \wedge dp.\]
+</p>
+
+<p>
+In general, the symplectic form on phase space will look something like this; but if you have a 3-dimensional particle, or a system of ten 2-dimensional particles, etc., you might have more positions and momentums to keep track of, making your symplectic form look like \(\sum_i dx_i \wedge dp_i,\) where you sum over every possible direction.
+</p>
+
+<p>
+This gives a geometric way to formulate Hamilitonian mechanics: you do some physics to design a phase space \(M\), symplectic form \(\omega,\) and Hamiltonian \(H\); then to solve your physics problem, you do some differential geometry to turn \(H\) into a vector field \(X_H,\) and find how particles flow along \(X_H.\)
+</p>
+
+<h2>Symplectic manifolds in pure mathematics</h2>
+
+<p>
+In physics, one has these phase spaces \(M\) -- shapes whose points represent the possible states of some physical system. In mathematics, one often finds <em>moduli spaces</em>; a moduli space is just some geometric shape whose points represent something (this is a pretty broad definition!). For example, the circle is the moduli space of all directions: each point on a circle represents a different direction, and all the possible directions (in 2-dimensional space) are points on a circle! 
+</p>
+
+<p>
+Remarkably, it turns out that the moduli spaces arising in pure mathematics often admit symplectic structures, just as the phase spaces of physics do! This allows one to use ideas from physics to study shapes arising in pure mathematics. These symplectic structures are particularly important in geometric representation theory, which has come to play an increasingly large role in the Langlands program. The idea of geometric representation theory is to turn questions in representation theory -- a branch of abstract algebra -- into geometry problems, by looking at complicated moduli spaces related to your original question. These complicated moduli spaces tend to have symplectic structures, and using tools from <em>symplectic geometry</em> we can better understand these moduli spaces, and hence solve our original representation theory question.
+</p>
 
 <!-- MailerLite Universal -->
 <script>
