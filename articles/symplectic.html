@@ -19,7 +19,7 @@
 <header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Symplectic geometry -- and how it relates to the Hamiltonian</h1><div class="article-info"><span class="article-badge">About 3 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Phase spaces</a></li><li><a href="#hp-section-2">Observables</a></li><li><a href="#hp-section-3">Interlude: vector fields as flows</a></li><li><a href="#hp-section-4">The vector field of an observable</a></li></ol></details></nav><div class="hp-prose">
 
 <p>
-Last week, we introduced Hamiltonian mechanics -- another perspective on classical mechanics. This week, we want to recast Hamiltonian mechanics in a more geometric language. This geometric language ends up being very interesting and useful even beyond its original applications in physics, so even if you didn't read last week's article, you still might enjoy this one!
+<a href="hamiltonian.html">Last week</a>, we introduced Hamiltonian mechanics -- another perspective on classical mechanics. This week, we want to recast Hamiltonian mechanics in a more geometric language. This geometric language ends up being very interesting and useful even beyond its original applications in physics, so even if you didn't read last week's article, you still might enjoy this one!
 </p>
 
 <p>
@@ -29,11 +29,14 @@ TODO: I think the introduction needs to pop more
 <h2>Phase spaces</h2>
 
 <p>
-In mathematics, one often deals with very strange shapes. This is because it is often helpful to think about the <em>phase space</em> of some physical system; this is a geometric object representing all possible states of the system. 
+In mathematics, one often deals with strange shapes (<a href="diff-forms.html">manifolds</a>). This is because it is often helpful to think about the <em>phase space</em> of some physical system; this is a geometric object representing all possible states of the system. 
 </p>
 
 <p>
-As a simple example, imagine you have a single particle in 1 dimension. As Newton observed, the two most important properties of this particle are its position and momentum (the forces acting on your particle are also pretty important, but we'll get to them later). 
+As a simple example, imagine you have a single particle in 1 dimension. 
+The basic hypothesis in mechanics is that if you know the particle's position and momentum (or velocity) then you can predict its future position. 
+This basic principle holds in all approaches to mechanics: Newton's, <a href="lagrangian.html">Lagrange's</a>, and <a href="hamiltonian.html">Hamilton's</a>.
+<!-- As Newton observed, the two most important properties of this particle are its position and momentum (the forces acting on your particle are also pretty important, but we'll get to them later).  -->
 </p>
 
 <p>
@@ -671,7 +674,7 @@ The <em>phase space</em> of this physical system (of a particle in 1-dimension) 
 </script>
 
 <p>
-If you watch this animation for long enough, you might notice how our particle always stays on an ellipse. This is because of <em>conservation of energy</em>: the kinetic energy plus the potential energy is always constant.
+Notice how our particle always stays on an ellipse. This is because of <em>conservation of energy</em>: the kinetic energy plus the potential energy is always constant.
 </p>
 
 <p>
@@ -681,11 +684,11 @@ where \(m\) is the mass and \(v\) is velocity. The potential energy is \(\frac{1
 </p>
 
 <p>
-Using that momentum \(p\) is given by \(mv,\) we can rewrite kinetic energy as \(\frac{1}{2m}p^2.\) Therefore conservation of energy tells us that
+Using that momentum \(p\) is \(mv,\) we can rewrite kinetic energy as \(\frac{1}{2m}p^2.\) Therefore conservation of energy tells us that
 \[\frac{1}{2m} \cdot p^2 + \frac{k}{2} \cdot x^2 = E,\]
 for some constant \(E\) (the total energy of the system). But remember: \(m\) and \(k\) are just some constants, and if you graph
 \[Ap^2 + Bx^2 = C\]
-in the \((p, x)\) coordinate plane, you'll always get an ellipse! 
+in the \((p, x)\) coordinate plane, you'll always get an ellipse! (of radius \(\sqrt{\frac CA}\) in the \(p\)-direction and radius \(\sqrt{\frac CB}\) in the \(x\)-direction).
 </p>
 
 <p>
@@ -699,12 +702,12 @@ Newton told us that, to understand the motion of a particle, you need to know th
 </p>
 
 <p>
-As we explained last week, Hamilton realized that there's a slightly different way to understand motion: record the current position and momentum, and then enforce a <em>conservation law</em>. Remarkably, enforcing the conservation law is enough to understand how the motion will evolve over time.
+As we explained <a href="hamiltonian.html">last week</a>, Hamilton realized that there's a slightly different way to understand motion: record the current position and momentum, and then enforce a <em>conservation law</em>. Remarkably, enforcing the conservation law is enough to understand how the motion will evolve over time.
 </p>
 
 <p>
 In honor of Hamilton's achievement, the total energy of a physical system is called the Hamiltonian. When our phase space is a manifold \(M,\) the Hamiltonian is a function
-\[H : M \to \mathbb{R}.\]
+\[H \colon M \to \mathbb{R}.\]
 In other words, the Hamiltonian takes as input a point on phase space, and outputs a real number.
 </p>
 
@@ -721,7 +724,7 @@ From here, Hamilton gives us a way to turn \(H\) into a <em>differential equatio
 <h2 id="hp-section-1">ODEs on manifolds</h2>
 
 <p>
-A <em>vector field</em> on a manifold \(M\) is a choice of tangent vector at each point of \(M.\) The geometric way to talk about ODEs is to talk about <em>flows along vector fields</em>: these are paths where, at every point in the path, the velocity is given by the vector field. 
+A <a href="diff-forms.html#line"><em>vector field</em></a> on a manifold \(M\) is a choice of tangent vector at each point of \(M.\) The geometric way to talk about ODEs is to talk about <em>flows along vector fields</em>: these are paths where, at every point in the path, the velocity is given by the vector field. 
 </p>
 
 <p>
@@ -3453,11 +3456,11 @@ In the last section, we saw how vector fields can be used to geometrize ordinary
 </p>
 
 <p>
-That is, suppose we have a phase space \(M\) of a physical system, and a Hamiltonian \(H : M \to \mathbb{R}\) on that physical system. How can we turn the Hamiltonian \(H\) into some vector field \(X_H\) that describes the motion of a particle whose energy is given by \(H\)? 
+That is, suppose we have a phase space \(M\) of a physical system, and a Hamiltonian \(H\colon M \to \mathbb{R}\) on that physical system. How can we turn the Hamiltonian \(H\) into some vector field \(X_H\) that describes the motion of a particle whose energy is given by \(H\)? 
 </p>
 
 <p>
-The first observation is that the vector field \(X_H\) should depend only on the 1-form \(dH,\) and not on the function \(H.\) This is because the Hamiltonian is the sum of kinetic energy and potential energy -- but potential energy is only meaningful <em>up to a constant</em>. For example, gravitational potential energy is equal to \(mgh,\) where \(m\) is your mass, \(g\) is the acceleration due to gravity (some constant), and \(h\) is your <em>height</em>. But height isn't a meaningful concept -- height above sea level? height above the ground? height above the center of the Earth?
+The first observation is that the vector field \(X_H\) should depend only on the <a href="diff-forms.html">1-form</a> \(dH,\) and not on the function \(H.\) This is because the Hamiltonian is the sum of kinetic energy and potential energy -- but potential energy is only meaningful <em>up to a constant</em>. For example, gravitational potential energy is equal to \(mgh,\) where \(m\) is your mass, \(g\) is the acceleration due to gravity (some constant), and \(h\) is your <em>height</em>. But height isn't a meaningful concept -- height above sea level? height above the ground? height above the center of the Earth?
 </p>
 
 <p>
@@ -3469,7 +3472,7 @@ Rephrasing our question, we now ask: given a 1-form \(dH,\) how can we turn it i
 </p>
 
 <p>
-Jacobi always said that, if you're stuck on a math problem, oyou should <em>invert</em>. So, let's go backwards for a second: starting with a vector field \(V,\) how might we turn it into a 1-form? 
+Jacobi always said "<em>Man muss immer umkehren</em>" -- if you're stuck on a math problem, you should <em>invert</em>. So, let's go backwards for a second: starting with a vector field \(V,\) how might we turn it into a 1-form? 
 </p>
 
 <p>
@@ -3477,7 +3480,7 @@ This question is easier to answer. If you're an expert, we'll just say that line
 </p>
 
 <p>
-Recall that a 2-form \(\omega\) on \(M\) was a certain object that took as input <em>two</em> tangent vectors, and outputted a number. If we <em>fix</em> a specific 2-form \(\omega,\) then we can turn any vector field \(V\) into a 1-form \(\alpha\): just define
+<a href="diff-forms.html#diff-2-forms">Recall</a> that a 2-form \(\omega\) on \(M\) was a certain object that took as input <em>two</em> tangent vectors, and outputted a number. If we <em>fix</em> a specific 2-form \(\omega,\) then we can turn any vector field \(V\) into a 1-form \(\alpha\): just define
 \[\alpha(W) := \omega(V, W).\] 
 </p>
 
@@ -3508,7 +3511,7 @@ To turn this into a vector field \(X_H,\) we need one more piece of information:
 </p>
 
 <p>
-Hamilton's equations tell us that, whatever the final motion is, it should obey
+<a href="hamiltonian.html#hp-section-3">Hamilton's equations</a> tell us that, whatever the final motion is, it should obey
 \[x'(t) = \frac{\partial H}{\partial p},\]
 \[p'(t) = -\frac{\partial H}{\partial x}.\] 
 </p>
