@@ -2602,5 +2602,253 @@ While we think the colorful pattern of Pascal's triangle is pretty cool, that's 
 </footer>
 
 
-</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/quadratic-residues.html"><div class="related-category">Number theory</div><h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3><p>When does a number have a square root modulo a prime?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/gamma.html"><div class="related-category">Calculus</div><h3>What is the factorial of 3.5?</h3><p>Remarkably, \(\pi\) appears! </p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer></body>
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/quadratic-residues.html"><div class="related-category">Number theory</div><h3>What is \(\sqrt{-1}\) modulo \(5\)?</h3><p>When does a number have a square root modulo a prime?</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/gamma.html"><div class="related-category">Calculus</div><h3>What is the factorial of 3.5?</h3><p>Remarkably, \(\pi\) appears! </p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
 </html>
