@@ -55,7 +55,7 @@ Newton gave the first formulation of mechanics, in the 17th century. Newton had 
 
 <p>
   In 1788, Lagrange introduced a <a href="lagrangian.html">more abstract framework for mechanics</a>. 
-  His approach was based on the <em>Lagrangian</em>, and a physical system evolves to minimize the action integral
+  His approach was based on the <em>Lagrangian</em>, a quantity \(L\); a physical system then evolves to minimize the action integral
   \[
   S=\int_{t_0}^{t_1}L\big(x(t),v(t),t\big)dt.
   \]
@@ -67,7 +67,7 @@ Newton gave the first formulation of mechanics, in the 17th century. Newton had 
 </p>
 
 <p>
-That is, in Hamilton's approach, we <em>start</em> by writing down some physical quantity which we know should be conserved, and then find some way for physics to evolve which forces that quantity to be conserved. 
+That is, in Hamilton's approach, we <em>start</em> by writing down some physical quantity that we know should be conserved, and then find some way for physics to evolve that forces that quantity to be conserved. 
 </p>
 
 <p>
@@ -93,7 +93,7 @@ Throughout the article, to simplify notation we will denote the Lagrangian by
 L(q,\dot q,t),
 \]
 where \(q\) should be understood to be shorthand for \(q_1,\dots,q_n\).
-In our previous <a href="lagrangian.html">article</a> we usually took \(q\) to be the usual cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
+In our previous <a href="lagrangian.html">article</a> we usually took \(q\) to be the usual Cartesian coordinate \(x\), so \(\dot q=v\) was velocity.
  But we could have taken \(q\) to be anything; for example, at the end of that article we thought about a pendulum and used \(q=\theta\) the angle the pendulum was at, instead of its literal \(x\)-coordinate. In physics, choosing the right coordinate system can often greatly simplify the mathematics involved -- in that pendulum example, the math is much simpler if you use \(\theta\) as your coordinate instead of tracking the \((x, y)\) coordinates of the position. 
 </p>
 
@@ -104,7 +104,7 @@ Given a Lagrangian \(L(q,\dot q,t)\), the <em>action</em> of a path \(q(t),\) st
   S=\int_{t_0}^{t_1}L\big(q(t),\dot q(t),t\big)dt.
   \]
 
-  Lagrange's key observation is that nature takes the path which <em>minimizes</em> the above action integral, given that the endpoints \(q(t_0)\) and \(q(t_1)\) are fixed.
+  Lagrange's key observation is that nature takes the path that <em>minimizes</em> the above action integral, given that the endpoints \(q(t_0)\) and \(q(t_1)\) are fixed.
 </p>
 <p>
 Fermat's principle, commonly used in calculus, allows you to detect minima and maxima by looking at how your function changes under small perturbations. Let's perturb our path to get \(q(t)+\delta q(t)\), where \(\delta q\) is some small function such that \(\delta q(t_0)=\delta q(t_1)=0\) to make sure the endpoints don't move.
@@ -141,7 +141,7 @@ Fermat's principle, commonly used in calculus, allows you to detect minima and m
 Let us introduce some terminology. We call \(q_i\) the <em>generalized coordinate</em>, and \(\dot q_i\) the <em>generalized velocity</em>.
 We call the derivative \(p_i=\frac{\partial L}{\partial\dot q_i}\) the <em>generalized momentum</em>, and the derivative \(F_i=\frac{\partial L}{\partial q_i}\) the <em>generalized force</em>.
 Then the Euler-Lagrange equation is now simply \[F_i=\frac{dp_i}{dt}.\] 
-As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\) are the usual cartesian coordinates, the momentum \(p_i\) and force \(F_i\) are the usual notions, and \(F_i=\frac{dp_i}{dt}\) is Newton's famous equation.
+As we saw in our previous <a href="lagrangian.html">article</a>, when \(q_i=x_i\) are the usual Cartesian coordinates, the momentum \(p_i\) and force \(F_i\) are the usual notions, and \(F_i=\frac{dp_i}{dt}\) is Newton's famous equation.
 </p>
 <p>
   In other words, we can view the Euler-Lagrange equation as Newton's equation but in more general coordinates.
@@ -165,7 +165,7 @@ Using the Euler-Lagrange equation, that \(F_i=\dot p_i\), we see
 \[
 \frac{dH}{dt}=-\frac{\partial L}{\partial t}.
 \]
-In other words, the Hamiltonian \(H\) is conserved exactly when the Lagrangian \(L\) is time-independent. Again rephrasing, if your Lagrangian is symmetric with respect to time, then the resulting motion will obey conservation of energy.
+In other words, the Hamiltonian \(H\) is conserved exactly when the Lagrangian \(L\) is time-independent. Again rephrasing, if your Lagrangian is symmetric in time, then the resulting motion will obey conservation of energy.
 </p>
 <p>
 Hamilton's idea was to take Lagrangian mechanics--formulated in terms of \(L,\) \(q_i\), and \(\dot q_i\)--and reformulate it in terms of \(H\), \(q_i\), and \(p_i\). 
@@ -197,7 +197,7 @@ S=\int\bigg(\sum_{i=1}^np_idq_i-Hdt\bigg).
 </p>
 
 <p>
-  For a moment, let's simplify notation by supposing \(n=1\), and let's take a variation \(q\to q+\delta q\) where \(\delta q(t_0)=\delta q(t_1)=0\). This induces a variation \(p\to p+\delta p\) of our momentum, since the momentum is determined by the path. The action integral
+  For a moment, let's simplify notation by supposing \(n=1\), and let's take a variation \(q\to q+\delta q,\) where \(\delta q(t_0)=\delta q(t_1)=0\). This induces a variation \(p\to p+\delta p\) of our momentum, since the momentum is determined by the path. The action integral
   \[
   S=\int_{t_0}^{t_1}\big(pdq-Hdt\big)
   \]
@@ -376,7 +376,7 @@ So, \(F\) is conserved exactly when this sum is zero. Let us re-write the sum us
 \]
 We generally define, for two functions \(f\) and \(g\), their <em>Poisson bracket</em> to be
 \[
-\boxed{\{f,g\}:=\sum_{i=1}^n\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg)}.
+\boxed{\{f,g\}:= \sum_{i=1}^n\bigg(\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}-\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}\bigg)}.
 \]
 Thus
 \[
@@ -496,7 +496,7 @@ so if \(g\) and \(h\) are conserved, then so is \(\{g,h\}\). The first few prope
 </p>
 
 <p>
-There are some situations where the Poisson bracket can build very nice conserved quantities. As an example, let's consider the 2D isotropic harmonic oscillator; this is the physical system of a particle moving in 2-dimensional space, experiencing some force always pulling it towards the origin (think of a 2-dimensional version of the solar system: the origin is like the sun, and the particle is a planet). The trajectories are ellipses, as illustrated in the below diagram (we warn that this fact is often counterintuitive to physics students, so you might want to ponder the animation for a moment, and think about how a force always pointing towards the origin can modify your velocity in such a way that you keep orbiting in an ellipse).
+There are some situations where the Poisson bracket can build very nice conserved quantities. As an example, let's consider the 2D isotropic harmonic oscillator; this is the physical system of a particle moving in 2-dimensional space, experiencing some force always pulling it towards the origin (think of a 2-dimensional version of the solar system: the origin is like the sun, and the particle is a planet). The trajectories are ellipses, as illustrated in the diagram below (we warn that this fact is often counterintuitive to physics students, so you might want to ponder the animation for a moment, and think about how a force always pointing towards the origin can modify your velocity in such a way that you keep orbiting in an ellipse).
 </p>
 
 <!doctype html>
@@ -914,7 +914,7 @@ Evaluating those derivatives, this simplifies to
 </p>
 
 <p>
-This new conserved quantity is not at all an obvious symmetry of our system! It is one component of the <em>Fradkin tensor</em>; in our article on Noether's theorem, we discussed how conservation laws come from symmetries. In this case, the Fradkin tensor comes from a very non-obvious symmetry of this Hamiltonian which was first discovered by the physicist David Fradkin. Using the Poisson bracket, one can very easily discovery this remarkable hidden phenomena!
+This new conserved quantity is not at all an obvious symmetry of our system! It is one component of the <em>Fradkin tensor</em>; in our article on Noether's theorem, we discussed how conservation laws come from symmetries. In this case, the Fradkin tensor comes from a very non-obvious symmetry of this Hamiltonian, which was first discovered by the physicist David Fradkin. Using the Poisson bracket, one can very easily discovery this remarkable hidden phenomena!
 </p>
 
 
