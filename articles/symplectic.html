@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Symplectic geometry -- and how it relates to the Hamiltonian</title>
+  <title>Symplectic geometry</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -16,8 +16,11 @@
 </head>
 <body class="article-page-body hp-page">
 <a class="hp-skip" href="#hp-main">Skip to content</a>
-<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1">
-  <header class="article-hero"><div class="article-category">Draft notes</div>
+
+<main class="page-shell" id="hp-main" tabindex="-1">
+
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+  <header class="article-hero"><div class="article-category"></div>
     <h1 class="article-title">Symplectic geometry -- and how it relates to the Hamiltonian</h1>
     <div class="article-info">
       <span class="article-badge">Level 2</span>
@@ -25,7 +28,7 @@
       <span class="article-badge">About 5 min read</span>
       <!-- <span class="article-badge">Draft · work in progress</span> -->
     </div><p class="article-date">September 19, 2026</p></header>
-    <div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Phase spaces</a></li><li><a href="#hp-section-2">Observables</a></li><li><a href="#hp-section-3">Interlude: vector fields as flows</a></li><li><a href="#hp-section-4">The vector field of an observable</a></li></ol></details></nav><div class="hp-prose">
+    <div class="hp-layout"><nav class="article-toc hp-toc" aria-label="On this page"><details class="hp-toc-details" open><summary>On this page</summary><ol><li><a href="#hp-section-1">Phase spaces</a></li><li><a href="#hp-section-2">ODEs on manifolds</a></li><li><a href="#hp-section-3">Turning Hamiltonians into vector fields</a></li><li><a href="#hp-section-4">Symlectic manifolds in pure mathematics</a></li></ol></details></nav><div class="hp-prose">
 
 <p>
 <a href="hamiltonian.html">Last week</a>, we introduced Hamiltonian mechanics -- another perspective on classical mechanics. This week, we want to recast Hamiltonian mechanics in a more geometric language. This geometric language ends up being very interesting and useful even beyond its original applications in physics, so even if you didn't read last week's article, you still might enjoy this one!
@@ -35,7 +38,7 @@
 TODO: I think the introduction needs to pop more
 </p> -->
 
-<h2>Phase spaces</h2>
+<h2 id="hp-section-1">Phase spaces</h2>
 
 <p>
 In mathematics, one often deals with strange shapes (<a href="diff-forms.html">manifolds</a>). This is because it is often helpful to think about the <em>phase space</em> of some physical system; this is a geometric object representing all possible states of the system. 
@@ -730,7 +733,7 @@ Observe that all the 'physics' goes into constructing \(M\) and choosing the Ham
 From here, Hamilton gives us a way to turn \(H\) into a <em>differential equation</em> -- solving this differential equation tells us how our particle will evolve over time. But before discussing how we can turn \(H\) into a differential equation, let's zoom out for a minute, and discuss ODEs (ordinary differential equations) on manifolds in general.
 </p>
 
-<h2 id="hp-section-1">ODEs on manifolds</h2>
+<h2 id="hp-section-2">ODEs on manifolds</h2>
 
 <p>
 A <a href="diff-forms.html#line"><em>vector field</em></a> on a manifold \(M\) is a choice of tangent vector at each point of \(M.\) The geometric way to talk about ODEs is to talk about <em>flows along vector fields</em>: these are paths where, at every point in the path, the velocity is given by the vector field. 
@@ -3458,7 +3461,7 @@ This definition of flow might seem complicated, but we're going to go through it
 })();
 </script>
 
-<h2 id="hp-section-2">Turning Hamiltonians into vector fields</h2>
+<h2 id="hp-section-3">Turning Hamiltonians into vector fields</h2>
 
 <p>
 In the last section, we saw how vector fields can be used to geometrize ordinary differential equations. So, what are Hamilton's equations of motion in terms of vector fields?
@@ -3551,7 +3554,7 @@ In general, the symplectic form on phase space will look something like this; bu
 This gives a geometric way to formulate Hamilitonian mechanics: you do some physics to design a phase space \(M\), symplectic form \(\omega,\) and Hamiltonian \(H\); then to solve your physics problem, you do some differential geometry to turn \(H\) into a vector field \(X_H,\) and find how particles flow along \(X_H.\)
 </p>
 
-<h2>Symplectic manifolds in pure mathematics</h2>
+<h2 id="hp-section-4">Symplectic manifolds in pure mathematics</h2>
 
 <p>
 In physics, one has these phase spaces \(M\) -- shapes whose points represent the possible states of some physical system. In mathematics, one often finds <em>moduli spaces</em>; a moduli space is just some geometric shape whose points represent something (this is a pretty broad definition!). For example, the circle is the moduli space of all directions: each point on a circle represents a different direction, and all the possible directions (in 2-dimensional space) are points on a circle! 
