@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mechanics III: the Hamiltonian</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+
+<style>
+        details > .details-content {
+                margin-inline-start: 2rem;
+        }
+</style>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+        <main class="page-shell" id="hp-main" tabindex="-1">
+
+          <header class="article-hero">
+    <a class="article-back-button" href="../index.html">← Back</a>
+    <div class="article-category">Physics</div>
+
+    <h1 class="article-title">
+     Gelfand duality 
+    </h1>
+
+    <p class="article-description">
+    Shapes and number systems are the same thing!
+    </p>
+
+
+    <div class="article-info">
+      <span class="article-badge">Level 3</span>
+      <span class="article-badge">About 12 min read</span>
+    </div>
+    <p class="article-date">September 12, 2026</p></header><div class="hp-layout"><nav class="article-toc hp-toc" aria-label=""><details class="hp-toc-details" open><summary>On this page</summary><ol>
+      <li><a href="#operators">Operators</a></li>
+      <li><a href="#understanding">Understanding functions</a></li>
+      <li><a href="#ag">Algebraic geometry</a></li>
+
+<p>
+What is a shape? 
+</p>
+
+<p>
+This question is a little silly; you already know what a shape is. However, to reason about a shape mathematically, one needs a very precise description of it. These descriptions usually go by labelling the <em>set of points</em> of a shape. For example, if I wanted to describe a circle to you, I could say "all the points exactly 1 unit away from this center point." 
+</p>
+
+<div class="hp-circle-widget"></div>
+
+<script>
+(() => {
+  const root = document.currentScript.previousElementSibling;
+
+  root.innerHTML = `
+    <svg
+      viewBox="0 0 500 360"
+      role="img"
+      aria-label="A circle"
+      style="
+        display: block;
+        width: 100%;
+        height: auto;
+        background: #1d2021;
+      "
+    >
+      <circle
+        cx="250"
+        cy="180"
+        r="120"
+        fill="none"
+        stroke="#fabd2f"
+        stroke-width="3"
+      />
+    </svg>
+  `;
+
+  Object.assign(root.style, {
+    display: "block",
+    width: "100%",
+    maxWidth: "760px",
+    margin: "1.5rem auto",
+    background: "#282828",
+    border: "1px solid #504945",
+    borderRadius: "16px",
+    overflow: "hidden"
+  });
+})();
+</script>
+
+<p>
+However, the legendary Russian mathematician Gelfand realized that there is another way to describe a shape: you could specify the <em>functions</em> on the shape. This way of conceptualizing shapes led to modern algebraic geometry, and is helpful in understanding quantum mechanics. 
+</p>
+
+<p>
+So, what did Gelfand observe? 
+</p>
+
+<h2 id="operators">Operators</h2>
+
+<p>
+If you have a shape \(X,\) you can consider functions 
+\[f : X \to \mathbb{R}.\] 
+That is, you look at functions \(f\) whose input is a point on your shape, and whose output is a real number. 
+</p>
+
+<p>
+Gelfand realized that, actually, just by understanding all of the <em>functions</em> \(X \to \mathbb{R},\) you can reconstruct the shape.  
+</p>
+
+<p>
+This sounds a little strange at first, because we're used to working with shapes like a circle or a square, where you just 'see' the shape directly. However, this method of studying shapes is quite natural when your shapes arise more abstractly.
+</p>
+
+<p>
+As an example, in our previous articles on physics, we've discussed the importance of <em>phase spaces</em>. The phase space of a physical system is just some shape representing all the possible states of that system. For example, below you'll see a 1-dimensional particle moving in physical space on the left, and its position in phase space (which tracks the position \(x\) and momentum \(p\)) on the right.
+</p>
+
+<script>
+(() => {
+  const host = document.currentScript;
+
+  const root = document.createElement("div");
+  root.className = "hp-phase-space-widget";
+
+  root.innerHTML = `
+    <style>
+      .hp-phase-space-widget {
+        --bg: #282828;
+        --bg1: #3c3836;
+        --bg2: #504945;
+        --fg: #ebdbb2;
+        --muted: #a89984;
+        --yellow: #fabd2f;
+        --orange: #fe8019;
+        --aqua: #8ec07c;
+
+        width: 100%;
+        max-width: 850px;
+        margin: 1.5rem auto;
+        color: var(--fg);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+                     Consolas, "Liberation Mono", monospace;
+      }
+
+      .hp-phase-space-widget * {
+        box-sizing: border-box;
+      }
+
+      .hp-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .hp-panel {
+        background: var(--bg);
+        border: 1px solid var(--bg2);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .hp-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px 8px;
+        border-bottom: 1px solid var(--bg1);
+      }
+
+      .hp-label {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .hp-sub {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .hp-stage {
+        padding: 8px 10px 12px;
+      }
+
+      .hp-phase-space-widget svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .hp-controls {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+
+        background: var(--bg);
+        border: 1px solid var(--bg2);
+        border-radius: 10px;
+        padding: 9px 11px;
+      }
+
+      .hp-controls button {
+        min-height: 38px;
+        padding: 0 13px;
+
+        border: 1px solid var(--bg2);
+        border-radius: 7px;
+        background: var(--bg1);
+        color: var(--fg);
+
+        font: inherit;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .hp-controls button:hover {
+        border-color: var(--muted);
+      }
+
+      .hp-speed {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        flex: 1 1 210px;
+
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .hp-speed input {
+        width: 100%;
+        accent-color: var(--yellow);
+      }
+
+      .hp-readout {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 650px) {
+        .hp-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hp-readout {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+    </style>
+
+    <div class="hp-grid">
+
+      <!-- PHYSICAL SPACE -->
+      <section class="hp-panel">
+        <div class="hp-head">
+          <span class="hp-label">physical space</span>
+          <span class="hp-sub">position x</span>
+        </div>
+
+        <div class="hp-stage">
+          <svg viewBox="0 0 360 220">
+
+            <text
+              x="180" y="34"
+              text-anchor="middle"
+              fill="#a89984"
+              font-size="11">
+            </text>
+
+            <!-- line -->
+            <line
+              x1="42" y1="112"
+              x2="318" y2="112"
+              stroke="#665c54"
+              stroke-width="2"
+            />
+
+            <!-- midpoint -->
+            <line
+              x1="180" y1="100"
+              x2="180" y2="124"
+              stroke="#928374"
+              stroke-width="1.5"
+            />
+
+            <text x="180" y="142"
+                  text-anchor="middle"
+                  fill="#928374"
+                  font-size="10">0</text>
+
+            <text x="42" y="142"
+                  text-anchor="middle"
+                  fill="#928374"
+                  font-size="10">−A</text>
+
+            <text x="318" y="142"
+                  text-anchor="middle"
+                  fill="#928374"
+                  font-size="10">+A</text>
+
+            <!-- position line -->
+            <line
+              class="hp-position-line"
+              x1="180" y1="112"
+              x2="318" y2="112"
+              stroke="#fabd2f"
+              stroke-width="3"
+              stroke-linecap="round"
+              opacity="0.35"
+            />
+
+            <!-- particle -->
+            <circle
+              class="hp-particle-halo"
+              cx="318" cy="112"
+              r="11"
+              fill="#fabd2f"
+              opacity="0.13"
+            />
+
+            <circle
+              class="hp-particle"
+              cx="318" cy="112"
+              r="6.5"
+              fill="#fabd2f"
+            />
+
+            <!-- velocity arrow -->
+            <line
+              class="hp-velocity-arrow"
+              x1="318" y1="82"
+              x2="318" y2="82"
+              stroke="#8ec07c"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+
+            <polygon
+              class="hp-velocity-head"
+              points="318,82 318,82 318,82"
+              fill="#8ec07c"
+            />
+
+            <text
+              class="hp-x-text"
+              x="180" y="184"
+              text-anchor="middle"
+              fill="#ebdbb2"
+              font-size="12">
+              x = 1.00
+            </text>
+
+            <text
+              class="hp-v-text"
+              x="180" y="202"
+              text-anchor="middle"
+              fill="#8ec07c"
+              font-size="11">
+              v = 0.00
+            </text>
+
+          </svg>
+        </div>
+      </section>
+
+
+      <!-- PHASE SPACE -->
+      <section class="hp-panel">
+        <div class="hp-head">
+          <span class="hp-label">phase space</span>
+          <span class="hp-sub">state = (x, p)</span>
+        </div>
+
+        <div class="hp-stage">
+          <svg viewBox="0 0 360 220">
+
+            <!-- axes -->
+            <line
+              x1="48" y1="110"
+              x2="320" y2="110"
+              stroke="#665c54"
+              stroke-width="1.4"
+            />
+
+            <line
+              x1="184" y1="26"
+              x2="184" y2="196"
+              stroke="#665c54"
+              stroke-width="1.4"
+            />
+
+            <text
+              x="323" y="106"
+              fill="#a89984"
+              font-size="11">
+              x
+            </text>
+
+            <text
+              x="191" y="30"
+              fill="#a89984"
+              font-size="11">
+              p
+            </text>
+
+            <!-- full orbit -->
+            <ellipse
+              cx="184"
+              cy="110"
+              rx="116"
+              ry="70"
+              fill="none"
+              stroke="#665c54"
+              stroke-width="1.5"
+            />
+
+            <!-- CURRENT STATE ONLY -->
+            <circle
+              class="hp-phase-halo"
+              cx="300"
+              cy="110"
+              r="10"
+              fill="#fe8019"
+              opacity="0.14"
+            />
+
+            <circle
+              class="hp-phase-dot"
+              cx="300"
+              cy="110"
+              r="6"
+              fill="#fe8019"
+            />
+
+            <text
+              x="184"
+              y="214"
+              text-anchor="middle"
+              fill="#a89984"
+              font-size="10">
+            </text>
+
+          </svg>
+        </div>
+      </section>
+
+    </div>
+
+
+    <div class="hp-controls">
+
+      <button class="hp-toggle" type="button">
+        Pause
+      </button>
+
+      <button class="hp-reset" type="button">
+        Reset
+      </button>
+
+      <label class="hp-speed">
+        <span>speed</span>
+
+        <input
+          class="hp-speed-input"
+          type="range"
+          min="0.2"
+          max="2.5"
+          value="1"
+          step="0.1"
+        >
+
+        <span class="hp-speed-label">
+          1.0×
+        </span>
+      </label>
+
+      <div class="hp-readout">
+        (x, v) = (1.00, 0.00)
+      </div>
+
+    </div>
+  `;
+
+  host.parentNode.insertBefore(root, host);
+
+  const particle =
+    root.querySelector(".hp-particle");
+
+  const particleHalo =
+    root.querySelector(".hp-particle-halo");
+
+  const positionLine =
+    root.querySelector(".hp-position-line");
+
+  const velocityArrow =
+    root.querySelector(".hp-velocity-arrow");
+
+  const velocityHead =
+    root.querySelector(".hp-velocity-head");
+
+  const xText =
+    root.querySelector(".hp-x-text");
+
+  const vText =
+    root.querySelector(".hp-v-text");
+
+  const phaseDot =
+    root.querySelector(".hp-phase-dot");
+
+  const phaseHalo =
+    root.querySelector(".hp-phase-halo");
+
+  const toggle =
+    root.querySelector(".hp-toggle");
+
+  const reset =
+    root.querySelector(".hp-reset");
+
+  const speedInput =
+    root.querySelector(".hp-speed-input");
+
+  const speedLabel =
+    root.querySelector(".hp-speed-label");
+
+  const readout =
+    root.querySelector(".hp-readout");
+
+
+  let theta = 0;
+  let speed = 1;
+  let running = true;
+
+  let lastTime = performance.now();
+
+
+  function formatNumber(n) {
+    if (Math.abs(n) < 0.005) n = 0;
+    return n.toFixed(2);
+  }
+
+
+  function render() {
+
+    // Simple harmonic oscillator:
+    //
+    //     x = cos(t)
+    //     v = -sin(t)
+    //
+    // so the phase-space trajectory is a closed ellipse.
+
+    const x = Math.cos(theta);
+    const v = -Math.sin(theta);
+
+
+    /* --------------------------------
+       PHYSICAL SPACE
+       -------------------------------- */
+
+    const particleX =
+      180 + 138 * x;
+
+    particle.setAttribute(
+      "cx",
+      particleX
+    );
+
+    particleHalo.setAttribute(
+      "cx",
+      particleX
+    );
+
+    positionLine.setAttribute(
+      "x2",
+      particleX
+    );
+
+
+    /* velocity arrow */
+
+    const arrowY = 82;
+    const arrowScale = 31;
+
+    const arrowStart =
+      particleX;
+
+    const arrowEnd =
+      particleX + arrowScale * v;
+
+    velocityArrow.setAttribute(
+      "x1",
+      arrowStart
+    );
+
+    velocityArrow.setAttribute(
+      "x2",
+      arrowEnd
+    );
+
+    velocityArrow.setAttribute(
+      "y1",
+      arrowY
+    );
+
+    velocityArrow.setAttribute(
+      "y2",
+      arrowY
+    );
+
+
+    const direction =
+      v >= 0 ? 1 : -1;
+
+    velocityHead.setAttribute(
+      "points",
+      `
+        ${arrowEnd},${arrowY}
+        ${arrowEnd - direction * 8},${arrowY - 4.5}
+        ${arrowEnd - direction * 8},${arrowY + 4.5}
+      `
+    );
+
+
+    xText.textContent =
+      `x = ${formatNumber(x)}`;
+
+    vText.textContent =
+      `v = ${formatNumber(v)}`;
+
+
+    /* --------------------------------
+       PHASE SPACE
+       -------------------------------- */
+
+    const phaseX =
+      184 + 116 * x;
+
+    const phaseY =
+      110 - 70 * v;
+
+    phaseDot.setAttribute(
+      "cx",
+      phaseX
+    );
+
+    phaseDot.setAttribute(
+      "cy",
+      phaseY
+    );
+
+    phaseHalo.setAttribute(
+      "cx",
+      phaseX
+    );
+
+    phaseHalo.setAttribute(
+      "cy",
+      phaseY
+    );
+
+
+    readout.textContent =
+      `(x, v) = (${formatNumber(x)}, ${formatNumber(v)})`;
+  }
+
+
+  function animate(now) {
+
+    const dt =
+      Math.min(
+        (now - lastTime) / 1000,
+        0.05
+      );
+
+    lastTime = now;
+
+    if (running) {
+      theta +=
+        dt * 1.45 * speed;
+
+      theta %=
+        2 * Math.PI;
+    }
+
+    render();
+
+    requestAnimationFrame(
+      animate
+    );
+  }
+
+
+  toggle.addEventListener(
+    "click",
+    () => {
+
+      running =
+        !running;
+
+      toggle.textContent =
+        running
+          ? "Pause"
+          : "Play";
+
+      lastTime =
+        performance.now();
+    }
+  );
+
+
+  reset.addEventListener(
+    "click",
+    () => {
+
+      theta = 0;
+
+      render();
+    }
+  );
+
+
+  speedInput.addEventListener(
+    "input",
+    () => {
+
+      speed =
+        Number(speedInput.value);
+
+      speedLabel.textContent =
+        `${speed.toFixed(1)}×`;
+    }
+  );
+
+
+  render();
+
+  requestAnimationFrame(
+    animate
+  );
+
+})();
+</script>
+
+
+<p>
+The phase space is an abstraction. A scientist observing the world would only see the figure on the left, of the ball moving on the line; the picture on the right is a shape created by the scientist to help understand the ball. 
+</p>
+
+<p>
+In particular, the scientist is not directly observing phase space. However, they can observe two <em>functions</em> on phase space. For example, the phase space above has two coordinates: position and momentum. The scientist observing the ball can directly see the ball's velocity. Assuming the ball has a mass of, say, 5 kilograms, this menas the scientist is directly observing the function
+\[f(p, x) = \frac{p}{5\text{ kg}}.\]
+</p>
+
+<p>
+Because momentum \(p\) is mass times velocity, dividing by the mass recovers velocity -- which is what our scientist can see. Gelfand's perspective -- that shapes are determined by their functions -- is therefore very natural to a scientist. A scientist understands all the possible functions on phase space: these are just the different measurements the scientist can make of the physical system. 
+</p>
+
+<h2 id="understanding">Understanding functions</h2>
+
+<p>
+The collection of all functions \(X \to \mathbb{R}\) on some shape \(X\) forms a mathematical structure known as a <em>ring</em>. 
+</p>
+
+<p>
+A <em>ring</em> is a collection of objects together with a way to <em>add</em> objects together, plus a way to <em>multiply</em> objects, such that the addition and multiplication behave similarly to the usual operations of addition and multiplication. Given two functions \(f : X \to \mathbb{R}\) and \(g : X \to \mathbb{R},\) we can add them using the rule
+\[(f+g)(x) = f(x) + g(x),\]
+and multiply them with
+\[(f \cdot g)(x) = f(x) \cdot g(x).\] 
+Thus, functions on a shape \(X\) form a ring. 
+</p>
+
+<p>
+<em>Gelfand duality</em> asserts that a shape \(X\) can be recovered from its ring of functions -- this means I tell you what all the functions are, together with how to add and multiply them. For mathematicians, Gelfand duality is usually stated as follows: a locally compact Hausdorff space can be reconstructed from its ring of continuous functions; in fact, the functor sending a locally compact Hausdorff space to its ring of continuous functions is fully faithful.
+</p>
+
+<h2 id="ag">Algebraic geometry</h2>
+
+<p>
+As we plan to explore in future posts, part of the power of Gelfand duality is actually not how it helps you understand shapes -- but instead how it helps you understand <em>rings</em>. Using Gelfand duality, one can rephrase many ideas occuring in ring theory geometrically. Humans, it turns out, are very geometric thinkers, and so having these geometric intuitions for ring theory makes us much better at understanding it. 
+</p>
+
+<p>
+We hope to explore this analogy further in upcoming articles, but as a starting point, let's discuss the Chinese remainder theorem (TODOCITE). This is usually thought of as a theorem of number theory, but Gelfand duality gives us some geometric insight as to what is going on.  
+</p>
+
+<h3>Mod 6 arithmetic</h3> 
+
+<p>
+As an example, let's consider the ring \(\mathbb{Z}/6\) -- read aloud as "Z modulo 6" -- which encodes the number system of "mod 6 arithmetic." 
+</p>
+
+<p>
+That is, \(\mathbb{Z}/6\) is a number system with six numbers -- they are 0, 1, 2, 3, 4, and 5 -- and where the addition and multiplication is done by adding or multiplying normally, and then dividing the answer by 6 and taking the remainder. For example, 
+\[5 + 5 = 4\]
+in this ring, because normally \(5+5=10,\) but 10 divided by 6 is 1 with remainder 4. 
+</p>
+
+<p>
+Similarly, in the number system \(\mathbb{Z}/6,\) we have
+\[3 + 4 = 1\]
+and
+\[2 \cdot 3 = 0.\] 
+</p>
+
+<h3>Some idempotents</h3>
+
+<p>
+In a ring, solutions to the equation \(x^2 = x\) are called <em>idempotents</em>.
+</p>
+
+<p>
+Humans usually work in number systems like \(\mathbb{Z}\) (the integers), \(\mathbb{R}\) (the real numbers), or maybe \(\mathbb{C}\) (the complex numbers). In those number systems, the equation \(x^2 = x\) only has two solutions: 0 and 1. However, in \(\mathbb{Z}/6,\) this quadratic equation actually has four solutions! As always, 0 and 1 solve it; but in \(\mathbb{Z}/6,\) \(x=4\) and \(x=3\) are also solutions, because
+\[3^2 = 3\]
+and
+\[4^2 = 4\]
+modulo 6. 
+</p>
+
+<p>
+These extra idempotents are a strange property of the ring \(\mathbb{Z}/6.\) To understand what they mean, let's go back to geometry.
+</p>
+
+<h3>Connected components</h3>
+
+<p>
+In mathematics, some shapes have multiple components. For example, the graph of 
+\[x^2 = y^2 + z^2 + 1\]
+naturally divides up into two pieces. 
+</p>
+
+<div class="hp-hyperboloid-widget"></div>
+
+<script>
+(() => {
+  const root = document.currentScript.previousElementSibling;
+
+  // ---------- Hidden Phenomena / Gruvbox palette ----------
+  const BG_OUTER = "#282828";
+  const BG_INNER = "#1d2021";
+  const BORDER = "#504945";
+  const TEXT = "#ebdbb2";
+  const GRID = "#504945";
+  const PLUS = "#83a598";   // gruvbox blue
+  const MINUS = "#b8bb26";  // gruvbox green
+
+  // ---------- container styling ----------
+  Object.assign(root.style, {
+    width: "100%",
+    maxWidth: "820px",
+    height: "560px",
+    margin: "1.5rem auto",
+    background: BG_OUTER,
+    border: `1px solid ${BORDER}`,
+    borderRadius: "16px",
+    overflow: "hidden",
+    boxSizing: "border-box"
+  });
+
+  // ---------- load Plotly if needed ----------
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function main() {
+    if (!window.Plotly) {
+      await loadScript("https://cdn.plot.ly/plotly-2.35.2.min.js");
+    }
+
+    // Parameterization:
+    // x = ±sqrt(r^2 + 1),  y = r cos(theta),  z = r sin(theta)
+    const nr = 50;
+    const nt = 72;
+    const rMax = 2.8;
+
+    const xPlus = [];
+    const yPlus = [];
+    const zPlus = [];
+
+    const xMinus = [];
+    const yMinus = [];
+    const zMinus = [];
+
+    for (let i = 0; i < nr; i++) {
+      const r = (rMax * i) / (nr - 1);
+
+      const rowXP = [];
+      const rowYP = [];
+      const rowZP = [];
+
+      const rowXM = [];
+      const rowYM = [];
+      const rowZM = [];
+
+      for (let j = 0; j < nt; j++) {
+        const theta = (2 * Math.PI * j) / (nt - 1);
+        const y = r * Math.cos(theta);
+        const z = r * Math.sin(theta);
+        const x = Math.sqrt(r * r + 1);
+
+        rowXP.push(x);
+        rowYP.push(y);
+        rowZP.push(z);
+
+        rowXM.push(-x);
+        rowYM.push(y);
+        rowZM.push(z);
+      }
+
+      xPlus.push(rowXP);
+      yPlus.push(rowYP);
+      zPlus.push(rowZP);
+
+      xMinus.push(rowXM);
+      yMinus.push(rowYM);
+      zMinus.push(rowZM);
+    }
+
+    const data = [
+      {
+        type: "surface",
+        name: "x = +√(y² + z² + 1)",
+        x: xPlus,
+        y: yPlus,
+        z: zPlus,
+        showscale: false,
+        opacity: 0.92,
+        colorscale: [
+          [0, PLUS],
+          [1, PLUS]
+        ],
+        hovertemplate:
+          "x=%{x:.2f}<br>y=%{y:.2f}<br>z=%{z:.2f}<extra>+ sheet</extra>"
+      },
+      {
+        type: "surface",
+        name: "x = -√(y² + z² + 1)",
+        x: xMinus,
+        y: yMinus,
+        z: zMinus,
+        showscale: false,
+        opacity: 0.92,
+        colorscale: [
+          [0, MINUS],
+          [1, MINUS]
+        ],
+        hovertemplate:
+          "x=%{x:.2f}<br>y=%{y:.2f}<br>z=%{z:.2f}<extra>- sheet</extra>"
+      }
+    ];
+
+    const layout = {
+      margin: { l: 0, r: 0, t: 44, b: 0 },
+      paper_bgcolor: BG_OUTER,
+      plot_bgcolor: BG_INNER,
+      font: {
+        color: TEXT,
+        family: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
+        size: 14
+      },
+      title: {
+        text: "x² = y² + z² + 1",
+        x: 0.5,
+        xanchor: "center",
+        font: { color: TEXT, size: 20 }
+      },
+      legend: {
+        bgcolor: "rgba(0,0,0,0)",
+        font: { color: TEXT, size: 12 },
+        x: 0.02,
+        y: 0.98
+      },
+      scene: {
+        bgcolor: BG_INNER,
+        aspectmode: "cube",
+        camera: {
+          eye: { x: 1.8, y: 1.35, z: 1.15 }
+        },
+        xaxis: {
+          title: "x",
+          color: TEXT,
+          gridcolor: GRID,
+          zerolinecolor: GRID,
+          showbackground: true,
+          backgroundcolor: BG_INNER
+        },
+        yaxis: {
+          title: "y",
+          color: TEXT,
+          gridcolor: GRID,
+          zerolinecolor: GRID,
+          showbackground: true,
+          backgroundcolor: BG_INNER
+        },
+        zaxis: {
+          title: "z",
+          color: TEXT,
+          gridcolor: GRID,
+          zerolinecolor: GRID,
+          showbackground: true,
+          backgroundcolor: BG_INNER
+        }
+      }
+    };
+
+    const config = {
+      responsive: true,
+      displayModeBar: false
+    };
+
+    Plotly.newPlot(root, data, layout, config);
+  }
+
+  main().catch(err => {
+    root.innerHTML = `
+      <div style="
+        color: ${TEXT};
+        background: ${BG_INNER};
+        padding: 1rem;
+        font-family: system-ui, sans-serif;
+      ">
+        Could not load the 3D plot.
+      </div>
+    `;
+    console.error(err);
+  });
+})();
+</script>
+
+<p>
+Under Gelfand duality, how do we 'see' that a shape has two pieces? 
+</p>
+
+<p>
+Well, let's say we have a shape \(X\) which is really two distinct pieces \(Y_1\) and \(Y_2\); we write this as 
+\[X = Y_1 \sqcup Y_2,\]
+where the symbol \(\sqcup\) is read aloud as "disjoint union." 
+</p>
+
+<p>
+Using functions, how might we separate \(Y_1\) and \(Y_2\)? Fortunately, there's an easy answer: we can define on \(X\) a continuous function 
+\[f_1 : X \to \mathbb{R}\]
+given by 
+\[
+f_1(x) = \begin{cases} 1 & x \in Y_1, \\ 0 & x \in Y_2.\end{cases}
+\]
+</p>
+
+<p>
+This function \(f_1\) obeys the property that
+\[f_1(x)^2 = f_1(x)\]
+for all \(x,\) but \(f_1\) is <em>not</em> the constant function 0 or 1! Thus \(f_1\) is an example of an interesting idempotent in the ring of continuous functions on \(X.\) 
+</p>
+
+<p>
+This is the geometric intuition for idempotents in a ring: idempotents are functions which only take the values 0 and 1; they thus help you divide the shape into pieces (the piece where the idempotent is 0, and the piece where the idempotent is 1). 
+</p>
+
+<p>
+The ring of continuous functions \(X \to \mathbb{R}\) has in total four idempotents: the constant function 0, the constant function 1, the function \(f_1\) above, and the similarly defined
+\[f_2(x) = \begin{cases} 0 & x \in Y_1, 1 & x \in Y_2.\end{cases}\]
+</p>
+
+<p>
+You should think that these four idempotents arise because there are two pieces to \(X,\) and because idempotents take the value 0 or 1 on each piece; so you have \(2 \cdot 2\) total idempotents. Similarly, if \(X\) was divided into three pieces, there would be \(2 \cdot 2 \cdot 2 = 8\) idempotents.
+</p>
+
+<p>
+Observe that, when we take a continuous function \(f : X \to \mathbb{R},\) if we multiply it by \(f_1,\) then we get a function
+\[(f \cdot f_1)(x) = \begin{cases} f(x) & x \in Y_1, \\ 0 & x \in Y_2.\end{cases}\]
+Thus multiplication by \(f_1\) "zeroes out" \(f\) on \(Y_2.\) So, the multiples of \(f_1\) live only on \(Y_1,\) and thus we can view the continuous functions on \(Y_1\) as being the multiples of \(f_1.\) 
+</p>
+
+<h3>Back to \(\mathbb{Z}/6\)</h3>
+
+<p>
+Recall that \(\mathbb{Z}/6\) had four idempotents: 0, 1, 3, and 4. This suggests that, in some sense, \(\mathbb{Z}/6\) should split into two pieces, just like our shape \(X\) above split into two pieces.
+</p>
+
+<p>
+In our geometric example, we recovered the continuous functions on \(Y_1\) from the continuous functions on \(X\) by multiplying by our interesting idempotent \(f_1.\) Here, we have an interesting idempotent 3, so let's look at the multiples of 3; in \(\mathbb{Z}/6,\) there are only two: 0 and 3. And 0 and 3 form an interesting number system: in mod 6 arithmetic, 
+\[3 + 3 = 0,\]
+\[0 + 3 = 3,\]
+\[0 \cdot 3 = 0,\]
+\[3 \cdot 3 = 3.\] 
+</p>
+
+<p>
+A number system with two numbers obeying the above four identities is <em>isomorphic</em> to modulo 2 arithmetic; this is because mod 2 arithmetic is a number system with two numbers, 0 and 1, obeying
+\[1 + 1 = 0,\]
+\[0 + 1 = 1,\]
+\[0 \cdot 1 = 0,\]
+\[1 \cdot 1 = 1.\] 
+</p>
+
+<p>
+If we just re-label the number called '1' in modulo 2 arithmetic as '3', then we recover the number system of 0 and 3 above. 
+</p>
+
+<p>
+Similarly, the multiples of 4 in \(\mathbb{Z}/6\) are \(0, 4,\) and \(2,\) and they form a number system isomorphic to modulo 3 arithmetic.
+</p>
+
+<p>
+This suggests that \(\mathbb{Z}/6\) breaks down into two pieces: mod 2 arithmetic, and mod 3 arithmetic. And indeed, it does -- this is exactly the content of the Chinese remainder theorem! Mathematically, we'd say
+\[\mathbb{Z}/2 \times \mathbb{Z}/3 \cong \mathbb{Z}/6\]
+(with the funny equals sign being read as "is isomorphic to"), and practically, this means that 
+\[a \equiv b \pmod{6}\]
+if and only if
+\[a \equiv b \pmod{2}\]
+<em>and</em>
+\[a \equiv b \pmod{3}.\]
+That is, instead of doing mod 6 arithmetic, you can do mod 2 and mod 3 arithmetic separately, and then put the results back together in the end!
+</p>
+
+<p>
+If we look at the 'extra' idempotents 3 and 4 in \(\mathbb{Z}/6,\) they have something in common with the idempotents \(f_1\) and \(f_2\) from our geometric example. Those geometric idempotents were 0 on one piece of our shape and 1 on the other; and similarly, 3 is 0 modulo 3 and 1 modulo 2; and 4 is 1 modulo 3 and 0 modulo 2. The idempotents in \(\mathbb{Z}/6\) and in our geometric example behave in the exact same ways! 
+</p>
+
+<p>
+In fact, if you are trying to prove the Chinese remainder theorem in general -- which asserts that, when \(a, b\) are coprime integers we have
+\[\mathbb{Z}/a \times \mathbb{Z}/b \cong \mathbb{Z}/ab,\]
+then this suggests should you look for some integers \(N\) and \(M\) with
+\[N \equiv 1 \pmod{a}, N \equiv 0\pmod{b},\]
+and
+\[M \equiv 0 \pmod{a}, M \equiv 1\pmod{b}.\] 
+</p>
+
+<p>
+And indeed, this is exactly how to prove the Chinese remainder theorem in general! So geometry gives you a big clue about how to prove a theorem in number theory! 
+</p>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/symplectic.html"><div class="related-category">Geometry · Physics</div><h3>Symplectic geometry -- and how it relates to the Hamiltonian</h3><p>Recasting Hamiltonian mechanics in the language of geometry.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/noether.html"><div class="related-category">Physics</div><h3>Mechanics II: symmetry is conservation</h3><p>Why symmetries of a physical system produce conservation laws.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
