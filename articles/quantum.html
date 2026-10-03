@@ -60,7 +60,7 @@
 
 
 
- <p>
+<p>
 In our series on mechanics, we discussed several approaches to mechanics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage—it serves as a <em>bridge between classical and quantum mechanics</em>.
 </p>
 
@@ -102,7 +102,10 @@ The fundamental equation in quantum mechanics is <em>Schrodinger’s equation,</
 \[
 i\hbar\frac{\partial}{\partial t}\psi(\vec x,t)=\bigg(-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial\vec x^2}+V(\vec x)\bigg)\psi(\vec x,t).
 \]
-Here, \(\hbar\) is called Planck’s constant, and it’s a very small number (which is why we only see quantum mechanics come into play on small scales). This is analogous to the equation for the energy
+Here, \(\hbar\) is called the (reduced) Planck constant, and it’s a very small number
+\[
+\hbar\approx1.054\times 10^{-34}\mathrm{J}\cdot\mathrm{s}.
+\](which is why we only see quantum mechanics come into play on small scales). This is analogous to the equation for the energy
 \(E=\frac{p^2}{2m}+V,\)
 where the energy \(E\) is replaced by the operator
 \[
@@ -174,11 +177,69 @@ Given a state \(|\psi\rangle\in\mathcal H\), observing the position will collaps
 Therefore, Heisenberg's uncertainty principle says that \(\hat x\) and \(\hat p\) have no simultaneous eigenvectors. Let's take a detour into linear algebra and think about when two matrices have simultaneous eigenvectors.
 </p>
 
-<h3>A detour: commuting matrices</h3>
+<h3>A detour: eigenvalues and eigenvectors</h3>
 
 <p>
-[Finish later]
-</p> 
+A matrix \(A\) has an eigenvalue \(\lambda\) if you have a non-zero vector \(\vec v\)--called an <em>eigenvector</em>--such that
+\[
+A\vec v=\lambda\vec v.
+\]
+For example, the matrix
+\[
+A=\begin{pmatrix}0&1\\
+-2&3
+\end{pmatrix}
+\]
+has eigenvalues \(\lambda=1,2\), since
+\[
+A\cdot\begin{pmatrix}1\\1\end{pmatrix}=\begin{pmatrix}1\\1\end{pmatrix},\ A\cdot\begin{pmatrix}1\\2\end{pmatrix}=2\begin{pmatrix}1\\2\end{pmatrix}.
+\]
+</p>
+
+<p>
+An important result in linear algebra is that if \(A\) and \(B\) are two matrices which commute with each other, i.e.,
+\[
+AB=BA,\]
+then you can find a simultaneous eigenvector: some vector \(\vec v\) such that
+\[
+A\vec v=\lambda\vec v,\ B\vec v=\mu\vec v\]
+for some scalars \(\lambda\) and \(\mu\).
+</p>
+
+<p>
+The basic reason is because if \(\vec v\) is an eigenvector of \(A\), then \(B\vec v\) is also an eigenvector of \(A\). Indeed, if \(A\vec v=\lambda\vec v\) for some scalar \(\lambda\), then
+\[
+A(B\vec v)=B(A\vec v)=B(\lambda\vec v)=\lambda(B\vec v),
+\]
+since \(A\) and \(B\) commute with each other. That means you can “arrange” an eigenvector for \(B\) without breaking the condition of being an eigenvector for \(A\).
+</p>
+
+<details class="hp-aside"> 
+<summary>To see a more rigorous proof, you can click <span style="color:orange">here</span>.</summary>
+        <div class="details-content" style="color:orange">
+<p>
+First of all, remember that any complex matrix has at least one eigenvalue. So let \(\lambda\) be an eigenvalue for \(A\). Then the vectors with eigenvalue \(\lambda\) form a subspace
+\[
+V=\{\vec v\in\mathbb C^n:A\vec v=\lambda\vec v\}\subset\mathbb C^n.
+\]
+The matrix \(B\) preserves this subspace, in the sense that if \(\vec v\in V\) then \(B\vec v\in V\) as well. That’s because
+\[
+A(B\vec v)=B(A\vec v)=B(\lambda\vec v)=\lambda(B\vec v).
+\]
+Now, \(B\) is a linear operator on \(V\), hence also has an eigenvector, call it \(\vec v\in V\), with some eigenvalue \(\mu\). This is the vector we were looking for.
+</p>
+
+<h3>Back to uncertainty</h3>
+<p>
+Therefore, the uncertainty principle tells us that the position and momentum operators \(\hat x\) and \(\hat p\) <em>do not</em> commute with each other. The extent to which the operators do not commute with each other is called the <em>commutator</em>,
+\[
+[\hat x,\hat p]=i\hbar.
+\]
+</p>
+
+
+
+
 
 
 
