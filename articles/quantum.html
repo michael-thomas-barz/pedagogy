@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mechanics IV: from Hamiltonian to quantum mechanics</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+
+<main class="page-shell" id="hp-main" tabindex="-1">
+
+  <header class="article-hero">
+    <a class="article-back-button" href="../index.html">← Back</a>
+
+    <div class="article-category">Physics</div>
+
+    <h1 class="article-title">
+      Mechanics IV: from Hamiltonian to quantum mechanics
+    </h1>
+
+    <p class="article-description">
+      We introduce basic ideas in quantum mechanics and how they relate to Hamilton's approach to mechanics.
+    </p>
+
+    <div class="article-info">
+      <span class="article-badge">Level 4</span>
+      <span class="article-badge">Helpful: Linear algebra; Hamiltonian mechanics</span>
+      <span class="article-badge">About 30 min read</span>
+    </div>
+
+    <p class="article-date">October 2, 2026</p>
+  </header>
+
+  <div class="hp-layout">
+    <nav class="article-toc hp-toc" aria-label="On this page">
+      <details class="hp-toc-details" open>
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#hp-section-1">Equivalence relations</a></li>
+          <li><a href="#hp-section-2">The formal definition of an equivalence relation</a></li>
+          <li><a href="#hp-section-3">Groupoids</a></li>
+          <li><a href="#hp-section-4">Groupoid-based mathematics</a></li>
+          <li><a href="#hp-section-5">The inadequacy of groupoids</a></li>
+          <li><a href="#hp-section-6">\(\infty\)-groupoids; or, anima</a></li>
+        </ol>
+      </details>
+    </nav>
+
+    <div class="hp-prose">
+
+
+
+ <p>
+In our series on mechanics, we discussed several approaches to mechanics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage—it serves as a <em>bridge between classical and quantum mechanics</em>.
+</p>
+
+<h2>What is quantum mechanics?</h2>
+
+<h3>Schrodinger’s cat</h3>
+
+<p>
+You may have heard of the famous thought experiment of Schrodinger’s cat, that the cat is both alive and dead simultaneously. What does that mean, really?
+</p>
+
+<p>
+A key principle in quantum mechanics is that particles only exist probabilistically. In other words, instead of saying a particle is at position \((1,2)\), in quantum mechanics you say that the position of a particle is a normal distribution centered around \((1,2)\) with standard deviation \(3\). Observing the particle amounts to sampling this distribution: you are likely to observe the particle close to \((1,2)\), but with a very small probability, you may observe it at \((100,-9)\).
+</p>
+
+<p>
+Going back to the example of Schrodinger’s cat, you take a particle which could have two states A and B, and assume it could be each state with probability \(\frac12\). Then, you make a contraption to release poison to the cat only when the particle has state B (it is cruel, we know…). If you do this, the cat will also be dead and alive with probability \(\frac12\).
+</p>
+
+<p>
+There is an important distinction between Schrodinger’s cat and flipping a coin. When you flip a coin, it also lands heads or tails with probability \(\frac12\). You could then decide to kill the cat (for some reason…) only when the coin flips tails. You may wonder; what is the difference? 
+</p>
+
+<p>
+The difference is that if you knew the speed and force at which you flipped the coin, you could <em>in principle</em> know whether it would land heads or tails before the experiment. In other words, we only say it lands heads or tails with probability \(\frac12\) due to our ignorance. However, in quantum mechanics, a particle can have a <em>physical state</em> which is state A with probability \(\frac12\) and state B with probability \(\frac12\). Even an all-knowing being could not tell you which state the particle is in before observing it. So, Schrodinger’s cat is really both physically alive and dead, in a precise physical sense.
+</p>
+
+<h3>Wave functions</h3>
+
+<p>
+So, how do we express a particle in quantum mechanics? We will use <em>wave functions</em>, which is a complex-valued function \(\psi(\vec x,t)\), where \(\vec x\in\mathbb R^3\) is the position and \(t\) is the time. When a particle has wave function \(\psi(\vec x,t)\), it means at time \(t\), you have probability \(|\psi(\vec x,t)|^2\) of finding it at position \(\vec x\). In particular, since probabilities should add to 1, we want
+\[
+\int_{\mathbb R^3}|\psi(\vec x,t)|^2d\vec x=1.
+\]
+</p>
+
+<p>
+The fundamental equation in quantum mechanics is <em>Schrodinger’s equation,</em> which states that if a particle of mass \(m\) is in a potential \(V(\vec x)\), the wave function obeys the differential equation
+\[
+i\hbar\frac{\partial}{\partial t}\psi(\vec x,t)=\bigg(-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial\vec x^2}+V(\vec x)\bigg)\psi(\vec x,t).
+\]
+Here, \(\hbar\) is called Planck’s constant, and it’s a very small number (which is why we only see quantum mechanics come into play on small scales). This is analogous to the equation for the energy
+\(E=\frac{p^2}{2m}+V,\)
+where the energy \(E\) is replaced by the operator
+\[
+i\hbar\frac{\partial}{\partial t},
+\]
+the momentum \(p\) is replaced by the operator
+\[
+\frac\hbar i\frac\partial{\partial\vec x}.
+\]
+</p>
+
+<h2>A linear algebraic foundation to quantum mechanics</h2>
+
+<p>
+In the previous section, we saw how we can formulate quantum mechanics through wave functions \(\psi(\vec x,t)\), which describes the probability distribution of the <em>position</em> of a particle. However, we could equally have used wave functions \(\psi(\vec p,t)\) which describes the probability distribution of the <em>momentum</em> of a particle. This suggests wave functions may not be the best way to formalize quantum mechanics.
+</p>
+
+<p>
+In the mathematical formalism of quantum mechanics developed by Paul Dirac, David Hilbert, John von Neumann, and Hermann Weyl, we instead think of a state of a quantum mechanical system as a vector \(|\psi\rangle\) in some vector space \(\mathcal H\). Our previous assumption that the probabilities in a wave function add to 1,
+\[
+\int_{\mathbb R^3}|\psi(\vec x,t)|^2d\vec x=1,
+\]
+is replaced with the hypothesis that the vector \(|\psi\rangle\) has length 1. In Dirac’s notation, we write this as
+\[
+\langle\psi|\psi\rangle=1.
+\]
+In general, given two vectors \(|\phi\rangle\) and \(|\psi\rangle\) in the vector space \(\mathcal H\), Dirac denotes their inner product as 
+\[
+\langle\phi|\psi\rangle.
+\]
+The physical state evolves with time, say as a function \(|\psi(t)\rangle\)--this is the Heisenberg picture.
+</p>
+
+<p>
+How do we relate these vectors back to wave functions? First of all, in this formalism, observables, such as position, momentum, angular momentum, … are all linear operators on \(\mathcal H\). For example, position becomes some linear operator \(\hat x\). Let \(|\vec x\rangle\) be eigenvectors of this position operator (which exists for each position \(\vec x\)). Then,
+\[
+\psi(\vec x,t)=\langle\vec x|\psi(t)\rangle.
+\]
+In other words, if we imagine expanding the vector \(|\psi(t)\rangle\) in terms of the eigenvectors \(|\vec x\rangle\), we can write it as
+\[
+|\psi(t)\rangle=\sum_{\vec x\in\mathbb R^3}\psi(\vec x,t)|\vec x\rangle.
+\]
+Of course, this doesn’t literally make sense, since this is an infinite sum… Instead, we should write
+\[
+|\psi(t)\rangle=\int_{\mathbb R^3}\psi(\vec x,t)|\vec x\rangle d\vec x.
+\]
+Recall that when we observe the particle, we will find it at position \(\vec x\) with probability \(|\psi(x,t)|^2\). In the language of linear algebra, we project the vector \(|\psi(t)\rangle\) to the eigenvector \(|\vec x\rangle\) with probability which is the absolute value squared of \(\langle\vec x|\psi(t)\rangle\).
+</p>
+
+<p>
+We could similarly recover the wave function with respect to momentum, \(\psi(\vec p,t)\), by letting \(\hat p\) be the momentum operator, and letting \(|\vec p\rangle\) be eigenvectors. Then
+\[
+\psi(\vec p,t)=\langle \vec p|\psi(t)\rangle,
+\]
+and we could do all the same things we did from before with position.
+</p>
+
+<h2>The uncertainty principle</h2>
+
+<p>
+One of the most fundamental principles in quantum mechanics is Heisenberg’s uncertainty principle. It states that you cannot know both the position and momentum of a particle precisely. This becomes particularly lucid when you think about quantum mechanics through linear operators.
+</p>
+
+<p>
+Given a state \(|\psi\rangle\in\mathcal H\), observing the position will collapse the vector to some eigenvector of the position operator \(\hat x\). In other words, knowing the position of the particle exactly would mean the state \(|\psi\rangle\) is an eigenvector of \(\hat x\). Similarly, if you knew the momentum exactly, then \(|\psi\rangle\) would be an eigenvector of the momentum operator \(\hat p\). 
+</p>
+
+<p>
+Therefore, Heisenberg's uncertainty principle says that \(\hat x\) and \(\hat p\) have no simultaneous eigenvectors. Let's take a detour into linear algebra and think about when two matrices have simultaneous eigenvectors.
+</p>
+
+<h3>A detour: commuting matrices</h3>
+
+<p>
+[Finish later]
+</p> 
+
+
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Using the mathematics of symmetry, we derive the cubic formula.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/monodromy.html"><div class="related-category">Topology · Calculus</div><h3>Möbius strips and differential equations</h3><p>Have you been going around in circles? Well, you might have travelled further than you think!
+</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
