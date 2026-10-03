@@ -279,8 +279,71 @@ i\hbar\frac d{dt}|\psi(t)\rangle=\hat H|\psi(t)\rangle.
 </p>
 
 <p>
-How does this relate with the Hamiltonian formalism for mechanics?
+How does this relate with the <a href=”hamiltonian.html”>Hamiltonian formalism</a> for mechanics? In Hamilton’s formalism, we have a function \(H\) of position \(\vec x\), momentum \(\vec p\), and time \(t\). It is then convenient to consider the Poisson bracket of two functions \(f\) and \(g\), defined by
+\[
+\{f,g\}=\sum_i\bigg(\frac{\partial f}{\partial x_i}\frac{\partial g}{\partial p_i}-\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial x_i}\bigg).
+\]
+Then Hamilton’s equation can be expressed as, for any function \(F\),
+\[
+\frac{dF}{dt}=\{H,F\}.
+\]
 </p>
+
+
+<p>
+To relate the two pictures, let’s take any observable \(f\) and \(g\) in classical mechanics, and consider them as operators \(\hat f\) and \(\hat g\) on \(\mathcal H\). Then the operator corresponding to the Poisson bracket \(\{f,g\}\) is the commutator \([\hat f,\hat g]/i\hbar\).
+</p>
+
+<p>
+For example, the functions of position \(x_i\) and momentum \(p_i\) correspond to operators \(\hat x\) and \(\hat p\) on \(\mathcal H\), and their commutator is
+\[
+[\hat x,\hat p]=i\hbar.
+\]
+This is what we expect, since \(\{x_i,p_i\}=1\)! 
+</p>
+
+<h3>Conserved quantities in quantum mechanics</h3>
+
+<p>
+In our last article, we saw that a quantity \(A\) is conserved exactly when \(\{A,H\}=0\). In quantum mechanics, we have the same exact phenomenon.
+</p>
+
+<p>
+Let \(\hat A\) be the linear operator on \(\mathcal H\) corresponding to \(A\). We view this as a function which takes a state \(|\psi\rangle\in\mathcal H\) and outputs a number
+\[
+\langle\psi|A|\psi\rangle.
+\]
+We say \(A\) is a conserved quantity exactly when the inner product
+\[
+\langle A\rangle_t:=\langle\psi(t)|A|\psi(t)\rangle
+\]
+does not change as we vary the time \(t\).
+</p>
+
+<p>
+Now, suppose \(\hat A\) and \(\hat H\) commute with each other, and assume they are time-independent for simplicity. Then Schrodinger’s equation tells us that
+\[
+\frac d{dt}|\psi(t)\rangle=-\frac i\hbar\hat H|\psi(t)\rangle,
+\]
+and taking adjoints,
+\[
+\frac d{dt}\langle\psi(t)|=\frac i\hbar\langle\psi(t)|\hat H.
+\]
+Thus, by the Leibniz rule, the derivative of \(\langle A\rangle_t\) is
+\[
+\frac d{dt}\langle A\rangle_t=\langle\dot\psi|A|\psi\rangle+\langle\psi|A|\psi\rangle.
+\]
+By applying Schrodinger’s equation, this equals
+\[
+\frac i\hbar\langle\psi|\hat H\hat A|\psi\rangle-\frac i\hbar\langle\psi|\hat A\hat H|\psi\rangle=\frac i\hbar\langle\psi|[\hat A,\hat H]|\psi\rangle.
+\]
+When \(\hat A\) and \(\hat H\) commute with each other, this expression is just 0, so \(\langle A\rangle_t\) is independent of \(t\).
+</p>
+
+<h2>Non-commutative geometry</h2>
+
+<p>To-complete</p>
+
 
 
       
