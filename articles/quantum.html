@@ -60,7 +60,13 @@
 
 
 
-<p>
+
+
+
+
+
+
+      <p>
 In our series on mechanics, we discussed several approaches to mechanics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage—it serves as a <em>bridge between classical and quantum mechanics</em>.
 </p>
 
@@ -163,6 +169,13 @@ We could similarly recover the wave function with respect to momentum, \(\psi(\v
 and we could do all the same things we did from before with position.
 </p>
 
+<p>
+We can translate the Schrodinger equation, which involves the wave function \(\psi(\vec x,t)\), into linear operators. Let \(\hat H\) be the Hamiltonian operator on \(\mathcal H\). Then the Schrodinger equation for the particle \(|\psi(t)\rangle\) is
+\[
+\boxed{i\hbar\frac d{dt}|\psi(t)\rangle=\hat H|\psi(t)\rangle}.
+\]
+</p>
+
 <h2>The uncertainty principle</h2>
 
 <p>
@@ -228,14 +241,49 @@ A(B\vec v)=B(A\vec v)=B(\lambda\vec v)=\lambda(B\vec v).
 \]
 Now, \(B\) is a linear operator on \(V\), hence also has an eigenvector, call it \(\vec v\in V\), with some eigenvalue \(\mu\). This is the vector we were looking for.
 </p>
+</div>
+</details>
 
 <h3>Back to uncertainty</h3>
 <p>
 Therefore, the uncertainty principle tells us that the position and momentum operators \(\hat x\) and \(\hat p\) <em>do not</em> commute with each other. The extent to which the operators do not commute with each other is called the <em>commutator</em>,
 \[
+[\hat x,\hat p]=\hat x\hat p-\hat p\hat x.
+\]
+So \(\hat x\) and \(\hat p\) commute exactly when \([\hat x,\hat p]=0\).
+The uncertainty principle, in linear algebraic terms, says
+\[
 [\hat x,\hat p]=i\hbar.
 \]
+That means the two operators \(\hat x\) and \(\hat p\) are very close to commuting, with an error of Planck’s constant \(\hbar\); this is again why we don’t see the uncertainty phenomenon at macroscopic scales.
 </p>
+
+<p>
+More carefully analyzing what the equation \([\hat x,\hat p]=\hbar\) means in terms of the eigenvalues of the operators \(\hat x\) and \(\hat p\), we get a more precise statement for the uncertainty principle. It says
+\[
+\sigma_x\cdot\sigma_p\ge\frac\hbar2,
+\]
+where \(\sigma_x\) is the standard deviation of position, and \(\sigma_p\) is the standard deviation of momentum.
+</p>
+
+<h2>Quantization of Hamiltonian mechanics</h2>
+<p>
+Let us summarize what we have done so far. In our formalism, the state of a physical system is a vector in some vector space \(\mathcal H\), and position and momentum are operators on this space. The position and momentum operators satisfy the equation
+\[
+[\hat x,\hat p]=i\hbar.
+\]
+There is furthermore an operator called the Hamiltonian \(\hat H\), and the state of a particle \(|\psi(t)\rangle\) evolves according to the equation
+\[
+i\hbar\frac d{dt}|\psi(t)\rangle=\hat H|\psi(t)\rangle.
+\]
+</p>
+
+<p>
+How does this relate with the Hamiltonian formalism for mechanics?
+</p>
+
+
+      
 
 
 
