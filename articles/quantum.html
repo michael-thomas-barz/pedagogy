@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mechanics IV: from Hamiltonian to quantum mechanics</title>
+  <title>Quantum mechanics and non-commutative geometry</title>
 
   <link rel="stylesheet" href="../style.css">
 
@@ -25,7 +25,7 @@
     <div class="article-category">Physics</div>
 
     <h1 class="article-title">
-      Mechanics IV: from Hamiltonian to quantum mechanics
+      Quantum mechanics and non-commutative geometry
     </h1>
 
     <p class="article-description">
@@ -61,7 +61,235 @@
 
 
  <p>
-In our series on mechanics, we discussed several approaches to mechanics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage—it serves as a <em>bridge between classical and quantum mechanics</em>.
+ In our series on <em>classical</em> mechanics, we discussed several approaches to physics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage—it serves as a <em>bridge between classical and quantum mechanics</em>.
+</p>
+
+<h2>Phase spaces and rings</h2>
+
+<p>
+In the geometric approach to Hamiltonian mechanics (via <a href="symplectic.html">symplectic manifolds</a>), the <em>phase space</em> of a physical system became the star of the show. Last week, when discussing <a href="gelfand.html">Gelfand duality</a>, we saw how shapes like phase spaces could be encoded as <em>rings of functions</em>, with the key point being that functions on a phase space (intuitively, these are the possible <em>measurements</em> you can make about a particle undergoing the motion this phase space is capturing) are enough to recover the geometry of it.
+</p>
+
+<p>
+In Gelfand duality, we used <em>commutative rings</em> -- number systems in which \(f \cdot g = g \cdot f.\) And functions on traditional shapes always obey this property.
+</p>
+
+<h3>Polarized light</h3> 
+
+<p>
+However, experiments suggest that some physical systems do not obey this commutativity. To expand, let us describe an experiment involving polarized light. 
+</p>
+
+<p>
+A <em>polarizing filter</em> is a type of device often used by photographers, because humans observed that these filters tend to allow some kinds of light to pass through them but prevent others; these filters are great for taking pictures on a sunny day, because you can use them to make less sunlight get to your camera, preventing glare in your final photos. These filters are usually disks; rotating them changes what kinds of light they allow through. TODO: https://en.wikipedia.org/wiki/Polarizing_filter_(photography)#/media/File:Animation_polariseur_2.gif
+</p>
+
+<p>
+Let's consider an experiment in which we have three polarizing filters; we will label them \(H, D,\) and \(V.\) The filter \(H\) (for horizontal) will be our first filter; the filter \(D\) (for diagonal) will be rotated \(45^{\circ}\) relative to the horizontal filter, and the filter \(V\) (for vertical) will be rotated \(90^{\circ}.\) In the widget below, you can see 
+</p>
+
+<div id="hp-polarization-widget">
+  <svg viewBox="0 0 760 180"
+       role="img"
+       aria-label="Three-polarizer experiment">
+
+    <!-- beam -->
+    <g class="beam">
+      <line class="beam-in"  x1="25"  y1="90" x2="190" y2="90"/>
+      <line class="beam-mid1" x1="230" y1="90" x2="355" y2="90"/>
+      <line class="beam-mid2" x1="405" y1="90" x2="530" y2="90"/>
+      <line class="beam-out" x1="570" y1="90" x2="735" y2="90"/>
+    </g>
+
+    <!-- little photons -->
+    <g class="photons">
+      <circle cx="70"  cy="90" r="4"/>
+      <circle cx="130" cy="90" r="4"/>
+      <circle cx="285" cy="90" r="4" class="photon-mid1"/>
+      <circle cx="465" cy="90" r="4" class="photon-mid2"/>
+      <circle cx="645" cy="90" r="4" class="photon-out"/>
+    </g>
+
+    <!-- vertical polarizer -->
+    <g class="polarizer fixed" transform="translate(190 35)">
+      <rect class="frame" width="40" height="110" rx="5"/>
+      <rect class="glass" x="5" y="5" width="30" height="100" rx="2"/>
+      <g class="stripes vertical-stripes">
+        <line x1="12" y1="12" x2="12" y2="98"/>
+        <line x1="20" y1="12" x2="20" y2="98"/>
+        <line x1="28" y1="12" x2="28" y2="98"/>
+      </g>
+    </g>
+
+    <!-- diagonal polarizer -->
+    <g id="hp-middle-filter"
+       class="polarizer movable"
+       transform="translate(365 35)"
+       tabindex="0"
+       role="button"
+       aria-label="Toggle diagonal polarizer"
+       aria-pressed="true">
+      <rect class="frame" width="40" height="110" rx="5"/>
+      <rect class="glass" x="5" y="5" width="30" height="100" rx="2"/>
+      <g class="stripes diagonal-stripes">
+        <line x1="7"  y1="27" x2="27" y2="7"/>
+        <line x1="7"  y1="47" x2="35" y2="19"/>
+        <line x1="7"  y1="67" x2="35" y2="39"/>
+        <line x1="7"  y1="87" x2="35" y2="59"/>
+        <line x1="13" y1="103" x2="35" y2="81"/>
+      </g>
+    </g>
+
+    <!-- horizontal polarizer -->
+    <g class="polarizer fixed" transform="translate(530 35)">
+      <rect class="frame" width="40" height="110" rx="5"/>
+      <rect class="glass" x="5" y="5" width="30" height="100" rx="2"/>
+      <g class="stripes horizontal-stripes">
+        <line x1="7" y1="32" x2="33" y2="32"/>
+        <line x1="7" y1="55" x2="33" y2="55"/>
+        <line x1="7" y1="78" x2="33" y2="78"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+#hp-polarization-widget {
+  --bg:     #282828;
+  --bg1:    #3c3836;
+  --bg2:    #504945;
+  --fg:     #ebdbb2;
+  --gray:   #928374;
+
+  --yellow: #fabd2f;
+  --aqua:   #8ec07c;
+  --blue:   #83a598;
+  --purple: #d3869b;
+
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid var(--bg2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#hp-polarization-widget svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#hp-polarization-widget .beam line {
+  stroke: var(--yellow);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: opacity .25s ease;
+}
+
+#hp-polarization-widget .beam-mid2 {
+  opacity: .72;
+}
+
+#hp-polarization-widget .beam-out {
+  opacity: .45;
+}
+
+#hp-polarization-widget .photons circle {
+  fill: var(--fg);
+  opacity: .85;
+  transition: opacity .25s ease;
+}
+
+#hp-polarization-widget .photon-mid2 {
+  opacity: .65;
+}
+
+#hp-polarization-widget .photon-out {
+  opacity: .45;
+}
+
+#hp-polarization-widget .frame {
+  fill: var(--bg1);
+  stroke: var(--gray);
+  stroke-width: 3;
+}
+
+#hp-polarization-widget .glass {
+  fill: var(--bg);
+}
+
+#hp-polarization-widget .stripes line {
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+#hp-polarization-widget .vertical-stripes line {
+  stroke: var(--aqua);
+}
+
+#hp-polarization-widget .diagonal-stripes line {
+  stroke: var(--purple);
+}
+
+#hp-polarization-widget .horizontal-stripes line {
+  stroke: var(--blue);
+}
+
+#hp-polarization-widget .movable {
+  cursor: pointer;
+  transition: transform .3s ease, opacity .3s ease;
+  outline: none;
+}
+
+#hp-polarization-widget .movable:hover .frame,
+#hp-polarization-widget .movable:focus-visible .frame {
+  stroke: var(--fg);
+}
+
+#hp-polarization-widget.middle-out .movable {
+  transform: translate(365px, 105px);
+  opacity: .35;
+}
+
+#hp-polarization-widget.middle-out .beam-mid2 {
+  opacity: 1;
+}
+
+#hp-polarization-widget.middle-out .beam-out,
+#hp-polarization-widget.middle-out .photon-out {
+  opacity: 0;
+}
+</style>
+
+<script>
+(() => {
+  const widget = document.getElementById("hp-polarization-widget");
+  const middle = document.getElementById("hp-middle-filter");
+
+  function toggleMiddle() {
+    const removed = widget.classList.toggle("middle-out");
+    middle.setAttribute("aria-pressed", String(!removed));
+  }
+
+  middle.addEventListener("click", toggleMiddle);
+
+  middle.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleMiddle();
+    }
+  });
+})();
+</script>
+
+<p>
+This experimental behavior is actually very strange from the point of view of Gelfand duality. Let's elaborate on why. 
+</p>
+
+<p>
+Light is made up of particles called photons. 
 </p>
 
 <h2>What is quantum mechanics?</h2>

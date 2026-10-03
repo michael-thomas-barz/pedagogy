@@ -1,0 +1,4975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trefoil knots in algebraic geometry</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+
+<main class="page-shell" id="hp-main" tabindex="-1">
+
+  <header class="article-hero">
+    <a class="article-back-button" href="../index.html">← Back</a>
+
+    <div class="article-category">Physics</div>
+
+    <h1 class="article-title">
+     Trefoil knots in algebraic geometry 
+    </h1>
+
+    <p class="article-description">
+    We show how the trefoil knot appears in algebraic geometry.
+    </p>
+
+    <div class="article-info">
+      <span class="article-badge">Level 2</span>
+      <span class="article-badge">About 8 min read</span>
+    </div>
+
+    <p class="article-date">October 3, 2026</p>
+  </header>
+
+  <div class="hp-layout">
+    <nav class="article-toc hp-toc" aria-label="On this page">
+      <details class="hp-toc-details" open>
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#sec1">Graphs of polynomials are usually straight lines</a></li>
+          <li><a href="#sec2">The cuspidal cubic, over the complex numbres</a></li>
+          <li><a href="#sec3">The cone on the trefoil knot</a></li>
+          <li><a href="#4">Epilogue: advanced algebraic geometry</a></li>
+        </ol>
+      </details>
+    </nav>
+
+    <div class="hp-prose">
+
+<p>
+You've probably seen a <em>trefoil knot</em> before. It looks something like this: 
+</p>
+
+<!-- Hidden Phenomena: trefoil knot. Paste this entire block. -->
+<div data-hp-knot="trefoil"></div>
+<script>
+(() => {
+  "use strict";
+  // This script mounts into the div immediately before it. No dependencies.
+  const host = document.currentScript.previousElementSibling;
+  const PARAMETRIC = false;
+  const root = host.attachShadow({ mode: "open" });
+  const TAU = Math.PI * 2;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  root.innerHTML = `
+  <style>
+    :host{display:block;width:100%;max-width:760px;margin:1.5rem auto;color-scheme:dark}
+    *,*::before,*::after{box-sizing:border-box}
+    .card{--bg:#1d2021;--panel:#282828;--line:#504945;--fg:#ebdbb2;--muted:#a89984;
+      background:var(--bg);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+      color:var(--fg);font:13px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}
+    .stage{position:relative;height:clamp(300px,55vw,420px);background:radial-gradient(ellipse at 48% 45%,#282828 0%,#1d2021 76%)}
+    canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline:none}
+    canvas:active{cursor:grabbing}
+    canvas:focus-visible{outline:2px solid #fabd2f;outline-offset:-5px}
+    .hint{position:absolute;right:17px;top:15px;pointer-events:none;color:#928374;opacity:.75}
+    .bar{display:flex;align-items:center;gap:8px;min-height:59px;padding:10px 15px;border-top:1px solid #3c3836;background:#282828}
+    .spacer{flex:1}
+    button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:6px 11px;margin:0;
+      border:1px solid #504945;border-radius:7px;background:#282828;color:#d5c4a1;font:inherit;line-height:1.25;cursor:pointer;white-space:nowrap}
+    button:hover{background:#3c3836;color:#ebdbb2;border-color:#7c6f64}
+    button[aria-pressed="true"]{color:#fabd2f;border-color:#b57614;background:#383025}
+    button:focus-visible,input:focus-visible{outline:2px solid #fabd2f;outline-offset:3px}
+    button svg{width:13px;height:13px;flex:none}
+    .square{width:34px;padding:0;font:20px/1 Georgia,serif}
+    .play{min-width:82px;color:#fabd2f}
+    .timeline{display:flex;align-items:center;gap:10px;flex:1;min-width:70px}
+    input[type=range]{appearance:none;-webkit-appearance:none;display:block;flex:1;min-width:25px;height:26px;background:transparent;cursor:pointer;margin:0;accent-color:#fabd2f}
+    input[type=range]::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(to right,#fabd2f var(--progress,100%),#665c54 var(--progress,100%))}
+    input[type=range]::-moz-range-track{height:3px;border-radius:2px;background:#665c54}
+    input[type=range]::-moz-range-progress{height:3px;background:#fabd2f}
+    input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fabd2f;border:2px solid #282828;box-shadow:0 0 0 1px #fabd2f;margin-top:-4.5px}
+    input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#fabd2f;border:2px solid #282828}
+    output{font-variant-numeric:tabular-nums;white-space:nowrap}
+    .time{min-width:65px;text-align:right;color:#d5c4a1;font-size:12px}
+    .angles{display:flex;align-items:center;gap:26px;padding:12px 17px;border-top:1px solid #3c3836;background:#282828}
+    .angle{display:flex;align-items:center;gap:10px;min-width:0}
+    .angle svg{width:42px;height:42px;overflow:visible;flex:none}
+    .angle b{font:italic 18px/1.2 Georgia,serif;font-weight:normal;display:block;margin-bottom:3px}
+    .angle output{font-size:11px;color:#bdae93}
+    .major{color:#fe8019}.minor{color:#8ec07c}
+    .angle circle,.angle line{vector-effect:non-scaling-stroke}
+    .aux{display:flex;gap:7px;margin-left:auto}
+    .error{padding:25px;color:#d5c4a1;font:15px/1.6 Georgia,serif}
+    @media(max-width:470px){.stage{height:320px}.bar{gap:7px;padding:10px}.angles{gap:16px;padding:11px 12px;flex-wrap:wrap}.angle{gap:7px}.angle svg{width:34px;height:34px}.angle output{font-size:10px}.angle b{font-size:17px}.aux{gap:5px}.aux button{padding:5px 8px;font-size:11px}.time{font-size:11px;min-width:59px}.play{min-width:72px;padding:6px 8px}}
+  </style>
+  <section class="card" aria-label="${PARAMETRIC ? '(2,3) torus knot parametrization' : 'Interactive trefoil knot'}">
+    <div class="stage">
+      <canvas tabindex="0" role="img" aria-label="${PARAMETRIC ? 'A trefoil on a translucent torus. Orange marks the major angle 2t; green marks the minor angle 3t. Use Trace or the slider to follow the curve.' : 'A three-dimensional trefoil knot.'} Drag to rotate, pinch to zoom, or use arrow keys. Plus and minus zoom; Home resets the view."></canvas>
+      <svg class="hint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="4"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="m19 7 2 4-4 1"/></svg>
+    </div>
+    ${PARAMETRIC ? `
+      <div class="bar">
+        <button class="play" type="button" title="Trace the curve from t = 0 to 2π">▶ Trace</button>
+        <div class="timeline"><input class="scrub" type="range" min="0" max="1" step="0.0001" value="1" aria-label="Parameter t, from 0 to 2π"><output class="time">t = 2.00π</output></div>
+      </div>
+      <div class="angles">
+        <div class="angle major"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#504945" stroke-width="1.5"/><circle cx="22" cy="22" r="2" fill="currentColor"/><line x1="22" y1="22" x2="38" y2="22" stroke="currentColor" stroke-width="1.5"/><circle class="dot" cx="38" cy="22" r="3" fill="currentColor"/></svg><div><b>2t</b><output>2.00 / 2 turns</output></div></div>
+        <div class="angle minor"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#504945" stroke-width="1.5"/><circle cx="22" cy="22" r="2" fill="currentColor"/><line x1="22" y1="22" x2="38" y2="22" stroke="currentColor" stroke-width="1.5"/><circle class="dot" cx="38" cy="22" r="3" fill="currentColor"/></svg><div><b>3t</b><output>3.00 / 3 turns</output></div></div>
+        <div class="aux"><button class="torus" type="button" aria-pressed="true" title="Show or hide the torus and its angle circles">Torus</button><button class="reset" type="button" title="Reset the camera">Reset view</button></div>
+      </div>` : `
+      <div class="bar"><button class="spin" type="button" aria-pressed="false">↻ Rotate</button><button class="reset" type="button">Reset view</button><span class="spacer"></span><button class="square out" type="button" aria-label="Zoom out">−</button><button class="square in" type="button" aria-label="Zoom in">+</button></div>`}
+  </section>`;
+
+  const canvas = root.querySelector("canvas");
+  const gl = canvas.getContext("webgl", { alpha:true, antialias:true, premultipliedAlpha:true });
+  if (!gl) {
+    root.querySelector(".stage").innerHTML = '<p class="error">This interactive view needs WebGL. Try enabling hardware acceleration or opening it in another browser.</p>';
+    root.querySelectorAll("button,input").forEach(el => el.disabled = true);
+    return;
+  }
+  const $ = s => root.querySelector(s);
+  const clamp = (x,a,b) => Math.min(b,Math.max(a,x));
+  const norm = v => { const l = Math.hypot(...v) || 1; return v.map(x => x/l); };
+  const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const identity = () => new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
+  const multiply = (a,b) => { const c = new Float32Array(16); for(let j=0;j<4;j++)for(let i=0;i<4;i++)for(let k=0;k<4;k++) c[i+4*j]+=a[i+4*k]*b[k+4*j]; return c; };
+  function rotation(axis,a) {
+    const c=Math.cos(a),s=Math.sin(a),m=identity();
+    if(axis===0){m[5]=c;m[6]=s;m[9]=-s;m[10]=c;}
+    if(axis===1){m[0]=c;m[2]=-s;m[8]=s;m[10]=c;}
+    if(axis===2){m[0]=c;m[1]=s;m[4]=-s;m[5]=c;}
+    return m;
+  }
+  // Standard torus coordinates: theta = 2t, phi = 3t, major radius 2, minor radius 1.
+  function point(t) {
+    const a=2*t,b=3*t,r=2+Math.cos(b);
+    return [r*Math.cos(a),r*Math.sin(a),Math.sin(b)];
+  }
+  function transform(p,scale=1) {
+    const m=identity(); m[0]=m[5]=m[10]=scale; m[12]=p[0];m[13]=p[1];m[14]=p[2];return m;
+  }
+  let view, zoom=1, spinning=false, playing=false, progress=1, showTorus=true;
+  function resetView() {
+    view=multiply(rotation(0,PARAMETRIC?0.84:0.30),rotation(2,PARAMETRIC?-0.30:Math.PI/6));
+    zoom=1; spinning=false; syncSpin(); requestDraw();
+  }
+  function syncSpin(){if($('.spin'))$('.spin').setAttribute('aria-pressed',String(spinning));}
+
+  let program, U, A, knot, torus, ring, sphere, derivatives;
+  const vertexSource = `
+    attribute vec3 aPosition, aNormal;
+    attribute vec2 aUV;
+    uniform mat4 uView, uLocal;
+    uniform vec2 uExtent;
+    uniform float uExpand, uRingRadius;
+    varying vec3 vNormal, vPosition;
+    varying vec2 vUV;
+    void main(){
+      vec3 p=aPosition+aNormal*uExpand;
+      if(uRingRadius>0.0) p.xy+=normalize(p.xy)*(uRingRadius-1.0);
+      vec4 q=uView*uLocal*vec4(p,1.0);
+      gl_Position=vec4(q.x/uExtent.x,q.y/uExtent.y,-q.z/12.0,1.0);
+      vNormal=mat3(uView)*mat3(uLocal)*aNormal;
+      vPosition=q.xyz;vUV=aUV;
+    }`;
+  function fragmentSource(){return `${derivatives ? '#extension GL_OES_standard_derivatives : enable' : ''}
+    precision mediump float;
+    uniform vec3 uColor;
+    uniform float uMode,uProgress,uFlat;
+    varying vec3 vNormal,vPosition;
+    varying vec2 vUV;
+    void main(){
+      vec3 n=normalize(vNormal);
+      if(!gl_FrontFacing)n=-n;
+      float key=max(dot(n,normalize(vec3(-0.45,0.65,1.0))),0.0);
+      float fill=max(dot(n,normalize(vec3(0.8,-0.3,0.5))),0.0);
+      float diffuse=0.38+0.57*key+0.17*fill;
+      float spec=pow(max(dot(n,normalize(vec3(-0.22,0.33,1.0))),0.0),38.0);
+      vec3 base=uColor;
+      if(uMode>0.5 && uMode<1.5 && vUV.x>uProgress)base=vec3(0.38,0.34,0.26);
+      vec3 col=base*diffuse+vec3(0.922,0.859,0.698)*spec*0.24;
+      float rim=pow(1.0-abs(n.z),3.0);
+      col*=1.0-0.24*rim;
+      if(uFlat>0.5)col=base;
+      if(uMode>1.5){
+        vec2 grid=vUV*vec2(28.0,12.0);
+        vec2 width=${derivatives ? 'max(fwidth(grid),vec2(0.0001))' : 'vec2(0.07)'};
+        vec2 d=abs(fract(grid-0.5)-0.5)/width;
+        float line=1.0-smoothstep(0.2,1.05,min(d.x,d.y));
+        col=mix(vec3(0.39,0.36,0.30),vec3(0.66,0.62,0.52),line);
+        gl_FragColor=vec4(col,0.075+0.025*key+0.19*line);
+      }else gl_FragColor=vec4(col,1.0);
+    }`;}
+  function compile(type,src) {
+    const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){const err=gl.getShaderInfoLog(s);gl.deleteShader(s);throw Error(err);}return s;
+  }
+  function mesh(nu,nv,fn,flip=false) {
+    const vertices=new Float32Array((nu+1)*(nv+1)*8),indices=new Uint16Array(nu*nv*6);
+    let k=0;
+    for(let i=0;i<=nu;i++)for(let j=0;j<=nv;j++){
+      const [p,n]=fn(i/nu,j/nv);
+      vertices.set([...p,...n,i/nu,j/nv],k);k+=8;
+    }
+    k=0;for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){
+      const a=i*(nv+1)+j,b=a+nv+1,c=a+1,d=b+1;
+      indices.set(flip?[a,c,b,c,d,b]:[a,b,c,b,d,c],k);k+=6;
+    }
+    const vb=gl.createBuffer(),ib=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,indices,gl.STATIC_DRAW);
+    return {vb,ib,count:indices.length};
+  }
+  function setup() {
+    derivatives=!!gl.getExtension('OES_standard_derivatives');
+    const vs=compile(gl.VERTEX_SHADER,vertexSource),fs=compile(gl.FRAGMENT_SHADER,fragmentSource());
+    program=gl.createProgram();gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);
+    gl.deleteShader(vs);gl.deleteShader(fs);
+    if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
+    U={};for(const s of ['View','Local','Extent','Expand','RingRadius','Color','Mode','Progress','Flat'])U[s]=gl.getUniformLocation(program,'u'+s);
+    A={};for(const s of ['Position','Normal','UV'])A[s]=gl.getAttribLocation(program,'a'+s);
+    knot=mesh(640,16,(s,v)=>{
+      const t=s*TAU,a=2*t,b=3*t,r=2+Math.cos(b),p=point(t);
+      const tangent=norm([-3*Math.sin(b)*Math.cos(a)-2*r*Math.sin(a),-3*Math.sin(b)*Math.sin(a)+2*r*Math.cos(a),3*Math.cos(b)]);
+      const n=[Math.cos(b)*Math.cos(a),Math.cos(b)*Math.sin(a),Math.sin(b)];
+      const binormal=cross(tangent,n),angle=v*TAU;
+      const normal=n.map((x,i)=>x*Math.cos(angle)+binormal[i]*Math.sin(angle));
+      return [p.map((x,i)=>x+(PARAMETRIC?0.072:0.125)*normal[i]),normal];
+    },true);
+    if(PARAMETRIC){
+      torus=mesh(160,64,(u,v)=>{
+        const a=u*TAU,b=v*TAU,n=[Math.cos(b)*Math.cos(a),Math.cos(b)*Math.sin(a),Math.sin(b)];
+        return [[(2+Math.cos(b))*Math.cos(a),(2+Math.cos(b))*Math.sin(a),Math.sin(b)],n];
+      });
+      ring=mesh(192,8,(u,v)=>{
+        const a=u*TAU,b=v*TAU,n=[Math.cos(b)*Math.cos(a),Math.cos(b)*Math.sin(a),Math.sin(b)];
+        return [[(1+0.018*Math.cos(b))*Math.cos(a),(1+0.018*Math.cos(b))*Math.sin(a),0.018*Math.sin(b)],n];
+      });
+      sphere=mesh(32,20,(u,v)=>{
+        const a=u*TAU,b=v*Math.PI,n=[Math.sin(b)*Math.cos(a),Math.sin(b)*Math.sin(a),Math.cos(b)];
+        return [n,n];
+      },true);
+    }
+    gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.enable(gl.CULL_FACE);
+    gl.clearColor(0,0,0,0);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  }
+  function drawMesh(m,color,mode=0,local=identity(),expand=0,flat=0,ringRadius=0) {
+    gl.bindBuffer(gl.ARRAY_BUFFER,m.vb);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.ib);
+    for(const [key,size,offset] of [['Position',3,0],['Normal',3,12],['UV',2,24]]){
+      gl.enableVertexAttribArray(A[key]);gl.vertexAttribPointer(A[key],size,gl.FLOAT,false,32,offset);
+    }
+    gl.uniformMatrix4fv(U.Local,false,local);gl.uniform3fv(U.Color,color);gl.uniform1f(U.Mode,mode);
+    gl.uniform1f(U.Expand,expand);gl.uniform1f(U.Flat,flat);gl.uniform1f(U.RingRadius,ringRadius);
+    gl.drawElements(gl.TRIANGLES,m.count,gl.UNSIGNED_SHORT,0);
+  }
+  function render() {
+    if(gl.isContextLost())return;
+    const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const pw=Math.round(w*dpr),ph=Math.round(h*dpr);
+    if(canvas.width!==pw||canvas.height!==ph){canvas.width=pw;canvas.height=ph;}
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
+    const aspect=w/h,halfY=Math.max(3.40,3.40/aspect)/zoom;
+    gl.uniform2f(U.Extent,halfY*aspect,halfY);gl.uniformMatrix4fv(U.View,false,view);gl.uniform1f(U.Progress,progress);
+    gl.disable(gl.BLEND);gl.depthMask(true);
+    // Back-face expansion gives each crossing a fine dark silhouette.
+    gl.cullFace(gl.FRONT);drawMesh(knot,[0.114,0.125,0.129],0,identity(),0.025,1);
+    gl.cullFace(gl.BACK);drawMesh(knot,[0.98,0.741,0.184],PARAMETRIC?1:0);
+    if(PARAMETRIC){
+      const t=TAU*progress,theta=2*t,phi=3*t;
+      if(showTorus){
+        drawMesh(ring,[0.996,0.502,0.098],0,transform([0,0,Math.sin(phi)]),0,0,2+Math.cos(phi));
+        const local=identity(),c=Math.cos(theta),s=Math.sin(theta);
+        local.set([c,s,0,0,0,0,1,0,s,-c,0,0,2*c,2*s,0,1]);
+        drawMesh(ring,[0.557,0.753,0.486],0,local,0,0,1);
+      }
+      gl.cullFace(gl.FRONT);drawMesh(sphere,[0.114,0.125,0.129],0,transform(point(t),0.143),0,1);
+      gl.cullFace(gl.BACK);drawMesh(sphere,[0.984,0.945,0.78],0,transform(point(t),0.125));
+      if(showTorus){
+        gl.enable(gl.BLEND);gl.depthMask(false);
+        gl.cullFace(gl.FRONT);drawMesh(torus,[0.4,0.4,0.4],2);
+        gl.cullFace(gl.BACK);drawMesh(torus,[0.4,0.4,0.4],2);
+        gl.depthMask(true);gl.disable(gl.BLEND);
+      }
+    }
+  }
+  // Animation only runs while needed, and stops off-screen or in a hidden tab.
+  let raf=0,last=0,visible=true,disposed=false,dirty=true;
+  function requestDraw(){dirty=true;if(!raf&&!disposed&&visible&&!document.hidden)raf=requestAnimationFrame(frame);}
+  function frame(now){
+    raf=0;if(disposed||!host.isConnected){dispose();return;}
+    const dt=last?Math.min((now-last)/1000,0.05):0;last=now;
+    if(spinning){view=multiply(rotation(1,dt*0.22),view);dirty=true;}
+    if(playing){progress=Math.min(1,progress+dt/18);if(progress>=1)playing=false;syncParam();dirty=true;}
+    if(dirty){render();dirty=false;}
+    if((playing||spinning)&&visible&&!document.hidden)raf=requestAnimationFrame(frame);
+    else last=0;
+  }
+  function syncParam(){
+    if(!PARAMETRIC)return;
+    $('.play').textContent=playing?'Ⅱ Pause':(progress>=1?'▶ Trace':'▶ Play');
+    $('.play').setAttribute('aria-label',playing?'Pause tracing':(progress>=1?'Trace from the beginning':'Resume tracing'));
+    $('.scrub').value=progress;$('.scrub').style.setProperty('--progress',`${progress*100}%`);
+    $('.scrub').setAttribute('aria-valuetext',`${(2*progress).toFixed(2)} pi radians`);
+    $('.time').textContent=`t = ${(2*progress).toFixed(2)}π`;
+    for(const [s,n] of [['.major',2],['.minor',3]]){
+      const angle=progress*TAU*n,x=22+16*Math.cos(angle),y=22-16*Math.sin(angle),el=$(s);
+      el.querySelector('line').setAttribute('x2',x);el.querySelector('line').setAttribute('y2',y);
+      el.querySelector('.dot').setAttribute('cx',x);el.querySelector('.dot').setAttribute('cy',y);
+      el.querySelector('output').textContent=`${(n*progress).toFixed(2)} / ${n} turns`;
+    }
+  }
+  $('.reset').addEventListener('click',resetView);
+  if(PARAMETRIC){
+    $('.play').addEventListener('click',()=>{if(!playing&&progress>=1)progress=0;playing=!playing;last=0;syncParam();requestDraw();});
+    $('.scrub').addEventListener('input',e=>{playing=false;progress=Number(e.target.value);syncParam();requestDraw();});
+    $('.torus').addEventListener('click',()=>{showTorus=!showTorus;$('.torus').setAttribute('aria-pressed',String(showTorus));requestDraw();});
+  }else{
+    $('.spin').addEventListener('click',()=>{spinning=!spinning;last=0;syncSpin();requestDraw();});
+    $('.in').addEventListener('click',()=>{zoom=clamp(zoom*1.13,0.6,1.65);requestDraw();});
+    $('.out').addEventListener('click',()=>{zoom=clamp(zoom/1.13,0.6,1.65);requestDraw();});
+  }
+  const pointers=new Map();
+  canvas.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,[e.clientX,e.clientY]);spinning=false;syncSpin();
+  });
+  canvas.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId))return;
+    const old=pointers.get(e.pointerId),next=[e.clientX,e.clientY];
+    if(pointers.size===1){view=multiply(multiply(rotation(1,(next[0]-old[0])*0.009),rotation(0,(next[1]-old[1])*0.009)),view);}
+    else{
+      const other=[...pointers.entries()].find(([id])=>id!==e.pointerId)[1];
+      const before=Math.hypot(old[0]-other[0],old[1]-other[1]),after=Math.hypot(next[0]-other[0],next[1]-other[1]);
+      if(before>4)zoom=clamp(zoom*after/before,0.6,1.65);
+    }
+    pointers.set(e.pointerId,next);requestDraw();
+  });
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,e=>pointers.delete(e.pointerId));
+  canvas.addEventListener('keydown',e=>{
+    let handled=true;
+    switch(e.key){
+      case 'ArrowLeft':view=multiply(rotation(1,-0.13),view);break;
+      case 'ArrowRight':view=multiply(rotation(1,0.13),view);break;
+      case 'ArrowUp':view=multiply(rotation(0,-0.13),view);break;
+      case 'ArrowDown':view=multiply(rotation(0,0.13),view);break;
+      case '+':case '=':zoom=clamp(zoom*1.1,0.6,1.65);break;
+      case '-':zoom=clamp(zoom/1.1,0.6,1.65);break;
+      case 'Home':resetView();break;
+      default:handled=false;
+    }
+    if(handled){e.preventDefault();spinning=false;syncSpin();requestDraw();}
+  });
+  // Explicit Ctrl/Command-wheel zoom, without stealing ordinary page scrolling.
+  canvas.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom=clamp(zoom*Math.exp(-e.deltaY*0.003),0.6,1.65);requestDraw();}},{passive:false});
+  const resizeObserver=new ResizeObserver(requestDraw);resizeObserver.observe(canvas);
+  const intersectionObserver=new IntersectionObserver(entries=>{
+    visible=entries[0].isIntersecting;
+    if(visible){last=0;requestDraw();}else{cancelAnimationFrame(raf);raf=0;last=0;}
+  });intersectionObserver.observe(host);
+  function visibilityChanged(){if(document.hidden){cancelAnimationFrame(raf);raf=0;last=0;}else requestDraw();}
+  document.addEventListener('visibilitychange',visibilityChanged);
+  function motionChanged(){if(reducedMotion.matches){spinning=false;playing=false;syncSpin();syncParam();requestDraw();}}
+  reducedMotion.addEventListener('change',motionChanged);
+  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);raf=0;});
+  canvas.addEventListener('webglcontextrestored',()=>{setup();requestDraw();});
+  function dispose(){
+    if(disposed)return;disposed=true;cancelAnimationFrame(raf);
+    resizeObserver.disconnect();intersectionObserver.disconnect();
+    document.removeEventListener('visibilitychange',visibilityChanged);reducedMotion.removeEventListener('change',motionChanged);
+    if(!gl.isContextLost()){
+      for(const m of [knot,torus,ring,sphere].filter(Boolean)){gl.deleteBuffer(m.vb);gl.deleteBuffer(m.ib);}
+      gl.deleteProgram(program);
+    }
+  }
+  try{setup();syncParam();resetView();}catch(error){
+    console.error('Hidden Phenomena knot widget:',error);
+    root.querySelector('.stage').innerHTML='<p class="error">The 3D view could not start in this browser. Please try another browser.</p>';
+    root.querySelectorAll('button,input').forEach(el=>el.disabled=true);dispose();
+  }
+})();
+</script>
+
+<p>
+In this week's post, we want to explain a quick but cute fact: the trefoil knot naturally shows up when you try to graph \(y^2 = x^3\) over the complex numbers!
+</p>
+
+<p>
+This observation is actually the beginning of a great story about the possible shapes defined by polynomial equations. We also think this story lives up to the blog's name: just by graphing some simple equations, you can discover a hidden trefoil knot inside of complex space! 
+</p>
+
+<h2 id="sec1">Graphs of polynomials are usually straight lines</h2>
+
+<p>
+When mathematicians study shapes, there are typically two levels of analysis: the <em>local</em> level, where we study a small portion of a shape; and the <em>global</em> level, where we try to understand the whole shape at once. It's usually a good idea to <em>start</em> with the local view before going to the global view. 
+</p> 
+
+<p>
+For example, let's suppose we want to understand the shape that \(y^2 = x^3 + x\) will make when we graph it. It can be helpful to start by getting a good idea of the <em>local</em> picture first. And fortunately for us, calculus is very helpful here: the graph of \(y^2 = x^3 + x\) will always, when you zoom in far enough on any point, look approximately like a line. 
+</p>
+
+<!-- Hidden Phenomena: smooth-point zoom widget -->
+<div id="hp-smooth-curve-zoom">
+  <style>
+    #hp-smooth-curve-zoom {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-smooth-curve-zoom .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 290px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 50% 46%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-smooth-curve-zoom canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #hp-smooth-curve-zoom .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-smooth-curve-zoom button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-smooth-curve-zoom button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-smooth-curve-zoom button:focus-visible,
+    #hp-smooth-curve-zoom input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-smooth-curve-zoom input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    #hp-smooth-curve-zoom .hp-zoom {
+      min-width: 6ch;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 520px) {
+      #hp-smooth-curve-zoom .hp-stage {
+        min-height: 255px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-smooth-curve-zoom .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+      #hp-smooth-curve-zoom .hp-zoom { display: none; }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Interactive zoom into a smooth point of the curve y squared equals x cubed plus x, showing the curve becoming its tangent line."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play>Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Zoom level">
+    <span class="hp-zoom" data-zoom>1×</span>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-smooth-curve-zoom');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+    const zoomReadout = root.querySelector('[data-zoom]');
+
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = prefersReduced ? 1 : 0;
+    let playing = !prefersReduced;
+    let lastTime = 0;
+    const DURATION = 6500;
+    let DPR = 1;
+    let aspect = 16/9;
+
+    const view = { centerX: 0, centerY: 0, halfX: 2, halfY: 1 };
+
+    function clamp(x,a=0,b=1) { return Math.max(a,Math.min(b,x)); }
+    function smoothstep(a,b,x) {
+      const t = clamp((x-a)/(b-a));
+      return t*t*(3-2*t);
+    }
+
+    function worldToScreen(x,y) {
+      return {
+        x: canvas.width * (0.5 + 0.5*(x-view.centerX)/view.halfX),
+        y: canvas.height * (0.5 - 0.5*(y-view.centerY)/view.halfY)
+      };
+    }
+
+    function drawGrid() {
+      const z = zoomFactor();
+      // Choose a pleasant grid spacing at every zoom.
+      const target = view.halfX / 3.0;
+      const pow = Math.pow(10, Math.floor(Math.log10(target)));
+      const m = target / pow;
+      const step = (m < 2 ? 1 : m < 5 ? 2 : 5) * pow;
+
+      const x0 = Math.ceil((view.centerX-view.halfX)/step)*step;
+      const x1 = view.centerX+view.halfX;
+      const y0 = Math.ceil((view.centerY-view.halfY)/step)*step;
+      const y1 = view.centerY+view.halfY;
+
+      ctx.lineWidth = Math.max(0.7, DPR*0.7);
+      ctx.strokeStyle = 'rgba(168,153,132,0.10)';
+      for (let x=x0; x<=x1+1e-12; x+=step) {
+        const a=worldToScreen(x,view.centerY-view.halfY);
+        const b=worldToScreen(x,view.centerY+view.halfY);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+      for (let y=y0; y<=y1+1e-12; y+=step) {
+        const a=worldToScreen(view.centerX-view.halfX,y);
+        const b=worldToScreen(view.centerX+view.halfX,y);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+
+      // Axes, when visible.
+      ctx.strokeStyle = 'rgba(235,219,178,0.22)';
+      ctx.lineWidth = Math.max(1,DPR);
+      if (view.centerX-view.halfX <= 0 && 0 <= view.centerX+view.halfX) {
+        const a=worldToScreen(0,view.centerY-view.halfY);
+        const b=worldToScreen(0,view.centerY+view.halfY);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+      if (view.centerY-view.halfY <= 0 && 0 <= view.centerY+view.halfY) {
+        const a=worldToScreen(view.centerX-view.halfX,0);
+        const b=worldToScreen(view.centerX+view.halfX,0);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+    }
+
+    
+    const target = { x: 0.72, y: Math.sqrt(0.72*0.72*0.72 + 0.72) };
+
+    function drawCurve() {
+      const z = zoomFactor();
+      const lineW = Math.max(2.2, canvas.width / 420);
+
+      // exact curve y = ±sqrt(x^3+x), x >= 0
+      for (const sign of [1, -1]) {
+        ctx.beginPath();
+        let started = false;
+        const xmin = Math.max(0, view.centerX - view.halfX * 1.25);
+        const xmax = Math.max(0.02, view.centerX + view.halfX * 1.25);
+        const N = 900;
+        for (let i = 0; i <= N; i++) {
+          const x = xmin + (xmax - xmin) * i / N;
+          const q = x*x*x + x;
+          if (q < 0) continue;
+          const y = sign * Math.sqrt(q);
+          const p = worldToScreen(x,y);
+          if (!started) { ctx.moveTo(p.x,p.y); started = true; }
+          else ctx.lineTo(p.x,p.y);
+        }
+        ctx.strokeStyle = '#fabd2f';
+        ctx.lineWidth = lineW;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+
+      // tangent line at the chosen smooth point
+      const slope = (3*target.x*target.x + 1) / (2*target.y);
+      const tangentAlpha = 0.10 + 0.80 * smoothstep(2, 18, z);
+      const xL = view.centerX - view.halfX*1.3;
+      const xR = view.centerX + view.halfX*1.3;
+      const yL = target.y + slope*(xL-target.x);
+      const yR = target.y + slope*(xR-target.x);
+      const a = worldToScreen(xL,yL), b = worldToScreen(xR,yR);
+      ctx.beginPath();
+      ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle = `rgba(142,192,124,${tangentAlpha})`;
+      ctx.lineWidth = Math.max(1.5, canvas.width/650);
+      ctx.setLineDash([8*DPR,7*DPR]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // highlighted point
+      const p = worldToScreen(target.x,target.y);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y, Math.max(4.2, canvas.width/170), 0, Math.PI*2);
+      ctx.fillStyle = '#fe8019';
+      ctx.fill();
+      ctx.strokeStyle = '#1d2021';
+      ctx.lineWidth = Math.max(2, canvas.width/520);
+      ctx.stroke();
+    }
+
+    function zoomFactor() {
+      return Math.exp(Math.log(1) + progress * Math.log(70));
+    }
+
+    function updateView() {
+      const z = zoomFactor();
+      // Keep the selected smooth point fixed at the center as we zoom.
+      view.centerX = target.x;
+      view.centerY = target.y;
+      view.halfX = 2.15 / z;
+      view.halfY = view.halfX / aspect;
+    }
+
+
+    function draw() {
+      updateView();
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid();
+      drawCurve();
+      scrub.value = String(Math.round(progress*1000));
+      const z = zoomFactor();
+      zoomReadout.textContent = z < 10 ? z.toFixed(1)+'×' : Math.round(z)+'×';
+      playBtn.textContent = playing ? 'Pause' : (progress >= 1 ? 'Replay' : 'Play');
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(rect.width * DPR));
+      canvas.height = Math.max(1, Math.round(rect.height * DPR));
+      aspect = canvas.width / canvas.height;
+      draw();
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      const dt = now-lastTime;
+      lastTime = now;
+      if (playing) {
+        progress += dt/DURATION;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+        }
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 1) progress = 0;
+      playing = !playing;
+      lastTime = performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      progress = 0;
+      playing = !prefersReduced;
+      lastTime = performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input', () => {
+      progress = clamp(Number(scrub.value)/1000);
+      playing = false;
+      draw();
+    });
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<h3>...but these graphs aren't always straight lines!</h3>
+
+<p>
+This straight line behavior is in contrast to what happens at \(y^2 = x^3 + x^2.\) On that curve -- which has a very similar equation! -- calculus predicts that, at \((0, 0),\) things should behave strangely: locally it should look like <em>two lines crossing</em>. And indeed, if we graph it, this is exactly what happens, as shown in the widget below.
+</p>
+
+<!-- Hidden Phenomena: node zoom widget -->
+<div id="hp-node-curve-zoom">
+  <style>
+    #hp-node-curve-zoom {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-node-curve-zoom .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 290px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 50% 46%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-node-curve-zoom canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #hp-node-curve-zoom .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-node-curve-zoom button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-node-curve-zoom button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-node-curve-zoom button:focus-visible,
+    #hp-node-curve-zoom input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-node-curve-zoom input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    #hp-node-curve-zoom .hp-zoom {
+      min-width: 6ch;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 520px) {
+      #hp-node-curve-zoom .hp-stage {
+        min-height: 255px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-node-curve-zoom .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+      #hp-node-curve-zoom .hp-zoom { display: none; }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Interactive zoom into the origin of the curve y squared equals x cubed plus x squared, showing two branches crossing with tangent lines y equals plus or minus x."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play>Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Zoom level">
+    <span class="hp-zoom" data-zoom>1×</span>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-node-curve-zoom');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+    const zoomReadout = root.querySelector('[data-zoom]');
+
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = prefersReduced ? 1 : 0;
+    let playing = !prefersReduced;
+    let lastTime = 0;
+    const DURATION = 6500;
+    let DPR = 1;
+    let aspect = 16/9;
+
+    const view = { centerX: 0, centerY: 0, halfX: 2, halfY: 1 };
+
+    function clamp(x,a=0,b=1) { return Math.max(a,Math.min(b,x)); }
+    function smoothstep(a,b,x) {
+      const t = clamp((x-a)/(b-a));
+      return t*t*(3-2*t);
+    }
+
+    function worldToScreen(x,y) {
+      return {
+        x: canvas.width * (0.5 + 0.5*(x-view.centerX)/view.halfX),
+        y: canvas.height * (0.5 - 0.5*(y-view.centerY)/view.halfY)
+      };
+    }
+
+    function drawGrid() {
+      const z = zoomFactor();
+      // Choose a pleasant grid spacing at every zoom.
+      const target = view.halfX / 3.0;
+      const pow = Math.pow(10, Math.floor(Math.log10(target)));
+      const m = target / pow;
+      const step = (m < 2 ? 1 : m < 5 ? 2 : 5) * pow;
+
+      const x0 = Math.ceil((view.centerX-view.halfX)/step)*step;
+      const x1 = view.centerX+view.halfX;
+      const y0 = Math.ceil((view.centerY-view.halfY)/step)*step;
+      const y1 = view.centerY+view.halfY;
+
+      ctx.lineWidth = Math.max(0.7, DPR*0.7);
+      ctx.strokeStyle = 'rgba(168,153,132,0.10)';
+      for (let x=x0; x<=x1+1e-12; x+=step) {
+        const a=worldToScreen(x,view.centerY-view.halfY);
+        const b=worldToScreen(x,view.centerY+view.halfY);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+      for (let y=y0; y<=y1+1e-12; y+=step) {
+        const a=worldToScreen(view.centerX-view.halfX,y);
+        const b=worldToScreen(view.centerX+view.halfX,y);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+
+      // Axes, when visible.
+      ctx.strokeStyle = 'rgba(235,219,178,0.22)';
+      ctx.lineWidth = Math.max(1,DPR);
+      if (view.centerX-view.halfX <= 0 && 0 <= view.centerX+view.halfX) {
+        const a=worldToScreen(0,view.centerY-view.halfY);
+        const b=worldToScreen(0,view.centerY+view.halfY);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+      if (view.centerY-view.halfY <= 0 && 0 <= view.centerY+view.halfY) {
+        const a=worldToScreen(view.centerX-view.halfX,0);
+        const b=worldToScreen(view.centerX+view.halfX,0);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+    }
+
+    
+    function drawCurve() {
+      const z = zoomFactor();
+      const lineW = Math.max(2.2, canvas.width / 420);
+      // The two smooth local branches can be parameterized by
+      // y = ± x sqrt(1+x), valid for x >= -1.
+      for (const sign of [1, -1]) {
+        ctx.beginPath();
+        let started = false;
+        const xmin = Math.max(-1, view.centerX - view.halfX * 1.25);
+        const xmax = view.centerX + view.halfX * 1.25;
+        const N = 1000;
+        for (let i = 0; i <= N; i++) {
+          const x = xmin + (xmax - xmin) * i / N;
+          if (x < -1) continue;
+          const y = sign * x * Math.sqrt(Math.max(0,1+x));
+          const p = worldToScreen(x,y);
+          if (!started) { ctx.moveTo(p.x,p.y); started = true; }
+          else ctx.lineTo(p.x,p.y);
+        }
+        ctx.strokeStyle = '#fabd2f';
+        ctx.lineWidth = lineW;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+
+      // Limiting tangent cone y = ±x
+      const tangentAlpha = 0.10 + 0.82 * smoothstep(2, 16, z);
+      for (const slope of [1,-1]) {
+        const xL = view.centerX - view.halfX*1.3;
+        const xR = view.centerX + view.halfX*1.3;
+        const a = worldToScreen(xL,slope*xL);
+        const b = worldToScreen(xR,slope*xR);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle = `rgba(142,192,124,${tangentAlpha})`;
+        ctx.lineWidth = Math.max(1.5, canvas.width/650);
+        ctx.setLineDash([8*DPR,7*DPR]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      const p = worldToScreen(0,0);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y, Math.max(4.2, canvas.width/170), 0, Math.PI*2);
+      ctx.fillStyle = '#fe8019';
+      ctx.fill();
+      ctx.strokeStyle = '#1d2021';
+      ctx.lineWidth = Math.max(2, canvas.width/520);
+      ctx.stroke();
+    }
+
+    function zoomFactor() {
+      return Math.exp(progress * Math.log(65));
+    }
+
+    function updateView() {
+      const z = zoomFactor();
+      view.centerX = 0;
+      view.centerY = 0;
+      view.halfX = 2.0 / z;
+      view.halfY = view.halfX / aspect;
+    }
+
+
+    function draw() {
+      updateView();
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid();
+      drawCurve();
+      scrub.value = String(Math.round(progress*1000));
+      const z = zoomFactor();
+      zoomReadout.textContent = z < 10 ? z.toFixed(1)+'×' : Math.round(z)+'×';
+      playBtn.textContent = playing ? 'Pause' : (progress >= 1 ? 'Replay' : 'Play');
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(rect.width * DPR));
+      canvas.height = Math.max(1, Math.round(rect.height * DPR));
+      aspect = canvas.width / canvas.height;
+      draw();
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      const dt = now-lastTime;
+      lastTime = now;
+      if (playing) {
+        progress += dt/DURATION;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+        }
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 1) progress = 0;
+      playing = !playing;
+      lastTime = performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      progress = 0;
+      playing = !prefersReduced;
+      lastTime = performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input', () => {
+      progress = clamp(Number(scrub.value)/1000);
+      playing = false;
+      draw();
+    });
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<p>
+The way to understand this two lines crossing is that, when \((x, y) \approx (0, 0),\) the number \(x^3\) is much smaller than \(x^2\) (think of how when you start with a small number like \(1/10,\) raising it to powers makes it even smaller: \((1/10)^2 = 1/100\) and \((1/10)^3 = 1/1000\)). So, since \(x^3\) is so much smaller than \(x^2,\) we can approximate our equation \(y^2 = x^3 + x^2\) by \(y^2 = x^2,\) and the graph of that is two lines crossing: the solutions to \(y^2 = x^2\) are \(y = \pm x,\) so the graph is just the union of the lines \(y=x\) and \(y=-x.\) If you happen to know calculus, we'll remark that <em>implicit differentiation</em> can make this more precise. 
+</p>
+
+<p>
+So, when you graph a polynomial, locally it <em>usually</em> looks like a straight line -- except near a handful of <em>critical points</em>, like the one above, where the local behavior of the graph can be far more complicated!
+</p>
+
+<h3>A cuspidal cubic</h3>
+
+<p>
+Some critical points can look even stranger than two lines crossing. Consider the equation \(y^2 =x^3.\) It is graphed in the widget below, and has a critical point at the origin; zooming in on that critical point, something strange happens: the graph looks like some kind of 'doubled line.'
+</p>
+
+<!-- Hidden Phenomena: cuspidal cubic y^2 = x^3 -->
+<div id="hp-cusp-curve-zoom">
+  <style>
+    #hp-cusp-curve-zoom {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-cusp-curve-zoom .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 290px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 50% 48%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-cusp-curve-zoom canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #hp-cusp-curve-zoom .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-cusp-curve-zoom button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-cusp-curve-zoom button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-cusp-curve-zoom button:focus-visible,
+    #hp-cusp-curve-zoom input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-cusp-curve-zoom input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    #hp-cusp-curve-zoom .hp-zoom {
+      min-width: 6ch;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 520px) {
+      #hp-cusp-curve-zoom .hp-stage {
+        min-height: 255px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-cusp-curve-zoom .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+      #hp-cusp-curve-zoom .hp-zoom {
+        display: none;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Interactive zoom into the cusp of the curve y squared equals x cubed. Both branches meet at the origin with tangent line y equals zero."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play>Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Zoom level">
+    <span class="hp-zoom" data-zoom>1×</span>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-cusp-curve-zoom');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+    const zoomReadout = root.querySelector('[data-zoom]');
+
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = prefersReduced ? 1 : 0;
+    let playing = !prefersReduced;
+    let lastTime = 0;
+    const DURATION = 6500;
+    let DPR = 1;
+    let aspect = 16/9;
+
+    const view = { centerX: 0, centerY: 0, halfX: 2, halfY: 1 };
+
+    function clamp(x,a=0,b=1) {
+      return Math.max(a,Math.min(b,x));
+    }
+
+    function smoothstep(a,b,x) {
+      const t = clamp((x-a)/(b-a));
+      return t*t*(3-2*t);
+    }
+
+    function zoomFactor() {
+      return Math.exp(progress * Math.log(60));
+    }
+
+    function updateView() {
+      const z = zoomFactor();
+
+      // Keep the cusp fixed at the origin while zooming isotropically.
+      // A small horizontal bias leaves room to see the one-sided nature
+      // of the cusp clearly.
+      view.centerX = 0.18 / z;
+      view.centerY = 0;
+      view.halfX = 2.15 / z;
+      view.halfY = view.halfX / aspect;
+    }
+
+    function worldToScreen(x,y) {
+      return {
+        x: canvas.width * (0.5 + 0.5*(x-view.centerX)/view.halfX),
+        y: canvas.height * (0.5 - 0.5*(y-view.centerY)/view.halfY)
+      };
+    }
+
+    function drawGrid() {
+      const target = view.halfX / 3.0;
+      const pow = Math.pow(10, Math.floor(Math.log10(target)));
+      const m = target / pow;
+      const step = (m < 2 ? 1 : m < 5 ? 2 : 5) * pow;
+
+      const x0 = Math.ceil((view.centerX-view.halfX)/step)*step;
+      const x1 = view.centerX+view.halfX;
+      const y0 = Math.ceil((view.centerY-view.halfY)/step)*step;
+      const y1 = view.centerY+view.halfY;
+
+      ctx.lineWidth = Math.max(0.7, DPR*0.7);
+      ctx.strokeStyle = 'rgba(168,153,132,0.10)';
+
+      for (let x=x0; x<=x1+1e-12; x+=step) {
+        const a=worldToScreen(x,view.centerY-view.halfY);
+        const b=worldToScreen(x,view.centerY+view.halfY);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      }
+
+      for (let y=y0; y<=y1+1e-12; y+=step) {
+        const a=worldToScreen(view.centerX-view.halfX,y);
+        const b=worldToScreen(view.centerX+view.halfX,y);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(235,219,178,0.22)';
+      ctx.lineWidth = Math.max(1,DPR);
+
+      if (view.centerX-view.halfX <= 0 && 0 <= view.centerX+view.halfX) {
+        const a=worldToScreen(0,view.centerY-view.halfY);
+        const b=worldToScreen(0,view.centerY+view.halfY);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      }
+
+      if (view.centerY-view.halfY <= 0 && 0 <= view.centerY+view.halfY) {
+        const a=worldToScreen(view.centerX-view.halfX,0);
+        const b=worldToScreen(view.centerX+view.halfX,0);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      }
+    }
+
+    function drawCusp() {
+      const lineW = Math.max(2.4, canvas.width / 420);
+
+      // Parametrization of y^2 = x^3:
+      //      x = t^2,  y = t^3.
+      //
+      // Use one continuous parameter interval so the point t=0
+      // is visibly the cusp where the two branches meet.
+      const xmax = Math.max(0.001, view.centerX + view.halfX*1.25);
+      const tmax = Math.sqrt(xmax);
+      const N = 1400;
+
+      ctx.beginPath();
+      let started = false;
+
+      for (let i=0; i<=N; i++) {
+        const t = -tmax + 2*tmax*i/N;
+        const x = t*t;
+        const y = t*t*t;
+        const p = worldToScreen(x,y);
+
+        if (!started) {
+          ctx.moveTo(p.x,p.y);
+          started = true;
+        } else {
+          ctx.lineTo(p.x,p.y);
+        }
+      }
+
+      // Dark under-stroke makes the curve read cleanly against the grid.
+      ctx.strokeStyle = '#1d2021';
+      ctx.lineWidth = lineW + Math.max(3, DPR*2.0);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      ctx.beginPath();
+      started = false;
+      for (let i=0; i<=N; i++) {
+        const t = -tmax + 2*tmax*i/N;
+        const x = t*t;
+        const y = t*t*t;
+        const p = worldToScreen(x,y);
+        if (!started) {
+          ctx.moveTo(p.x,p.y);
+          started = true;
+        } else {
+          ctx.lineTo(p.x,p.y);
+        }
+      }
+      ctx.strokeStyle = '#fabd2f';
+      ctx.lineWidth = lineW;
+      ctx.stroke();
+
+      // Tangent cone: both branches have the same tangent y = 0.
+      const z = zoomFactor();
+      const tangentAlpha = 0.08 + 0.82*smoothstep(2,16,z);
+      const xL = view.centerX - view.halfX*1.3;
+      const xR = view.centerX + view.halfX*1.3;
+      const a = worldToScreen(xL,0);
+      const b = worldToScreen(xR,0);
+
+      ctx.beginPath();
+      ctx.moveTo(a.x,a.y);
+      ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle = `rgba(142,192,124,${tangentAlpha})`;
+      ctx.lineWidth = Math.max(1.5, canvas.width/650);
+      ctx.setLineDash([8*DPR,7*DPR]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Cusp point.
+      const p0 = worldToScreen(0,0);
+      ctx.beginPath();
+      ctx.arc(p0.x,p0.y,Math.max(4.2,canvas.width/170),0,Math.PI*2);
+      ctx.fillStyle = '#fe8019';
+      ctx.fill();
+      ctx.strokeStyle = '#1d2021';
+      ctx.lineWidth = Math.max(2,canvas.width/520);
+      ctx.stroke();
+    }
+
+    function draw() {
+      updateView();
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid();
+      drawCusp();
+
+      scrub.value = String(Math.round(progress*1000));
+      const z = zoomFactor();
+      zoomReadout.textContent = z < 10 ? z.toFixed(1)+'×' : Math.round(z)+'×';
+      playBtn.textContent = playing ? 'Pause' : (progress >= 1 ? 'Replay' : 'Play');
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(rect.width * DPR));
+      canvas.height = Math.max(1, Math.round(rect.height * DPR));
+      aspect = canvas.width / canvas.height;
+      draw();
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      const dt = now-lastTime;
+      lastTime = now;
+
+      if (playing) {
+        progress += dt/DURATION;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+        }
+        draw();
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 1) progress = 0;
+      playing = !playing;
+      lastTime = performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      progress = 0;
+      playing = !prefersReduced;
+      lastTime = performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input', () => {
+      progress = clamp(Number(scrub.value)/1000);
+      playing = false;
+      draw();
+    });
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<p>
+This doubled line behavior is called a <em>cusp</em>, and the equation \(y^2 = x^3\) is often referred to as the <em>cuspidal cubic</em>. It will be the object of interest for the rest of this point. 
+</p>
+
+<h2 id="sec2">The cuspidal cubic, over the complex numbers</h2>
+
+<p>
+The great thing about polynomial equations is that they don't just make sense over the real numbers, but in fact they make sense over every number system. So, we can graph \(y^2 = x^3\) over the complex numbers \(\mathbb{C},\) and try to compare to our real picture.
+</p>
+
+<p>
+What do we mean by graphing \(y^2 = x^3\) over \(\mathbb{C}\)? The answer is a little hard to geometrically understand, but is algebraically quite simple: instead of looking for pairs of <em>real</em> numbers solving this equation, we now look at the set of all pairs \((x, y)\) where \(x, y\) are both <em>complex</em> numbers obeying \(y^2 = x^3.\) For example, \((-1, i)\) is a point on the complex graph which we cannot see on the real graph.
+</p>
+
+<p>
+Complex graphs are hard to draw, because \(\mathbb{C}\) is 2-dimensional (you need to specify two real numbers to determine a=one complex number: its real part and its imaginary part); so pairs of complex numbers are <em>four</em> dimensional. The equation \(y^2 = x^3\) ends up defining a 2-dimensional subset of a 4-dimensional space. As with the graph over the real numbers, most of the time this shape looks boring locally: for any point \((x, y)\neq (0, 0)\) on our graph, the surface just looks like a flat 2-dimensional plane; multivariable calculus can allow you to predict this.
+</p>
+
+<p>
+But near \((0, 0),\) the graph looks totally different! What happens there? That is -- what's the analogue of the cusp we saw over \(\mathbb{R}\) when we graph in \(\mathbb{C}\)? 
+</p>
+
+<p>
+To get a handle on this graph, we're going to express it algebraically; this algebraic expression of the surface we can then draw inside of 3-dimensional space, to give you a picture of the shape. 
+</p>
+
+<p>
+We want to understand solutions to \(y^2 = x^3\) near \((0, 0).\) When you have a complex number, there are generally two ways to write it: you could write it in <em>Cartesian form</em> as something like \(2 + 3i\) or \(4 - 5i,\) or you could write it in <em>polar form</em>. Polar form is just the analogue of polar coordinates for complex numbers; let's quickly review it.
+</p>
+
+<h3>Digression: Polar form</h3>
+
+<p>
+When you want to specify the location of a point in 2-dimensional space, <em>Cartesian</em> coordinates tell you that you should say how far <em>right</em> to move from the origin, followed by how far <em>up</em> to move. 
+</p>
+
+<!-- Hidden Phenomena: Cartesian coordinates animation -->
+<div id="hp-cartesian-34">
+
+  <style>
+    #hp-cartesian-34 {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --blue: #83a598;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-cartesian-34 .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 290px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 48% 46%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-cartesian-34 canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #hp-cartesian-34 .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-cartesian-34 button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-cartesian-34 button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-cartesian-34 button:focus-visible,
+    #hp-cartesian-34 input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-cartesian-34 input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    @media (max-width: 520px) {
+      #hp-cartesian-34 .hp-stage {
+        min-height: 255px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-cartesian-34 .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Animation moving from the origin right to x equals 3 and then up to the point 3 comma 4."></canvas>
+  </div>
+  <div class="hp-controls">
+    <button type="button" data-play>Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0" aria-label="Animation progress">
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-cartesian-34');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = prefersReduced ? 1 : 0;
+    let playing = !prefersReduced;
+    let last = 0;
+    let dpr = 1;
+    const DURATION = 5200;
+
+    const bounds = { xmin: -1.0, xmax: 5.3, ymin: -1.0, ymax: 5.5 };
+
+    const clamp = (x,a=0,b=1) => Math.max(a,Math.min(b,x));
+    const ease = t => {
+      t = clamp(t);
+      return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+    };
+
+    function W(x,y) {
+      const pad = 0.07;
+      const w = canvas.width, h = canvas.height;
+      const xx = pad*w + (x-bounds.xmin)/(bounds.xmax-bounds.xmin) * (1-2*pad)*w;
+      const yy = h - (pad*h + (y-bounds.ymin)/(bounds.ymax-bounds.ymin) * (1-2*pad)*h);
+      return {x:xx,y:yy};
+    }
+
+    function drawGrid() {
+      const w = canvas.width;
+      ctx.lineWidth = Math.max(0.7, dpr*0.7);
+      ctx.strokeStyle = 'rgba(168,153,132,0.10)';
+
+      for (let x=0; x<=5; x++) {
+        const a=W(x,bounds.ymin), b=W(x,bounds.ymax);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+      for (let y=0; y<=5; y++) {
+        const a=W(bounds.xmin,y), b=W(bounds.xmax,y);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(235,219,178,0.32)';
+      ctx.lineWidth = Math.max(1.1,dpr);
+      let a=W(bounds.xmin,0), b=W(bounds.xmax,0);
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      a=W(0,bounds.ymin); b=W(0,bounds.ymax);
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+    }
+
+    function drawArrow(x1,y1,x2,y2,color,width,alpha=1) {
+      const a=W(x1,y1), b=W(x2,y2);
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+
+      const ang = Math.atan2(b.y-a.y,b.x-a.x);
+      const L = Math.max(10*dpr, width*3.2);
+      ctx.beginPath();
+      ctx.moveTo(b.x,b.y);
+      ctx.lineTo(b.x-L*Math.cos(ang-.48), b.y-L*Math.sin(ang-.48));
+      ctx.lineTo(b.x-L*Math.cos(ang+.48), b.y-L*Math.sin(ang+.48));
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function dot(x,y,r,color) {
+      const p=W(x,y);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,r,0,Math.PI*2);
+      ctx.fillStyle='#1d2021'; ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,Math.max(2,r-2.0*dpr),0,Math.PI*2);
+      ctx.fillStyle=color; ctx.fill();
+    }
+
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid();
+
+      // two equal-time phases: horizontal, then vertical
+      let x=0,y=0;
+      const pw = Math.max(4*dpr, canvas.width/185);
+      if (progress <= .5) {
+        const t=ease(progress/.5);
+        x=3*t; y=0;
+        drawArrow(0,0,x,0,'#fabd2f',pw);
+      } else {
+        const t=ease((progress-.5)/.5);
+        x=3; y=4*t;
+        drawArrow(0,0,3,0,'#fabd2f',pw,0.95);
+        drawArrow(3,0,3,y,'#8ec07c',pw);
+      }
+
+      dot(0,0,5.2*dpr,'#ebdbb2');
+      dot(x,y,7.0*dpr,'#fe8019');
+
+      if (progress >= .5) {
+        // subtle right-angle corner marker, purely visual
+        const p=W(3,0);
+        const s=11*dpr;
+        ctx.strokeStyle='rgba(235,219,178,0.38)';
+        ctx.lineWidth=Math.max(1,dpr);
+        ctx.beginPath();
+        ctx.moveTo(p.x-s,p.y);
+        ctx.lineTo(p.x-s,p.y-s);
+        ctx.lineTo(p.x,p.y-s);
+        ctx.stroke();
+      }
+
+      scrub.value = String(Math.round(progress*1000));
+      playBtn.textContent = playing ? 'Pause' : (progress >= 1 ? 'Replay' : 'Play');
+    }
+
+    function resize() {
+      const r=canvas.getBoundingClientRect();
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      canvas.width=Math.max(1,Math.round(r.width*dpr));
+      canvas.height=Math.max(1,Math.round(r.height*dpr));
+      draw();
+    }
+
+    function tick(now) {
+      if(!last) last=now;
+      const dt=now-last; last=now;
+      if(playing) {
+        progress += dt/DURATION;
+        if(progress>=1) { progress=1; playing=false; }
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click',()=>{
+      if(progress>=1) progress=0;
+      playing=!playing;
+      last=performance.now();
+      draw();
+    });
+    restartBtn.addEventListener('click',()=>{
+      progress=0; playing=!prefersReduced; last=performance.now(); draw();
+    });
+    scrub.addEventListener('input',()=>{
+      progress=clamp(Number(scrub.value)/1000);
+      playing=false; draw();
+    });
+
+    if('ResizeObserver' in window) new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    else window.addEventListener('resize',resize);
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<p>
+However, there's a different way to describe the location: instead of saying how far right and up to move, let's just describe the straight line path to the new point. This requires two pieces of information: a direction to face (encoded as an angle \(\theta\)), followed by a distance \(r\) to move in that direction. 
+</p>
+
+<!-- Hidden Phenomena: polar coordinates animation -->
+<div id="hp-polar-34">
+
+  <style>
+    #hp-polar-34 {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --blue: #83a598;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-polar-34 .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 290px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 48% 46%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-polar-34 canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #hp-polar-34 .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-polar-34 button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-polar-34 button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-polar-34 button:focus-visible,
+    #hp-polar-34 input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-polar-34 input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    @media (max-width: 520px) {
+      #hp-polar-34 .hp-stage {
+        min-height: 255px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-polar-34 .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Animation reaching the point 3 comma 4 by first rotating to its polar angle and then moving radially outward to radius 5."></canvas>
+  </div>
+  <div class="hp-controls">
+    <button type="button" data-play>Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0" aria-label="Animation progress">
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-polar-34');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = prefersReduced ? 1 : 0;
+    let playing = !prefersReduced;
+    let last = 0;
+    let dpr = 1;
+    const DURATION = 5200;
+
+    const bounds = { xmin: -1.0, xmax: 5.3, ymin: -1.0, ymax: 5.5 };
+    const theta = Math.atan2(4,3);
+    const R = 5;
+
+    const clamp = (x,a=0,b=1) => Math.max(a,Math.min(b,x));
+    const ease = t => {
+      t=clamp(t);
+      return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+    };
+
+    function W(x,y) {
+      const pad=.07;
+      const w=canvas.width,h=canvas.height;
+      return {
+        x: pad*w + (x-bounds.xmin)/(bounds.xmax-bounds.xmin)*(1-2*pad)*w,
+        y: h-(pad*h + (y-bounds.ymin)/(bounds.ymax-bounds.ymin)*(1-2*pad)*h)
+      };
+    }
+
+    function drawGrid() {
+      ctx.lineWidth=Math.max(.7,dpr*.7);
+      ctx.strokeStyle='rgba(168,153,132,0.10)';
+      for(let x=0;x<=5;x++) {
+        const a=W(x,bounds.ymin),b=W(x,bounds.ymax);
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      }
+      for(let y=0;y<=5;y++) {
+        const a=W(bounds.xmin,y),b=W(bounds.xmax,y);
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      }
+      ctx.strokeStyle='rgba(235,219,178,0.32)';
+      ctx.lineWidth=Math.max(1.1,dpr);
+      let a=W(bounds.xmin,0),b=W(bounds.xmax,0);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      a=W(0,bounds.ymin);b=W(0,bounds.ymax);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    }
+
+    function dot(x,y,r,color) {
+      const p=W(x,y);
+      ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);
+      ctx.fillStyle='#1d2021';ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2,r-2*dpr),0,Math.PI*2);
+      ctx.fillStyle=color;ctx.fill();
+    }
+
+    function drawRay(angle,length,color,alpha=1,arrow=true) {
+      const a=W(0,0), b=W(length*Math.cos(angle), length*Math.sin(angle));
+      const width=Math.max(4*dpr,canvas.width/185);
+      ctx.save();
+      ctx.globalAlpha=alpha;
+      ctx.strokeStyle=color;ctx.fillStyle=color;
+      ctx.lineWidth=width;ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      if(arrow && length>.25) {
+        const ang=Math.atan2(b.y-a.y,b.x-a.x);
+        const L=Math.max(10*dpr,width*3.2);
+        ctx.beginPath();
+        ctx.moveTo(b.x,b.y);
+        ctx.lineTo(b.x-L*Math.cos(ang-.48),b.y-L*Math.sin(ang-.48));
+        ctx.lineTo(b.x-L*Math.cos(ang+.48),b.y-L*Math.sin(ang+.48));
+        ctx.closePath();ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawArc(angle) {
+      if(angle<=0.001) return;
+      const o=W(0,0);
+      // convert a world-radius into screen radius
+      const q=W(1.0,0);
+      const r=Math.abs(q.x-o.x);
+      ctx.beginPath();
+      ctx.arc(o.x,o.y,r,0,-angle,true);
+      ctx.strokeStyle='rgba(142,192,124,0.78)';
+      ctx.lineWidth=Math.max(2*dpr,canvas.width/320);
+      ctx.lineCap='round';
+      ctx.stroke();
+
+      const ex=o.x+r*Math.cos(angle);
+      const ey=o.y-r*Math.sin(angle);
+      ctx.beginPath();ctx.arc(ex,ey,4.4*dpr,0,Math.PI*2);
+      ctx.fillStyle='#8ec07c';ctx.fill();
+    }
+
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid();
+
+      // Phase 1: rotate a unit ray from angle 0 to theta.
+      // Phase 2: keep angle fixed and extend radius from 1 to 5.
+      let ang=0, rad=1;
+      if(progress<=.5) {
+        ang=theta*ease(progress/.5);
+        rad=1;
+      } else {
+        ang=theta;
+        rad=1+(R-1)*ease((progress-.5)/.5);
+      }
+
+      // faint final radial direction
+      drawRay(theta,R,'#504945',0.42,false);
+      drawArc(ang);
+
+      // moving ray / radius
+      drawRay(ang,rad,'#fabd2f',1,true);
+
+      dot(0,0,5.2*dpr,'#ebdbb2');
+      dot(rad*Math.cos(ang),rad*Math.sin(ang),7*dpr,'#fe8019');
+
+      // final target is always faintly visible
+      if(progress<1) dot(3,4,5.2*dpr,'rgba(131,165,152,0.7)');
+
+      scrub.value=String(Math.round(progress*1000));
+      playBtn.textContent=playing?'Pause':(progress>=1?'Replay':'Play');
+    }
+
+    function resize() {
+      const r=canvas.getBoundingClientRect();
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      canvas.width=Math.max(1,Math.round(r.width*dpr));
+      canvas.height=Math.max(1,Math.round(r.height*dpr));
+      draw();
+    }
+
+    function tick(now) {
+      if(!last) last=now;
+      const dt=now-last;last=now;
+      if(playing) {
+        progress += dt/DURATION;
+        if(progress>=1) {progress=1;playing=false;}
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click',()=>{
+      if(progress>=1) progress=0;
+      playing=!playing;last=performance.now();draw();
+    });
+    restartBtn.addEventListener('click',()=>{
+      progress=0;playing=!prefersReduced;last=performance.now();draw();
+    });
+    scrub.addEventListener('input',()=>{
+      progress=clamp(Number(scrub.value)/1000);
+      playing=false;draw();
+    });
+
+    if('ResizeObserver' in window) new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    else window.addEventListener('resize',resize);
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<p>
+Polar coordinates and Cartesian coordinates are related by a simple formula, easily derived from trigonometry: if your polar coordinates are \((r,\theta),\) then your Cartesian coordinates are \(x = r\cos\theta\) and \(y = r\sin\theta.\)
+</p>
+
+<p>
+Complex numbers are just 2-dimensional points with some extra algebraic structure; so, these polar coordinates go through for them, and we can write every complex number as 
+\[z = r(\cos\theta + i\sin\theta).\] 
+</p>
+
+<p>
+The extra algebraic structure on complex numbers makes polar form particularly natural, though: the angle addition identities of trigonometry imply
+\[(\cos\theta + i\sin\theta) \cdot (\cos\phi + i\sin\phi) = \cos(\theta+\phi) + i\sin(\theta+\phi).\]
+If you know trigonometry but have never seen this formula, we highly recommend you work through it! It implies that <em>when you multiply complex numbers, their angles add</em>. 
+</p>
+
+<p>
+This behavior -- where multiplication turns into addition -- is exactly what exponents do: multiplying \(b^x \cdot b^y\) becomes \(b^{x+y},\) with the multiplication turning into an addition. It is thus tempting to wonder if \(\cos\theta + i\sin\theta\) can be expressed in the form \(b^{\theta}\) for some base \(b\); remarkably this is true, though we won't elaborate on why in this article -- if you've never seen it before, imagine this is just some convenient notation to remind us of the rule for multiplying complex numbers. Thus people often write the polar form of a complex number as
+\[z = re^{i\theta},\]
+where \(e^i\) ends up being the base used to express these complex numbers (here \(e \approx 2.718\) is called Euler's number). 
+</p>
+
+<p>
+Visually, the intuition of polar coordinates is still here: \(e^{i\theta}\) is just the complex number at angle \(\theta\) on the unit circle, and \(r\) just scales us up or down. 
+</p>
+
+<!-- Hidden Phenomena: e^{iθ} then radial scaling, isotropic coordinates -->
+<div id="hp-complex-polar-animation">
+  <style>
+    #hp-complex-polar-animation {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --blue: #83a598;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-complex-polar-animation .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 290px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 49% 48%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-complex-polar-animation canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #hp-complex-polar-animation .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-complex-polar-animation button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-complex-polar-animation button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-complex-polar-animation button:focus-visible,
+    #hp-complex-polar-animation input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-complex-polar-animation input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    @media (max-width: 520px) {
+      #hp-complex-polar-animation .hp-stage {
+        min-height: 255px;
+        aspect-ratio: 4 / 3;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Animation of a point rotating from 1 around the unit circle to e to the i theta, then moving radially outward by a scale factor r."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play>Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Animation progress">
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-complex-polar-animation');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+
+    const reduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = reduced ? 1 : 0;
+    let playing = !reduced;
+    let last = 0;
+    let dpr = 1;
+
+    const DURATION = 5600;
+    const TAU = Math.PI * 2;
+    const theta = Math.atan2(4, 3);
+    const radius = 5;
+
+    const clamp = (x,a=0,b=1) => Math.max(a, Math.min(b,x));
+
+    function ease(t) {
+      t = clamp(t);
+      return t < .5
+        ? 4*t*t*t
+        : 1 - Math.pow(-2*t+2,3)/2;
+    }
+
+    // One common scale factor for x and y, so the unit circle is visually round.
+    function plotTransform() {
+      const w = canvas.width, h = canvas.height;
+      const pad = 0.07;
+      const cx = 1.65;
+      const cy = 1.75;
+      const halfSpan = 3.65;
+
+      const availableW = (1 - 2*pad) * w;
+      const availableH = (1 - 2*pad) * h;
+      const scale = Math.min(availableW, availableH) / (2 * halfSpan);
+
+      return { cx, cy, halfSpan, scale, px:w/2, py:h/2 };
+    }
+
+    function W(x,y) {
+      const T = plotTransform();
+      return {
+        x: T.px + (x - T.cx) * T.scale,
+        y: T.py - (y - T.cy) * T.scale
+      };
+    }
+
+    function visibleBounds() {
+      const T = plotTransform();
+      return {
+        xmin: T.cx - canvas.width /(2*T.scale),
+        xmax: T.cx + canvas.width /(2*T.scale),
+        ymin: T.cy - canvas.height/(2*T.scale),
+        ymax: T.cy + canvas.height/(2*T.scale)
+      };
+    }
+
+    function drawGrid() {
+      const b = visibleBounds();
+
+      ctx.lineWidth = Math.max(.7, dpr*.7);
+      ctx.strokeStyle = 'rgba(168,153,132,0.09)';
+
+      for (let x=Math.ceil(b.xmin); x<=Math.floor(b.xmax); x++) {
+        const a=W(x,b.ymin), c=W(x,b.ymax);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(c.x,c.y); ctx.stroke();
+      }
+
+      for (let y=Math.ceil(b.ymin); y<=Math.floor(b.ymax); y++) {
+        const a=W(b.xmin,y), c=W(b.xmax,y);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(c.x,c.y); ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(235,219,178,0.28)';
+      ctx.lineWidth = Math.max(1.1,dpr);
+
+      if (b.ymin <= 0 && 0 <= b.ymax) {
+        const a=W(b.xmin,0), c=W(b.xmax,0);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(c.x,c.y); ctx.stroke();
+      }
+
+      if (b.xmin <= 0 && 0 <= b.xmax) {
+        const a=W(0,b.ymin), c=W(0,b.ymax);
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(c.x,c.y); ctx.stroke();
+      }
+    }
+
+    function drawUnitCircle() {
+      const o = W(0,0);
+      const one = W(1,0);
+      const r = Math.abs(one.x-o.x);
+
+      ctx.beginPath();
+      ctx.arc(o.x,o.y,r,0,TAU);
+      ctx.strokeStyle = 'rgba(131,165,152,0.78)';
+      ctx.lineWidth = Math.max(2*dpr, canvas.width/350);
+      ctx.stroke();
+    }
+
+    function drawAngleArc(angle) {
+      if (angle <= .002) return;
+
+      const o = W(0,0);
+      const q = W(.55,0);
+      const r = Math.abs(q.x-o.x);
+
+      ctx.beginPath();
+      ctx.arc(o.x,o.y,r,0,-angle,true);
+      ctx.strokeStyle='rgba(142,192,124,0.92)';
+      ctx.lineWidth=Math.max(2.2*dpr,canvas.width/330);
+      ctx.lineCap='round';
+      ctx.stroke();
+    }
+
+    function drawRay(angle, length, color, alpha=1, dashed=false) {
+      const a=W(0,0);
+      const b=W(length*Math.cos(angle), length*Math.sin(angle));
+
+      ctx.save();
+      ctx.globalAlpha=alpha;
+      ctx.strokeStyle=color;
+      ctx.lineWidth=Math.max(2*dpr,canvas.width/330);
+      ctx.lineCap='round';
+      if (dashed) ctx.setLineDash([8*dpr,7*dpr]);
+      ctx.beginPath();
+      ctx.moveTo(a.x,a.y);
+      ctx.lineTo(b.x,b.y);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function dot(x,y,r,color) {
+      const p=W(x,y);
+
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,r+1.35*dpr,0,TAU);
+      ctx.fillStyle='#1d2021';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,r,0,TAU);
+      ctx.fillStyle=color;
+      ctx.fill();
+    }
+
+    function drawExpLabel(x,y,alpha=1) {
+      const p=W(x,y);
+      ctx.save();
+      ctx.globalAlpha=alpha;
+      ctx.fillStyle='#8ec07c';
+      ctx.textAlign='left';
+      ctx.textBaseline='alphabetic';
+
+      const baseSize=17*dpr;
+      ctx.font=`italic ${baseSize}px Georgia, "Times New Roman", serif`;
+      ctx.fillText('e',p.x+10*dpr,p.y-9*dpr);
+
+      const eWidth=ctx.measureText('e').width;
+      ctx.font=`italic ${11*dpr}px Georgia, "Times New Roman", serif`;
+      ctx.fillText('iθ',p.x+10*dpr+eWidth+1*dpr,p.y-18*dpr);
+      ctx.restore();
+    }
+
+    function drawRLabel(radialLength,alpha=1) {
+      if (radialLength <= 1.05) return;
+
+      // Label halfway between e^{iθ} and the current scaled point.
+      const mid = (1 + radialLength) / 2;
+      const x=mid*Math.cos(theta);
+      const y=mid*Math.sin(theta);
+      const p=W(x,y);
+
+      // Small perpendicular offset from the ray.
+      const ox=-Math.sin(theta)*15*dpr;
+      const oy=-Math.cos(theta)*15*dpr;
+
+      ctx.save();
+      ctx.globalAlpha=alpha;
+      ctx.fillStyle='#fabd2f';
+      ctx.font=`italic ${18*dpr}px Georgia, "Times New Roman", serif`;
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText('r',p.x+ox,p.y+oy);
+      ctx.restore();
+    }
+
+    function drawFinalLabel(alpha=1) {
+      const p=W(radius*Math.cos(theta), radius*Math.sin(theta));
+
+      ctx.save();
+      ctx.globalAlpha=alpha;
+      ctx.fillStyle='#fe8019';
+      ctx.textAlign='left';
+      ctx.textBaseline='alphabetic';
+
+      const x0=p.x+11*dpr;
+      const y0=p.y-9*dpr;
+
+      ctx.font=`italic ${17*dpr}px Georgia, "Times New Roman", serif`;
+      ctx.fillText('re',x0,y0);
+
+      const baseWidth=ctx.measureText('re').width;
+      ctx.font=`italic ${11*dpr}px Georgia, "Times New Roman", serif`;
+      ctx.fillText('iθ',x0+baseWidth+1*dpr,y0-9*dpr);
+
+      ctx.restore();
+    }
+
+    function drawTrail(angle, radialLength, phase) {
+      if (phase === 0) {
+        const o=W(0,0);
+        const one=W(1,0);
+        const r=Math.abs(one.x-o.x);
+
+        ctx.beginPath();
+        ctx.arc(o.x,o.y,r,0,-angle,true);
+        ctx.strokeStyle='#fabd2f';
+        ctx.lineWidth=Math.max(3.2*dpr,canvas.width/230);
+        ctx.lineCap='round';
+        ctx.stroke();
+      } else {
+        const ux=Math.cos(theta), uy=Math.sin(theta);
+
+        dot(ux,uy,3.0*dpr,'#8ec07c');
+
+        const a=W(ux,uy);
+        const b=W(radialLength*ux,radialLength*uy);
+
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle='#fabd2f';
+        ctx.lineWidth=Math.max(3.4*dpr,canvas.width/220);
+        ctx.lineCap='round';
+        ctx.stroke();
+
+        drawExpLabel(ux,uy,1);
+        drawRLabel(radialLength,1);
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      drawGrid();
+      drawUnitCircle();
+
+      let angle, r, phase;
+
+      if (progress <= .5) {
+        const t=ease(progress/.5);
+        angle=theta*t;
+        r=1;
+        phase=0;
+      } else {
+        const t=ease((progress-.5)/.5);
+        angle=theta;
+        r=1+(radius-1)*t;
+        phase=1;
+      }
+
+      drawRay(theta,radius,'#504945',.38,true);
+      drawAngleArc(angle);
+      drawTrail(angle,r,phase);
+      drawRay(angle,r,'#fabd2f',.92,false);
+
+      // Smaller, lighter point markers.
+      dot(0,0,3.0*dpr,'#ebdbb2');
+      dot(r*Math.cos(angle),r*Math.sin(angle),4.15*dpr,'#fe8019');
+
+      // As the rotation approaches θ, fade in the e^{iθ} label.
+      if (phase === 0) {
+        const t=clamp((progress-.36)/.14);
+        if (t>0) drawExpLabel(Math.cos(theta),Math.sin(theta),t);
+      }
+
+      // Fade in the label for the final point as the radial scaling finishes.
+      const finalLabelAlpha=clamp((progress-.82)/.18);
+      if (finalLabelAlpha>0) drawFinalLabel(finalLabelAlpha);
+
+      scrub.value=String(Math.round(progress*1000));
+      playBtn.textContent=playing ? 'Pause' : (progress>=1 ? 'Replay' : 'Play');
+    }
+
+    function resize() {
+      const rect=canvas.getBoundingClientRect();
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      canvas.width=Math.max(1,Math.round(rect.width*dpr));
+      canvas.height=Math.max(1,Math.round(rect.height*dpr));
+      draw();
+    }
+
+    function tick(now) {
+      if (!last) last=now;
+      const dt=now-last;
+      last=now;
+
+      if (playing) {
+        progress += dt/DURATION;
+        if (progress >= 1) {
+          progress=1;
+          playing=false;
+        }
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click',() => {
+      if (progress>=1) progress=0;
+      playing=!playing;
+      last=performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click',() => {
+      progress=0;
+      playing=!reduced;
+      last=performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input',() => {
+      progress=clamp(Number(scrub.value)/1000);
+      playing=false;
+      draw();
+    });
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize',resize);
+    }
+
+    resize();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<h3>Solving our equation</h3>
+
+<p>
+Let's rewrite \(y^2 = x^3\) in polar form. If we set \(x = re^{i\theta}\) and \(y = se^{i\phi},\) then \(y^2 = x^3\) becomes
+\[s^2e^{2i\phi} = r^3e^{3i\theta}.\] 
+</p>
+
+<p>
+For two numbers in polar form to be equal, they must have the same radius and same angular part; so we can separate this one equation into the two equations
+\[s^2 = r^3\]
+and
+\[e^{2i\phi} = e^{3i\theta}.\] 
+</p>
+
+<p>
+This first equation \(s^2 = r^3\) is just our real number \(y^2 = x^3\) from before, because now \(s, r\) are real; although \(r, s\) are both positive (because they are distances), so actually it's only the top half of our cusp.
+</p>
+
+<p>
+This second equation \(e^{2i\phi} = e^{3i\theta}\) is more interesting, though. It is an equation relating two variables \(\phi\) and \(\theta,\) where \(\phi\) and \(\theta\) are not numbers but <em>angles</em>: the subtle distinction is that the numbers 0 and \(360\) are distinct, but as <em>angles</em> \(0^{\circ}\) and \(360^{\circ}\) are the same. 
+</p>
+
+<p>
+So, we're solving for <em>angles</em> \(\phi\) and \(\theta\) obeying \(2\phi = 3\theta.\) In the same way that we graphed \(s^2 = r^3\) on the \((r, s)\)-plane, we can graph the equation \(2\phi = 3\theta,\) but it requires a bit more care.
+</p>
+
+<h3>The torus</h3>
+
+<p>
+The natural geometric object associated to a number is a line: a number gives a point on the line. Similarly, the natural geometric object associated to an angle is the circle. 
+</p>
+
+<p>
+The natural geometric object associated to a pair of numbers is the plane, because pairs of numbers give points on the plane. But what is the geometric object associated to a <em>pair of angles</em>? 
+</p>
+
+<p>
+The answer is actually a torus! A torus can be generated by taking one circle, and looping it around in a circle. Thus a point on the torus is specified by two angles: the first angle tells you where you are on the initial circle, and the second angle tells you how far to rotate that initial circle.
+</p>
+
+<div class="hp-torus-product" id="hp-torus-product">
+  <canvas></canvas>
+
+  <div class="hp-torus-controls">
+    <button class="hp-torus-button hp-pause">Pause</button>
+    <button class="hp-torus-button hp-reset">Reset</button>
+
+    <label class="hp-torus-speed">
+      speed
+      <input type="range" min="0.2" max="2.2" step="0.05" value="1">
+    </label>
+  </div>
+
+  <div class="hp-torus-label">
+    <span class="hp-s1 hp-s1-a">S¹</span>
+    <span class="hp-times">×</span>
+    <span class="hp-s1 hp-s1-b">S¹</span>
+  </div>
+</div>
+
+<style>
+.hp-torus-product {
+  --bg: #282828;
+  --bg2: #1d2021;
+  --fg: #ebdbb2;
+  --muted: #928374;
+  --yellow: #fabd2f;
+  --orange: #fe8019;
+  --aqua: #8ec07c;
+  --blue: #83a598;
+
+  position: relative;
+  width: min(100%, 760px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 50% 44%, #32302f 0%, #282828 55%, #1d2021 100%);
+
+  border: 1px solid #504945;
+  border-radius: 14px;
+
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.025);
+
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+}
+
+.hp-torus-product canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hp-torus-controls {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 7px 9px;
+  border-radius: 9px;
+
+  background: rgba(29,32,33,.82);
+  border: 1px solid rgba(146,131,116,.35);
+  backdrop-filter: blur(8px);
+}
+
+.hp-torus-button {
+  appearance: none;
+  border: 1px solid #665c54;
+  border-radius: 6px;
+
+  padding: 5px 9px;
+
+  background: #3c3836;
+  color: #d5c4a1;
+
+  font: inherit;
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    color .15s ease;
+}
+
+.hp-torus-button:hover {
+  background: #504945;
+  border-color: #928374;
+  color: #fbf1c7;
+}
+
+.hp-torus-speed {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #928374;
+  font-size: 10px;
+}
+
+.hp-torus-speed input {
+  width: 72px;
+  accent-color: #8ec07c;
+}
+
+.hp-torus-label {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 14px;
+  font-weight: 600;
+  opacity: .9;
+}
+
+.hp-s1-a {
+  color: #fabd2f;
+}
+
+.hp-s1-b {
+  color: #8ec07c;
+}
+
+.hp-times {
+  color: #928374;
+}
+</style>
+
+<script>
+(() => {
+  const root = document.querySelector("#hp-torus-product");
+  const canvas = root.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const pauseButton = root.querySelector(".hp-pause");
+  const resetButton = root.querySelector(".hp-reset");
+  const speedSlider = root.querySelector('input[type="range"]');
+
+  const COLORS = {
+    bg: "#282828",
+    fg: "#ebdbb2",
+    muted: "#928374",
+    dark: "#1d2021",
+    yellow: "#fabd2f",
+    orange: "#fe8019",
+    aqua: "#8ec07c",
+    blue: "#83a598"
+  };
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+
+  let running = true;
+  let phase = "sweep";
+
+  let sweep = 0;
+  let shade = 0;
+  let holdTime = 0;
+
+  let lastTime = performance.now();
+
+  // Geometry.
+  const R = 1.62;
+  const r = 0.58;
+
+  // Camera.
+  const rotX = -0.76;
+  const rotZ = -0.16;
+
+  function resize() {
+    const rect = root.getBoundingClientRect();
+
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    width = rect.width;
+    height = rect.height;
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+
+  function rotatePoint([x, y, z]) {
+    const cz = Math.cos(rotZ);
+    const sz = Math.sin(rotZ);
+
+    const x1 = x * cz - y * sz;
+    const y1 = x * sz + y * cz;
+    const z1 = z;
+
+    const cx = Math.cos(rotX);
+    const sx = Math.sin(rotX);
+
+    return [
+      x1,
+      y1 * cx - z1 * sx,
+      y1 * sx + z1 * cx
+    ];
+  }
+
+  function project(p) {
+    const [x, y, z] = rotatePoint(p);
+
+    const focal = 6.5;
+    const perspective = focal / (focal - z);
+
+    const scale = Math.min(width, height) * 0.195;
+
+    return {
+      x: width * 0.5 + x * scale * perspective,
+      y: height * 0.48 - y * scale * perspective,
+      z,
+      perspective
+    };
+  }
+
+  function torus(phi, theta) {
+    const radial = R + r * Math.cos(theta);
+
+    return [
+      radial * Math.cos(phi),
+      radial * Math.sin(phi),
+      r * Math.sin(theta)
+    ];
+  }
+
+  function centerCircle(phi) {
+    return [
+      R * Math.cos(phi),
+      R * Math.sin(phi),
+      0
+    ];
+  }
+
+  function drawPolyline(points, stroke, lineWidth, alpha = 1) {
+    if (points.length < 2) return;
+
+    ctx.save();
+    ctx.beginPath();
+
+    const p0 = project(points[0]);
+    ctx.moveTo(p0.x, p0.y);
+
+    for (let i = 1; i < points.length; i++) {
+      const p = project(points[i]);
+      ctx.lineTo(p.x, p.y);
+    }
+
+    ctx.strokeStyle = stroke;
+    ctx.globalAlpha = alpha;
+    ctx.lineWidth = lineWidth;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawCentralCircle() {
+    const points = [];
+
+    for (let i = 0; i <= 160; i++) {
+      const phi = i / 160 * Math.PI * 2;
+      points.push(centerCircle(phi));
+    }
+
+    drawPolyline(points, COLORS.yellow, 1.8, 0.70);
+  }
+
+  /*
+    Filled torus.
+
+    We break the torus into tiny quadrilateral patches, project them,
+    sort them by depth, and paint back-to-front. This gives the fill
+    substantially more 3D depth than simply drawing one giant shape.
+  */
+  function drawTorusSurface(amount) {
+    if (amount <= 0) return;
+
+    const phiSteps = 56;
+    const thetaSteps = 24;
+
+    const faces = [];
+
+    for (let i = 0; i < phiSteps; i++) {
+      const phi0 = i / phiSteps * Math.PI * 2;
+      const phi1 = (i + 1) / phiSteps * Math.PI * 2;
+
+      for (let j = 0; j < thetaSteps; j++) {
+        const theta0 = j / thetaSteps * Math.PI * 2;
+        const theta1 = (j + 1) / thetaSteps * Math.PI * 2;
+
+        const raw = [
+          torus(phi0, theta0),
+          torus(phi1, theta0),
+          torus(phi1, theta1),
+          torus(phi0, theta1)
+        ];
+
+        const pts = raw.map(project);
+
+        const depth =
+          (pts[0].z + pts[1].z + pts[2].z + pts[3].z) / 4;
+
+        // Simple surface lighting.
+        // The value varies around the tube, making the torus much easier
+        // to visually parse once it fills in.
+        const midTheta = (theta0 + theta1) / 2;
+        const midPhi = (phi0 + phi1) / 2;
+
+        const light =
+          0.55 +
+          0.28 * Math.cos(midTheta - 0.6) +
+          0.12 * Math.cos(midPhi + 0.8);
+
+        faces.push({
+          pts,
+          depth,
+          light
+        });
+      }
+    }
+
+    faces.sort((a, b) => a.depth - b.depth);
+
+    for (const face of faces) {
+      const { pts, light } = face;
+
+      ctx.save();
+      ctx.beginPath();
+
+      ctx.moveTo(pts[0].x, pts[0].y);
+
+      for (let i = 1; i < pts.length; i++) {
+        ctx.lineTo(pts[i].x, pts[i].y);
+      }
+
+      ctx.closePath();
+
+      /*
+        Gruvbox aqua base.
+
+        RGB 142, 192, 124.
+        We vary the alpha slightly with lighting rather than changing
+        the hue, preserving the site's visual language.
+      */
+      const alpha =
+        amount * Math.max(0.12, Math.min(0.58, light * 0.48));
+
+      ctx.fillStyle = `rgba(142,192,124,${alpha})`;
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
+
+  function drawSweptTorus() {
+    if (sweep <= 0) return;
+
+    const maxPhi = Math.min(sweep, Math.PI * 2);
+
+    const meridianCount = 27;
+
+    for (let j = 0; j <= meridianCount; j++) {
+      const phi = maxPhi * j / meridianCount;
+
+      const points = [];
+
+      for (let i = 0; i <= 60; i++) {
+        const theta = i / 60 * Math.PI * 2;
+        points.push(torus(phi, theta));
+      }
+
+      drawPolyline(
+        points,
+        COLORS.aqua,
+        0.85,
+        0.15 + 0.20 * (j / meridianCount)
+      );
+    }
+
+    const longitudeCount = 14;
+
+    for (let j = 0; j < longitudeCount; j++) {
+      const theta = j / longitudeCount * Math.PI * 2;
+
+      const points = [];
+
+      const count = Math.max(
+        2,
+        Math.ceil(90 * maxPhi / (Math.PI * 2))
+      );
+
+      for (let i = 0; i <= count; i++) {
+        const phi = maxPhi * i / count;
+        points.push(torus(phi, theta));
+      }
+
+      drawPolyline(points, COLORS.blue, 0.75, 0.18);
+    }
+  }
+
+  function drawActiveMeridian(phi) {
+    const points = [];
+
+    for (let i = 0; i <= 100; i++) {
+      const theta = i / 100 * Math.PI * 2;
+      points.push(torus(phi, theta));
+    }
+
+    drawPolyline(points, COLORS.aqua, 6, 0.08);
+    drawPolyline(points, COLORS.aqua, 2.4, 0.95);
+
+    const c = project(centerCircle(phi));
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 4.2, 0, Math.PI * 2);
+    ctx.fillStyle = COLORS.yellow;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = COLORS.yellow;
+    ctx.globalAlpha = 0.20;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawGuideRadius(phi) {
+    const origin = project([0, 0, 0]);
+    const c = project(centerCircle(phi));
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.moveTo(origin.x, origin.y);
+    ctx.lineTo(c.x, c.y);
+
+    ctx.setLineDash([4, 6]);
+    ctx.strokeStyle = COLORS.yellow;
+    ctx.globalAlpha = 0.22;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawCenter() {
+    const p = project([0, 0, 0]);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = COLORS.muted;
+    ctx.globalAlpha = 0.65;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function resetAnimation() {
+    phase = "sweep";
+    sweep = 0;
+    shade = 0;
+    holdTime = 0;
+  }
+
+  function update(dt) {
+    if (!running) return;
+
+    const speed = Number(speedSlider.value);
+
+    if (phase === "sweep") {
+      sweep += dt * 0.72 * speed;
+
+      if (sweep >= Math.PI * 2) {
+        sweep = Math.PI * 2;
+        phase = "shade";
+      }
+    }
+
+    else if (phase === "shade") {
+      // About 0.8 seconds at speed = 1.
+      shade += dt * 1.25 * speed;
+
+      if (shade >= 1) {
+        shade = 1;
+        phase = "hold";
+        holdTime = 0;
+      }
+    }
+
+    else if (phase === "hold") {
+      /*
+        Intentionally don't multiply this by the speed slider:
+        the completed torus always remains visible for ~1 second.
+      */
+      holdTime += dt;
+
+      if (holdTime >= 1.0) {
+        resetAnimation();
+      }
+    }
+  }
+
+  function render(time) {
+    const dt = Math.min((time - lastTime) / 1000, 0.05);
+    lastTime = time;
+
+    update(dt);
+
+    ctx.clearRect(0, 0, width, height);
+
+    /*
+      Draw the surface first so that the grid remains crisp above it.
+    */
+    drawTorusSurface(shade);
+
+    drawCenter();
+    drawCentralCircle();
+    drawSweptTorus();
+
+    if (phase === "sweep") {
+      const phi = Math.min(sweep, Math.PI * 2);
+
+      drawGuideRadius(phi);
+      drawActiveMeridian(phi);
+    }
+
+    /*
+      Once the torus is complete, retain one final meridian but make it
+      subtler so attention shifts to the completed surface.
+    */
+    else {
+      drawPolyline(
+        Array.from({ length: 101 }, (_, i) =>
+          torus(0, i / 100 * Math.PI * 2)
+        ),
+        COLORS.aqua,
+        1.25,
+        0.45
+      );
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  pauseButton.addEventListener("click", () => {
+    running = !running;
+    pauseButton.textContent = running ? "Pause" : "Play";
+  });
+
+  resetButton.addEventListener("click", () => {
+    resetAnimation();
+    running = true;
+    pauseButton.textContent = "Pause";
+  });
+
+  requestAnimationFrame(render);
+})();
+</script>
+
+<h3>Torus knots</h3>
+
+<p>
+What does \(2\phi = 3\theta\) look like, graphed on the torus? Your computer can make this graph this parametrically; the parametric curve
+\[t \mapsto (\theta = 2t, \phi = 3t)\]
+(where \(t\) is now an <em>angle</em> instead of a number!) obeys \(2\phi = 3\theta,\) and this parametric curve is easy (at least for a computer!) to graph. Graphing it leads to the following picture:
+</p>
+
+<!-- Hidden Phenomena: (2,3) torus-knot parametrization. Paste this entire block. -->
+<div data-hp-knot="torus-knot"></div>
+<script>
+(() => {
+  "use strict";
+  // This script mounts into the div immediately before it. No dependencies.
+  const host = document.currentScript.previousElementSibling;
+  const PARAMETRIC = true;
+  const root = host.attachShadow({ mode: "open" });
+  const TAU = Math.PI * 2;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  root.innerHTML = `
+  <style>
+    :host{display:block;width:100%;max-width:760px;margin:1.5rem auto;color-scheme:dark}
+    *,*::before,*::after{box-sizing:border-box}
+    .card{--bg:#1d2021;--panel:#282828;--line:#504945;--fg:#ebdbb2;--muted:#a89984;
+      background:var(--bg);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+      color:var(--fg);font:13px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}
+    .stage{position:relative;height:clamp(300px,55vw,420px);background:radial-gradient(ellipse at 48% 45%,#282828 0%,#1d2021 76%)}
+    canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline:none}
+    canvas:active{cursor:grabbing}
+    canvas:focus-visible{outline:2px solid #fabd2f;outline-offset:-5px}
+    .hint{position:absolute;right:17px;top:15px;pointer-events:none;color:#928374;opacity:.75}
+    .bar{display:flex;align-items:center;gap:8px;min-height:59px;padding:10px 15px;border-top:1px solid #3c3836;background:#282828}
+    .spacer{flex:1}
+    button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:6px 11px;margin:0;
+      border:1px solid #504945;border-radius:7px;background:#282828;color:#d5c4a1;font:inherit;line-height:1.25;cursor:pointer;white-space:nowrap}
+    button:hover{background:#3c3836;color:#ebdbb2;border-color:#7c6f64}
+    button[aria-pressed="true"]{color:#fabd2f;border-color:#b57614;background:#383025}
+    button:focus-visible,input:focus-visible{outline:2px solid #fabd2f;outline-offset:3px}
+    button svg{width:13px;height:13px;flex:none}
+    .square{width:34px;padding:0;font:20px/1 Georgia,serif}
+    .play{min-width:82px;color:#fabd2f}
+    .timeline{display:flex;align-items:center;gap:10px;flex:1;min-width:70px}
+    input[type=range]{appearance:none;-webkit-appearance:none;display:block;flex:1;min-width:25px;height:26px;background:transparent;cursor:pointer;margin:0;accent-color:#fabd2f}
+    input[type=range]::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(to right,#fabd2f var(--progress,100%),#665c54 var(--progress,100%))}
+    input[type=range]::-moz-range-track{height:3px;border-radius:2px;background:#665c54}
+    input[type=range]::-moz-range-progress{height:3px;background:#fabd2f}
+    input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fabd2f;border:2px solid #282828;box-shadow:0 0 0 1px #fabd2f;margin-top:-4.5px}
+    input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#fabd2f;border:2px solid #282828}
+    output{font-variant-numeric:tabular-nums;white-space:nowrap}
+    .time{min-width:65px;text-align:right;color:#d5c4a1;font-size:12px}
+    .angles{display:flex;align-items:center;gap:26px;padding:12px 17px;border-top:1px solid #3c3836;background:#282828}
+    .angle{display:flex;align-items:center;gap:10px;min-width:0}
+    .angle svg{width:42px;height:42px;overflow:visible;flex:none}
+    .angle b{font:italic 18px/1.2 Georgia,serif;font-weight:normal;display:block;margin-bottom:3px}
+    .angle output{font-size:11px;color:#bdae93}
+    .major{color:#fe8019}.minor{color:#8ec07c}
+    .angle circle,.angle line{vector-effect:non-scaling-stroke}
+    .aux{display:flex;gap:7px;margin-left:auto}
+    .error{padding:25px;color:#d5c4a1;font:15px/1.6 Georgia,serif}
+    @media(max-width:470px){.stage{height:320px}.bar{gap:7px;padding:10px}.angles{gap:16px;padding:11px 12px;flex-wrap:wrap}.angle{gap:7px}.angle svg{width:34px;height:34px}.angle output{font-size:10px}.angle b{font-size:17px}.aux{gap:5px}.aux button{padding:5px 8px;font-size:11px}.time{font-size:11px;min-width:59px}.play{min-width:72px;padding:6px 8px}}
+  </style>
+  <section class="card" aria-label="${PARAMETRIC ? '(2,3) torus knot parametrization' : 'Interactive trefoil knot'}">
+    <div class="stage">
+      <canvas tabindex="0" role="img" aria-label="${PARAMETRIC ? 'A trefoil on a translucent torus. Orange marks the major angle 2t; green marks the minor angle 3t. Use Trace or the slider to follow the curve.' : 'A three-dimensional trefoil knot.'} Drag to rotate, pinch to zoom, or use arrow keys. Plus and minus zoom; Home resets the view."></canvas>
+      <svg class="hint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="4"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="m19 7 2 4-4 1"/></svg>
+    </div>
+    ${PARAMETRIC ? `
+      <div class="bar">
+        <button class="play" type="button" title="Trace the curve from t = 0 to 2π">▶ Trace</button>
+        <div class="timeline"><input class="scrub" type="range" min="0" max="1" step="0.0001" value="1" aria-label="Parameter t, from 0 to 2π"><output class="time">t = 2.00π</output></div>
+      </div>
+      <div class="angles">
+        <div class="angle major"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#504945" stroke-width="1.5"/><circle cx="22" cy="22" r="2" fill="currentColor"/><line x1="22" y1="22" x2="38" y2="22" stroke="currentColor" stroke-width="1.5"/><circle class="dot" cx="38" cy="22" r="3" fill="currentColor"/></svg><div><b>2t</b><output>2.00 / 2 turns</output></div></div>
+        <div class="angle minor"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#504945" stroke-width="1.5"/><circle cx="22" cy="22" r="2" fill="currentColor"/><line x1="22" y1="22" x2="38" y2="22" stroke="currentColor" stroke-width="1.5"/><circle class="dot" cx="38" cy="22" r="3" fill="currentColor"/></svg><div><b>3t</b><output>3.00 / 3 turns</output></div></div>
+        <div class="aux"><button class="torus" type="button" aria-pressed="true" title="Show or hide the torus and its angle circles">Torus</button><button class="reset" type="button" title="Reset the camera">Reset view</button></div>
+      </div>` : `
+      <div class="bar"><button class="spin" type="button" aria-pressed="false">↻ Rotate</button><button class="reset" type="button">Reset view</button><span class="spacer"></span><button class="square out" type="button" aria-label="Zoom out">−</button><button class="square in" type="button" aria-label="Zoom in">+</button></div>`}
+  </section>`;
+
+  const canvas = root.querySelector("canvas");
+  const gl = canvas.getContext("webgl", { alpha:true, antialias:true, premultipliedAlpha:true });
+  if (!gl) {
+    root.querySelector(".stage").innerHTML = '<p class="error">This interactive view needs WebGL. Try enabling hardware acceleration or opening it in another browser.</p>';
+    root.querySelectorAll("button,input").forEach(el => el.disabled = true);
+    return;
+  }
+  const $ = s => root.querySelector(s);
+  const clamp = (x,a,b) => Math.min(b,Math.max(a,x));
+  const norm = v => { const l = Math.hypot(...v) || 1; return v.map(x => x/l); };
+  const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const identity = () => new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
+  const multiply = (a,b) => { const c = new Float32Array(16); for(let j=0;j<4;j++)for(let i=0;i<4;i++)for(let k=0;k<4;k++) c[i+4*j]+=a[i+4*k]*b[k+4*j]; return c; };
+  function rotation(axis,a) {
+    const c=Math.cos(a),s=Math.sin(a),m=identity();
+    if(axis===0){m[5]=c;m[6]=s;m[9]=-s;m[10]=c;}
+    if(axis===1){m[0]=c;m[2]=-s;m[8]=s;m[10]=c;}
+    if(axis===2){m[0]=c;m[1]=s;m[4]=-s;m[5]=c;}
+    return m;
+  }
+  // Standard torus coordinates: theta = 2t, phi = 3t, major radius 2, minor radius 1.
+  function point(t) {
+    const a=2*t,b=3*t,r=2+Math.cos(b);
+    return [r*Math.cos(a),r*Math.sin(a),Math.sin(b)];
+  }
+  function transform(p,scale=1) {
+    const m=identity(); m[0]=m[5]=m[10]=scale; m[12]=p[0];m[13]=p[1];m[14]=p[2];return m;
+  }
+  let view, zoom=1, spinning=false, playing=false, progress=1, showTorus=true;
+  function resetView() {
+    view=multiply(rotation(0,PARAMETRIC?0.84:0.30),rotation(2,PARAMETRIC?-0.30:Math.PI/6));
+    zoom=1; spinning=false; syncSpin(); requestDraw();
+  }
+  function syncSpin(){if($('.spin'))$('.spin').setAttribute('aria-pressed',String(spinning));}
+
+  let program, U, A, knot, torus, ring, sphere, derivatives;
+  const vertexSource = `
+    attribute vec3 aPosition, aNormal;
+    attribute vec2 aUV;
+    uniform mat4 uView, uLocal;
+    uniform vec2 uExtent;
+    uniform float uExpand, uRingRadius;
+    varying vec3 vNormal, vPosition;
+    varying vec2 vUV;
+    void main(){
+      vec3 p=aPosition+aNormal*uExpand;
+      if(uRingRadius>0.0) p.xy+=normalize(p.xy)*(uRingRadius-1.0);
+      vec4 q=uView*uLocal*vec4(p,1.0);
+      gl_Position=vec4(q.x/uExtent.x,q.y/uExtent.y,-q.z/12.0,1.0);
+      vNormal=mat3(uView)*mat3(uLocal)*aNormal;
+      vPosition=q.xyz;vUV=aUV;
+    }`;
+  function fragmentSource(){return `${derivatives ? '#extension GL_OES_standard_derivatives : enable' : ''}
+    precision mediump float;
+    uniform vec3 uColor;
+    uniform float uMode,uProgress,uFlat;
+    varying vec3 vNormal,vPosition;
+    varying vec2 vUV;
+    void main(){
+      vec3 n=normalize(vNormal);
+      if(!gl_FrontFacing)n=-n;
+      float key=max(dot(n,normalize(vec3(-0.45,0.65,1.0))),0.0);
+      float fill=max(dot(n,normalize(vec3(0.8,-0.3,0.5))),0.0);
+      float diffuse=0.38+0.57*key+0.17*fill;
+      float spec=pow(max(dot(n,normalize(vec3(-0.22,0.33,1.0))),0.0),38.0);
+      vec3 base=uColor;
+      if(uMode>0.5 && uMode<1.5 && vUV.x>uProgress)base=vec3(0.38,0.34,0.26);
+      vec3 col=base*diffuse+vec3(0.922,0.859,0.698)*spec*0.24;
+      float rim=pow(1.0-abs(n.z),3.0);
+      col*=1.0-0.24*rim;
+      if(uFlat>0.5)col=base;
+      if(uMode>1.5){
+        vec2 grid=vUV*vec2(28.0,12.0);
+        vec2 width=${derivatives ? 'max(fwidth(grid),vec2(0.0001))' : 'vec2(0.07)'};
+        vec2 d=abs(fract(grid-0.5)-0.5)/width;
+        float line=1.0-smoothstep(0.2,1.05,min(d.x,d.y));
+        col=mix(vec3(0.39,0.36,0.30),vec3(0.66,0.62,0.52),line);
+        gl_FragColor=vec4(col,0.075+0.025*key+0.19*line);
+      }else gl_FragColor=vec4(col,1.0);
+    }`;}
+  function compile(type,src) {
+    const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){const err=gl.getShaderInfoLog(s);gl.deleteShader(s);throw Error(err);}return s;
+  }
+  function mesh(nu,nv,fn,flip=false) {
+    const vertices=new Float32Array((nu+1)*(nv+1)*8),indices=new Uint16Array(nu*nv*6);
+    let k=0;
+    for(let i=0;i<=nu;i++)for(let j=0;j<=nv;j++){
+      const [p,n]=fn(i/nu,j/nv);
+      vertices.set([...p,...n,i/nu,j/nv],k);k+=8;
+    }
+    k=0;for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){
+      const a=i*(nv+1)+j,b=a+nv+1,c=a+1,d=b+1;
+      indices.set(flip?[a,c,b,c,d,b]:[a,b,c,b,d,c],k);k+=6;
+    }
+    const vb=gl.createBuffer(),ib=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,indices,gl.STATIC_DRAW);
+    return {vb,ib,count:indices.length};
+  }
+  function setup() {
+    derivatives=!!gl.getExtension('OES_standard_derivatives');
+    const vs=compile(gl.VERTEX_SHADER,vertexSource),fs=compile(gl.FRAGMENT_SHADER,fragmentSource());
+    program=gl.createProgram();gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);
+    gl.deleteShader(vs);gl.deleteShader(fs);
+    if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
+    U={};for(const s of ['View','Local','Extent','Expand','RingRadius','Color','Mode','Progress','Flat'])U[s]=gl.getUniformLocation(program,'u'+s);
+    A={};for(const s of ['Position','Normal','UV'])A[s]=gl.getAttribLocation(program,'a'+s);
+    knot=mesh(640,16,(s,v)=>{
+      const t=s*TAU,a=2*t,b=3*t,r=2+Math.cos(b),p=point(t);
+      const tangent=norm([-3*Math.sin(b)*Math.cos(a)-2*r*Math.sin(a),-3*Math.sin(b)*Math.sin(a)+2*r*Math.cos(a),3*Math.cos(b)]);
+      const n=[Math.cos(b)*Math.cos(a),Math.cos(b)*Math.sin(a),Math.sin(b)];
+      const binormal=cross(tangent,n),angle=v*TAU;
+      const normal=n.map((x,i)=>x*Math.cos(angle)+binormal[i]*Math.sin(angle));
+      return [p.map((x,i)=>x+(PARAMETRIC?0.072:0.125)*normal[i]),normal];
+    },true);
+    if(PARAMETRIC){
+      torus=mesh(160,64,(u,v)=>{
+        const a=u*TAU,b=v*TAU,n=[Math.cos(b)*Math.cos(a),Math.cos(b)*Math.sin(a),Math.sin(b)];
+        return [[(2+Math.cos(b))*Math.cos(a),(2+Math.cos(b))*Math.sin(a),Math.sin(b)],n];
+      });
+      ring=mesh(192,8,(u,v)=>{
+        const a=u*TAU,b=v*TAU,n=[Math.cos(b)*Math.cos(a),Math.cos(b)*Math.sin(a),Math.sin(b)];
+        return [[(1+0.018*Math.cos(b))*Math.cos(a),(1+0.018*Math.cos(b))*Math.sin(a),0.018*Math.sin(b)],n];
+      });
+      sphere=mesh(32,20,(u,v)=>{
+        const a=u*TAU,b=v*Math.PI,n=[Math.sin(b)*Math.cos(a),Math.sin(b)*Math.sin(a),Math.cos(b)];
+        return [n,n];
+      },true);
+    }
+    gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.enable(gl.CULL_FACE);
+    gl.clearColor(0,0,0,0);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  }
+  function drawMesh(m,color,mode=0,local=identity(),expand=0,flat=0,ringRadius=0) {
+    gl.bindBuffer(gl.ARRAY_BUFFER,m.vb);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.ib);
+    for(const [key,size,offset] of [['Position',3,0],['Normal',3,12],['UV',2,24]]){
+      gl.enableVertexAttribArray(A[key]);gl.vertexAttribPointer(A[key],size,gl.FLOAT,false,32,offset);
+    }
+    gl.uniformMatrix4fv(U.Local,false,local);gl.uniform3fv(U.Color,color);gl.uniform1f(U.Mode,mode);
+    gl.uniform1f(U.Expand,expand);gl.uniform1f(U.Flat,flat);gl.uniform1f(U.RingRadius,ringRadius);
+    gl.drawElements(gl.TRIANGLES,m.count,gl.UNSIGNED_SHORT,0);
+  }
+  function render() {
+    if(gl.isContextLost())return;
+    const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const pw=Math.round(w*dpr),ph=Math.round(h*dpr);
+    if(canvas.width!==pw||canvas.height!==ph){canvas.width=pw;canvas.height=ph;}
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
+    const aspect=w/h,halfY=Math.max(3.40,3.40/aspect)/zoom;
+    gl.uniform2f(U.Extent,halfY*aspect,halfY);gl.uniformMatrix4fv(U.View,false,view);gl.uniform1f(U.Progress,progress);
+    gl.disable(gl.BLEND);gl.depthMask(true);
+    // Back-face expansion gives each crossing a fine dark silhouette.
+    gl.cullFace(gl.FRONT);drawMesh(knot,[0.114,0.125,0.129],0,identity(),0.025,1);
+    gl.cullFace(gl.BACK);drawMesh(knot,[0.98,0.741,0.184],PARAMETRIC?1:0);
+    if(PARAMETRIC){
+      const t=TAU*progress,theta=2*t,phi=3*t;
+      if(showTorus){
+        drawMesh(ring,[0.996,0.502,0.098],0,transform([0,0,Math.sin(phi)]),0,0,2+Math.cos(phi));
+        const local=identity(),c=Math.cos(theta),s=Math.sin(theta);
+        local.set([c,s,0,0,0,0,1,0,s,-c,0,0,2*c,2*s,0,1]);
+        drawMesh(ring,[0.557,0.753,0.486],0,local,0,0,1);
+      }
+      gl.cullFace(gl.FRONT);drawMesh(sphere,[0.114,0.125,0.129],0,transform(point(t),0.143),0,1);
+      gl.cullFace(gl.BACK);drawMesh(sphere,[0.984,0.945,0.78],0,transform(point(t),0.125));
+      if(showTorus){
+        gl.enable(gl.BLEND);gl.depthMask(false);
+        gl.cullFace(gl.FRONT);drawMesh(torus,[0.4,0.4,0.4],2);
+        gl.cullFace(gl.BACK);drawMesh(torus,[0.4,0.4,0.4],2);
+        gl.depthMask(true);gl.disable(gl.BLEND);
+      }
+    }
+  }
+  // Animation only runs while needed, and stops off-screen or in a hidden tab.
+  let raf=0,last=0,visible=true,disposed=false,dirty=true;
+  function requestDraw(){dirty=true;if(!raf&&!disposed&&visible&&!document.hidden)raf=requestAnimationFrame(frame);}
+  function frame(now){
+    raf=0;if(disposed||!host.isConnected){dispose();return;}
+    const dt=last?Math.min((now-last)/1000,0.05):0;last=now;
+    if(spinning){view=multiply(rotation(1,dt*0.22),view);dirty=true;}
+    if(playing){progress=Math.min(1,progress+dt/18);if(progress>=1)playing=false;syncParam();dirty=true;}
+    if(dirty){render();dirty=false;}
+    if((playing||spinning)&&visible&&!document.hidden)raf=requestAnimationFrame(frame);
+    else last=0;
+  }
+  function syncParam(){
+    if(!PARAMETRIC)return;
+    $('.play').textContent=playing?'Ⅱ Pause':(progress>=1?'▶ Trace':'▶ Play');
+    $('.play').setAttribute('aria-label',playing?'Pause tracing':(progress>=1?'Trace from the beginning':'Resume tracing'));
+    $('.scrub').value=progress;$('.scrub').style.setProperty('--progress',`${progress*100}%`);
+    $('.scrub').setAttribute('aria-valuetext',`${(2*progress).toFixed(2)} pi radians`);
+    $('.time').textContent=`t = ${(2*progress).toFixed(2)}π`;
+    for(const [s,n] of [['.major',2],['.minor',3]]){
+      const angle=progress*TAU*n,x=22+16*Math.cos(angle),y=22-16*Math.sin(angle),el=$(s);
+      el.querySelector('line').setAttribute('x2',x);el.querySelector('line').setAttribute('y2',y);
+      el.querySelector('.dot').setAttribute('cx',x);el.querySelector('.dot').setAttribute('cy',y);
+      el.querySelector('output').textContent=`${(n*progress).toFixed(2)} / ${n} turns`;
+    }
+  }
+  $('.reset').addEventListener('click',resetView);
+  if(PARAMETRIC){
+    $('.play').addEventListener('click',()=>{if(!playing&&progress>=1)progress=0;playing=!playing;last=0;syncParam();requestDraw();});
+    $('.scrub').addEventListener('input',e=>{playing=false;progress=Number(e.target.value);syncParam();requestDraw();});
+    $('.torus').addEventListener('click',()=>{showTorus=!showTorus;$('.torus').setAttribute('aria-pressed',String(showTorus));requestDraw();});
+  }else{
+    $('.spin').addEventListener('click',()=>{spinning=!spinning;last=0;syncSpin();requestDraw();});
+    $('.in').addEventListener('click',()=>{zoom=clamp(zoom*1.13,0.6,1.65);requestDraw();});
+    $('.out').addEventListener('click',()=>{zoom=clamp(zoom/1.13,0.6,1.65);requestDraw();});
+  }
+  const pointers=new Map();
+  canvas.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,[e.clientX,e.clientY]);spinning=false;syncSpin();
+  });
+  canvas.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId))return;
+    const old=pointers.get(e.pointerId),next=[e.clientX,e.clientY];
+    if(pointers.size===1){view=multiply(multiply(rotation(1,(next[0]-old[0])*0.009),rotation(0,(next[1]-old[1])*0.009)),view);}
+    else{
+      const other=[...pointers.entries()].find(([id])=>id!==e.pointerId)[1];
+      const before=Math.hypot(old[0]-other[0],old[1]-other[1]),after=Math.hypot(next[0]-other[0],next[1]-other[1]);
+      if(before>4)zoom=clamp(zoom*after/before,0.6,1.65);
+    }
+    pointers.set(e.pointerId,next);requestDraw();
+  });
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,e=>pointers.delete(e.pointerId));
+  canvas.addEventListener('keydown',e=>{
+    let handled=true;
+    switch(e.key){
+      case 'ArrowLeft':view=multiply(rotation(1,-0.13),view);break;
+      case 'ArrowRight':view=multiply(rotation(1,0.13),view);break;
+      case 'ArrowUp':view=multiply(rotation(0,-0.13),view);break;
+      case 'ArrowDown':view=multiply(rotation(0,0.13),view);break;
+      case '+':case '=':zoom=clamp(zoom*1.1,0.6,1.65);break;
+      case '-':zoom=clamp(zoom/1.1,0.6,1.65);break;
+      case 'Home':resetView();break;
+      default:handled=false;
+    }
+    if(handled){e.preventDefault();spinning=false;syncSpin();requestDraw();}
+  });
+  // Explicit Ctrl/Command-wheel zoom, without stealing ordinary page scrolling.
+  canvas.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom=clamp(zoom*Math.exp(-e.deltaY*0.003),0.6,1.65);requestDraw();}},{passive:false});
+  const resizeObserver=new ResizeObserver(requestDraw);resizeObserver.observe(canvas);
+  const intersectionObserver=new IntersectionObserver(entries=>{
+    visible=entries[0].isIntersecting;
+    if(visible){last=0;requestDraw();}else{cancelAnimationFrame(raf);raf=0;last=0;}
+  });intersectionObserver.observe(host);
+  function visibilityChanged(){if(document.hidden){cancelAnimationFrame(raf);raf=0;last=0;}else requestDraw();}
+  document.addEventListener('visibilitychange',visibilityChanged);
+  function motionChanged(){if(reducedMotion.matches){spinning=false;playing=false;syncSpin();syncParam();requestDraw();}}
+  reducedMotion.addEventListener('change',motionChanged);
+  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);raf=0;});
+  canvas.addEventListener('webglcontextrestored',()=>{setup();requestDraw();});
+  function dispose(){
+    if(disposed)return;disposed=true;cancelAnimationFrame(raf);
+    resizeObserver.disconnect();intersectionObserver.disconnect();
+    document.removeEventListener('visibilitychange',visibilityChanged);reducedMotion.removeEventListener('change',motionChanged);
+    if(!gl.isContextLost()){
+      for(const m of [knot,torus,ring,sphere].filter(Boolean)){gl.deleteBuffer(m.vb);gl.deleteBuffer(m.ib);}
+      gl.deleteProgram(program);
+    }
+  }
+  try{setup();syncParam();resetView();}catch(error){
+    console.error('Hidden Phenomena knot widget:',error);
+    root.querySelector('.stage').innerHTML='<p class="error">The 3D view could not start in this browser. Please try another browser.</p>';
+    root.querySelectorAll('button,input').forEach(el=>el.disabled=true);dispose();
+  }
+})();
+</script>
+
+<p>
+You might not be able to see it yet, but this picture is actually the trefoil knot from before!  
+</p>
+
+<!-- Hidden Phenomena: torus knot -> trefoil -->
+<div id="hp-torus-to-trefoil">
+  <style>
+    #hp-torus-to-trefoil {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --blue: #83a598;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-torus-to-trefoil .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      min-height: 300px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 50% 44%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-torus-to-trefoil canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    #hp-torus-to-trefoil canvas:active { cursor: grabbing; }
+
+    #hp-torus-to-trefoil .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-torus-to-trefoil button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-torus-to-trefoil button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-torus-to-trefoil button:focus-visible,
+    #hp-torus-to-trefoil input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-torus-to-trefoil input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    #hp-torus-to-trefoil .hp-percent {
+      min-width: 4.2ch;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 520px) {
+      #hp-torus-to-trefoil .hp-stage {
+        min-height: 260px;
+        aspect-ratio: 4 / 3;
+      }
+
+      #hp-torus-to-trefoil .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+
+      #hp-torus-to-trefoil .hp-percent {
+        display: none;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Animation showing a 2,3 torus knot on a torus, then the torus fading away as the knot rotates into a trefoil view."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play aria-label="Play or pause animation">Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Transition from torus knot to trefoil">
+    <span class="hp-percent" data-percent>0%</span>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-torus-to-trefoil');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+    const percent = root.querySelector('[data-percent]');
+
+    const COLORS = {
+      bgHard: '#1d2021',
+      gold: '#fabd2f',
+      goldHot: '#fe8019',
+      torus: '#83a598',
+      wire: '#8ec07c'
+    };
+
+    const TAU = Math.PI * 2;
+    const DURATION = 6500;
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = prefersReduced ? 1 : 0;
+    let playing = !prefersReduced;
+    let lastTime = 0;
+    let raf = 0;
+    let dragYaw = 0;
+    let dragPitch = 0;
+    let pointer = null;
+
+    const knot = [];
+    const KNOT_N = 420;
+    for (let i = 0; i <= KNOT_N; i++) {
+      const t = TAU * i / KNOT_N;
+      knot.push([
+        (2 + 0.68 * Math.cos(3 * t)) * Math.cos(2 * t),
+        (2 + 0.68 * Math.cos(3 * t)) * Math.sin(2 * t),
+        0.68 * Math.sin(3 * t)
+      ]);
+    }
+
+    const torusQuads = [];
+    const NU = 34, NV = 16;
+    for (let i = 0; i < NU; i++) {
+      const u0 = TAU * i / NU;
+      const u1 = TAU * (i + 1) / NU;
+      for (let j = 0; j < NV; j++) {
+        const v0 = TAU * j / NV;
+        const v1 = TAU * (j + 1) / NV;
+        const pt = (u, v) => [
+          (2 + 0.68 * Math.cos(v)) * Math.cos(u),
+          (2 + 0.68 * Math.cos(v)) * Math.sin(u),
+          0.68 * Math.sin(v)
+        ];
+        torusQuads.push([
+          pt(u0, v0), pt(u1, v0), pt(u1, v1), pt(u0, v1)
+        ]);
+      }
+    }
+
+    function clamp(x, a = 0, b = 1) { return Math.max(a, Math.min(b, x)); }
+    function mix(a, b, t) { return a + (b - a) * t; }
+    function smoothstep(a, b, x) {
+      const t = clamp((x - a) / (b - a));
+      return t * t * (3 - 2 * t);
+    }
+    function ease(t) {
+      return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+    }
+
+    function rotate(p, yaw, pitch, roll) {
+      let [x, y, z] = p;
+
+      let c = Math.cos(yaw), s = Math.sin(yaw);
+      [x, z] = [c*x + s*z, -s*x + c*z];
+
+      c = Math.cos(pitch); s = Math.sin(pitch);
+      [y, z] = [c*y - s*z, s*y + c*z];
+
+      c = Math.cos(roll); s = Math.sin(roll);
+      [x, y] = [c*x - s*y, s*x + c*y];
+
+      return [x, y, z];
+    }
+
+    function camera(p) {
+      const e = ease(progress);
+
+      // Start: oblique torus view. End: clean three-lobed trefoil view.
+      const yaw   = mix(-0.50,  0.35, e) + dragYaw;
+      const pitch = mix( 0.95,  0.42, e) + dragPitch;
+      const roll  = mix( 0.00, -0.25, e);
+      return rotate(p, yaw, pitch, roll);
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.round(rect.width * dpr));
+      const h = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      draw();
+    }
+
+    function project(p) {
+      const w = canvas.width, h = canvas.height;
+      const q = camera(p);
+      const endZoom = 1.13;
+      const zoom = mix(0.92, endZoom, ease(progress));
+      const scale = Math.min(w, h) * 0.145 * zoom;
+
+      // A very mild perspective preserves the spatial feeling at the start
+      // without distorting the final trefoil silhouette.
+      const perspective = 1 / (1 + 0.055 * q[2]);
+      return {
+        x: w * 0.5 + q[0] * scale * perspective,
+        y: h * 0.5 - q[1] * scale * perspective,
+        z: q[2],
+        p: perspective
+      };
+    }
+
+    function drawTorus(alpha) {
+      const faces = torusQuads.map(face => {
+        const p = face.map(project);
+        const z = p.reduce((s, q) => s + q.z, 0) / 4;
+        return { p, z };
+      }).sort((a, b) => a.z - b.z);
+
+      for (const face of faces) {
+        const pts = face.p;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+
+        ctx.fillStyle = `rgba(131,165,152,${0.032 * alpha})`;
+        ctx.fill();
+
+        ctx.strokeStyle = `rgba(142,192,124,${0.19 * alpha})`;
+        ctx.lineWidth = Math.max(0.65, canvas.width / 1000);
+        ctx.stroke();
+      }
+
+      // Two stronger guide circles make the torus structure immediately legible.
+      ctx.lineWidth = Math.max(1, canvas.width / 650);
+      for (const mode of [0, 1]) {
+        ctx.beginPath();
+        for (let i = 0; i <= 180; i++) {
+          const a = TAU * i / 180;
+          let p;
+          if (mode === 0) {
+            p = [2 * Math.cos(a), 2 * Math.sin(a), 0];
+          } else {
+            p = [2 + 0.68 * Math.cos(a), 0, 0.68 * Math.sin(a)];
+          }
+          const q = project(p);
+          if (!i) ctx.moveTo(q.x, q.y); else ctx.lineTo(q.x, q.y);
+        }
+        ctx.strokeStyle = mode === 0
+          ? `rgba(131,165,152,${0.48 * alpha})`
+          : `rgba(254,128,25,${0.42 * alpha})`;
+        ctx.stroke();
+      }
+    }
+
+    function drawKnot() {
+      const pts = knot.map(project);
+      const segments = [];
+      for (let i = 0; i < pts.length - 1; i++) {
+        segments.push({
+          a: pts[i],
+          b: pts[i + 1],
+          z: (pts[i].z + pts[i + 1].z) * 0.5
+        });
+      }
+      segments.sort((a, b) => a.z - b.z);
+
+      const e = ease(progress);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = mix(3.9, 5.7, e) * dpr;
+      const under = width + 4.0 * dpr;
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (const seg of segments) {
+        ctx.beginPath();
+        ctx.moveTo(seg.a.x, seg.a.y);
+        ctx.lineTo(seg.b.x, seg.b.y);
+        ctx.strokeStyle = `rgba(29,32,33,${mix(0.72, 0.96, e)})`;
+        ctx.lineWidth = under;
+        ctx.stroke();
+
+        const depthGlow = clamp((seg.z + 2.7) / 5.4);
+        const r = Math.round(mix(250, 254, depthGlow));
+        const g = Math.round(mix(189, 128, depthGlow));
+        const b = Math.round(mix(47, 25, depthGlow));
+        ctx.strokeStyle = `rgb(${r},${g},${b})`;
+        ctx.lineWidth = width;
+        ctx.stroke();
+      }
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const torusFade = 1 - smoothstep(0.08, 0.68, progress);
+      if (torusFade > 0.003) drawTorus(torusFade);
+
+      drawKnot();
+
+      scrub.value = String(Math.round(progress * 1000));
+      percent.textContent = `${Math.round(progress * 100)}%`;
+      playBtn.textContent = playing ? 'Pause' : 'Play';
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      const dt = now - lastTime;
+      lastTime = now;
+
+      if (playing) {
+        progress += dt / DURATION;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+        }
+        draw();
+      }
+
+      raf = requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 1) progress = 0;
+      playing = !playing;
+      lastTime = performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      progress = 0;
+      playing = !prefersReduced;
+      dragYaw = 0;
+      dragPitch = 0;
+      lastTime = performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input', () => {
+      progress = clamp(Number(scrub.value) / 1000);
+      playing = false;
+      draw();
+    });
+
+    canvas.addEventListener('pointerdown', e => {
+      pointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      canvas.setPointerCapture(e.pointerId);
+    });
+
+    canvas.addEventListener('pointermove', e => {
+      if (!pointer || e.pointerId !== pointer.id) return;
+      const dx = e.clientX - pointer.x;
+      const dy = e.clientY - pointer.y;
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+      dragYaw += dx * 0.006;
+      dragPitch = clamp(dragPitch + dy * 0.006, -1.0, 1.0);
+      draw();
+    });
+
+    const endPointer = e => {
+      if (pointer && e.pointerId === pointer.id) pointer = null;
+    };
+    canvas.addEventListener('pointerup', endPointer);
+    canvas.addEventListener('pointercancel', endPointer);
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    resize();
+    raf = requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<p>
+In this animation, you can see us removing the torus from the picture and then reorienting the camera, allowing us to see that the trefoil knot from before is the same shape that we just drew on the torus! 
+</p>
+
+<h2 id="sec3">The cone on the trefoil knot</h2>
+
+<p>
+Putting all this together, what is the final shape of the graph of \(y^2 = x^3\) near \((0, 0)\), over the complex numbers?
+</p>
+
+<p>
+Remember that we rewrote this equation as \(s^2e^{2i\phi} = r^3e^{3i\theta}.\) The equation \(s^2 = r^3\) -- solved over positive reals -- defined a simple curve; the equation \(e^{2i\phi} = e^{3i\theta}\) defined a trefoil knot. Putting these two equations together, the final shape looks like a trefoil knot which <em>gets smaller and smaller</em>. 
+</p>
+
+<p>
+Why? Well, the final pair \((x, y)\) is obtained by taking our point \((3\theta, 2\phi)\) on the torus, and then scaling the \(y\)-coordinate by \(s^2\) and scaling the \(x\)-coordinate by \(r^3.\) As we approach the origin, these scaling facotrs \(s^2\) and \(r^3\) (which, remember, are equal to each other) get smaller and smaller; so, we have copies of the trefoil knot which scale down as they get closer to the origin. What does this shape look like?
+</p>
+
+<h3>Digression: Cones</h3>
+
+<p>
+Before answering the question of our graph, let's take a moment to reflect on cones. You've probably seen a cone before, but we're going to describe the cone in a slightly strange way: a cone is what you get by taking a circle, and then creating more and more copies of it, each of which is slightly scaled down. The below widget hopefully illustrates to you what we mean by this. It might help to rotate the camera a little, to get a sense of the 3-dimensional picture.
+</p>
+
+<!-- Hidden Phenomena: cone on a circle -->
+<div id="hp-cone-circle">
+  <style>
+    #hp-cone-circle {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --blue: #83a598;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-cone-circle .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      min-height: 300px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 50% 40%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-cone-circle canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    #hp-cone-circle canvas:active { cursor: grabbing; }
+
+    #hp-cone-circle .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-cone-circle button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-cone-circle button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-cone-circle button:focus-visible,
+    #hp-cone-circle input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-cone-circle input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    #hp-cone-circle .hp-percent {
+      min-width: 4.2ch;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 520px) {
+      #hp-cone-circle .hp-stage {
+        min-height: 260px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-cone-circle .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+      #hp-cone-circle .hp-percent {
+        display: none;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Animation showing a cone being built from shrinking copies of a circle converging to an apex point."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play aria-label="Play or pause animation">Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Cone-building animation progress">
+    <span class="hp-percent" data-percent>0%</span>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-cone-circle');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+    const percent = root.querySelector('[data-percent]');
+
+    const TAU = Math.PI * 2;
+    const DURATION = 6800;
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = 0;
+    let playing = !prefersReduced;
+    let lastTime = 0;
+    let pointer = null;
+    let dragYaw = 0;
+    let dragPitch = 0.0;
+
+    const SLICES = 34;
+    const showBaseGuide = true;
+    const showApexRays = true;
+
+    function clamp(x, a=0, b=1) { return Math.max(a, Math.min(b, x)); }
+    function mix(a, b, t) { return a + (b - a) * t; }
+    function ease(t) {
+      return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+    }
+
+    function rotate(p, yaw, pitch, roll) {
+      let [x, y, z] = p;
+      let c = Math.cos(yaw), s = Math.sin(yaw);
+      [x, z] = [c*x + s*z, -s*x + c*z];
+      c = Math.cos(pitch); s = Math.sin(pitch);
+      [y, z] = [c*y - s*z, s*y + c*z];
+      c = Math.cos(roll); s = Math.sin(roll);
+      [x, y] = [c*x - s*y, s*x + c*y];
+      return [x, y, z];
+    }
+
+    function worldToView(p) {
+      const autoYaw = -0.35 + 0.42 * Math.sin(performance.now() / 2400) * (playing ? 1 : 0);
+      const yaw = autoYaw + dragYaw;
+      const pitch = 0.85 + dragPitch;
+      const roll = 0.0;
+      return rotate(p, yaw, pitch, roll);
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.round(rect.width * dpr));
+      const h = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      draw();
+    }
+
+    function project(p) {
+      const w = canvas.width, h = canvas.height;
+      const q = worldToView(p);
+      const scale = Math.min(w, h) * 0.165;
+      const perspective = 1 / (1 + 0.07 * q[2]);
+      return {
+        x: w * 0.5 + q[0] * scale * perspective,
+        y: h * 0.62 - q[1] * scale * perspective,
+        z: q[2],
+        p: perspective
+      };
+    }
+
+    function circleShape(n=180) {
+      const pts = [];
+      for (let i = 0; i <= n; i++) {
+        const t = TAU * i / n;
+        pts.push([1.45 * Math.cos(t), 0, 1.45 * Math.sin(t)]);
+      }
+      return pts;
+    }
+
+    function trefoilShape(n=320) {
+      const pts = [];
+      for (let i = 0; i <= n; i++) {
+        const t = TAU * i / n;
+        // A scaled trefoil, then rotated in model-space a bit so the silhouette reads clearly.
+        let x = (2 + 0.68 * Math.cos(3 * t)) * Math.cos(2 * t);
+        let y = 0.68 * Math.sin(3 * t);
+        let z = (2 + 0.68 * Math.cos(3 * t)) * Math.sin(2 * t);
+        x *= 0.55; y *= 0.55; z *= 0.55;
+        // model rotation
+        [x, y, z] = rotate([x, y, z], 0.55, -0.5, 0.15);
+        pts.push([x, y, z]);
+      }
+      return pts;
+    }
+
+    const baseCurve = circleShape();
+
+    function sliceCurve(s) {
+      // s=0 is base, s=1 is apex
+      const k = 1 - s;
+      const h = 2.45 * s;
+      return baseCurve.map(([x, y, z]) => [k * x, h + k * y, k * z]);
+    }
+
+    function drawPath(points, stroke, width, alpha=1) {
+      const pts = points.map(project);
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.strokeStyle = stroke.replace('ALPHA', alpha.toFixed(4));
+      ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      return pts;
+    }
+
+    function drawFilledPoint(p, r, fill) {
+      const q = project(p);
+      ctx.beginPath();
+      ctx.arc(q.x, q.y, r, 0, TAU);
+      ctx.fillStyle = fill;
+      ctx.fill();
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const e = ease(progress);
+      const topIndex = Math.max(0, Math.floor(e * SLICES));
+      const slices = [];
+      for (let i = 0; i <= topIndex; i++) {
+        const s = i / SLICES;
+        const curve = sliceCurve(s);
+        // depth for painter's order
+        let depth = 0;
+        for (const p of curve) depth += worldToView(p)[2];
+        depth /= curve.length;
+        slices.push({ s, curve, depth });
+      }
+      slices.sort((a,b) => a.depth - b.depth);
+
+      if (showBaseGuide) {
+        // shadow on the floor
+        const shadow = baseCurve.map(([x, y, z]) => [x, -0.04, z]);
+        drawPath(shadow, 'rgba(29,32,33,ALPHA)', Math.max(4, w/180), 0.22);
+      }
+
+      if (showApexRays && topIndex > 1) {
+        const base = sliceCurve(0);
+        const apex = [0, 2.45, 0];
+        const pick = 8;
+        for (let i = 0; i < base.length - 1; i += pick) {
+          const a = project(base[i]);
+          const b = project(apex);
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(131,165,152,0.12)';
+          ctx.lineWidth = Math.max(1, w/900);
+          ctx.stroke();
+        }
+      }
+
+      // draw intermediate slices back-to-front
+      for (const item of slices) {
+        const s = item.s;
+        const isBase = s === 0;
+        const isTop = Math.abs(s - topIndex / SLICES) < 1e-9;
+        const alpha = isBase ? 0.98 : mix(0.18, 0.72, 1 - s) * mix(0.55, 1.0, e);
+        const outer = isBase ? Math.max(5, w/145) : Math.max(3, w/220);
+        const inner = isBase ? Math.max(3.6, w/190) : Math.max(1.6, w/360);
+
+        drawPath(item.curve, 'rgba(29,32,33,ALPHA)', outer, Math.min(1, alpha*0.95));
+        const color = isBase
+          ? 'rgba(250,189,47,ALPHA)'
+          : (isTop ? 'rgba(254,128,25,ALPHA)' : 'rgba(131,165,152,ALPHA)');
+        drawPath(item.curve, color, inner, alpha);
+      }
+
+      // highlight currently "newest" slice
+      if (topIndex > 0 && topIndex < SLICES) {
+        const current = sliceCurve(topIndex / SLICES);
+        drawPath(current, 'rgba(29,32,33,ALPHA)', Math.max(5, w/150), 0.9);
+        drawPath(current, 'rgba(254,128,25,ALPHA)', Math.max(2.7, w/240), 0.95);
+      }
+
+      drawFilledPoint([0, 2.45, 0], Math.max(3.2, w / 180), 'rgba(254,128,25,0.95)');
+
+      scrub.value = String(Math.round(progress * 1000));
+      percent.textContent = `${Math.round(progress * 100)}%`;
+      playBtn.textContent = playing ? 'Pause' : (progress >= 1 ? 'Replay' : 'Play');
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      const dt = now - lastTime;
+      lastTime = now;
+
+      if (playing) {
+        progress += dt / DURATION;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+        }
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 1) progress = 0;
+      playing = !playing;
+      lastTime = performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      progress = 0;
+      playing = !prefersReduced;
+      lastTime = performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input', () => {
+      progress = clamp(Number(scrub.value) / 1000);
+      playing = false;
+      draw();
+    });
+
+    canvas.addEventListener('pointerdown', e => {
+      pointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      canvas.setPointerCapture(e.pointerId);
+    });
+
+    canvas.addEventListener('pointermove', e => {
+      if (!pointer || e.pointerId !== pointer.id) return;
+      const dx = e.clientX - pointer.x;
+      const dy = e.clientY - pointer.y;
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+      dragYaw += dx * 0.006;
+      dragPitch = clamp(dragPitch + dy * 0.006, -0.8, 0.65);
+      draw();
+    });
+
+    const endPointer = e => {
+      if (pointer && e.pointerId === pointer.id) pointer = null;
+    };
+    canvas.addEventListener('pointerup', endPointer);
+    canvas.addEventListener('pointercancel', endPointer);
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    resize();
+    draw();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<h3>Back to our graph</h3>
+
+<p>
+Why did we have this digression on cones? Because the cone and our graph of \(y^2=x^3\) near the origin are built in the same way: in the cone we start with a circle and then scale it down to a point; in \(y^2=x^3\) we start with a <em>trefoil</em> knot and scale it down to a point. Thus, near the origin, \(y^2=x^3\) is a <em>cone on a trefoil knot!</em> The final image can be seen in the below widget; we highly recommend you rotate it around to get a good view of this cone!
+</p>
+
+<!-- Hidden Phenomena: cone on a trefoil knot -->
+<div id="hp-cone-trefoil">
+  <style>
+    #hp-cone-trefoil {
+      --bg: #282828;
+      --bg-soft: #32302f;
+      --bg-hard: #1d2021;
+      --fg: #ebdbb2;
+      --muted: #a89984;
+      --gold: #fabd2f;
+      --orange: #fe8019;
+      --aqua: #8ec07c;
+      --blue: #83a598;
+      --border: #504945;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--fg);
+      font: 14px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    #hp-cone-trefoil .hp-stage {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      min-height: 300px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 50% 40%, #32302f 0%, #282828 58%, #1d2021 100%);
+    }
+
+    #hp-cone-trefoil canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    #hp-cone-trefoil canvas:active { cursor: grabbing; }
+
+    #hp-cone-trefoil .hp-controls {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    #hp-cone-trefoil button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #hp-cone-trefoil button:hover {
+      border-color: var(--muted);
+      background: #3c3836;
+    }
+
+    #hp-cone-trefoil button:focus-visible,
+    #hp-cone-trefoil input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    #hp-cone-trefoil input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    #hp-cone-trefoil .hp-percent {
+      min-width: 4.2ch;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 520px) {
+      #hp-cone-trefoil .hp-stage {
+        min-height: 260px;
+        aspect-ratio: 4 / 3;
+      }
+      #hp-cone-trefoil .hp-controls {
+        grid-template-columns: auto auto 1fr;
+      }
+      #hp-cone-trefoil .hp-percent {
+        display: none;
+      }
+    }
+  </style>
+
+  <div class="hp-stage">
+    <canvas aria-label="Animation showing the cone on a trefoil knot being built from shrinking copies of the trefoil converging to an apex point."></canvas>
+  </div>
+
+  <div class="hp-controls">
+    <button type="button" data-play aria-label="Play or pause animation">Pause</button>
+    <button type="button" data-restart>Restart</button>
+    <input data-scrub type="range" min="0" max="1000" value="0"
+           aria-label="Cone-building animation progress">
+    <span class="hp-percent" data-percent>0%</span>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('hp-cone-trefoil');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = '1';
+
+    const canvas = root.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = root.querySelector('[data-play]');
+    const restartBtn = root.querySelector('[data-restart]');
+    const scrub = root.querySelector('[data-scrub]');
+    const percent = root.querySelector('[data-percent]');
+
+    const TAU = Math.PI * 2;
+    const DURATION = 6800;
+    const prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = 0;
+    let playing = !prefersReduced;
+    let lastTime = 0;
+    let pointer = null;
+    let dragYaw = 0;
+    let dragPitch = 0.0;
+
+    const SLICES = 34;
+    const showBaseGuide = true;
+    const showApexRays = true;
+
+    function clamp(x, a=0, b=1) { return Math.max(a, Math.min(b, x)); }
+    function mix(a, b, t) { return a + (b - a) * t; }
+    function ease(t) {
+      return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+    }
+
+    function rotate(p, yaw, pitch, roll) {
+      let [x, y, z] = p;
+      let c = Math.cos(yaw), s = Math.sin(yaw);
+      [x, z] = [c*x + s*z, -s*x + c*z];
+      c = Math.cos(pitch); s = Math.sin(pitch);
+      [y, z] = [c*y - s*z, s*y + c*z];
+      c = Math.cos(roll); s = Math.sin(roll);
+      [x, y] = [c*x - s*y, s*x + c*y];
+      return [x, y, z];
+    }
+
+    function worldToView(p) {
+      const autoYaw = -0.35 + 0.42 * Math.sin(performance.now() / 2400) * (playing ? 1 : 0);
+      const yaw = autoYaw + dragYaw;
+      const pitch = 0.85 + dragPitch;
+      const roll = 0.0;
+      return rotate(p, yaw, pitch, roll);
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.round(rect.width * dpr));
+      const h = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      draw();
+    }
+
+    function project(p) {
+      const w = canvas.width, h = canvas.height;
+      const q = worldToView(p);
+      const scale = Math.min(w, h) * 0.165;
+      const perspective = 1 / (1 + 0.07 * q[2]);
+      return {
+        x: w * 0.5 + q[0] * scale * perspective,
+        y: h * 0.62 - q[1] * scale * perspective,
+        z: q[2],
+        p: perspective
+      };
+    }
+
+    function circleShape(n=180) {
+      const pts = [];
+      for (let i = 0; i <= n; i++) {
+        const t = TAU * i / n;
+        pts.push([1.45 * Math.cos(t), 0, 1.45 * Math.sin(t)]);
+      }
+      return pts;
+    }
+
+    function trefoilShape(n=320) {
+      const pts = [];
+      for (let i = 0; i <= n; i++) {
+        const t = TAU * i / n;
+        // A scaled trefoil, then rotated in model-space a bit so the silhouette reads clearly.
+        let x = (2 + 0.68 * Math.cos(3 * t)) * Math.cos(2 * t);
+        let y = 0.68 * Math.sin(3 * t);
+        let z = (2 + 0.68 * Math.cos(3 * t)) * Math.sin(2 * t);
+        x *= 0.55; y *= 0.55; z *= 0.55;
+        // model rotation
+        [x, y, z] = rotate([x, y, z], 0.55, -0.5, 0.15);
+        pts.push([x, y, z]);
+      }
+      return pts;
+    }
+
+    const baseCurve = trefoilShape();
+
+    function sliceCurve(s) {
+      // s=0 is base, s=1 is apex
+      const k = 1 - s;
+      const h = 2.45 * s;
+      return baseCurve.map(([x, y, z]) => [k * x, h + k * y, k * z]);
+    }
+
+    function drawPath(points, stroke, width, alpha=1) {
+      const pts = points.map(project);
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.strokeStyle = stroke.replace('ALPHA', alpha.toFixed(4));
+      ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      return pts;
+    }
+
+    function drawFilledPoint(p, r, fill) {
+      const q = project(p);
+      ctx.beginPath();
+      ctx.arc(q.x, q.y, r, 0, TAU);
+      ctx.fillStyle = fill;
+      ctx.fill();
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const e = ease(progress);
+      const topIndex = Math.max(0, Math.floor(e * SLICES));
+      const slices = [];
+      for (let i = 0; i <= topIndex; i++) {
+        const s = i / SLICES;
+        const curve = sliceCurve(s);
+        // depth for painter's order
+        let depth = 0;
+        for (const p of curve) depth += worldToView(p)[2];
+        depth /= curve.length;
+        slices.push({ s, curve, depth });
+      }
+      slices.sort((a,b) => a.depth - b.depth);
+
+      if (showBaseGuide) {
+        // shadow on the floor
+        const shadow = baseCurve.map(([x, y, z]) => [x, -0.04, z]);
+        drawPath(shadow, 'rgba(29,32,33,ALPHA)', Math.max(4, w/180), 0.22);
+      }
+
+      if (showApexRays && topIndex > 1) {
+        const base = sliceCurve(0);
+        const apex = [0, 2.45, 0];
+        const pick = 14;
+        for (let i = 0; i < base.length - 1; i += pick) {
+          const a = project(base[i]);
+          const b = project(apex);
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(131,165,152,0.12)';
+          ctx.lineWidth = Math.max(1, w/900);
+          ctx.stroke();
+        }
+      }
+
+      // draw intermediate slices back-to-front
+      for (const item of slices) {
+        const s = item.s;
+        const isBase = s === 0;
+        const isTop = Math.abs(s - topIndex / SLICES) < 1e-9;
+        const alpha = isBase ? 0.98 : mix(0.18, 0.72, 1 - s) * mix(0.55, 1.0, e);
+        const outer = isBase ? Math.max(5, w/145) : Math.max(3, w/220);
+        const inner = isBase ? Math.max(3.6, w/190) : Math.max(1.6, w/360);
+
+        drawPath(item.curve, 'rgba(29,32,33,ALPHA)', outer, Math.min(1, alpha*0.95));
+        const color = isBase
+          ? 'rgba(250,189,47,ALPHA)'
+          : (isTop ? 'rgba(254,128,25,ALPHA)' : 'rgba(131,165,152,ALPHA)');
+        drawPath(item.curve, color, inner, alpha);
+      }
+
+      // highlight currently "newest" slice
+      if (topIndex > 0 && topIndex < SLICES) {
+        const current = sliceCurve(topIndex / SLICES);
+        drawPath(current, 'rgba(29,32,33,ALPHA)', Math.max(5, w/150), 0.9);
+        drawPath(current, 'rgba(254,128,25,ALPHA)', Math.max(2.7, w/240), 0.95);
+      }
+
+      drawFilledPoint([0, 2.45, 0], Math.max(3.2, w / 180), 'rgba(254,128,25,0.95)');
+
+      scrub.value = String(Math.round(progress * 1000));
+      percent.textContent = `${Math.round(progress * 100)}%`;
+      playBtn.textContent = playing ? 'Pause' : (progress >= 1 ? 'Replay' : 'Play');
+    }
+
+    function tick(now) {
+      if (!lastTime) lastTime = now;
+      const dt = now - lastTime;
+      lastTime = now;
+
+      if (playing) {
+        progress += dt / DURATION;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+        }
+        draw();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 1) progress = 0;
+      playing = !playing;
+      lastTime = performance.now();
+      draw();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      progress = 0;
+      playing = !prefersReduced;
+      lastTime = performance.now();
+      draw();
+    });
+
+    scrub.addEventListener('input', () => {
+      progress = clamp(Number(scrub.value) / 1000);
+      playing = false;
+      draw();
+    });
+
+    canvas.addEventListener('pointerdown', e => {
+      pointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      canvas.setPointerCapture(e.pointerId);
+    });
+
+    canvas.addEventListener('pointermove', e => {
+      if (!pointer || e.pointerId !== pointer.id) return;
+      const dx = e.clientX - pointer.x;
+      const dy = e.clientY - pointer.y;
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+      dragYaw += dx * 0.006;
+      dragPitch = clamp(dragPitch + dy * 0.006, -0.8, 0.65);
+      draw();
+    });
+
+    const endPointer = e => {
+      if (pointer && e.pointerId === pointer.id) pointer = null;
+    };
+    canvas.addEventListener('pointerup', endPointer);
+    canvas.addEventListener('pointercancel', endPointer);
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(resize).observe(root.querySelector('.hp-stage'));
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    resize();
+    draw();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</div>
+
+<h2 id="sec4">Epilogue: advanced algebraic geometry</h2>
+
+<p>
+This story about the trefoil knot appearing in the graph of \(y^2 = x^3\) was very inspirational to the great mathematician John Milnor. Starting from this observation, he attempted to understand: what do graphs of general polynomial equations look like in the complex numbers, at least <em>locally</em>? 
+</p>
+
+<p>
+He found a beautiful general story: in the simplest situation of two variable equations, the graph would always resemble either the plane, or the cone on some knot (but perhaps a different knot than the trefoil). 
+</p>
+
+<p>
+From here, the story was developed by many mathematicians beyond Milnor. Mark Goresky and Bob MacPherson developed <em>stratified Morse theory</em>, which allowed them to push Milnor's results to more complicated equations than just two variable ones. 
+</p>
+
+<p>
+And in the two variable case, the legendary algebraic geometer Alexander Grothendieck managed to uncover a part of the story Milnor couldn't finish studying: <em>which knots show up in the graphs of complex polynomials?</em> 
+
+Milnor observed that, in all of his examples, the knots which showed up had a peculiar property; this peculiar property was that a certain knot invariant called the Alexander polynomial always had solutions which were roots of unity, but the precise meaning of this is not important. This property was quite peculiar, which led Milnor to wonder: were the examples he had calculated explicitly just special in some way he didn't notice, or did all the knots which show up in graphs of complex polynomials have this property? 
+</p>
+
+<p>
+Grothendieck found an incredibly beautiful proof that in fact, all the knots which show up do have this property. This theorem of Grothendieck -- called <em>quasi-unipotence of monodromy</em> -- was a real tour de force in algebraic geometry. Grothendieck, quite remarkably, proved this by first solving these polynomial equations <em>in modular arithmetic</em>, and then using the properties of the solutions in modular arithmetic to remarkably deduce something about the graphs over the complex numbers! This kind of argument has since been used in many other contexts to prove great theorems which somehow seem impenetrable to geometry alone.
+</p>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Using the mathematics of symmetry, we derive the cubic formula.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/monodromy.html"><div class="related-category">Topology · Calculus</div><h3>Möbius strips and differential equations</h3><p>Have you been going around in circles? Well, you might have travelled further than you think!
+</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
