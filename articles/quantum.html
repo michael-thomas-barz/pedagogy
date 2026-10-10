@@ -126,13 +126,22 @@ You might expect that a quantum mechanical particle is formalized then as some p
 </p>
 
 <p>
-It seems natural, then, to just add a second probability distribution, and store a particle as two probability distributions: one for its position, and one for its momentum. However, one of the most surprising and strange parts of quantum mechanics is that the position and momentum probability distributions are related. 
+It seems natural, then, to just add a second probability distribution, and store a particle as two probability distributions: one for its position, and one for its momentum. However, one of the most surprising and strange parts of quantum mechanics is that the position and momentum probability distributions are related. This relationship was discovered through experiments illustrating how quantum particles interfere with each other in strange ways, and led physicists to the idea of the <em>wave function</em>: a single <em>complex-valued</em> function \(\psi(\vec x,t)\), where \(\vec x\in\mathbb R^3\) is the position and \(t\) is the time. When a particle has wave function \(\psi(\vec x,t)\), it means at time \(t\), you have probability \(|\psi(\vec x,t)|^2\) of finding it at position \(\vec x\). In particular, since probabilities should add to 1, we want
+\[
+\int_{\mathbb R^3}|\psi(\vec x,t)|^2d\vec x=1.
+\]
 </p>
 
 <p>
-How do we actually express a particle in quantum mechanics? We will use <em>wave functions</em>. A wave function is a <em>complex</em>-valued function \(\psi(\vec x,t)\), where \(\vec x\in\mathbb R^3\) is the position and \(t\) is the time. When a particle has wave function \(\psi(\vec x,t)\), it means at time \(t\), you have probability \(|\psi(\vec x,t)|^2\) of finding it at position \(\vec x\). In particular, since probabilities should add to 1, we want
+So, if the wave function is \(\psi,\) the particle's position has a probability density function of \(|\psi|^2.\) But what about the momentum?
+</p>
+
+<p>
+Remarkably, the momentum has probability density
+\[\left|\frac{\hbar}{i}\frac{\partial}{\partial\vec x}\psi(\vec x, t)\right|^2,\]
+where \(\hbar\) is called the (reduced) Planck constant, and is given by
 \[
-\int_{\mathbb R^3}|\psi(\vec x,t)|^2d\vec x=1.
+\hbar\approx1.054\times 10^{-34}\mathrm{J}\cdot\mathrm{s}.
 \]
 </p>
 
@@ -141,10 +150,7 @@ The fundamental equation in quantum mechanics is <em>Schrodinger’s equation,</
 \[
 i\hbar\frac{\partial}{\partial t}\psi(\vec x,t)=\bigg(-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial\vec x^2}+V(\vec x)\bigg)\psi(\vec x,t).
 \]
-Here, \(\hbar\) is called the (reduced) Planck constant, and it’s a very small number
-\[
-\hbar\approx1.054\times 10^{-34}\mathrm{J}\cdot\mathrm{s}.
-\](which is why we only see quantum mechanics come into play on small scales). This is analogous to the equation for the energy
+This is analogous to the equation for energy
 \(E=\frac{p^2}{2m}+V,\)
 where the energy \(E\) is replaced by the operator
 \[
