@@ -104,10 +104,30 @@ How does one talk about proabilities of something that can have infinitely many 
 </p>
 
 <p>
-For example, when you choose a card at random from a standard deck, there are 52 possible outcomes, and we assign each probability \(1/52.\) But when you're talking about the position of a particle in quantum mechanics, the 
+For example, when you choose a card at random from a standard deck, there are 52 possible outcomes, and we assign each probability \(1/52.\) But when you're talking about the position of a particle moving in 1-dimension, the possible outcome is <em>any</em> real number. That's infinitely many possibilities! How do we assign them probabilities?
+</p>
+
+<p>
+To motivate this switch, let's think about throwing a dart on a dartboard. This is another random variable: the dart lands at a random point on the circular board. It seems to be logical to say that the dart has probability \(\frac{1}{2}\) of landing on the right side of the board, and probability \(\frac{1}{3}\) of landing in the top third. This suggests a general principle: the probability the dart lands in a certain region seems to be
+\[\frac{\text{area of region}}{\text{area of entire board}}.\] 
+</p>
+
+<p>
+This connection between probability and area led to the notion of a <em>probability density function</em>: when one has a random variable \(X\) whose value is a real number, we formalize it with a function
+\[\phi : \mathbb{R} \to [0, 1],\]
+and then we say that
+\[\text{probability \(a \leq X \leq b\)} = \int_a^b \phi(x) \, dx.\] 
 </p>
 
 <h3>Wave functions</h3>
+
+<p>
+You might expect that a quantum mechanical particle is formalized then as some probability density function, describing the probability distribution of its position. And, while this is close, it turns out that to understand a quantum mechanics one is required to know a little more information; this extra information is analogous to how, in classical mechanics, one is required to not just know the position of a particle, but also its momentum, if they want to understand how the system will evolve.
+</p>
+
+<p>
+What's the analogue of momentum in quantum mechanics? Unfortunately, we cannot store it just as a second probability distribution; momentum and position are related in a way
+</p>
 
 <p>
 How do we actually express a particle in quantum mechanics? We will use <em>wave functions</em>. A wave function is a <em>complex</em>-valued function \(\psi(\vec x,t)\), where \(\vec x\in\mathbb R^3\) is the position and \(t\) is the time. When a particle has wave function \(\psi(\vec x,t)\), it means at time \(t\), you have probability \(|\psi(\vec x,t)|^2\) of finding it at position \(\vec x\). In particular, since probabilities should add to 1, we want
