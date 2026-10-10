@@ -182,6 +182,13 @@ We could similarly recover the wave function with respect to momentum, \(\psi(\v
 and we could do all the same things we did from before with position.
 </p>
 
+<p>
+We can translate the Schrodinger equation, which involves the wave function \(\psi(\vec x,t)\), into linear operators. Let \(\hat H\) be the Hamiltonian operator on \(\mathcal H\). Then the Schrodinger equation for the particle \(|\psi(t)\rangle\) is
+\[
+\boxed{i\hbar\frac d{dt}|\psi(t)\rangle=\hat H|\psi(t)\rangle}.
+\]
+</p>
+
 <h2 id="sec3">The uncertainty principle</h2>
 
 <p>
@@ -247,14 +254,179 @@ A(B\vec v)=B(A\vec v)=B(\lambda\vec v)=\lambda(B\vec v).
 \]
 Now, \(B\) is a linear operator on \(V\), hence also has an eigenvector, call it \(\vec v\in V\), with some eigenvalue \(\mu\). This is the vector we were looking for.
 </p>
+</div>
+</details>
 
 <h3>Back to uncertainty</h3>
 <p>
 Therefore, the uncertainty principle tells us that the position and momentum operators \(\hat x\) and \(\hat p\) <em>do not</em> commute with each other. The extent to which the operators do not commute with each other is called the <em>commutator</em>,
 \[
+[\hat x,\hat p]=\hat x\hat p-\hat p\hat x.
+\]
+So \(\hat x\) and \(\hat p\) commute exactly when \([\hat x,\hat p]=0\).
+The uncertainty principle, in linear algebraic terms, says
+\[
 [\hat x,\hat p]=i\hbar.
 \]
+That means the two operators \(\hat x\) and \(\hat p\) are very close to commuting, with an error of Planck’s constant \(\hbar\); this is again why we don’t see the uncertainty phenomenon at macroscopic scales.
 </p>
+
+<p>
+More carefully analyzing what the equation \([\hat x,\hat p]=\hbar\) means in terms of the eigenvalues of the operators \(\hat x\) and \(\hat p\), we get a more precise statement for the uncertainty principle. It says
+\[
+\sigma_x\cdot\sigma_p\ge\frac\hbar2,
+\]
+where \(\sigma_x\) is the standard deviation of position, and \(\sigma_p\) is the standard deviation of momentum.
+</p>
+
+<h2>Quantization of Hamiltonian mechanics</h2>
+<p>
+Let us summarize what we have done so far. In our formalism, the state of a physical system is a vector in some vector space \(\mathcal H\), and position and momentum are operators on this space. The position and momentum operators satisfy the equation
+\[
+[\hat x,\hat p]=i\hbar.
+\]
+There is furthermore an operator called the Hamiltonian \(\hat H\), and the state of a particle \(|\psi(t)\rangle\) evolves according to the equation
+\[
+i\hbar\frac d{dt}|\psi(t)\rangle=\hat H|\psi(t)\rangle.
+\]
+</p>
+
+<p>
+How does this relate with the <a href=”hamiltonian.html”>Hamiltonian formalism</a> for mechanics? In Hamilton’s formalism, we have a function \(H\) of position \(\vec x\), momentum \(\vec p\), and time \(t\). It is then convenient to consider the Poisson bracket of two functions \(f\) and \(g\), defined by
+\[
+\{f,g\}=\sum_i\bigg(\frac{\partial f}{\partial x_i}\frac{\partial g}{\partial p_i}-\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial x_i}\bigg).
+\]
+Then Hamilton’s equation can be expressed as, for any function \(F\),
+\[
+\frac{dF}{dt}=\{H,F\}.
+\]
+</p>
+
+
+<p>
+To relate the two pictures, let’s take any observable \(f\) and \(g\) in classical mechanics, and consider them as operators \(\hat f\) and \(\hat g\) on \(\mathcal H\). Then the operator corresponding to the Poisson bracket \(\{f,g\}\) is the commutator \([\hat f,\hat g]/i\hbar\).
+</p>
+
+<p>
+For example, the functions of position \(x_i\) and momentum \(p_i\) correspond to operators \(\hat x\) and \(\hat p\) on \(\mathcal H\), and their commutator is
+\[
+[\hat x,\hat p]=i\hbar.
+\]
+This is what we expect, since \(\{x_i,p_i\}=1\)! 
+</p>
+
+<h3>Conserved quantities in quantum mechanics</h3>
+
+<p>
+In our last article, we saw that a quantity \(A\) is conserved exactly when \(\{A,H\}=0\). In quantum mechanics, we have the same exact phenomenon.
+</p>
+
+<p>
+Let \(\hat A\) be the linear operator on \(\mathcal H\) corresponding to \(A\). We view this as a function which takes a state \(|\psi\rangle\in\mathcal H\) and outputs a number
+\[
+\langle\psi|A|\psi\rangle.
+\]
+We say \(A\) is a conserved quantity exactly when the inner product
+\[
+\langle A\rangle_t:=\langle\psi(t)|A|\psi(t)\rangle
+\]
+does not change as we vary the time \(t\).
+</p>
+
+<p>
+Now, suppose \(\hat A\) and \(\hat H\) commute with each other, and assume they are time-independent for simplicity. Then Schrodinger’s equation tells us that
+\[
+\frac d{dt}|\psi(t)\rangle=-\frac i\hbar\hat H|\psi(t)\rangle,
+\]
+and taking adjoints,
+\[
+\frac d{dt}\langle\psi(t)|=\frac i\hbar\langle\psi(t)|\hat H.
+\]
+Thus, by the Leibniz rule, the derivative of \(\langle A\rangle_t\) is
+\[
+\frac d{dt}\langle A\rangle_t=\langle\dot\psi|A|\psi\rangle+\langle\psi|A|\psi\rangle.
+\]
+By applying Schrodinger’s equation, this equals
+\[
+\frac i\hbar\langle\psi|\hat H\hat A|\psi\rangle-\frac i\hbar\langle\psi|\hat A\hat H|\psi\rangle=\frac i\hbar\langle\psi|[\hat A,\hat H]|\psi\rangle.
+\]
+When \(\hat A\) and \(\hat H\) commute with each other, this expression is just 0, so \(\langle A\rangle_t\) is independent of \(t\).
+</p>
+
+<h2>Non-commutative geometry</h2>
+
+<p>Now let’s relate the ideas of quantum mechanics back to <a href=”gelfand.html”>Gelfand duality</a>. There, we explored the idea that to describe a space \(X\) and to describe all the (continuous) functions on \(X\) is really the same thing. This is a “duality” between geometry (spaces) and algebra (rings).
+</p>
+
+<p>
+You only get <em>commutative</em> rings from Gelfand duality. That’s simply because it doesn’t matter in which order you multiply functions in: for any two functions \(f\) and \(g\) on \(X\),
+\[
+f(x)g(x)=g(x)f(x)\in\mathbb R
+\]
+for all \(x\in X\). There are, however, rings that we encounter in daily life which are not commutative. For example, the ring \(M_{2\times 2}(\mathbb R)\) of \(2\times 2\)-matrices is not commutative, since
+\[
+\begin{pmatrix}0&1\\
+0&0\end{pmatrix}\cdot\begin{pmatrix}
+0&0\\
+1&0
+\end{pmatrix}=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+\]
+whereas
+\[
+\begin{pmatrix}0&0\\
+1&0\end{pmatrix}\cdot\begin{pmatrix}
+0&1\\
+0&0
+\end{pmatrix}=\begin{pmatrix}0&0\\0&1\end{pmatrix}.
+\]
+</p>
+
+<p>
+It would be fun if we could take a non-commutative ring \(\mathcal A\) such as \(M_{2\times 2}(\mathbb R)\) and imagine it is the ring of functions on some “space” \(X\). This idea is the core of the field called “non-commutative geometry.”
+</p>
+
+<p>
+This process of turning our attention from a commutative situation to a non-commutative situation is exactly what happened when we went from classical to quantum mechanics. In classical mechanics we thought about observables as functions \(f(\vec x,\vec p)\) which commute with each other, whereas in quantum mechanics we consider observable as operators on a vector space \(\mathcal H\), which need not commute with each other.
+</p>
+
+<p>
+More formally, in classical mechanics our observables were functions \(f(\vec x,\vec p)\) on the \(2n\)-dimensional phase space \(\mathbb R^{2n}\), which has \(n\) position coordinates and \(n\) momentum coordinates. In quantum mechanics, we instead consider a ring with variables \(\hat x_i\) and \(\hat p_i\), which satisfy the relation
+\[
+\hat x_i\hat p_i-\hat p_i\hat x_i=i\hbar.
+\]
+</p>
+
+<p>
+Amusingly, this relation closely resembles the relation satisfied by differential operators. The space of 1-variable functions \(f(t)\) have two interesting linear operators on it: differentiation, which takes
+\[
+f(t)\mapsto\frac{df}{dt}(t),
+\] 
+and multiplication by \(t\), which takes
+\[
+f(t)\mapsto tf(t).
+\]
+Then, by the product rule,
+\[
+\frac d{dt}\big(tf(t)\big)=t\frac d{dt}f(t)+f(t),
+\]
+which equivalently means
+\[
+\big[t,\frac d{dt}\big]=1.
+\]
+</p>
+
+<p>
+In other words, the relations satisfied by the operators \(\hat x_i\) and \(\hat p_i\) are the same as those satisfied by the operators of multiplication by \(t_i\) and differentiation \(\frac{\partial}{\partial t_i}\) on the space of all functions \(f(t_1,\dots,t_n)\) on \(n\)-dimensional space \(\mathb R^n\).
+</p>
+
+<p>
+In other words, going from classical mechanics to quantum mechanics is the same as quantizing from the algebra of functions on the phase space \(\mathbb R^{2n}\) to the algebra of differential operators on \(\mathbb R^n\).
+</p>
+
+
+
+
+      
 
 
 
