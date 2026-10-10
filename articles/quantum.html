@@ -46,12 +46,9 @@
       <details class="hp-toc-details" open>
         <summary>On this page</summary>
         <ol>
-          <li><a href="#hp-section-1">Equivalence relations</a></li>
-          <li><a href="#hp-section-2">The formal definition of an equivalence relation</a></li>
-          <li><a href="#hp-section-3">Groupoids</a></li>
-          <li><a href="#hp-section-4">Groupoid-based mathematics</a></li>
-          <li><a href="#hp-section-5">The inadequacy of groupoids</a></li>
-          <li><a href="#hp-section-6">\(\infty\)-groupoids; or, anima</a></li>
+          <li><a href="#sec1">What is quantum mechanics?</a></li>
+          <li><a href="#sec2">A linear algebra foundation to quantum mechanics</a></li>
+          <li><a href="#sec3">The uncertainty principle</a></li>
         </ol>
       </details>
     </nav>
@@ -61,10 +58,18 @@
 
 
 <p>
-In our series on mechanics, we discussed several approaches to mechanics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage—it serves as a <em>bridge between classical and quantum mechanics</em>.
+In our series on mechanics, we discussed several approaches to mechanics, leading up to <a href=”hamiltonian.html”>Hamilton’s approach</a>. Although Hamilton’s approach is abstract, it is a more symmetric approach (treating position and momentum on equal grounds), and it helps us better understand conserved quantities. However, it has another big advantage: it serves as a bridge between classical and quantum mechanics.
 </p>
 
-<h2>What is quantum mechanics?</h2>
+<p>
+Recall how, in the <a href="symplectic.html">geometric approach to Hamiltonian mechanics</a>, we showed how symplectic geometry allows you to phrase mechanics in terms of the geometry of <em>phase spaces</em> -- geometric spaces which encode the possible states of some physical system. These phase spaces are abstract shapes which are hard to 'see' directly; instead, scientists access them by making measurements (see <a href="gelfand.html">our article on Gelfand duality</a> for an elaboration on this). 
+</p>
+
+<p>
+In quantum mechanics, this view of physics reigns supreme, with one change: the phase spaces involved become much stranger than any usual shapes.
+</p>
+
+<h2 id="sec1">What is quantum mechanics?</h2>
 
 <h3>Schrodinger’s cat</h3>
 
@@ -73,25 +78,39 @@ You may have heard of the famous thought experiment of Schrodinger’s cat, that
 </p>
 
 <p>
-A key principle in quantum mechanics is that particles only exist probabilistically. In other words, instead of saying a particle is at position \((1,2)\), in quantum mechanics you say that the position of a particle is a normal distribution centered around \((1,2)\) with standard deviation \(3\). Observing the particle amounts to sampling this distribution: you are likely to observe the particle close to \((1,2)\), but with a very small probability, you may observe it at \((100,-9)\).
+A key principle in quantum mechanics is that particles only exist probabilistically. In other words, instead of saying a particle is at position \((1,2)\), in quantum mechanics you say that the position of a particle is a normal distribution centered around \((1,2)\) with standard deviation \(3\). Observing the particle amounts to sampling this distribution: you are likely to observe the particle close to \((1,2)\), but with a very small probability, you may observe it at \((100,-9)\). In other words, the measurements scientists make behave more like <em>random variables</em> than like traditional functions.
 </p>
 
 <p>
-Going back to the example of Schrodinger’s cat, you take a particle which could have two states A and B, and assume it could be each state with probability \(\frac12\). Then, you make a contraption to release poison to the cat only when the particle has state B (it is cruel, we know…). If you do this, the cat will also be dead and alive with probability \(\frac12\).
+Going back to the example of Schrodinger’s cat, you take a particle which could have two states A and B, and assume it could be each state with probability \(\frac12\). Then, you make a contraption to release poison to the cat only when the particle has state B (scientists seem to have quite cruel minds... why not have the theoretical contraption release candy?). If you do this, the cat will also be dead and alive with probability \(\frac12\).
 </p>
 
 <p>
-There is an important distinction between Schrodinger’s cat and flipping a coin. When you flip a coin, it also lands heads or tails with probability \(\frac12\). You could then decide to kill the cat (for some reason…) only when the coin flips tails. You may wonder; what is the difference? 
+There is an important distinction between the kind of probabilities occurring here versus the kind of probability people mean when they talk about flipping a coin.
 </p>
 
 <p>
-The difference is that if you knew the speed and force at which you flipped the coin, you could <em>in principle</em> know whether it would land heads or tails before the experiment. In other words, we only say it lands heads or tails with probability \(\frac12\) due to our ignorance. However, in quantum mechanics, a particle can have a <em>physical state</em> which is state A with probability \(\frac12\) and state B with probability \(\frac12\). Even an all-knowing being could not tell you which state the particle is in before observing it. So, Schrodinger’s cat is really both physically alive and dead, in a precise physical sense.
+For example, when you flip a coin, it also lands heads or tails with probability \(\frac12\). Perhaps you decide you'll flip a coin, and then release the poison only when the coin flips heads. How does this differ from the quantum situation?
+</p>
+
+<p>
+The key is that if you knew the speed and force at which you flipped the coin, you could <em>in principle</em> know whether it would land heads or tails before the experiment. In other words, we only say it lands heads or tails with probability \(\frac12\) due to our ignorance. However, in quantum mechanics, a particle can have a <em>physical state</em> which is state A with probability \(\frac12\) and state B with probability \(\frac12\). Even an all-knowing being could not tell you which state the particle is in before observing it. So, Schrodinger’s cat is really both physically alive and dead, in a precise physical sense.
+</p>
+
+<h3>Probability density functions</h3>
+
+<p>
+How does one talk about proabilities of something that can have infinitely many outcomes? 
+</p>
+
+<p>
+For example, when you choose a card at random from a standard deck, there are 52 possible outcomes, and we assign each probability \(1/52.\) But when you're talking about the position of a particle in quantum mechanics, the 
 </p>
 
 <h3>Wave functions</h3>
 
 <p>
-So, how do we express a particle in quantum mechanics? We will use <em>wave functions</em>, which is a complex-valued function \(\psi(\vec x,t)\), where \(\vec x\in\mathbb R^3\) is the position and \(t\) is the time. When a particle has wave function \(\psi(\vec x,t)\), it means at time \(t\), you have probability \(|\psi(\vec x,t)|^2\) of finding it at position \(\vec x\). In particular, since probabilities should add to 1, we want
+How do we actually express a particle in quantum mechanics? We will use <em>wave functions</em>. A wave function is a <em>complex</em>-valued function \(\psi(\vec x,t)\), where \(\vec x\in\mathbb R^3\) is the position and \(t\) is the time. When a particle has wave function \(\psi(\vec x,t)\), it means at time \(t\), you have probability \(|\psi(\vec x,t)|^2\) of finding it at position \(\vec x\). In particular, since probabilities should add to 1, we want
 \[
 \int_{\mathbb R^3}|\psi(\vec x,t)|^2d\vec x=1.
 \]
@@ -117,7 +136,7 @@ the momentum \(p\) is replaced by the operator
 \]
 </p>
 
-<h2>A linear algebraic foundation to quantum mechanics</h2>
+<h2 id="sec2">A linear algebraic foundation to quantum mechanics</h2>
 
 <p>
 In the previous section, we saw how we can formulate quantum mechanics through wave functions \(\psi(\vec x,t)\), which describes the probability distribution of the <em>position</em> of a particle. However, we could equally have used wave functions \(\psi(\vec p,t)\) which describes the probability distribution of the <em>momentum</em> of a particle. This suggests wave functions may not be the best way to formalize quantum mechanics.
@@ -163,7 +182,7 @@ We could similarly recover the wave function with respect to momentum, \(\psi(\v
 and we could do all the same things we did from before with position.
 </p>
 
-<h2>The uncertainty principle</h2>
+<h2 id="sec3">The uncertainty principle</h2>
 
 <p>
 One of the most fundamental principles in quantum mechanics is Heisenberg’s uncertainty principle. It states that you cannot know both the position and momentum of a particle precisely. This becomes particularly lucid when you think about quantum mechanics through linear operators.
