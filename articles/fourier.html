@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Integrals and shapes</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+<header class="site-header hp-site-header"><div class="page-shell"><nav class="site-nav" aria-label="Main navigation"><a class="site-title" href="../index.html">HIDDEN PHENOMENA</a><div class="site-nav-links"><a href="../index.html#topics">Topics</a><a href="../index.html#start-here">Start Here</a><a href="../about.html">About</a></div></nav></div></header><main class="page-shell" id="hp-main" tabindex="-1"><header class="article-hero"><div class="article-category">Draft notes</div><h1 class="article-title">Integrals and shapes</h1><div class="article-info"><span class="article-badge">About 1 min read</span><span class="article-badge">Draft · work in progress</span></div><p class="article-date">todo</p></header><div class="hp-layout hp-no-toc"><div class="hp-prose">
+
+<p>
+In most calculus courses, students are taught how to solve the integral
+\[\int\frac{dx}{\sqrt{1-x^2}}.\]
+However, the very similar looking integral
+\[\int\frac{dx}{\sqrt{x^3-2}}\]
+would given even an expert undergraduate calculus student trouble!
+</p>
+
+<p>
+What makes the second integral so much harder than the first? It turns out that the answer comes from <em>geometry</em>. This might sound shocking the first time you hear it; the goal of this blogpost is to explain what we mean here.
+</p>
+
+<h2>A review of calculus</h2>
+
+<p>
+Let's start by recalling how to integrate <em>rational functions</em>. When mathematicians first started integrating, they were of course interested in knowing which classes of functions they could easily integrate. 
+</p>
+
+<p>
+One 'simple' class of functions are polynomials: functions like \(x^3 + 2x^2 - 5x + 3.\) These are fortunately easy to integrate: using the easy identities
+\[\int x^n dx = \frac{x^{n+1}}{n+1} + C,\]
+one can integrate any polynomial.
+</p>
+
+<p>
+The next step up from polynomials is the class of <em>rational functions</em>. These are functions that arise as the quotient of two polynomials; for example,
+\[\frac{1+2x}{1-2x}\]
+is a rational function, as is
+\[\frac{x^3-5x+2}{x^{17} - x^6 + 8}.\]
+</p>
+
+<p>
+It is harder to integrate rational functions, but with a trick called <em>partial fraction decomposition</em>, you can always integrate rational functions. We won't dwell on it here, but just remember that rational functions are 'easy' to integrate, at least in theory; it turns out that integrating them requires some tricky algebra (including factoring high degree polynomials) which can make it difficult to carry out in practice, but at least in theory there's a way to do it.
+</p>
+
+
+<h2>Trigonometric substitutions with circles</h2>
+
+<p>
+How might we solve the integral
+\[\int\frac{dx}{\sqrt{1-x^2}}?\]
+</p>
+
+<p>
+In the previous section, we described how to integrate rational functions; so, it's natural to ask if we can do some clever substitution to turn this into the integral of a rational function.
+</p>
+
+<p>
+Whenever you're doing mathematics -- and especially integration -- it is helpful to give things names. The scary part of this integral is the square root, so let's give it a name: put
+\[y = \sqrt{1-x^2}.\] 
+In particular, 
+\[y^2 = 1-x^2,\]
+or
+\[x^2 + y^2 = 1.\] 
+</p>
+
+<p>
+This equation defines a circle! The trigonometric substitution that is typically done now has some geometric meaning: our equation defining the circle has two variables, but the circle is a 1-dimensional object; trigonometric functions allow us to reduce the circle to a one variable object, which is easier to study.
+</p>
+
+<p>
+There is a second way to do this integral, however: parametrize the circle by <em>rational</em> functions. As we know how to integrate all rational functions (as described in the previous section), this way is just as effective. However, this rational parametrization is much less well-known than the trigonometric parametrization, and has uses besides integrals, so we thought it would be fun to explain this rational function solutino of our integral.
+</p>
+
+<h3>A rational parametrization of the unit circle</h3>
+
+<p>
+One sort of silly way to parametrize the unit circle is via the parametric equation
+\[t \mapsto (t, \sqrt{1-t^2})\]
+</p>
+
+<p>
+The reason this doesn't help is that this parametrization just turns our integral from
+\[\int \frac{dx}{\sqrt{1-x^2}}\]
+to
+\[\int\frac{dt}{\sqrt{1-t^2}},\]
+which of course isn't any easier! 
+</p>
+
+<p>
+What classes of functions do we know how to integrate? The 'easiest' type of function to integrate is polynomials. And it turns out that there is a way to parametrize the unit circle by functions which are <em>almost</em> polynomials.
+</p>
+
+<p>
+The parametrization of the unit circle by trigonometric functions is obtained by thinking of a point on a circle as being determined by the angle it is at. There is another way to specify a point on a circle with one number, though. 
+</p>
+
+<p>
+This second way was first observed by the ancient Greek mathematician Diophantus. Start by taking the point \((1, 0)\) on our circle; then, draw the line with slope \(t\) at \((1, 0).\) This is dranw in the widget below. This line will always intersect the circle at \((1, 0)\) and one other point; in this way, we can describe points of the circle using only one number (the slope \(t\) of our line).
+</p>
+
+<div id="diophantus-widget">
+  <div class="dio-canvas-wrap">
+    <canvas id="dio-canvas"></canvas>
+  </div>
+
+  <div class="dio-controls">
+    <div class="dio-slider-row">
+      <label for="dio-slider">Slope <i>t</i></label>
+      <input
+        id="dio-slider"
+        type="range"
+        min="-5"
+        max="5"
+        step="0.01"
+        value="-1"
+      />
+      <span id="dio-value">−1.00</span>
+    </div>
+
+    <div class="dio-buttons">
+      <button id="dio-play">▶ Play</button>
+      <button id="dio-reset">Reset</button>
+    </div>
+  </div>
+
+  <div class="dio-formula">
+    <span id="dio-point-label">Second intersection:</span>
+    <span id="dio-coordinates"></span>
+  </div>
+</div>
+
+<style>
+#diophantus-widget {
+  --bg: #282828;
+  --fg: #ebdbb2;
+  --muted: #a89984;
+  --grid: #504945;
+  --blue: #83a598;
+  --orange: #fe8019;
+  --yellow: #fabd2f;
+
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  width: 100%;
+  max-width: 720px;
+  margin: 1.5rem auto;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+#diophantus-widget * {
+  box-sizing: border-box;
+}
+
+.dio-canvas-wrap {
+  width: 100%;
+  height: 390px;
+  position: relative;
+}
+
+#dio-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.dio-controls {
+  padding: 8px 12px;
+}
+
+.dio-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dio-slider-row label {
+  white-space: nowrap;
+  min-width: 65px;
+}
+
+#dio-slider {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+#dio-value {
+  color: var(--orange);
+  font-family: monospace;
+  font-size: 1rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+.dio-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.dio-buttons button {
+  background: #3c3836;
+  color: var(--fg);
+  border: 1px solid #665c54;
+  border-radius: 5px;
+  padding: 7px 18px;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dio-buttons button:hover {
+  background: #504945;
+}
+
+.dio-formula {
+  margin: 12px 8px 4px;
+  padding: 12px;
+  border-top: 1px solid #504945;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+#dio-coordinates {
+  display: block;
+  color: var(--fg);
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+</style>
+
+<script>
+(() => {
+  const canvas = document.getElementById("dio-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const slider = document.getElementById("dio-slider");
+  const valueLabel = document.getElementById("dio-value");
+  const coordLabel = document.getElementById("dio-coordinates");
+  const playButton = document.getElementById("dio-play");
+  const resetButton = document.getElementById("dio-reset");
+
+  const C = {
+    fg: "#ebdbb2",
+    muted: "#a89984",
+    grid: "#504945",
+    blue: "#83a598",
+    orange: "#fe8019",
+    yellow: "#fabd2f",
+    bg: "#282828"
+  };
+
+  let t = -1;
+  let playing = false;
+  let dragging = false;
+  let animationFrame = null;
+  let lastTime = null;
+
+  let W, H, cx, cy, scale;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    W = rect.width;
+    H = rect.height;
+
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    cx = W / 2;
+    cy = H / 2;
+    scale = Math.min(W * 0.35, H * 0.38);
+
+    draw();
+  }
+
+  function X(x) { return cx + x * scale; }
+  function Y(y) { return cy - y * scale; }
+
+  function circlePoint(slope) {
+    return {
+      x: (slope * slope - 1) / (1 + slope * slope),
+      y: -2 * slope / (1 + slope * slope)
+    };
+  }
+
+  function fmt(n) {
+    if (Math.abs(n) < 0.005) return "0.00";
+    return n.toFixed(2).replace("-", "−");
+  }
+
+  function line(x1, y1, x2, y2, color, width = 1) {
+    ctx.beginPath();
+    ctx.moveTo(X(x1), Y(y1));
+    ctx.lineTo(X(x2), Y(y2));
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.stroke();
+  }
+
+  function dot(x, y, color, radius = 6) {
+    ctx.beginPath();
+    ctx.arc(X(x), Y(y), radius, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    ctx.strokeStyle = C.bg;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  function text(str, x, y, color, size = 14, align = "left") {
+    ctx.fillStyle = color;
+    ctx.font = `${size}px sans-serif`;
+    ctx.textAlign = align;
+    ctx.textBaseline = "middle";
+    ctx.fillText(str, X(x), Y(y));
+  }
+
+  function draw() {
+    if (!W) return;
+
+    ctx.clearRect(0, 0, W, H);
+
+    const extentX = W / (2 * scale);
+    const extentY = H / (2 * scale);
+
+    // Coordinate axes
+    line(-extentX, 0, extentX, 0, C.grid);
+    line(0, -extentY, 0, extentY, C.grid);
+
+    // Tick marks
+    for (let i = -1; i <= 1; i++) {
+      if (i === 0) continue;
+
+      line(i, -0.025, i, 0.025, C.grid);
+      line(-0.025, i, 0.025, i, C.grid);
+    }
+
+    // Unit circle
+    ctx.beginPath();
+    ctx.arc(cx, cy, scale, 0, 2 * Math.PI);
+    ctx.strokeStyle = C.fg;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    const p = circlePoint(t);
+
+    // Line y = t(x - 1), extended past both intersections.
+    // Use its unit direction to avoid huge values for large t.
+    const norm = Math.sqrt(1 + t*t);
+    const dx = 1 / norm;
+    const dy = t / norm;
+
+    const L = 4;
+
+    line(
+      1 - L*dx, -L*dy,
+      1 + L*dx,  L*dy,
+      C.orange, 2
+    );
+
+    // Fixed point (1,0)
+    dot(1, 0, C.yellow, 6);
+    text("(1, 0)", 1.08, -0.13, C.yellow, 14);
+
+    // Moving point
+    dot(p.x, p.y, C.blue, 8);
+
+    // Label near moving point
+    const offsetX = p.x > 0.5 ? -0.14 : 0.12;
+    const align = p.x > 0.5 ? "right" : "left";
+
+    text(
+      "(x(t), y(t))",
+      p.x + offsetX,
+      p.y + (p.y > 0.65 ? -0.15 : 0.15),
+      C.blue,
+      15,
+      align
+    );
+
+    // Line equation in upper left
+    ctx.font = "15px sans-serif";
+    ctx.fillStyle = C.orange;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText(
+      "y = t(x − 1)",
+      12, 12
+    );
+  }
+
+  function update(newT) {
+    t = Math.max(-5, Math.min(5, newT));
+    slider.value = t;
+    valueLabel.textContent = fmt(t);
+
+    const p = circlePoint(t);
+
+    coordLabel.textContent =
+                  `(x(${fmt(t)}), y(${fmt(t)})) = (${fmt(p.x)}, ${fmt(p.y)})`;
+
+    draw();
+  }
+
+  function stop() {
+    playing = false;
+    playButton.textContent = "▶ Play";
+
+    if (animationFrame !== null) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+
+    lastTime = null;
+  }
+
+  function animate(timestamp) {
+    if (!playing) return;
+
+    if (lastTime === null) lastTime = timestamp;
+
+    const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+    lastTime = timestamp;
+
+    let next = t + dt * 0.8;
+
+    if (next > 5) next = -5;
+
+    update(next);
+
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  playButton.addEventListener("click", () => {
+    if (playing) {
+      stop();
+    } else {
+      playing = true;
+      playButton.textContent = "⏸ Pause";
+      lastTime = null;
+      animationFrame = requestAnimationFrame(animate);
+    }
+  });
+
+  resetButton.addEventListener("click", () => {
+    stop();
+    update(-1);
+  });
+
+  slider.addEventListener("input", e => {
+    stop();
+    update(parseFloat(e.target.value));
+  });
+
+  // Drag the blue point around the circle
+  canvas.addEventListener("pointerdown", e => {
+    stop();
+    dragging = true;
+    canvas.setPointerCapture(e.pointerId);
+    handlePointer(e);
+  });
+
+  canvas.addEventListener("pointermove", e => {
+    if (dragging) handlePointer(e);
+  });
+
+  canvas.addEventListener("pointerup", () => {
+    dragging = false;
+  });
+
+  canvas.addEventListener("pointercancel", () => {
+    dragging = false;
+  });
+
+  function handlePointer(e) {
+    const rect = canvas.getBoundingClientRect();
+
+    const mx = (e.clientX - rect.left - cx) / scale;
+    const my = -(e.clientY - rect.top - cy) / scale;
+
+    // Project the pointer onto the circle
+    const angle = Math.atan2(my, mx);
+    const px = Math.cos(angle);
+    const py = Math.sin(angle);
+
+    // Slope of the line joining (1,0) to (px,py)
+    const denominator = px - 1;
+
+    if (Math.abs(denominator) < 1e-6) return;
+
+    const newT = py / denominator;
+    update(newT);
+  }
+
+  window.addEventListener("resize", resize);
+
+  resize();
+  update(-1);
+})();
+</script>
+
+<p>
+With a bit of algebra, we can find the exact coordinates \((x(t), y(t))\) of this intersection point. The line with slope \(t\) passing through \((1, 0)\) has equation
+\[y = t(x-1)\]
+(using point-slope form). We want to find where this line intersects the circle
+\[x^2 + y^2 = 1.\]
+Substituting \(y=t(x-1)\) into the circle equation, we get the quadratic
+\[x^2 + t^2(x-1)^2 = 1.\]
+This seems bad at first glance: we want \(x\) to be a <em>rational</em> function of \(t,\) but generally to solve quadratics requires taking square roots! However, there's a very clever simplification we can do here: <em>we already know that one of the solutions is \(x=1,\) because our line intersects the circle at \((1, 0).\)</em> 
+</p>
+
+<p>
+By <a href="quartic.html">Vieta's formulas,</a> we know that the <em>product</em> of the solutions to
+\[x^2 + t^2(x-1)^2 = 1\]
+is 
+\[\frac{t^2-1}{1+t^2}.\]
+As the two solutions multiply to \((t^2-1)/(1+t^2),\) and one solution is \(1,\) the other solution must be
+\[x(t) = \frac{t^2-1}{1+t^2}.\]
+Thus we solved this equation without using the quadratic formula, and found a rational function of \(t\) as our answer! 
+</p>
+
+<p>
+Using \(y=t(x-1),\) we find then that
+\[y(t) = \frac{-2t}{1+t^2},\]
+giving us the parametrization
+\[t \mapsto \left(\frac{t^2-1}{1+t^2}, \frac{-2t}{1+t^2}\right).\]
+</p>
+
+<h3>Back to our integral</h3> 
+
+<p>
+We can now do our integral. Recall that we're trying to integrate
+\[\int\frac{dx}{y}.\]
+Substituting
+\[x = \frac{t^2-1}{1+t^2},\]
+\[y = \frac{-2t}{1+t^2},\]
+we find that
+\[\frac{dx}{y} = \frac{-2}{1+t^2} \, dt.\] 
+</p>
+
+<p>
+Thus our integral becomes
+\[\int \frac{-2}{1+t^2} \, dt,\]
+the integral of a rational function! Using the algorithm mentioned before for integrating rational functions, this integral is just
+\[\int \frac{-2 dt}{1+t^2} = -2\arctan(t) + C.\] 
+We're not <em>quite</em> done yet, though: we still need to change this back to \(x,\) using the relationship
+\[x = \frac{t^2-1}{t^2+1}.\] 
+</p>
+
+<p>
+Remember that \(\arctan(t)\) is some angle \(\theta\) having the property that \(\tan(\theta) = t.\) Thus we can say
+\[x = \frac{\tan(\theta)^2 - 1}{\tan(\theta)^2 + 1}.\]
+Using that \(\tan(\theta) = \sin(\theta)/\cos(\theta),\) we find
+\[x = \frac{\sin(\theta)^2 - \cos(\theta)^2}{\sin(\theta)^2 +\cos(\theta)^2} = -\cos(2\theta),\]
+wher in the last step we use some common trigonometric identities. So, we can rewrite 
+-2\arctan(t) = -2\theta = \arccos(-x),\]
+getting
+\[\int \frac{dx}{\sqrt{1-x^2}} = \arccos(-x) + C,\]
+which is the more standard answer. Using the identity \(\arccos(-x) = \arcsin(x) + \pi/2,\) and absorbing the \(\pi/2\) into the \(+C,\) you could also write the antiderivative as \(\arcsin(x) + C.\) 
+</p>
+
+<h3>Another application: Pythagorean triples</h3>
+
+<p>Why bother using this rational parametrization of the unit circle, instead of just doing a trigonometric subsitution? One answer is that the rational parametrization can be used to solve other problems that the trigonometric parametrization cannot.</p>
+
+<p>
+Recall that a <em>Pythagorean triple</em> is a triple of three whole numbers \(a,b,c\) such that
+\[a^2 + b^2 = c^2,\]
+meaning that \(a,b,c\) form the sides of a right triangle. Examples of Pythagorean triples are \(3,4,5\) and \(5,12,13.\) 
+</p>
+
+<p>
+How can we find <em>all</em> Pythagorean triples? It turns out our rational parametrization helps us out! First, instead of trying to find integer solutions to \(a^2+b^2=c^2,\) let's divide by \(c^2,\) to instead find rational number solutions to
+\[\left(\frac{a}{c}\right)^2 + \left(\frac{b}{c}\right)^2 = 1.\]
+Thus, we're just trying to find points on the unit circle both of whose coordinates are ratios of integers. This can be done with our rational parametrization: every point on the unit circle is of the form
+\[\left(\frac{t^2-1}{t^2+1}, \frac{-2t}{t^2+1}\right).\]
+The only way this point has both coordinates rational is when \(t\) is a rational number; all Pythagorean triples come from plugging in rational values of \(t\) to our parametrization! For example, plugging in \(t=-2\) gives
+\[(3/5, 4/5),\]
+recovering our \(3,4,5\) right triangle from earlier; plugging in \(t=-10\) gives
+\[(99/101, 20/101),\]
+which corresponds to the Pythagorean triple \(20,99,101,\) which you might not have seen before. In other words, just by plugging in different values of \(t,\) we can discover new Pythagorean triples!
+</p>
+
+<h2>The harder integral</h2>
+
+<p>
+Why is the integral
+\[\int\frac{dx}{\sqrt{x^3-2}}\]
+so hard to compute, then? 
+</p>
+
+<p>
+To understand why, let's substitute
+\[y = \sqrt{x^3-2}.\]
+Then
+\[y^2 = x^3 - 2.\] 
+</p>
+
+<p>
+When we graph this equation in the coordinate plane, we get a complicated looking curve:
+</p>
+<div id="elliptic-widget">
+  <div class="elliptic-canvas-wrap">
+    <canvas id="elliptic-canvas"></canvas>
+  </div>
+
+  <div class="elliptic-controls">
+    <div class="elliptic-slider-row">
+      <label for="elliptic-slider">Point</label>
+      <input
+        id="elliptic-slider"
+        type="range"
+        min="-8"
+        max="8"
+        step="0.01"
+        value="1.5"
+      />
+      <span id="elliptic-value">1.50</span>
+    </div>
+
+    <div class="elliptic-buttons">
+      <button id="elliptic-play">▶ Play</button>
+      <button id="elliptic-reset">Reset</button>
+      <button id="elliptic-zoom-in">+</button>
+      <button id="elliptic-zoom-out">−</button>
+    </div>
+  </div>
+
+  <div class="elliptic-info">
+    <div id="elliptic-point-info"></div>
+    <div class="elliptic-equation">y² = x³ − 2</div>
+  </div>
+</div>
+
+<style>
+#elliptic-widget {
+  --bg: #282828;
+  --fg: #ebdbb2;
+  --muted: #a89984;
+  --grid: #504945;
+  --blue: #83a598;
+  --orange: #fe8019;
+  --yellow: #fabd2f;
+
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  width: 100%;
+  max-width: 720px;
+  margin: 1.5rem auto;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+#elliptic-widget * {
+  box-sizing: border-box;
+}
+
+.elliptic-canvas-wrap {
+  width: 100%;
+  height: 420px;
+  position: relative;
+}
+
+#elliptic-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.elliptic-controls {
+  padding: 8px 12px;
+}
+
+.elliptic-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.elliptic-slider-row label {
+  white-space: nowrap;
+}
+
+#elliptic-slider {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+#elliptic-value {
+  color: var(--orange);
+  font-family: monospace;
+  min-width: 55px;
+  text-align: right;
+}
+
+.elliptic-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.elliptic-buttons button {
+  background: #3c3836;
+  color: var(--fg);
+  border: 1px solid #665c54;
+  border-radius: 5px;
+  padding: 7px 17px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.elliptic-buttons button:hover {
+  background: #504945;
+}
+
+.elliptic-info {
+  margin: 12px 8px 4px;
+  padding: 12px;
+  border-top: 1px solid #504945;
+  text-align: center;
+  line-height: 1.8;
+}
+
+#elliptic-point-info {
+  color: var(--blue);
+  font-size: 1.05rem;
+}
+
+.elliptic-equation {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById("elliptic-widget");
+  const canvas = root.querySelector("#elliptic-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const slider = root.querySelector("#elliptic-slider");
+  const valueLabel = root.querySelector("#elliptic-value");
+  const pointInfo = root.querySelector("#elliptic-point-info");
+
+  const playButton = root.querySelector("#elliptic-play");
+  const resetButton = root.querySelector("#elliptic-reset");
+  const zoomIn = root.querySelector("#elliptic-zoom-in");
+  const zoomOut = root.querySelector("#elliptic-zoom-out");
+
+  const C = {
+    bg: "#282828",
+    fg: "#ebdbb2",
+    muted: "#a89984",
+    grid: "#504945",
+    blue: "#83a598",
+    orange: "#fe8019",
+    yellow: "#fabd2f"
+  };
+
+  let W, H, cx, cy;
+  let scale = 65;
+
+  let y = 1.5;
+  let playing = false;
+  let dragging = false;
+  let animationFrame = null;
+  let lastTime = null;
+
+  const LIMIT = 8;
+
+  // The curve y² = x³ − 2,
+  // parametrized by the real coordinate y.
+  function curveX(y) {
+    return Math.cbrt(y * y + 2);
+  }
+
+  function X(x) {
+    return cx + x * scale;
+  }
+
+  function Y(y) {
+    return cy - y * scale;
+  }
+
+  function fmt(n) {
+    if (Math.abs(n) < 0.005) return "0.00";
+    return n.toFixed(2).replace("-", "−");
+  }
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    W = rect.width;
+    H = rect.height;
+
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Position the origin slightly to the left,
+    // leaving room for the positive-x branch.
+    cx = W * 0.30;
+    cy = H * 0.50;
+
+    // Scale proportionally with widget size.
+    scale = Math.min(W / 10, H / 6);
+
+    draw();
+  }
+
+  function drawLine(x1, y1, x2, y2, color, width = 1) {
+    ctx.beginPath();
+    ctx.moveTo(X(x1), Y(y1));
+    ctx.lineTo(X(x2), Y(y2));
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.stroke();
+  }
+
+  function drawGrid() {
+    const xmin = (0 - cx) / scale;
+    const xmax = (W - cx) / scale;
+    const ymin = (cy - H) / scale;
+    const ymax = cy / scale;
+
+    // Grid lines
+    ctx.strokeStyle = C.grid;
+    ctx.lineWidth = 0.6;
+
+    for (let x = Math.ceil(xmin); x <= xmax; x++) {
+      if (x === 0) continue;
+      drawLine(x, ymin, x, ymax, C.grid, 0.6);
+    }
+
+    for (let y = Math.ceil(ymin); y <= ymax; y++) {
+      if (y === 0) continue;
+      drawLine(xmin, y, xmax, y, C.grid, 0.6);
+    }
+
+    // Coordinate axes
+    drawLine(xmin, 0, xmax, 0, C.muted, 1.2);
+    drawLine(0, ymin, 0, ymax, C.muted, 1.2);
+
+    // Tick labels
+    ctx.fillStyle = C.muted;
+    ctx.font = "12px sans-serif";
+
+    for (let x = Math.ceil(xmin); x <= xmax; x++) {
+      if (x === 0) continue;
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText(x, X(x), Y(0) + 7);
+    }
+
+    for (let y = Math.ceil(ymin); y <= ymax; y++) {
+      if (y === 0) continue;
+
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillText(y, X(0) - 9, Y(y));
+    }
+
+    // Axis labels
+    ctx.font = "italic 16px serif";
+    ctx.textAlign = "right";
+    ctx.fillStyle = C.fg;
+    ctx.fillText("x", W - 10, Y(0) - 12);
+
+    ctx.textAlign = "left";
+    ctx.fillText("y", X(0) + 12, 15);
+  }
+
+  function drawCurve() {
+    const ymin = (cy - H) / scale;
+    const ymax = cy / scale;
+
+    ctx.beginPath();
+
+    const steps = 1500;
+
+    for (let i = 0; i <= steps; i++) {
+      const yy = ymin + (ymax - ymin) * i / steps;
+      const xx = curveX(yy);
+
+      if (i === 0) {
+        ctx.moveTo(X(xx), Y(yy));
+      } else {
+        ctx.lineTo(X(xx), Y(yy));
+      }
+    }
+
+    ctx.strokeStyle = C.orange;
+    ctx.lineWidth = 3;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.stroke();
+  }
+
+  function drawPoint() {
+    const x = curveX(y);
+
+    // Point
+    ctx.beginPath();
+    ctx.arc(X(x), Y(y), 7, 0, Math.PI * 2);
+    ctx.fillStyle = C.blue;
+    ctx.fill();
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = C.bg;
+    ctx.stroke();
+
+    // Label
+    ctx.fillStyle = C.blue;
+    ctx.font = "italic 16px serif";
+    ctx.textAlign = "left";
+
+    const labelOffsetY = y > 0 ? -13 : 22;
+
+    ctx.fillText(
+      "P",
+      X(x) + 12,
+      Y(y) + labelOffsetY
+    );
+  }
+
+  function draw() {
+    if (!W) return;
+
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.save();
+
+    // Keep drawings inside canvas.
+    ctx.beginPath();
+    ctx.rect(0, 0, W, H);
+    ctx.clip();
+
+    drawGrid();
+    drawCurve();
+    drawPoint();
+
+    ctx.restore();
+  }
+
+  function update(newY) {
+    y = Math.max(-LIMIT, Math.min(LIMIT, newY));
+
+    slider.value = y;
+    valueLabel.textContent = fmt(y);
+
+    const x = curveX(y);
+
+    pointInfo.textContent =
+      `P = (${fmt(x)}, ${fmt(y)})`;
+
+    draw();
+  }
+
+  function stop() {
+    playing = false;
+    playButton.textContent = "▶ Play";
+
+    if (animationFrame !== null) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+
+    lastTime = null;
+  }
+
+  function animate(timestamp) {
+    if (!playing) return;
+
+    if (lastTime === null) lastTime = timestamp;
+
+    const dt = Math.min(
+      (timestamp - lastTime) / 1000,
+      0.05
+    );
+
+    lastTime = timestamp;
+
+    let nextY = y - dt * 1.1;
+
+    // Loop back after reaching the bottom.
+    if (nextY < -LIMIT) nextY = LIMIT;
+
+    update(nextY);
+
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  playButton.addEventListener("click", () => {
+    if (playing) {
+      stop();
+    } else {
+      playing = true;
+      playButton.textContent = "⏸ Pause";
+      lastTime = null;
+      animationFrame = requestAnimationFrame(animate);
+    }
+  });
+
+  resetButton.addEventListener("click", () => {
+    stop();
+    update(1.5);
+  });
+
+  slider.addEventListener("input", e => {
+    stop();
+    update(parseFloat(e.target.value));
+  });
+
+  zoomIn.addEventListener("click", () => {
+    scale = Math.min(scale * 1.25, 250);
+    draw();
+  });
+
+  zoomOut.addEventListener("click", () => {
+    scale = Math.max(scale / 1.25, 20);
+    draw();
+  });
+
+  // Find the closest point on the curve to the mouse.
+  // This lets users drag the point naturally.
+  function handlePointer(e) {
+    const rect = canvas.getBoundingClientRect();
+
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    const mouseY = (cy - my) / scale;
+
+    // Minimize squared screen-space distance
+    // using a coarse search followed by refinements.
+    function distanceSquared(candidateY) {
+      const candidateX = curveX(candidateY);
+
+      const dx = X(candidateX) - mx;
+      const dy = Y(candidateY) - my;
+
+      return dx * dx + dy * dy;
+    }
+
+    let bestY = mouseY;
+    let bestD = Infinity;
+
+    const steps = 300;
+
+    for (let i = 0; i <= steps; i++) {
+      const yy = -LIMIT + 2 * LIMIT * i / steps;
+      const d = distanceSquared(yy);
+
+      if (d < bestD) {
+        bestD = d;
+        bestY = yy;
+      }
+    }
+
+    let radius = 2 * LIMIT / steps;
+
+    for (let iteration = 0; iteration < 4; iteration++) {
+      let localBest = bestY;
+
+      for (let j = -5; j <= 5; j++) {
+        const candidate = Math.max(
+          -LIMIT,
+          Math.min(LIMIT, bestY + j * radius / 5)
+        );
+
+        if (distanceSquared(candidate) < bestD) {
+          bestD = distanceSquared(candidate);
+          localBest = candidate;
+        }
+      }
+
+      bestY = localBest;
+      radius /= 5;
+    }
+
+    update(bestY);
+  }
+
+  canvas.addEventListener("pointerdown", e => {
+    stop();
+    dragging = true;
+    canvas.setPointerCapture(e.pointerId);
+    handlePointer(e);
+  });
+
+  canvas.addEventListener("pointermove", e => {
+    if (dragging) handlePointer(e);
+  });
+
+  canvas.addEventListener("pointerup", () => {
+    dragging = false;
+  });
+
+  canvas.addEventListener("pointercancel", () => {
+    dragging = false;
+  });
+
+  window.addEventListener("resize", resize);
+
+  resize();
+  update(1.5);
+})();
+</script>
+
+<p>
+The key to solving the integral
+\[\int\frac{dx}{\sqrt{1-x^2}}\]
+was finding a 1-variable parametrization of the curve \(x^2 + y^2 = 1\) by <em>rational functions</em>. Because rational functions are 'easy' to integrate, the resulting integral was easy to do. 
+</p>
+
+<p>
+So, can we find rational functions \(x(t)\) and \(y(t)\) parametrizing the curve
+\[y^2 = x^3 - 2?\] 
+</p>
+
+<p>
+Remarkably, this is impossible: there is no such parametrization by rational curves!
+</p>
+
+<p>
+And even more remarkably, the easiest way to understand this non-existence result is to go to <em>complex geometry</em>. 
+</p>
+
+<h2>Graphing equations over the complex numbers</h2>
+
+<p>
+To explain why \(y^2 = x^3 - 2\) cannot be parametrized by rational functions, let's start by discussing graphs in the complex plane.
+</p>
+
+<p>
+Normally, when someone grpahs \(y^2 = x^3 - 2,\) they look for all pairs of <em>real numbers</em> \(x\) and \(y\) which solve that equation, and sketch all such pairs inside of the Euclidean plane. However, we could just as well ask for pairs of <em>complex numbers</em> satisfying this equation; for example, \((1, i)\) is a solution over the complex numbers. We can then plot these points inside of \(\mathbb{C} \times \mathbb{C},\) the product of two copies of the complex plane (in the same way the real number graphs are plotted in \(\mathbb{R} \times \mathbb{R}\)).
+</p>
+
+<p>
+Unfortunately, it can be quite tricky to understand the graphs of functions over the complex numbers; while a graph over the real numbers produces a 1-dimensional curve inside of a 2-dimensional ambient space, the graph of a function over the complex numbers gives a 2-dimensional surfaces inside of an ambient 4-dimensional space; this is because the complex plane is 2-dimensional, and so graphs become 2-dimensional shapes inside of the 4-dimensional space \(\mathbb{C} \times \mathbb{C}.\) 
+</p>
+
+<p>
+The great geometers Poincare and Riemann made huge progress on understanding the possible shapes of these graphs, despite how geometrically inaccessible they first seem. Poincare, with his classification of surfaces, showed that -- while originally the graph is a 2-dimensional subset of 4-dimensional space -- you can always actually fit the graph inside of 3-dimensional space in some way, and the resulting shape looks like a donut with some number of holes: 
+</p>
+<div id="surface-genus-widget">
+  <div class="genus-viewer">
+    <div id="genus-scene"></div>
+  </div>
+
+  <div class="genus-controls">
+    <div class="genus-selector">
+      <button data-genus="0">Sphere</button>
+      <button data-genus="1" class="active">Torus</button>
+      <button data-genus="2">Double torus</button>
+      <button data-genus="3">Triple torus</button>
+    </div>
+
+    <div class="genus-bottom">
+      <span id="genus-description">Genus 1 — one hole</span>
+      <button id="genus-rotate">⏸ Pause rotation</button>
+    </div>
+
+    <div class="genus-hint">
+      Drag to rotate · Scroll to zoom
+    </div>
+  </div>
+</div>
+
+<style>
+#surface-genus-widget {
+  --bg: #282828;
+  --fg: #ebdbb2;
+  --muted: #a89984;
+  --orange: #fe8019;
+  --border: #504945;
+
+  width: 100%;
+  max-width: 760px;
+  margin: 1.5rem auto;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#surface-genus-widget * {
+  box-sizing: border-box;
+}
+
+.genus-viewer {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+#genus-scene {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+#genus-scene:active {
+  cursor: grabbing;
+}
+
+.genus-controls {
+  padding: 12px 16px 16px;
+}
+
+.genus-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.genus-selector button,
+#genus-rotate {
+  background: #3c3836;
+  color: var(--fg);
+  border: 1px solid #665c54;
+  border-radius: 5px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.genus-selector button:hover,
+#genus-rotate:hover {
+  background: #504945;
+}
+
+.genus-selector button.active {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: #3c3836;
+}
+
+.genus-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+#genus-description {
+  color: var(--orange);
+  font-size: 1.05rem;
+}
+
+.genus-hint {
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 14px;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+<script>
+(() => {
+  const root = document.getElementById("surface-genus-widget");
+  const container = root.querySelector("#genus-scene");
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x282828);
+
+  const camera = new THREE.PerspectiveCamera(
+    40, 1, 0.1, 100
+  );
+
+  camera.position.set(0, 3.8, 9);
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: false
+  });
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+
+  const light1 = new THREE.DirectionalLight(0xffffff, 3);
+  light1.position.set(-4, 7, 8);
+  scene.add(light1);
+
+  const light2 = new THREE.DirectionalLight(0x83a598, 1.5);
+  light2.position.set(5, -3, -5);
+  scene.add(light2);
+
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xfe8019,
+    metalness: 0.05,
+    roughness: 0.55,
+    side: THREE.DoubleSide
+  });
+
+  let mesh = null;
+  let genus = 1;
+
+  let rotating =
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let dragging = false;
+  let previousX = 0;
+  let previousY = 0;
+
+  let rotationX = -0.35;
+  let rotationY = 0.3;
+
+  let zoom = 1;
+
+  // Construct a smooth rounded rectangle.
+  function roundedRectangle(width, height, radius) {
+    const shape = new THREE.Shape();
+
+    const x = -width / 2;
+    const y = -height / 2;
+    const r = radius;
+
+    shape.moveTo(x + r, y);
+
+    shape.lineTo(x + width - r, y);
+    shape.quadraticCurveTo(
+      x + width, y,
+      x + width, y + r
+    );
+
+    shape.lineTo(x + width, y + height - r);
+    shape.quadraticCurveTo(
+      x + width, y + height,
+      x + width - r, y + height
+    );
+
+    shape.lineTo(x + r, y + height);
+    shape.quadraticCurveTo(
+      x, y + height,
+      x, y + height - r
+    );
+
+    shape.lineTo(x, y + r);
+    shape.quadraticCurveTo(
+      x, y,
+      x + r, y
+    );
+
+    return shape;
+  }
+
+  // Create a sphere (genus 0) or a thickened
+  // planar region containing g holes (genus g).
+  function createGeometry(g) {
+    if (g === 0) {
+      return new THREE.SphereGeometry(1.65, 96, 64);
+    }
+
+    if (g === 1) {
+      return new THREE.TorusGeometry(
+        1.35, 0.48, 40, 128
+      );
+    }
+
+    const spacing = 2.25;
+    const width = g * spacing + 1.1;
+    const height = 3.0;
+
+    const shape = roundedRectangle(
+      width,
+      height,
+      1.15
+    );
+
+    // Remove g circular disks from the interior.
+    for (let i = 0; i < g; i++) {
+      const cx = (i - (g - 1) / 2) * spacing;
+
+      const hole = new THREE.Path();
+      hole.absarc(
+        cx, 0,
+        0.72,
+        0,
+        Math.PI * 2,
+        true
+      );
+
+      shape.holes.push(hole);
+    }
+
+    // Extrude and bevel the planar region.
+    // Its boundary is a closed surface of genus g.
+    const geometry = new THREE.ExtrudeGeometry(shape, {
+      depth: 0.75,
+      steps: 1,
+      bevelEnabled: true,
+      bevelThickness: 0.28,
+      bevelSize: 0.25,
+      bevelSegments: 8,
+      curveSegments: 48
+    });
+
+    geometry.translate(0, 0, -0.375);
+
+    // Fit all genera inside the same viewer.
+    const scale = 3.8 / width;
+    geometry.scale(scale, scale, scale);
+
+    return geometry;
+  }
+
+  function setGenus(g) {
+    genus = g;
+
+    if (mesh) {
+      scene.remove(mesh);
+      mesh.geometry.dispose();
+    }
+
+    mesh = new THREE.Mesh(
+      createGeometry(g),
+      material
+    );
+
+    scene.add(mesh);
+
+    root.querySelectorAll("[data-genus]").forEach(btn => {
+      btn.classList.toggle(
+        "active",
+        Number(btn.dataset.genus) === g
+      );
+    });
+
+    const names = [
+      "Genus 0 — no holes",
+      "Genus 1 — one hole",
+      "Genus 2 — two holes",
+      "Genus 3 — three holes"
+    ];
+
+    root.querySelector("#genus-description").textContent =
+      names[g];
+
+    rotationX = -0.35;
+    rotationY = 0.3;
+    zoom = 1;
+  }
+
+  root.querySelectorAll("[data-genus]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      setGenus(Number(btn.dataset.genus));
+    });
+  });
+
+  const rotateButton = root.querySelector("#genus-rotate");
+
+  function updateRotateButton() {
+    rotateButton.textContent = rotating
+      ? "⏸ Pause rotation"
+      : "▶ Auto-rotate";
+  }
+
+  rotateButton.addEventListener("click", () => {
+    rotating = !rotating;
+    updateRotateButton();
+  });
+
+  updateRotateButton();
+
+  // Mouse/touch rotation
+  container.addEventListener("pointerdown", e => {
+    dragging = true;
+    previousX = e.clientX;
+    previousY = e.clientY;
+
+    container.setPointerCapture(e.pointerId);
+  });
+
+  container.addEventListener("pointermove", e => {
+    if (!dragging) return;
+
+    const dx = e.clientX - previousX;
+    const dy = e.clientY - previousY;
+
+    rotationY += dx * 0.008;
+    rotationX += dy * 0.008;
+
+    rotationX = Math.max(
+      -Math.PI / 2,
+      Math.min(Math.PI / 2, rotationX)
+    );
+
+    previousX = e.clientX;
+    previousY = e.clientY;
+  });
+
+  container.addEventListener("pointerup", () => {
+    dragging = false;
+  });
+
+  container.addEventListener("pointercancel", () => {
+    dragging = false;
+  });
+
+  // Zoom
+  container.addEventListener("wheel", e => {
+    e.preventDefault();
+
+    zoom *= Math.exp(e.deltaY * 0.001);
+
+    zoom = Math.max(0.5, Math.min(2.5, zoom));
+  }, { passive: false });
+
+  // Resize
+  function resize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(w, h);
+  }
+
+  window.addEventListener("resize", resize);
+
+  // Animation
+  const clock = new THREE.Clock();
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const dt = Math.min(clock.getDelta(), 0.05);
+
+    if (rotating && !dragging) {
+      rotationY += dt * 0.35;
+    }
+
+    if (mesh) {
+      mesh.rotation.x = rotationX;
+      mesh.rotation.y = rotationY;
+    }
+
+    camera.position.set(
+      0,
+      0,
+      9 * zoom
+    );
+
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+
+  setGenus(1);
+  resize();
+  animate();
+})();
+</script>
+<p>
+In this widget, we animated the 0 hole, 1 hole, 2 hole, and 3 hole cases (called genus 0, 1, 2, and 3), but of course you could have as high a genus as you want; I just got bored of animating at genus 3.
+</p> 
+
+<p>
+Poincare's proof of this fact actually goes by classifying <em>all</em> possible 2-dimensional shapes, embedded inside of any higher dimension ambient space. Riemann observed that the possible graphs of polynomials over the complex numbers had a special property called <em>orientability</em>; if you go through Poincare's list of all possible 2-dimensional shapes, it turns out that all the orientable ones fit inside of 3-dimensions.
+</p>
+
+<p>
+There's actually one small caveat here: in order for Poincare's classification to apply, we need to <em>compactify</em> our graphs. This means adding extra points 'at infinity' to close them up. We won't dwell too much on this procedure here, though. However, because of this caveat, Poincare's classification really can only be used to understand graphs of <em>polynomials</em>; otherwise the shapes are too complicated to say much about in general.
+</p>
+
+<p>
+The <em>degree-genus formula</em> allows one to calculate the genus of the graph of any polynomial just from the degree of the polynomial equation; it is
+\[g = \frac{1}{2}(d-1)(d-2),\]
+where \(g\) is genus and \(d\) is the highest degree of a term in your polynomial. Plugging in \(d=3\), we find that our degree 3 equation \(y^2 = x^3 - 2\) has genus \(g=1.\) Thus this graph looks like a donut!
+</p>
+
+<h2>Rational functions and the Riemann sphere</h2>
+
+<p>
+OK, so now we know what shapes \(y^2 = x^3 - 2\) and \(x^2 + y^2 = 1\) make when we graph them over the complex numbers. But why is this important?
+</p>
+
+<p>
+Let's think about what a parametrization by rational functions means. It means we have some bijective function
+\[t \mapsto (x(t), y(t))\]
+from one number \(t\) to pairs \((x, y)\) on our graph, such that \(x(t), y(t)\) are both rational functions. 
+</p>
+
+<p>
+The 'shape' of one complex number is the complex plane, \(\mathbb{C}.\) Compactifying this (recall the notion of compactification from the last section) gives the sphere, which in this context people call \(\mathbb{CP}^1\) (the 'complex projective line'). 
+</p>
+
+<p>
+Thus a parametrization by rational functions is actually a bijective function
+\[\mathbb{CP}^1 \to \text{our graph}.\]
+Here, the fact that \(x(t), y(t)\) were rational functions is quite important: rational functions can always be extended to compactifications, but for more general functions you cannot always do this.
+</p>
+
+<p>
+However, \(\mathbb{CP}^1\) is a sphere, and our graph \(y^2 = x^3 - 2\) was a torus! This are <em>different shapes</em>: there's no way to have the sphere map bijectively (and continuously) to the torus.
+</p>
+
+<p>
+So, the fact that our graph was a torus (and not a sphere) forbids us from even parametrizing our curve by rational functions -- and this is why the integral is so hard: there's no substitution you can do to reduce it to an integral of rational functions!
+</p>
+
+<h2>Diophantine equations</h2>
+
+<p>
+When discussing the rational parametrization of the unit circle, we showed how one could use it to solve the Diophantine equation \(a^2 + b^2 = c^2,\) and thus find all Pythagorean triples.
+</p>
+
+<p>
+In the same way that \(x^2 + y^2 = 1\) gave rise to that Diophantine equation \(a^2+b^2=c^2,\) the equation
+\[y^2 = x^3 - 2\]
+is related to the Diophantine equation
+\[a^3 + b^2c = 2c^3.\] 
+
+This Diophantine equation is shockingly hard to solve! If you stare at it for a little, you might notice that
+\[25 = 27 - 2,\]
+or \(5^2 = 3^3 - 2,\) so \((3, 5)\) is one solution; similarly, \((3, -5)\) is a solution. These are in fact the <em>only</em> two solutions, but proving this is quite tricky unless you know some algebraic number theory!
+</p>
+
+<p>
+It turns out that, whenever one is given a Diophantine equation (that is, a polynomial equation one wants integer or rational solutions for), the best 'first step' to solving it is to find the corresponding polynomial equation over the complex numbers, and get a feel for the geometry of the resulting shape.
+</p>
+
+<p>
+This is one of the many subtle links between number theory and algebraic geometry over the complex numbers. To end this article, we'd like to just remark about how surprising this connection is: somehow, the <em>geometry</em> of an equation over the complex numbers tells you about the difficulty of solving a related equation over the <em>integers</em>. Somehow, these two very different number systems -- the complex numbers and the integers -- seem to be talking to each other.
+</p>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/rh.html"><div class="related-category">Number theory · Analysis</div><h3>The Riemann hypothesis (or, how to earn $1 million)</h3><p>How a complex-valued function encodes the mysterious distribution of prime numbers.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/gamma.html"><div class="related-category">Calculus</div><h3>What is the factorial of 3.5?</h3><p>Extend factorials to non-integers and discover why \(\pi\) appears.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
