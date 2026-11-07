@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Let's count some shapes</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+
+<main class="page-shell" id="hp-main" tabindex="-1">
+
+  <header class="article-hero">
+    <a class="article-back-button" href="../index.html">← Back</a>
+
+    <div class="article-category">Combinatorics</div>
+
+    <h1 class="article-title">
+      Let's count some shapes
+    </h1>
+
+    <p class="article-description">
+      An introduction to Catalan numbers.    </p>
+
+    <div class="article-info">
+      <span class="article-badge">Level 1</span>
+      <!-- <span class="article-badge">Helpful: Linear algebra; Hamiltonian mechanics</span> -->
+      <span class="article-badge">About 30 min read</span>
+    </div>
+
+    <p class="article-date">October 2, 2026</p>
+  </header>
+
+  <div class="hp-layout">
+    <nav class="article-toc hp-toc" aria-label="On this page">
+      <details class="hp-toc-details" open>
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#sec1">Dissecting polygons</a></li>
+          <li><a href="#sec2">A linear algebra foundation to quantum mechanics</a></li>
+          <li><a href="#sec3">The uncertainty principle</a></li>
+        </ol>
+      </details>
+    </nav>
+
+    <div class="hp-prose">
+
+  <p>
+      Today, let us explore <em>combinatorics</em>, which is the area of math where we count various objects.
+      We will introduce serveral counting problems, and explain why they are actually the same.
+  </p>
+      <h3>Dissecting polygons</h3>
+<p>
+  How many ways are there to dissect a hexagon into triangles? It turns out there are 14 ways total:
+</p>
+<img src="hexagon-triangulations.svg" alt="The 14 triangulations of a hexagon" style="display:block;
+          margin:2rem auto;
+          max-width:100%;
+          height:auto;">
+
+<p>
+  Let's try seeing what happens when we increase the number of sides.
+</p>
+
+<div class="interactive-block" id="tri-block">
+  <div class="interactive-header">
+    <div class="interactive-label">Try it yourself</div>
+    <h3 class="interactive-title">All the triangulations of an \(n\)-gon</h3>
+  </div>
+  <div class="interactive-content">
+    <div class="tri-grid" id="tri-grid" aria-live="polite"></div>
+  </div>
+  <div class="interactive-controls">
+    <button class="interactive-button" id="tri-minus" type="button" aria-label="Fewer sides">−</button>
+    <span class="tri-n">n = <span id="tri-n">6</span></span>
+    <button class="interactive-button" id="tri-plus" type="button" aria-label="More sides">+</button>
+    <span class="interactive-instructions" id="tri-count"></span>
+  </div>
+</div>
+
+<p>
+  Let's tabulate these numbers into a table for our convenience:
+</p>
+<table style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td style="border: 1px solid #d79921; padding: 10px; font-weight: bold;">
+      number of sides
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px; font-weight: bold;">
+      number of triangulations
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+     3 (triangle)
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      1
+    </td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+     4 (square)
+    </td>
+    <td style="border: 1px solid  #d79921; padding: 10px;">
+      2
+    </td>
+  </tr>
+  <tr><td style="border: 1px solid  #d79921; padding: 10px;">5 (pentagon)
+    </td><td style="border: 1px solid  #d79921; padding: 10px;">5</td></tr>
+    <tr><td style="border: 1px solid  #d79921; padding: 10px;">6 (hexagon)
+    </td><td style="border: 1px solid  #d79921; padding: 10px;">14</td></tr>
+    <tr><td style="border: 1px solid  #d79921; padding: 10px;">7 (heptagon)
+    </td><td style="border: 1px solid  #d79921; padding: 10px;">42</td></tr>
+    <tr><td style="border: 1px solid  #d79921; padding: 10px;">8 (octagon)
+    </td><td style="border: 1px solid  #d79921; padding: 10px;">132</td></tr>
+    <tr><td style="border: 1px solid  #d79921; padding: 10px;">9 (nonagon)
+    </td><td style="border: 1px solid  #d79921; padding: 10px;">429</td></tr>
+    <tr><td style="border: 1px solid  #d79921; padding: 10px;">10 (decagon)
+    </td><td style="border: 1px solid  #d79921; padding: 10px;">1430</td></tr>
+</table>
+
+<style>
+  .tri-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    max-height: 32rem;
+    overflow-y: auto;
+  }
+  .tri-grid svg { width: 76px; height: 76px; }
+  .tri-grid .edge { fill: none; stroke: var(--fg-soft); stroke-width: 0.04; stroke-linejoin: round; }
+  .tri-grid .diag { stroke: var(--yellow-light); stroke-width: 0.04; stroke-linecap: round; }
+  .tri-grid .vert { fill: var(--fg-soft); }
+  .tri-n { min-width: 4.5em; text-align: center; color: var(--fg); }
+</style>
+
+<script>
+(function () {
+  var MIN = 3, MAX = 10;
+  var n = 6;
+  var grid = document.getElementById('tri-grid');
+  var label = document.getElementById('tri-n');
+  var count = document.getElementById('tri-count');
+  var minus = document.getElementById('tri-minus');
+  var plus = document.getElementById('tri-plus');
+
+  // Triangulations of the polygon with consecutive vertices lo..hi, as lists of diagonals:
+  // the edge (lo, hi) lies in exactly one triangle (lo, k, hi); split there and recurse.
+  function triangulate(lo, hi) {
+    if (hi - lo < 2) return [[]];
+    var out = [];
+    for (var k = lo + 1; k < hi; k++) {
+      triangulate(lo, k).forEach(function (L) {
+        triangulate(k, hi).forEach(function (R) {
+          var d = L.concat(R);
+          if (k - lo > 1) d.push([lo, k]);
+          if (hi - k > 1) d.push([k, hi]);
+          out.push(d);
+        });
+      });
+    }
+    return out;
+  }
+
+  function rotate(t, r) {
+    return t.map(function (d) {
+      var a = (d[0] + r) % n, b = (d[1] + r) % n;
+      return a < b ? [a, b] : [b, a];
+    }).sort(function (x, y) { return x[0] - y[0] || x[1] - y[1]; });
+  }
+
+  function key(t) { return t.join(';'); }
+
+  // List the triangulations so that rotations of the same picture sit together,
+  // biggest families first.
+  function ordered() {
+    var seen = {}, families = [];
+    triangulate(0, n - 1).forEach(function (t) {
+      if (seen[key(rotate(t, 0))]) return;
+      var rots = [], canon = null;
+      for (var r = 0; r < n; r++) {
+        var k = key(rotate(t, r));
+        if (canon === null || k < canon.k) canon = { k: k, t: rotate(t, r) };
+      }
+      for (r = 0; r < n; r++) {
+        var s = rotate(canon.t, r), sk = key(s);
+        if (!seen[sk]) { seen[sk] = true; rots.push(s); }
+      }
+      families.push({ k: canon.k, members: rots });
+    });
+    families.sort(function (a, b) {
+      return b.members.length - a.members.length || (a.k < b.k ? -1 : 1);
+    });
+    return [].concat.apply([], families.map(function (f) { return f.members; }));
+  }
+
+  function draw(t) {
+    var offset = n % 4 === 0 ? 0.5 : 0; // squares and octagons sit flat
+    var p = [];
+    for (var i = 0; i < n; i++) {
+      var a = 2 * Math.PI * (i + offset) / n;
+      p.push([Math.sin(a), -Math.cos(a)]);
+    }
+    var f = function (v) { return v.toFixed(3); };
+    var s = '<svg viewBox="-1.15 -1.15 2.3 2.3" aria-hidden="true">';
+    s += '<polygon class="edge" points="' + p.map(function (q) { return f(q[0]) + ',' + f(q[1]); }).join(' ') + '"/>';
+    t.forEach(function (d) {
+      s += '<line class="diag" x1="' + f(p[d[0]][0]) + '" y1="' + f(p[d[0]][1]) +
+           '" x2="' + f(p[d[1]][0]) + '" y2="' + f(p[d[1]][1]) + '"/>';
+    });
+    p.forEach(function (q) { s += '<circle class="vert" r="0.065" cx="' + f(q[0]) + '" cy="' + f(q[1]) + '"/>'; });
+    return s + '</svg>';
+  }
+
+  function render() {
+    var all = ordered();
+    grid.innerHTML = all.map(draw).join('');
+    grid.scrollTop = 0;
+    label.textContent = n;
+    count.textContent = all.length + (all.length === 1 ? ' triangulation' : ' triangulations');
+    minus.disabled = n <= MIN;
+    plus.disabled = n >= MAX;
+  }
+
+  minus.addEventListener('click', function () { if (n > MIN) { n--; render(); } });
+  plus.addEventListener('click', function () { if (n < MAX) { n++; render(); } });
+  render();
+})();
+</script>
+
+
+<h3>Counting paths</h3>
+
+<p>
+Next, let's consider a totally different counting problem. 
+Let's try counting paths on the plane that look like the following:
+</p>
+
+<img src="dyck-example.svg" alt="A Dyck path of length 6" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+<p>
+  It's easier to see the rules from the picture than to explain them, but you travel according to the following rules:
+  <ol>
+  <li>You can only move diagonally up or diagonally down.</li>
+  <li>You may not cross below the horizontal white line.</li>
+  <li>You must start and end on the white line.</li>
+</ol>
+These special paths are called <em>Dyck paths</em>.
+</p>
+
+<p>
+  Now, how many Dyck paths are there with 4 up-steps? It turns out, there are also 14:
+</p>
+
+<img src="dyck-paths.svg" alt="The 14 Dyck paths of length 4" style="display:block;
+          margin:2rem auto;
+          max-width:100%;
+          height:auto;">
+  You can experiment with what happens when we allow more up-steps:
+
+<div class="interactive-block" id="dyck-block">
+  <div class="interactive-header">
+    <div class="interactive-label">Try it yourself</div>
+    <h3 class="interactive-title">All the Dyck paths of length \(n\)</h3>
+  </div>
+  <div class="interactive-content">
+    <div class="tri-grid dyck-grid" id="dyck-grid" aria-live="polite"></div>
+  </div>
+  <div class="interactive-controls">
+    <button class="interactive-button" id="dyck-minus" type="button" aria-label="Shorter paths">−</button>
+    <span class="tri-n">n = <span id="dyck-n">4</span></span>
+    <button class="interactive-button" id="dyck-plus" type="button" aria-label="Longer paths">+</button>
+    <span class="interactive-instructions" id="dyck-count"></span>
+  </div>
+</div>
+
+<style>
+  .dyck-grid svg { width: auto; height: auto; }
+  .dyck-grid .lattice { fill: var(--border-soft); }
+  .dyck-grid .base { stroke: var(--fg-soft); stroke-width: 0.11; stroke-linecap: round; }
+  .dyck-grid .path { fill: none; stroke: var(--yellow-light); stroke-width: 0.13; stroke-linejoin: round; stroke-linecap: round; }
+  /* zero-length dashes with round caps: one dot at every corner of the path */
+  .dyck-grid .dots { fill: none; stroke: var(--fg-soft); stroke-width: 0.38; stroke-linecap: round; stroke-dasharray: 0 1; }
+</style>
+
+<script>
+(function () {
+  var MIN = 2, MAX = 8;
+  var UNIT = 9; // pixels per step
+  var n = 4;
+  var grid = document.getElementById('dyck-grid');
+  var label = document.getElementById('dyck-n');
+  var count = document.getElementById('dyck-count');
+  var minus = document.getElementById('dyck-minus');
+  var plus = document.getElementById('dyck-plus');
+
+  // All paths with n up-steps and n down-steps that never dip below the start,
+  // as strings of 'U' and 'D'. Going up is allowed while ups remain; going down
+  // only while we are above the baseline.
+  function dyck() {
+    var out = [];
+    (function go(s, up, down) {
+      if (up === n && down === n) { out.push(s); return; }
+      if (up < n) go(s + 'U', up + 1, down);
+      if (down < up) go(s + 'D', up, down + 1);
+    })('', 0, 0);
+    return out;
+  }
+
+  // The lattice and baseline are the same for every path of a given n,
+  // so they are drawn once into a hidden <svg> and each tile reuses them.
+  var defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  defs.setAttribute('width', 0);
+  defs.setAttribute('height', 0);
+  defs.setAttribute('aria-hidden', 'true');
+  defs.style.position = 'absolute';
+  grid.parentNode.insertBefore(defs, grid);
+
+  function drawDefs() {
+    var w = 2 * n;
+    var s = '<defs><g id="dyck-lattice">';
+    for (var i = 0; i <= w; i++) {
+      for (var h = 0; h <= Math.min(i, w - i); h++) {
+        if ((i + h) % 2 === 0) s += '<circle class="lattice" r="0.1" cx="' + i + '" cy="' + (-h) + '"/>';
+      }
+    }
+    s += '<line class="base" x1="0" y1="0" x2="' + w + '" y2="0"/></g></defs>';
+    defs.innerHTML = s;
+    defs.setAttribute('class', 'dyck-grid');
+  }
+
+  function draw(s) {
+    var w = 2 * n, pad = 0.6;
+    var out = '<svg viewBox="' + (-pad) + ' ' + (-n - pad) + ' ' + (w + 2 * pad) + ' ' + (n + 2 * pad) +
+              '" width="' + (w + 2 * pad) * UNIT + '" height="' + (n + 2 * pad) * UNIT + '" aria-hidden="true">' +
+              '<use href="#dyck-lattice"/>';
+    var pts = '0,0';
+    for (var i = 0, y = 0; i < s.length; i++) {
+      y += s[i] === 'U' ? 1 : -1;
+      pts += ' ' + (i + 1) + ',' + (-y);
+    }
+    // pathLength makes each step one unit long, so the dash pattern puts a dot on every corner
+    return out + '<polyline class="path" points="' + pts + '"/>' +
+           '<polyline class="dots" pathLength="' + w + '" points="' + pts + '"/></svg>';
+  }
+
+  function render() {
+    var all = dyck();
+    drawDefs();
+    grid.innerHTML = all.map(draw).join('');
+    grid.scrollTop = 0;
+    label.textContent = n;
+    count.textContent = all.length + (all.length === 1 ? ' Dyck path' : ' Dyck paths');
+    minus.disabled = n <= MIN;
+    plus.disabled = n >= MAX;
+  }
+
+  minus.addEventListener('click', function () { if (n > MIN) { n--; render(); } });
+  plus.addEventListener('click', function () { if (n < MAX) { n++; render(); } });
+  render();
+})();
+</script>
+It looks like we are getting the same sequence as before: 1, 2, 5, 14, 42, ...! But why?
+
+<h3>Binary trees</h3>
+<p>
+  Next, let's try to count binary trees, which are graphs on the plane which look like this:
+</p>
+<img src="binary-tree-example.svg" alt="A full binary tree with 6 branching nodes" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 320px);
+          height:auto;">
+There are 14 binary trees with 4 white vertices:
+<img src="binary-trees.svg" alt="The 14 full binary trees with 4 branching nodes" style="display:block;
+          margin:2rem auto;
+          max-width:100%;
+          height:auto;">
+
+You can again try to vary the number of vertices:
+<div class="interactive-block" id="tree-block">
+  <div class="interactive-header">
+    <div class="interactive-label">Try it yourself</div>
+    <h3 class="interactive-title">All the full binary trees with \(n\) branching nodes</h3>
+  </div>
+  <div class="interactive-content">
+    <div class="tri-grid tree-grid" id="tree-grid" aria-live="polite"></div>
+  </div>
+  <div class="interactive-controls">
+    <button class="interactive-button" id="tree-minus" type="button" aria-label="Fewer branching nodes">−</button>
+    <span class="tri-n">n = <span id="tree-n">4</span></span>
+    <button class="interactive-button" id="tree-plus" type="button" aria-label="More branching nodes">+</button>
+    <span class="interactive-instructions" id="tree-count"></span>
+  </div>
+</div>
+
+<style>
+  .tree-grid svg { width: auto; height: auto; }
+  .tree-grid .edges { fill: none; stroke: var(--yellow-light); stroke-width: 0.13; stroke-linecap: round; }
+  .tree-grid .node { fill: var(--fg-soft); }
+  .tree-grid .leaf { fill: var(--bg); stroke: var(--fg-soft); stroke-width: 0.09; }
+</style>
+
+<script>
+(function () {
+  var MIN = 2, MAX = 8;
+  var UNIT = 10; // pixels per level
+  var n = 4;
+  var grid = document.getElementById('tree-grid');
+  var label = document.getElementById('tree-n');
+  var count = document.getElementById('tree-count');
+  var minus = document.getElementById('tree-minus');
+  var plus = document.getElementById('tree-plus');
+
+  // A full binary tree is null (a leaf) or [left, right]. With k branching nodes
+  // on the left, the right gets the other n - 1 - k.
+  var memo = {};
+  function trees(m) {
+    if (m === 0) return [null];
+    if (memo[m]) return memo[m];
+    var out = [];
+    for (var k = 0; k < m; k++) {
+      trees(k).forEach(function (L) {
+        trees(m - 1 - k).forEach(function (R) { out.push([L, R]); });
+      });
+    }
+    return (memo[m] = out);
+  }
+
+  // Same order as the Dyck paths above: a tree's path is up, left subtree, down, right subtree.
+  function dyck(t) { return t === null ? '' : 'U' + dyck(t[0]) + 'D' + dyck(t[1]); }
+
+  function ordered() {
+    return trees(n).map(function (t) { return { t: t, k: dyck(t).replace(/U/g, '0').replace(/D/g, '1') }; })
+      .sort(function (a, b) { return a.k < b.k ? -1 : 1; })
+      .map(function (e) { return e.t; });
+  }
+
+  // Leaves sit at x = 0, 1, 2, ... from left to right; a branching node sits midway above its children.
+  function draw(t) {
+    var d = '', nodes = '', leaf = 0, pad = 0.5;
+    (function go(t, y) {
+      if (t === null) {
+        nodes += '<circle class="leaf" r="0.17" cx="' + leaf + '" cy="' + y + '"/>';
+        return leaf++;
+      }
+      var xl = go(t[0], y + 1), xr = go(t[1], y + 1), x = (xl + xr) / 2;
+      d += 'M' + xl + ' ' + (y + 1) + 'L' + x + ' ' + y + 'L' + xr + ' ' + (y + 1);
+      nodes += '<circle class="node" r="0.19" cx="' + x + '" cy="' + y + '"/>';
+      return x;
+    })(t, 0);
+    return '<svg viewBox="' + (-pad) + ' ' + (-pad) + ' ' + (n + 2 * pad) + ' ' + (n + 2 * pad) +
+           '" width="' + (n + 2 * pad) * UNIT + '" height="' + (n + 2 * pad) * UNIT + '" aria-hidden="true">' +
+           '<path class="edges" d="' + d + '"/>' + nodes + '</svg>';
+  }
+
+  function render() {
+    var all = ordered();
+    grid.innerHTML = all.map(draw).join('');
+    grid.scrollTop = 0;
+    label.textContent = n;
+    count.textContent = all.length + (all.length === 1 ? ' tree' : ' trees');
+    minus.disabled = n <= MIN;
+    plus.disabled = n >= MAX;
+  }
+
+  minus.addEventListener('click', function () { if (n > MIN) { n--; render(); } });
+  plus.addEventListener('click', function () { if (n < MAX) { n++; render(); } });
+  render();
+})();
+</script>
+
+<h3>Chord diagrams</h3>
+
+Finally, let's now imagine you have 8 points on a circle, and you want to connect them to each other in a way such that the chords do not cross. There are again 14 ways to do this:
+<!-- <img src="chord-diagram-example.svg" alt="A chord diagram with 6 chords" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 260px);
+          height:auto;"> -->
+
+<img src="chord-diagrams.svg" alt="The 14 chord diagrams with 4 chords" style="display:block;
+          margin:2rem auto;
+          max-width:100%;
+          height:auto;">
+When you vary the number of points on the circle, you again see the sequence 1, 2, 5, 14, 42, ...
+
+<div class="interactive-block" id="chord-block">
+  <div class="interactive-header">
+    <div class="interactive-label">Try it yourself</div>
+    <h3 class="interactive-title">All the chord diagrams with \(n\) chords</h3>
+  </div>
+  <div class="interactive-content">
+    <div class="tri-grid" id="chord-grid" aria-live="polite"></div>
+  </div>
+  <div class="interactive-controls">
+    <button class="interactive-button" id="chord-minus" type="button" aria-label="Fewer chords">−</button>
+    <span class="tri-n">n = <span id="chord-n">4</span></span>
+    <button class="interactive-button" id="chord-plus" type="button" aria-label="More chords">+</button>
+    <span class="interactive-instructions" id="chord-count"></span>
+  </div>
+</div>
+
+<style>
+  .tri-grid .chord { fill: none; stroke: var(--yellow-light); stroke-width: 0.04; stroke-linecap: round; }
+</style>
+
+<script>
+(function () {
+  var MIN = 2, MAX = 8;
+  var n = 4;
+  var grid = document.getElementById('chord-grid');
+  var label = document.getElementById('chord-n');
+  var count = document.getElementById('chord-count');
+  var minus = document.getElementById('chord-minus');
+  var plus = document.getElementById('chord-plus');
+
+  // Non-crossing ways to pair up the points lo..hi-1, as lists of chords: lo is joined
+  // to some j, and the points strictly between them have to pair up among themselves.
+  function matchings(lo, hi) {
+    if (lo >= hi) return [[]];
+    var out = [];
+    for (var j = lo + 1; j < hi; j += 2) {
+      matchings(lo + 1, j).forEach(function (A) {
+        matchings(j + 1, hi).forEach(function (B) { out.push([[lo, j]].concat(A, B)); });
+      });
+    }
+    return out;
+  }
+
+  // Same order as the Dyck paths above: going round the circle, the first end of
+  // each chord is an up step and the second end is a down step.
+  function ordered() {
+    return matchings(0, 2 * n).map(function (m) {
+      var k = [];
+      m.forEach(function (c) { k[c[0]] = '0'; k[c[1]] = '1'; });
+      return { m: m, k: k.join('') };
+    }).sort(function (a, b) { return a.k < b.k ? -1 : 1; })
+      .map(function (e) { return e.m; });
+  }
+
+  // The arc from P to Q that meets the unit circle at right angles, so it bows towards
+  // the centre; arcs from chords that don't cross don't cross either.
+  function arc(P, Q) {
+    var f = function (v) { return v.toFixed(3); };
+    var half = Math.abs(Math.atan2(P[0] * Q[1] - P[1] * Q[0], P[0] * Q[0] + P[1] * Q[1])) / 2;
+    if (Math.abs(half - Math.PI / 2) < 1e-9) return 'M' + f(P[0]) + ' ' + f(P[1]) + 'L' + f(Q[0]) + ' ' + f(Q[1]);
+    var rr = Math.tan(half);
+    var mx = (P[0] + Q[0]) / 2, my = (P[1] + Q[1]) / 2;
+    var k = (1 / Math.cos(half)) / Math.hypot(mx, my);
+    var C = [mx * k, my * k]; // centre of the arc, outside the circle
+    var sweep = (P[0] - C[0]) * (Q[1] - C[1]) - (P[1] - C[1]) * (Q[0] - C[0]) > 0 ? 1 : 0;
+    return 'M' + f(P[0]) + ' ' + f(P[1]) + 'A' + f(rr) + ' ' + f(rr) + ' 0 0 ' + sweep + ' ' + f(Q[0]) + ' ' + f(Q[1]);
+  }
+
+  function draw(m) {
+    var p = [];
+    for (var i = 0; i < 2 * n; i++) {
+      var a = 2 * Math.PI * (i + 0.5) / (2 * n); // the top of the circle sits between two points
+      p.push([Math.sin(a), -Math.cos(a)]);
+    }
+    var s = '<svg viewBox="-1.15 -1.15 2.3 2.3" aria-hidden="true"><circle class="edge" r="1"/>';
+    m.forEach(function (c) { s += '<path class="chord" d="' + arc(p[c[0]], p[c[1]]) + '"/>'; });
+    p.forEach(function (q) { s += '<circle class="vert" r="0.065" cx="' + q[0].toFixed(3) + '" cy="' + q[1].toFixed(3) + '"/>'; });
+    return s + '</svg>';
+  }
+
+  function render() {
+    var all = ordered();
+    grid.innerHTML = all.map(draw).join('');
+    grid.scrollTop = 0;
+    label.textContent = n;
+    count.textContent = all.length + (all.length === 1 ? ' chord diagram' : ' chord diagrams');
+    minus.disabled = n <= MIN;
+    plus.disabled = n >= MAX;
+  }
+
+  minus.addEventListener('click', function () { if (n > MIN) { n--; render(); } });
+  plus.addEventListener('click', function () { if (n < MAX) { n++; render(); } });
+  render();
+})();
+</script>
+
+<h3>Catalan numbers</h3>
+<p>
+At this point, it's seeming like everything we want to count follows the pattern 1, 2, 5, 14, 42, ... These are known as <em>Catalan numbers</em>, and are one of the most important sequences in combinatorics.
+</p>
+
+
+<p>
+  There's actually a simple formula for them,
+  \[C_n=\frac1{n+1}{2n\choose n}=\frac{(2n)!}{n!(n+1)!}.\]
+  For example,
+  \[
+  C_4=\frac1{5}{8\choose 4}=\frac15\cdot\frac{8\cdot 7\cdot 6\cdot 5}{4\cdot 3\cdot 2\cdot 1}=14,
+  \]
+  which was the number we kept seeing.
+</p>
+
+<p>
+  But why is this sequence so ubiquitous? Let's try seeing directly why these different counting problems are actually the same.
+</p>
+
+<h2>Why are they the same number?</h2>
+
+<h3>Dyck paths and Binary trees</h3>
+<p>
+  So, we know there are exactly the same number (14) of Dyck paths with 4 up-steps, and binary trees with 4 branching nodes. 
+  But we could have shown there was the same number without counting all of them, by creating a <em>bijection</em>.
+</p>
+
+<p>
+  For example, I can tell you there are an equal number of (human) left legs as right legs on earth, even though I have no idea how many billions the true number is. That's because each person has exactly one left leg and right leg, so we can match each of them up.
+</p>
+      
+
+<p>
+  In other words, starting with a binary tree, 
+  <img src="binary-tree-example.svg" alt="A full binary tree with 6 branching nodes" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 320px);
+          height:auto;">
+  I want to construct for you a Dyck path out of it. But how do you do that? An important point to notice is that a binary tree always has a left half and a right half:
+</p>
+
+<img src="binary-tree-halves.svg" alt="The same binary tree with its left half in blue and its right half in pink" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 320px);
+          height:auto;">
+
+<p>
+  So, a first step is to find a similar "structure" in Dyck paths:
+  <img src="dyck-example-middle.svg" alt="A Dyck path of length 6" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+  Looking at this Dyck path, maybe a natural idea is: to think about when the Dyck path crosses the horizontal line, and divide the Dyck path into two parts:
+  <img src="dyck-example-halves.svg" alt="The same Dyck path with the part before it first returns to the ground in blue, and the rest in pink" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+</p>
+
+<p>
+  There is an obvious problem with that strategy: what if the Dyck path never touches the horizontal line,
+  <img src="dyck-example-no-return.svg" alt="A Dyck path of length 6 that only touches the ground at its two ends" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+    or touches the horizontal line multiple times?
+    <img src="dyck-example.svg" alt="A Dyck path of length 6" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+</p>
+
+<p>
+  Well, maybe the issue of never touching the horizontal line isn't such a big problem. After all, there are binary trees which only has one side:
+  <img src="binary-tree-one-sided.svg" alt="A binary tree whose top vertex has only a left child" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 320px);
+          height:auto;">
+    To deal with Dyck paths that could touch the horizontal line multiple times, let's promise to separate the Dyck paths at the first crossing.
+  <img src="dyck-example-touches-twice.svg" alt="A Dyck path that touches the ground twice in the middle, in blue up to the first touch and pink after it" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+      Now, notice that the blue half will actually always live above the first line, because there cannot be a crossing in the blue half.
+  <img src="dyck-example-touches-twice-raised.svg" alt="The same Dyck path, with a second line one level up under the blue part" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+        This has successfully "decomposed" a big Dyck path into two smaller Dyck paths:
+  <img src="dyck-example-pieces.svg" alt="The two smaller Dyck paths side by side: the blue one, up up down down, and the pink one, up up down down up down" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 440px);
+          height:auto;">
+</p>
+Now, we can keep decomposing a Dyck path into smaller and smaller pieces this way. The same holds for binary trees: decompose them into smaller and smaller binary trees. 
+Since they "decompose" in the same way, there should be a way to biject the two objects. Here is an explicit algorithm to do so:
+
+<div class="interactive-block walk" id="walk-block">
+  <div class="interactive-header">
+    <div class="interactive-label">Try it yourself</div>
+    <h3 class="interactive-title">Turning a binary tree into a Dyck path</h3>
+  </div>
+  <div class="interactive-content">
+    <div class="walk-panels">
+      <svg id="walk-tree" aria-label="Binary tree" role="img"></svg>
+      <svg id="walk-path" aria-label="Dyck path" role="img"></svg>
+    </div>
+    <div class="walk-word" id="walk-word" aria-hidden="true"></div>
+    <p class="walk-caption" id="walk-caption" aria-live="polite"></p>
+  </div>
+  <div class="interactive-controls">
+    <button class="interactive-button" id="walk-back" type="button">← Back</button>
+    <button class="interactive-button" id="walk-next" type="button">Next →</button>
+    <button class="interactive-button" id="walk-new" type="button">New tree</button>
+    <span class="interactive-instructions" id="walk-step"></span>
+  </div>
+</div>
+
+<style>
+  .walk { --up: #8ec07c; --down: #fb4934; }
+  .walk-panels { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; }
+  .walk-panels svg { max-width: 100%; height: auto; }
+  .walk .edge { stroke: var(--yellow-light); stroke-width: 2; stroke-linecap: round; }
+  .walk .node { fill: var(--fg-soft); stroke: var(--fg-soft); stroke-width: 2; }
+  .walk .node.leaf { fill: var(--bg); }
+  .walk .node.up { fill: var(--up); stroke: var(--up); }
+  .walk .node.down { fill: var(--down); stroke: var(--down); }
+  .walk .node.skip { fill: var(--bg); stroke: var(--muted); stroke-dasharray: 3 3; }
+  .walk .halo { fill: none; stroke: var(--fg); stroke-width: 2; }
+  .walk .num { fill: var(--bg); font-size: 11px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+  .walk .num.skip { fill: var(--muted); }
+  .walk .lattice { fill: var(--border-soft); }
+  .walk .base { stroke: var(--fg-soft); stroke-width: 1.6; stroke-linecap: round; }
+  .walk .step { stroke-width: 2.6; stroke-linecap: round; }
+  .walk .step.up { stroke: var(--up); }
+  .walk .step.down { stroke: var(--down); }
+  .walk .step.current { stroke-width: 5; }
+  .walk .vert { fill: var(--fg-soft); }
+  .walk-word { margin-top: 0.8rem; min-height: 1.7em; letter-spacing: 0.35em; font-weight: bold; }
+  .walk-word .up { color: var(--up); }
+  .walk-word .down { color: var(--down); }
+  .walk-word .current { text-decoration: underline; text-underline-offset: 0.25em; }
+  .walk-caption { margin: 0.6rem auto 0; max-width: 34rem; min-height: 3.4em; color: var(--fg-soft); }
+</style>
+
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var TU = 46, PU = 24; // pixels per unit in the tree and in the path
+  var treeSvg = document.getElementById('walk-tree');
+  var pathSvg = document.getElementById('walk-path');
+  var word = document.getElementById('walk-word');
+  var caption = document.getElementById('walk-caption');
+  var stepLabel = document.getElementById('walk-step');
+  var back = document.getElementById('walk-back');
+  var next = document.getElementById('walk-next');
+
+  // A full binary tree is null (a leaf) or [left, right]. Start with the tree pictured above.
+  var tree = [[null, null], [[[null, null], [null, null]], null]];
+  var nodes, edges, k; // nodes in visiting order; k = how many have been visited
+
+  function trees(m) {
+    if (m === 0) return [null];
+    var out = [];
+    for (var j = 0; j < m; j++) {
+      trees(j).forEach(function (L) {
+        trees(m - 1 - j).forEach(function (R) { out.push([L, R]); });
+      });
+    }
+    return out;
+  }
+
+  // Leaves sit at x = 0, 1, 2, ... from left to right and a branching node sits midway above its
+  // children. Nodes are listed in the order we visit them: a node first, then everything down its
+  // left branch, then everything down its right branch.
+  function build() {
+    nodes = []; edges = [];
+    var leaf = 0;
+    (function go(t, y) {
+      var me = { y: y, leaf: t === null };
+      nodes.push(me);
+      if (me.leaf) { me.x = leaf++; return me; }
+      var l = go(t[0], y + 1), r = go(t[1], y + 1);
+      me.x = (l.x + r.x) / 2;
+      edges.push([me, l], [me, r]);
+      return me;
+    })(tree, 0);
+    k = 0;
+  }
+
+  function el(name, attrs, parent, text) {
+    var e = document.createElementNS(NS, name);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    if (text !== undefined) e.textContent = text;
+    parent.appendChild(e);
+    return e;
+  }
+
+  // what visiting node i does: branching nodes step up, leaves step down, the last leaf is skipped
+  function kind(i) {
+    if (i === nodes.length - 1) return 'skip';
+    return nodes[i].leaf ? 'down' : 'up';
+  }
+
+  function drawTree() {
+    var w = (nodes.length - 1) / 2, d = 0;
+    nodes.forEach(function (v) { d = Math.max(d, v.y); });
+    var pad = 0.5, W = (w + 2 * pad) * TU, H = (d + 2 * pad) * TU;
+    treeSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    treeSvg.setAttribute('width', W);
+    treeSvg.setAttribute('height', H);
+    treeSvg.innerHTML = '';
+    var X = function (x) { return (x + pad) * TU; }, Y = function (y) { return (y + pad) * TU; };
+    edges.forEach(function (e) {
+      el('line', { 'class': 'edge', x1: X(e[0].x), y1: Y(e[0].y), x2: X(e[1].x), y2: Y(e[1].y) }, treeSvg);
+    });
+    nodes.forEach(function (v, i) {
+      var cls = 'node' + (v.leaf ? ' leaf' : '') + (i < k ? ' ' + kind(i) : '');
+      if (i === k - 1) el('circle', { 'class': 'halo', cx: X(v.x), cy: Y(v.y), r: 15 }, treeSvg);
+      el('circle', { 'class': cls, cx: X(v.x), cy: Y(v.y), r: i < k ? 10 : (v.leaf ? 6 : 6.5) }, treeSvg);
+      if (i < k) el('text', { 'class': 'num' + (kind(i) === 'skip' ? ' skip' : ''), x: X(v.x), y: Y(v.y) }, treeSvg, i + 1);
+    });
+  }
+
+  function drawPath() {
+    var steps = nodes.length - 1, h = 0, top = 0;
+    for (var i = 0; i < steps; i++) { h += kind(i) === 'up' ? 1 : -1; top = Math.max(top, h); }
+    var pad = 0.6, W = (steps + 2 * pad) * PU, H = (top + 2 * pad) * PU;
+    pathSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    pathSvg.setAttribute('width', W);
+    pathSvg.setAttribute('height', H);
+    pathSvg.innerHTML = '';
+    var X = function (x) { return (x + pad) * PU; }, Y = function (y) { return (top + pad - y) * PU; };
+    for (var x = 0; x <= steps; x++) {
+      for (var y = 0; y <= Math.min(x, steps - x, top); y++) {
+        if ((x + y) % 2 === 0) el('circle', { 'class': 'lattice', cx: X(x), cy: Y(y), r: 1.6 }, pathSvg);
+      }
+    }
+    el('line', { 'class': 'base', x1: X(0), y1: Y(0), x2: X(steps), y2: Y(0) }, pathSvg);
+    var pts = [[0, 0]];
+    for (i = 0, h = 0; i < Math.min(k, steps); i++) {
+      var dh = kind(i) === 'up' ? 1 : -1;
+      el('line', { 'class': 'step ' + kind(i) + (i === k - 1 ? ' current' : ''),
+                   x1: X(i), y1: Y(h), x2: X(i + 1), y2: Y(h + dh) }, pathSvg);
+      h += dh;
+      pts.push([i + 1, h]);
+    }
+    pts.forEach(function (p) { el('circle', { 'class': 'vert', cx: X(p[0]), cy: Y(p[1]), r: 3 }, pathSvg); });
+  }
+
+  function drawWord() {
+    var s = '';
+    for (var i = 0; i < Math.min(k, nodes.length - 1); i++) {
+      s += '<span class="' + kind(i) + (i === k - 1 ? ' current' : '') + '">' + (kind(i) === 'up' ? 'U' : 'D') + '</span>';
+    }
+    word.innerHTML = s;
+  }
+
+  function describe() {
+    var last = nodes.length;
+    if (k === 0) {
+      return 'Start at the top of the tree. We will visit every node in turn, always exploring the left ' +
+             'branch before the right one. Each branching node is a step up, each leaf a step down.';
+    }
+    if (k === last) {
+      return 'Node ' + k + ' is the last leaf, and we leave it out. A tree always has one more leaf than ' +
+             'branching nodes, so without it the ups and downs balance and the path ends back on the ground.';
+    }
+    var v = nodes[k - 1];
+    var where = k === 1 ? 'Node 1 is the top of the tree' : 'Node ' + k + ' is a ' + (v.leaf ? 'leaf' : 'branching node');
+    if (k === 1) where += ', a branching node';
+    return where + ', so the path steps ' + (v.leaf ? 'down.' : 'up.');
+  }
+
+  function render() {
+    drawTree();
+    drawPath();
+    drawWord();
+    caption.textContent = describe();
+    stepLabel.textContent = 'Step ' + k + ' of ' + nodes.length;
+    back.disabled = k === 0;
+    next.disabled = k === nodes.length;
+  }
+
+  back.addEventListener('click', function () { if (k > 0) { k--; render(); } });
+  next.addEventListener('click', function () { if (k < nodes.length) { k++; render(); } });
+  document.getElementById('walk-new').addEventListener('click', function () {
+    var options = trees(3 + Math.floor(Math.random() * 4)); // 3 to 6 branching nodes
+    tree = options[Math.floor(Math.random() * options.length)];
+    build();
+    render();
+  });
+
+  build();
+  render();
+})();
+</script>
+
+<h3>Dyck paths and Chord diagrams</h3>
+
+<p>
+  Next, let's try to figure out why Dyck paths and chord diagrams correspond to each other. A picture speaks a thousand words, so: the following picture tells you how to go between them!
+</p>
+
+<img src="dyck-chord-bijection.svg" alt="A Dyck path with its steps numbered 1 to 12, each up step joined to its matching down step, above the chord diagram on 12 numbered points that joins the same pairs" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 480px);
+          height:auto;">
+
+<p>It's a fun exercise, to think about how to biject dissections of a polygon with any of the other objects (Dyck paths, binary trees, chord diagrams) that appeared today!</p>
+
+<h2>Catalan numbers, beyond combinatorics</h2>
+
+<p>So, Catalan numbers count all of these objects. But you may ask: what's their use?</p>
+
+<p>
+  The author of the blog has encountered Catalan numbers "in the natuere" (not when thinking about combinatorics) several times. The most surprising, perhaps, was when I was thinking about knot theory (see also, <a href="trefoil.html">this article</a>).
+</p>
+
+<p>
+  Chord diagrams, such as
+  <img src="chord-diagram-example.svg" alt="A chord diagram with 6 chords" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 260px);
+          height:auto;">
+    are special examples of diagrams called <em>tangles</em>. These tangles can actually be made into an algebra, called the <em>Temperley-Lieb algebra</em>, which can be used to understand knot invariants.
+</p>
+
+<p>
+  It may be mysterious to you why knots, which involve crossings:
+  <img src="trefoil-knot.svg" alt="A trefoil knot" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 260px);
+          height:auto;">
+   can be analyzed via chord diagrams, which don't involve any crossings. However, you can "resolve" all the crossings in a trefoil in various ways:
+  <img src="trefoil-khovanov-cube.svg" alt="The cube of resolutions of the trefoil: eight diagrams labelled 000 to 111, each smoothing all three crossings one of two ways, with arrows from each diagram to those that change one 0 to a 1. From left to right they have 2 circles, then 1 circle each, then 2 circles each, then 3 circles" style="display:block;
+          margin:2rem auto;
+          max-width:min(100%, 640px);
+          height:auto;">
+    The Temperley-Lieb algebra can essentially be used to keep track of all of these ways to resolve crossings.
+</p>
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Using the mathematics of symmetry, we derive the cubic formula.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/monodromy.html"><div class="related-category">Topology · Calculus</div><h3>Möbius strips and differential equations</h3><p>Have you been going around in circles? Well, you might have travelled further than you think!
+</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

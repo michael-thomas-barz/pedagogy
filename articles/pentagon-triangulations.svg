@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="525" height="105" viewBox="0 0 525 105">
+<polygon points="52.50,12.50 90.54,40.14 76.01,84.86 28.99,84.86 14.46,40.14" fill="none" stroke="#ebdbb2" stroke-width="1.6" stroke-linejoin="round"/>
+<line x1="52.50" y1="12.50" x2="76.01" y2="84.86" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="52.50" y1="12.50" x2="28.99" y2="84.86" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="52.50" cy="12.50" r="2.6" fill="#ebdbb2"/>
+<circle cx="90.54" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<circle cx="76.01" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="28.99" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="14.46" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<polygon points="157.50,12.50 195.54,40.14 181.01,84.86 133.99,84.86 119.46,40.14" fill="none" stroke="#ebdbb2" stroke-width="1.6" stroke-linejoin="round"/>
+<line x1="195.54" y1="40.14" x2="133.99" y2="84.86" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="195.54" y1="40.14" x2="119.46" y2="40.14" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="157.50" cy="12.50" r="2.6" fill="#ebdbb2"/>
+<circle cx="195.54" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<circle cx="181.01" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="133.99" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="119.46" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<polygon points="262.50,12.50 300.54,40.14 286.01,84.86 238.99,84.86 224.46,40.14" fill="none" stroke="#ebdbb2" stroke-width="1.6" stroke-linejoin="round"/>
+<line x1="262.50" y1="12.50" x2="286.01" y2="84.86" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="286.01" y1="84.86" x2="224.46" y2="40.14" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="262.50" cy="12.50" r="2.6" fill="#ebdbb2"/>
+<circle cx="300.54" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<circle cx="286.01" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="238.99" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="224.46" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<polygon points="367.50,12.50 405.54,40.14 391.01,84.86 343.99,84.86 329.46,40.14" fill="none" stroke="#ebdbb2" stroke-width="1.6" stroke-linejoin="round"/>
+<line x1="367.50" y1="12.50" x2="343.99" y2="84.86" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="405.54" y1="40.14" x2="343.99" y2="84.86" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="367.50" cy="12.50" r="2.6" fill="#ebdbb2"/>
+<circle cx="405.54" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<circle cx="391.01" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="343.99" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="329.46" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<polygon points="472.50,12.50 510.54,40.14 496.01,84.86 448.99,84.86 434.46,40.14" fill="none" stroke="#ebdbb2" stroke-width="1.6" stroke-linejoin="round"/>
+<line x1="510.54" y1="40.14" x2="434.46" y2="40.14" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="496.01" y1="84.86" x2="434.46" y2="40.14" stroke="#fabd2f" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="472.50" cy="12.50" r="2.6" fill="#ebdbb2"/>
+<circle cx="510.54" cy="40.14" r="2.6" fill="#ebdbb2"/>
+<circle cx="496.01" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="448.99" cy="84.86" r="2.6" fill="#ebdbb2"/>
+<circle cx="434.46" cy="40.14" r="2.6" fill="#ebdbb2"/>
+</svg>

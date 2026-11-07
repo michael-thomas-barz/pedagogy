@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="476" height="558" viewBox="0 0 476 558">
+<circle cx="34" cy="139.4" r="1.6" fill="#665c54"/>
+<circle cx="68" cy="105.4" r="1.6" fill="#665c54"/>
+<circle cx="102" cy="139.4" r="1.6" fill="#665c54"/>
+<circle cx="102" cy="71.4" r="1.6" fill="#665c54"/>
+<circle cx="136" cy="105.4" r="1.6" fill="#665c54"/>
+<circle cx="136" cy="37.4" r="1.6" fill="#665c54"/>
+<circle cx="170" cy="139.4" r="1.6" fill="#665c54"/>
+<circle cx="170" cy="71.4" r="1.6" fill="#665c54"/>
+<circle cx="204" cy="105.4" r="1.6" fill="#665c54"/>
+<circle cx="204" cy="37.4" r="1.6" fill="#665c54"/>
+<circle cx="238" cy="139.4" r="1.6" fill="#665c54"/>
+<circle cx="238" cy="71.4" r="1.6" fill="#665c54"/>
+<circle cx="272" cy="105.4" r="1.6" fill="#665c54"/>
+<circle cx="272" cy="37.4" r="1.6" fill="#665c54"/>
+<circle cx="306" cy="139.4" r="1.6" fill="#665c54"/>
+<circle cx="306" cy="71.4" r="1.6" fill="#665c54"/>
+<circle cx="340" cy="105.4" r="1.6" fill="#665c54"/>
+<circle cx="340" cy="37.4" r="1.6" fill="#665c54"/>
+<circle cx="374" cy="139.4" r="1.6" fill="#665c54"/>
+<circle cx="374" cy="71.4" r="1.6" fill="#665c54"/>
+<circle cx="408" cy="105.4" r="1.6" fill="#665c54"/>
+<circle cx="442" cy="139.4" r="1.6" fill="#665c54"/>
+<line x1="34" y1="139.4" x2="442" y2="139.4" stroke="#ebdbb2" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="51" y1="122.4" x2="85" y2="122.4" stroke="#fb4934" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="119" y1="122.4" x2="357" y2="122.4" stroke="#83a598" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="153" y1="88.4" x2="187" y2="88.4" stroke="#b8bb26" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="221" y1="88.4" x2="323" y2="88.4" stroke="#d3869b" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="255" y1="54.4" x2="289" y2="54.4" stroke="#fe8019" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="391" y1="122.4" x2="425" y2="122.4" stroke="#8ec07c" stroke-width="2.4" stroke-linecap="round"/>
+<polyline points="34,139.4 68,105.4 102,139.4 136,105.4 170,71.4 204,105.4 238,71.4 272,37.4 306,71.4 340,105.4 374,139.4 408,105.4 442,139.4" fill="none" stroke="#fabd2f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="34" cy="139.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="68" cy="105.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="102" cy="139.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="136" cy="105.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="170" cy="71.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="204" cy="105.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="238" cy="71.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="272" cy="37.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="306" cy="71.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="340" cy="105.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="374" cy="139.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="408" cy="105.4" r="3.4" fill="#ebdbb2"/>
+<circle cx="442" cy="139.4" r="3.4" fill="#ebdbb2"/>
+<text x="45.22" y="105.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">1</text>
+<text x="90.78" y="105.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">2</text>
+<text x="113.22" y="105.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">3</text>
+<text x="147.22" y="71.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">4</text>
+<text x="192.78" y="71.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">5</text>
+<text x="215.22" y="71.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">6</text>
+<text x="249.22" y="37.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">7</text>
+<text x="294.78" y="37.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">8</text>
+<text x="328.78" y="71.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">9</text>
+<text x="362.78" y="105.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">10</text>
+<text x="385.22" y="105.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">11</text>
+<text x="430.78" y="105.4" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">12</text>
+<circle cx="238" cy="357.2" r="160" fill="none" stroke="#ebdbb2" stroke-width="2"/>
+<path d="M279.41 202.65A42.87 42.87 0 0 0 351.14 244.06" fill="none" stroke="#fb4934" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M392.55 315.79A597.13 597.13 0 0 1 83.45 315.79" fill="none" stroke="#83a598" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M392.55 398.61A42.87 42.87 0 0 0 351.14 470.34" fill="none" stroke="#b8bb26" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M279.41 511.75A160.00 160.00 0 0 0 83.45 398.61" fill="none" stroke="#d3869b" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M196.59 511.75A42.87 42.87 0 0 0 124.86 470.34" fill="none" stroke="#fe8019" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M124.86 244.06A42.87 42.87 0 0 0 196.59 202.65" fill="none" stroke="#8ec07c" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="279.41" cy="202.65" r="4.5" fill="#ebdbb2"/>
+<text x="284.59" y="183.33" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">1</text>
+<circle cx="351.14" cy="244.06" r="4.5" fill="#ebdbb2"/>
+<text x="365.28" y="229.92" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">2</text>
+<circle cx="392.55" cy="315.79" r="4.5" fill="#ebdbb2"/>
+<text x="411.87" y="310.61" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">3</text>
+<circle cx="392.55" cy="398.61" r="4.5" fill="#ebdbb2"/>
+<text x="411.87" y="403.79" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">4</text>
+<circle cx="351.14" cy="470.34" r="4.5" fill="#ebdbb2"/>
+<text x="365.28" y="484.48" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">5</text>
+<circle cx="279.41" cy="511.75" r="4.5" fill="#ebdbb2"/>
+<text x="284.59" y="531.07" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">6</text>
+<circle cx="196.59" cy="511.75" r="4.5" fill="#ebdbb2"/>
+<text x="191.41" y="531.07" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">7</text>
+<circle cx="124.86" cy="470.34" r="4.5" fill="#ebdbb2"/>
+<text x="110.72" y="484.48" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">8</text>
+<circle cx="83.45" cy="398.61" r="4.5" fill="#ebdbb2"/>
+<text x="64.13" y="403.79" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">9</text>
+<circle cx="83.45" cy="315.79" r="4.5" fill="#ebdbb2"/>
+<text x="64.13" y="310.61" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">10</text>
+<circle cx="124.86" cy="244.06" r="4.5" fill="#ebdbb2"/>
+<text x="110.72" y="229.92" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">11</text>
+<circle cx="196.59" cy="202.65" r="4.5" fill="#ebdbb2"/>
+<text x="191.41" y="183.33" fill="#ebdbb2" font-family="Monaco, 'Lucida Console', monospace" font-size="13" text-anchor="middle" dominant-baseline="central">12</text>
+</svg>

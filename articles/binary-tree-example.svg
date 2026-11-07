@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="308" height="220" viewBox="0 0 308 220">
+<line x1="44" y1="66" x2="22" y2="110" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="44" y1="66" x2="66" y2="110" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="132" y1="154" x2="110" y2="198" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="132" y1="154" x2="154" y2="198" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="220" y1="154" x2="198" y2="198" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="220" y1="154" x2="242" y2="198" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="176" y1="110" x2="132" y2="154" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="176" y1="110" x2="220" y2="154" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="231" y1="66" x2="176" y2="110" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="231" y1="66" x2="286" y2="110" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="137.5" y1="22" x2="44" y2="66" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="137.5" y1="22" x2="231" y2="66" stroke="#fabd2f" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="22" cy="110" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="66" cy="110" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="44" cy="66" r="5" fill="#ebdbb2"/>
+<circle cx="110" cy="198" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="154" cy="198" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="132" cy="154" r="5" fill="#ebdbb2"/>
+<circle cx="198" cy="198" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="242" cy="198" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="220" cy="154" r="5" fill="#ebdbb2"/>
+<circle cx="176" cy="110" r="5" fill="#ebdbb2"/>
+<circle cx="286" cy="110" r="5" fill="#282828" stroke="#ebdbb2" stroke-width="1.76"/>
+<circle cx="231" cy="66" r="5" fill="#ebdbb2"/>
+<circle cx="137.5" cy="22" r="5" fill="#ebdbb2"/>
+</svg>
