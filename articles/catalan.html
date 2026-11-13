@@ -55,20 +55,20 @@
     <div class="hp-prose">
 
   <p>
-      Today, let us explore <em>combinatorics</em>, which is the area of math where we count various objects.
-      We will introduce serveral counting problems, and explain why they are actually the same.
+  	Today, we are going to solve a few counting problems... and remarkably discover they all have the same answer!
   </p>
       <h3>Dissecting polygons</h3>
-<p>
-  How many ways are there to dissect a hexagon into triangles? It turns out there are 14 ways total:
-</p>
+
+      <p>
+	For our first problem, let's discuss <em>triangulations</em> of a polygon. This means splitting up our polygon into triangles. For example, with a hexagon, there are 14 total triangulations:
+      </p>
 <img src="hexagon-triangulations.svg" alt="The 14 triangulations of a hexagon" style="display:block;
           margin:2rem auto;
           max-width:100%;
           height:auto;">
 
 <p>
-  Let's try seeing what happens when we increase the number of sides.
+With the widget below, you can change the number of sides, to see how many triangulations there are for different types of polygons.
 </p>
 
 <div class="interactive-block" id="tri-block">
@@ -88,7 +88,7 @@
 </div>
 
 <p>
-  Let's tabulate these numbers into a table for our convenience:
+Currently, our only way to find the number of triangulations of an \(n\)-sided polygon is to try enumerating all such triangulations by hand. This is an error prone and time consuming procedure. Is there a faster way? To find out, let's tabulate the answers shown in the widget above, to see if we can notice any pattern:
 </p>
 <table style="border-collapse: collapse; text-align: center;">
   <tr>
@@ -239,37 +239,39 @@
 })();
 </script>
 
+<p>
+At the moment, those numbers might seem pretty random -- for example, by plotting them, one can observe that no linear or quadratic function of \(n\) agrees with our table. Drats! 
+</p>
+
+<p>
+Let's put a pin in this problem for now, and discuss another classical combinatorics problem.
+</p>
 
 <h3>Counting paths</h3>
 
 <p>
-Next, let's consider a totally different counting problem. 
-Let's try counting paths on the plane that look like the following:
+Let's talk a walk in the plane. We start at \((0, 0),\) and we can only take two kinds of steps: we can go up one unit, or we can go right one unit. 
+
+We want to end at \((6, 6).\) However, we're never allowed to go above the line \(y=x.\) An example of this type of path is shown below.
 </p>
 
-<img src="dyck-example.svg" alt="A Dyck path of length 6" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 440px);
-          height:auto;">
+<img src="dyck-example-rotated.svg" alt="A Dyck path of length 6">
 <p>
-  It's easier to see the rules from the picture than to explain them, but you travel according to the following rules:
-  <ol>
-  <li>You can only move diagonally up or diagonally down.</li>
-  <li>You may not cross below the horizontal white line.</li>
-  <li>You must start and end on the white line.</li>
-</ol>
 These special paths are called <em>Dyck paths</em>.
 </p>
 
 <p>
-  Now, how many Dyck paths are there with 4 up-steps? It turns out, there are also 14:
+Now, how many Dyck paths are there from \((0, 0)\) to \((4, 4)\)? By enumerating them all, we can find 14 total; to draw them, we'll rotate the paths by \(135^{\circ},\) to make it easier to fit many on one page.
 </p>
 
 <img src="dyck-paths.svg" alt="The 14 Dyck paths of length 4" style="display:block;
           margin:2rem auto;
           max-width:100%;
           height:auto;">
-  You can experiment with what happens when we allow more up-steps:
+
+<p>
+What happens to the total number of Dyck paths when we change the ending from \((6, 6)\) to \((n,n)\) for different values of \(n\)? The widget below can help you out!
+</p>
 
 <div class="interactive-block" id="dyck-block">
   <div class="interactive-header">
@@ -373,16 +375,29 @@ These special paths are called <em>Dyck paths</em>.
   render();
 })();
 </script>
-It looks like we are getting the same sequence as before: 1, 2, 5, 14, 42, ...! But why?
+
+<p>
+This sequence \(1, 2, 5, 14, 42\) looks exactly like the sequence counting triangulations of \(n\)-gons! What is going on?!
+</p>
 
 <h3>Binary trees</h3>
 <p>
-  Next, let's try to count binary trees, which are graphs on the plane which look like this:
+Let's look at another combinatorics problem: how many <em>binary trees</em> are there? 
 </p>
+
+<p>
+A <em>binary tree</em> is a graph which you obtain by the following simple procedure: you start with one node; then, that node has 'two children.' From then on, you get to make choices: each node either has two new children below it, or has no children at all. You can see an example below.
+</p>
+
 <img src="binary-tree-example.svg" alt="A full binary tree with 6 branching nodes" style="display:block;
           margin:2rem auto;
           max-width:min(100%, 320px);
           height:auto;">
+
+<p>
+In this example, we colored nodes in white if they have children, and left nodes transparent if they have no children. People often refer to the transparent nodes as "leaves," and the white nodes as "branching nodes." 
+</p>
+
 There are 14 binary trees with 4 white vertices:
 <img src="binary-trees.svg" alt="The 14 full binary trees with 4 branching nodes" style="display:block;
           margin:2rem auto;
@@ -484,7 +499,7 @@ You can again try to vary the number of vertices:
 
 <h3>Chord diagrams</h3>
 
-Finally, let's now imagine you have 8 points on a circle, and you want to connect them to each other in a way such that the chords do not cross. There are again 14 ways to do this:
+Finally, let's now imagine you have 8 points on a circle, and you want to connect them to each other in a way such that the chords do not cross. Here, we only care about the combinatorial arrangement of the chords you draw, and not about the exact shape of the line. Counting this way, there are again 14 possible chord connections:
 <!-- <img src="chord-diagram-example.svg" alt="A chord diagram with 6 chords" style="display:block;
           margin:2rem auto;
           max-width:min(100%, 260px);
@@ -594,12 +609,14 @@ When you vary the number of points on the circle, you again see the sequence 1, 
 
 <h3>Catalan numbers</h3>
 <p>
-At this point, it's seeming like everything we want to count follows the pattern 1, 2, 5, 14, 42, ... These are known as <em>Catalan numbers</em>, and are one of the most important sequences in combinatorics.
+At this point, it seems like everything we want to count follows the pattern 1, 2, 5, 14, 42, ... 
+
+This sequence is known as the <em>Catalan numbers</em>, and they are one of the most important sequences in combinatorics.
 </p>
 
 
 <p>
-  There's actually a simple formula for them,
+  There's actually a simple formula for them, given by
   \[C_n=\frac1{n+1}{2n\choose n}=\frac{(2n)!}{n!(n+1)!}.\]
   For example,
   \[
@@ -617,16 +634,11 @@ At this point, it's seeming like everything we want to count follows the pattern
 <h3>Dyck paths and Binary trees</h3>
 <p>
   So, we know there are exactly the same number (14) of Dyck paths with 4 up-steps, and binary trees with 4 branching nodes. 
-  But we could have shown there was the same number without counting all of them, by creating a <em>bijection</em>.
+  But we could have shown there was the same number without counting all of them, by creating a <em>bijection</em>: that is, there is a way to pair off binary trees and Dyck paths, so that each binary tree lies in exactly one pair, and each Dyck path lies in exactly one pair. If we can pair them off like this, we know that there has to be the same number of binary trees as Dyck paths, even if we don't know how many binary trees or Dyck paths exist.
 </p>
 
 <p>
-  For example, I can tell you there are an equal number of (human) left legs as right legs on earth, even though I have no idea how many billions the true number is. That's because each person has exactly one left leg and right leg, so we can match each of them up.
-</p>
-      
-
-<p>
-  In other words, starting with a binary tree, 
+  In other words, starting with a binary tree 
   <img src="binary-tree-example.svg" alt="A full binary tree with 6 branching nodes" style="display:block;
           margin:2rem auto;
           max-width:min(100%, 320px);
@@ -640,12 +652,18 @@ At this point, it's seeming like everything we want to count follows the pattern
           height:auto;">
 
 <p>
-  So, a first step is to find a similar "structure" in Dyck paths:
+So, a binary tree can always be stored recursively as the data of <em>two</em> smaller binary trees. Can we similarly find a way to break any Dyck path up into two <em>shorter</em> Dyck paths?
+</p>
+
   <img src="dyck-example-middle.svg" alt="A Dyck path of length 6" style="display:block;
           margin:2rem auto;
           max-width:min(100%, 440px);
           height:auto;">
-  Looking at this Dyck path, maybe a natural idea is: to think about when the Dyck path crosses the horizontal line, and divide the Dyck path into two parts:
+
+  <p>
+In this Dyck path, there's maybe a natural way to break it up: a Dyck path starts and ends at this horizontal line; this Dyck path actually meets the horizontal line a third time, so let's use that middle point as a breakpoint, and divide our Dyck path up into two shorter Dyck paths, like so:
+  </p>
+
   <img src="dyck-example-halves.svg" alt="The same Dyck path with the part before it first returns to the ground in blue, and the rest in pink" style="display:block;
           margin:2rem auto;
           max-width:min(100%, 440px);
@@ -653,43 +671,10 @@ At this point, it's seeming like everything we want to count follows the pattern
 </p>
 
 <p>
-  There is an obvious problem with that strategy: what if the Dyck path never touches the horizontal line,
-  <img src="dyck-example-no-return.svg" alt="A Dyck path of length 6 that only touches the ground at its two ends" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 440px);
-          height:auto;">
-    or touches the horizontal line multiple times?
-    <img src="dyck-example.svg" alt="A Dyck path of length 6" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 440px);
-          height:auto;">
-</p>
-
-<p>
-  Well, maybe the issue of never touching the horizontal line isn't such a big problem. After all, there are binary trees which only has one side:
-  <img src="binary-tree-one-sided.svg" alt="A binary tree whose top vertex has only a left child" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 320px);
-          height:auto;">
-    To deal with Dyck paths that could touch the horizontal line multiple times, let's promise to separate the Dyck paths at the first crossing.
-  <img src="dyck-example-touches-twice.svg" alt="A Dyck path that touches the ground twice in the middle, in blue up to the first touch and pink after it" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 440px);
-          height:auto;">
-      Now, notice that the blue half will actually always live above the first line, because there cannot be a crossing in the blue half.
-  <img src="dyck-example-touches-twice-raised.svg" alt="The same Dyck path, with a second line one level up under the blue part" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 440px);
-          height:auto;">
-        This has successfully "decomposed" a big Dyck path into two smaller Dyck paths:
-  <img src="dyck-example-pieces.svg" alt="The two smaller Dyck paths side by side: the blue one, up up down down, and the pink one, up up down down up down" style="display:block;
-          margin:2rem auto;
-          max-width:min(100%, 440px);
-          height:auto;">
-</p>
+We can then 
 Now, we can keep decomposing a Dyck path into smaller and smaller pieces this way. The same holds for binary trees: decompose them into smaller and smaller binary trees. 
-Since they "decompose" in the same way, there should be a way to biject the two objects. Here is an explicit algorithm to do so:
-
+Since they "decompose" in the same way, there should be a way to biject the two objects. Here is an explicit algorithm to do so: we start at the top node of our binary tree; Dyck paths always start with an up step, so we turn that branching node into an up move. Then, we traverse the left half of our binary tree, turning branching nodes into up-steps and leaves into down steps; finally, we traverse the right half the same way. It's easiest to get a feel for this algorithm by seeing it in action:
+</p>
 <div class="interactive-block walk" id="walk-block">
   <div class="interactive-header">
     <div class="interactive-label">Try it yourself</div>
@@ -894,7 +879,7 @@ Since they "decompose" in the same way, there should be a way to biject the two 
 <h3>Dyck paths and Chord diagrams</h3>
 
 <p>
-  Next, let's try to figure out why Dyck paths and chord diagrams correspond to each other. A picture speaks a thousand words, so: the following picture tells you how to go between them!
+  Next, let's try to figure out why Dyck paths and chord diagrams correspond to each other. A picture speaks a thousand words, so: the following picture tells you how to go between them! In the picture, we labelled each step of the Dyck path with a number; we then connected any two edges which have an unobstructed view of each other.
 </p>
 
 <img src="dyck-chord-bijection.svg" alt="A Dyck path with its steps numbered 1 to 12, each up step joined to its matching down step, above the chord diagram on 12 numbered points that joins the same pairs" style="display:block;
@@ -902,14 +887,14 @@ Since they "decompose" in the same way, there should be a way to biject the two 
           max-width:min(100%, 480px);
           height:auto;">
 
-<p>It's a fun exercise, to think about how to biject dissections of a polygon with any of the other objects (Dyck paths, binary trees, chord diagrams) that appeared today!</p>
+<p>It's a fun exercise to think about how to biject dissections of a polygon with any of the other objects (Dyck paths, binary trees, chord diagrams) that appeared today!</p>
 
 <h2>Catalan numbers, beyond combinatorics</h2>
 
 <p>So, Catalan numbers count all of these objects. But you may ask: what's their use?</p>
 
 <p>
-  The author of the blog has encountered Catalan numbers "in the natuere" (not when thinking about combinatorics) several times. The most surprising, perhaps, was when I was thinking about knot theory (see also, <a href="trefoil.html">this article</a>).
+  The author of the blog has encountered Catalan numbers "in the wild" (not when thinking about combinatorics) several times. The most surprising, perhaps, was when I was thinking about knot theory (see also <a href="trefoil.html">this article</a>).
 </p>
 
 <p>
