@@ -37,7 +37,7 @@
       <span class="article-badge">About 30 min read</span>
     </div>
 
-    <p class="article-date">October 2, 2026</p>
+    <p class="article-date">November 14, 2026</p>
   </header>
 
   <div class="hp-layout">
@@ -45,9 +45,9 @@
       <details class="hp-toc-details" open>
         <summary>On this page</summary>
         <ol>
-          <li><a href="#sec1">Dissecting polygons</a></li>
-          <li><a href="#sec2">A linear algebra foundation to quantum mechanics</a></li>
-          <li><a href="#sec3">The uncertainty principle</a></li>
+          <li><a href="#sec1">Some counting problems</a></li>
+          <li><a href="#sec2">Why are they the same number?</a></li>
+          <li><a href="#sec3">Catalan numbers, beyond combinatorics</a></li>
         </ol>
       </details>
     </nav>
@@ -57,6 +57,8 @@
   <p>
   	Today, we are going to solve a few counting problems... and remarkably discover they all have the same answer!
   </p>
+<h2 id="#sec1">Some counting problems</h2>
+		
       <h3>Dissecting polygons</h3>
 
       <p>
@@ -70,7 +72,7 @@
 <p>
 With the widget below, you can change the number of sides, to see how many triangulations there are for different types of polygons.
 </p>
-
+<p>
 <div class="interactive-block" id="tri-block">
   <div class="interactive-header">
     <div class="interactive-label">Try it yourself</div>
@@ -238,6 +240,7 @@ Currently, our only way to find the number of triangulations of an \(n\)-sided p
   render();
 })();
 </script>
+	</p>
 
 <p>
 At the moment, those numbers might seem pretty random -- for example, by plotting them, one can observe that no linear or quadratic function of \(n\) agrees with our table. Drats! 
@@ -629,7 +632,7 @@ This sequence is known as the <em>Catalan numbers</em>, and they are one of the 
   But why is this sequence so ubiquitous? Let's try seeing directly why these different counting problems are actually the same.
 </p>
 
-<h2>Why are they the same number?</h2>
+<h2 id="#sec2">Why are they the same number?</h2>
 
 <h3>Dyck paths and Binary trees</h3>
 <p>
@@ -889,7 +892,7 @@ Since they "decompose" in the same way, there should be a way to biject the two 
 
 <p>It's a fun exercise to think about how to biject dissections of a polygon with any of the other objects (Dyck paths, binary trees, chord diagrams) that appeared today!</p>
 
-<h2>Catalan numbers, beyond combinatorics</h2>
+<h2 id="#sec3">Catalan numbers, beyond combinatorics</h2>
 
 <p>So, Catalan numbers count all of these objects. But you may ask: what's their use?</p>
 
