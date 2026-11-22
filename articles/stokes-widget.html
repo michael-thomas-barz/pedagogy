@@ -1,4 +1,4 @@
-<div id="hp-airy-stokes-three">
+<div id="hp-airy-stokes-exponentials">
   <div class="hp-frame">
     <header class="hp-heading">
       <div>
@@ -23,33 +23,26 @@
         </div>
       </section>
 
-      <section class="hp-comparison" aria-label="Airy values and sector approximations">
+      <section class="hp-comparison" aria-label="Airy values and exponential recipes">
         <div class="hp-point" aria-live="polite" aria-atomic="true">
           <div class="hp-point-z"><i>z</i> <span data-z-value></span></div>
           <div class="hp-point-ai"><span>Ai(<i>z</i>)</span><span data-ai-value></span></div>
         </div>
         <div class="hp-table-top">
           <span data-region></span>
-          <label>Terms per saddle
-            <select aria-label="Terms per saddle" data-terms>
-              <option value="1">1</option>
-              <option value="3" selected>3</option>
-              <option value="6">6</option>
-              <option value="least">Least term</option>
-            </select>
-          </label>
         </div>
-        <table class="hp-table" aria-label="Comparison of three Airy sector recipes">
-          <thead><tr><th scope="col">Sector</th><th scope="col">Recipe</th><th scope="col">Value</th><th scope="col" title="Absolute error divided by the modulus of Ai(z)">Rel. error</th></tr></thead>
+        <table class="hp-table" aria-label="Comparison of three exponential recipes">
+          <thead><tr><th scope="col">Sector</th><th scope="col">Exponential factors</th><th scope="col">Value</th><th scope="col" title="Absolute error divided by the modulus of Ai(z)">Rel. error</th></tr></thead>
           <tbody></tbody>
         </table>
+        <p class="hp-note">ζ = (2/3)z<sup>3/2</sup>. Values omit the Airy amplitude.</p>
       </section>
     </div>
   </div>
 </div>
 
 <style>
-#hp-airy-stokes-three {
+#hp-airy-stokes-exponentials {
   --hp-bg: #282828;
   --hp-stage: #1d2021;
   --hp-fg: #ebdbb2;
@@ -64,8 +57,8 @@
   color-scheme: dark;
   width: 100%;
 }
-#hp-airy-stokes-three *, #hp-airy-stokes-three *::before, #hp-airy-stokes-three *::after { box-sizing: border-box; }
-#hp-airy-stokes-three .hp-frame {
+#hp-airy-stokes-exponentials *, #hp-airy-stokes-exponentials *::before, #hp-airy-stokes-exponentials *::after { box-sizing: border-box; }
+#hp-airy-stokes-exponentials .hp-frame {
   max-width: 850px;
   margin: 0 auto;
   padding: clamp(12px, 3vw, 24px);
@@ -73,88 +66,79 @@
   border-radius: 15px;
   background: var(--hp-bg);
 }
-#hp-airy-stokes-three .hp-heading {
+#hp-airy-stokes-exponentials .hp-heading {
   display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
   gap: 5px 14px; margin-bottom: 17px;
 }
-#hp-airy-stokes-three .hp-heading h2 {
+#hp-airy-stokes-exponentials .hp-heading h2 {
   margin: 0; color: var(--hp-fg); font: 400 clamp(25px, 4vw, 34px)/1.1 var(--hp-serif);
 }
-#hp-airy-stokes-three .hp-heading p { margin: 6px 0 0; color: var(--hp-dim); font-size: 12px; }
-#hp-airy-stokes-three .hp-equation { color: var(--hp-dim); font: 400 17px/1.1 var(--hp-serif); }
-#hp-airy-stokes-three .hp-layout {
+#hp-airy-stokes-exponentials .hp-heading p { margin: 6px 0 0; color: var(--hp-dim); font-size: 12px; }
+#hp-airy-stokes-exponentials .hp-equation { color: var(--hp-dim); font: 400 17px/1.1 var(--hp-serif); }
+#hp-airy-stokes-exponentials .hp-layout {
   display: grid; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
   align-items: start; gap: 17px;
 }
-#hp-airy-stokes-three .hp-plane, #hp-airy-stokes-three .hp-comparison { min-width: 0; }
-#hp-airy-stokes-three .hp-map {
+#hp-airy-stokes-exponentials .hp-plane, #hp-airy-stokes-exponentials .hp-comparison { min-width: 0; }
+#hp-airy-stokes-exponentials .hp-map {
   display: block; width: 100%; padding: 0; aspect-ratio: 1;
   border: 1px solid var(--hp-border); border-radius: 10px;
   background: var(--hp-stage); color: var(--hp-fg); cursor: crosshair; touch-action: none;
 }
-#hp-airy-stokes-three .hp-map:focus-visible,
-#hp-airy-stokes-three select:focus-visible { outline: 2px solid var(--hp-gold); outline-offset: 3px; }
-#hp-airy-stokes-three .hp-svg { display: block; width: 100%; height: 100%; }
-#hp-airy-stokes-three .hp-svg text { user-select: none; dominant-baseline: central; }
-#hp-airy-stokes-three .hp-plane-readout, #hp-airy-stokes-three .hp-legend {
+#hp-airy-stokes-exponentials .hp-map:focus-visible { outline: 2px solid var(--hp-gold); outline-offset: 3px; }
+#hp-airy-stokes-exponentials .hp-svg { display: block; width: 100%; height: 100%; }
+#hp-airy-stokes-exponentials .hp-svg text { user-select: none; dominant-baseline: central; }
+#hp-airy-stokes-exponentials .hp-plane-readout, #hp-airy-stokes-exponentials .hp-legend {
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
   gap: 4px 15px; color: var(--hp-dim); font-size: 11px;
 }
-#hp-airy-stokes-three .hp-plane-readout { min-height: 32px; color: var(--hp-fg); }
-#hp-airy-stokes-three .hp-legend i {
+#hp-airy-stokes-exponentials .hp-plane-readout { min-height: 32px; color: var(--hp-fg); }
+#hp-airy-stokes-exponentials .hp-legend i {
   display: inline-block; width: 14px; vertical-align: 3px; margin-right: 3px;
 }
-#hp-airy-stokes-three .hp-ray-jump { border-top: 2px solid var(--hp-gold); }
-#hp-airy-stokes-three .hp-ray-cut { border-top: 1px dashed var(--hp-axis); }
-#hp-airy-stokes-three .hp-point {
+#hp-airy-stokes-exponentials .hp-ray-jump { border-top: 2px solid var(--hp-gold); }
+#hp-airy-stokes-exponentials .hp-ray-cut { border-top: 1px dashed var(--hp-axis); }
+#hp-airy-stokes-exponentials .hp-point {
   background: var(--hp-stage); border: 1px solid var(--hp-border);
   border-radius: 9px; padding: 10px 12px; overflow-wrap: anywhere;
 }
-#hp-airy-stokes-three .hp-point-z { font-size: 12px; color: var(--hp-dim); }
-#hp-airy-stokes-three .hp-point-ai { display: flex; flex-wrap: wrap; gap: 1px 10px; align-items: baseline; }
-#hp-airy-stokes-three .hp-point-ai > :first-child { font: 400 23px var(--hp-serif); }
-#hp-airy-stokes-three .hp-point-ai > :last-child { color: var(--hp-gold); font-size: 14px; }
-#hp-airy-stokes-three .hp-table-top {
+#hp-airy-stokes-exponentials .hp-point-z { font-size: 12px; color: var(--hp-dim); }
+#hp-airy-stokes-exponentials .hp-point-ai { display: flex; flex-wrap: wrap; gap: 1px 10px; align-items: baseline; }
+#hp-airy-stokes-exponentials .hp-point-ai > :first-child { font: 400 23px var(--hp-serif); }
+#hp-airy-stokes-exponentials .hp-point-ai > :last-child { color: var(--hp-gold); font-size: 14px; }
+#hp-airy-stokes-exponentials .hp-table-top {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 4px 8px; margin: 8px 0 2px; min-height: 36px; font-size: 11px;
 }
-#hp-airy-stokes-three .hp-table-top > span { color: var(--hp-fg); }
-#hp-airy-stokes-three .hp-table-top label { color: var(--hp-dim); display: flex; align-items: center; gap: 6px; }
-#hp-airy-stokes-three select {
-  font: inherit; color: var(--hp-fg); padding: 4px 2px 4px 5px;
-  background: #32302f; border: 1px solid var(--hp-border); border-radius: 5px;
-  min-height: 28px;
-}
-#hp-airy-stokes-three .hp-table {
+#hp-airy-stokes-exponentials .hp-table-top > span { color: var(--hp-fg); }
+#hp-airy-stokes-exponentials .hp-table {
   width: 100%; table-layout: auto; border-collapse: collapse;
   margin: 0; font: 11px/1.28 var(--hp-mono); color: var(--hp-fg);
 }
-#hp-airy-stokes-three .hp-table :is(th, td) {
+#hp-airy-stokes-exponentials .hp-table :is(th, td) {
   border: 0; border-bottom: 1px solid var(--hp-border); padding: 6px 4px;
   text-align: left; vertical-align: middle; background: transparent;
 }
-#hp-airy-stokes-three .hp-table thead th { color: var(--hp-dim); font-weight: 400; white-space: nowrap; }
-#hp-airy-stokes-three .hp-table tr > :first-child { padding-left: 6px; }
-#hp-airy-stokes-three .hp-table tr > :last-child { text-align: right; padding-right: 5px; white-space: nowrap; }
-#hp-airy-stokes-three .hp-table tbody th { width: 13%; font-weight: 500; color: var(--sector); }
-#hp-airy-stokes-three .hp-table .hp-recipe { font: 400 15px/1.15 var(--hp-serif); white-space: nowrap; }
-#hp-airy-stokes-three .hp-table .hp-value { width: 49%; }
-#hp-airy-stokes-three .hp-value-part { display: inline-block; white-space: nowrap; }
-#hp-airy-stokes-three .hp-table .hp-current { background: var(--sector-wash); }
-#hp-airy-stokes-three .hp-table .hp-current > :first-child { box-shadow: inset 2px 0 var(--sector); }
-#hp-airy-stokes-three .hp-recipe sub { font-size: .73em; }
+#hp-airy-stokes-exponentials .hp-table thead th { color: var(--hp-dim); font-weight: 400; }
+#hp-airy-stokes-exponentials .hp-table tr > :first-child { padding-left: 6px; }
+#hp-airy-stokes-exponentials .hp-table tr > :last-child { text-align: right; padding-right: 5px; white-space: nowrap; }
+#hp-airy-stokes-exponentials .hp-table tbody th { width: 13%; font-weight: 500; color: var(--sector); }
+#hp-airy-stokes-exponentials .hp-table .hp-recipe { font: 400 15px/1.15 var(--hp-serif); white-space: nowrap; }
+#hp-airy-stokes-exponentials .hp-table .hp-value { width: 49%; }
+#hp-airy-stokes-exponentials .hp-value-part { display: inline-block; white-space: nowrap; }
+#hp-airy-stokes-exponentials .hp-table .hp-current { background: var(--sector-wash); }
+#hp-airy-stokes-exponentials .hp-table .hp-current > :first-child { box-shadow: inset 2px 0 var(--sector); }
+#hp-airy-stokes-exponentials .hp-recipe sub { font-size: .73em; }
 @media (max-width: 650px) {
-  #hp-airy-stokes-three .hp-layout { grid-template-columns: minmax(0, 1fr); gap: 13px; }
-  #hp-airy-stokes-three .hp-plane { width: min(100%, 385px); justify-self: center; }
-  #hp-airy-stokes-three .hp-plane-readout { min-height: 29px; }
+  #hp-airy-stokes-exponentials .hp-layout { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  #hp-airy-stokes-exponentials .hp-plane { width: min(100%, 385px); justify-self: center; }
+  #hp-airy-stokes-exponentials .hp-plane-readout { min-height: 29px; }
 }
 @media (max-width: 370px) {
-  #hp-airy-stokes-three .hp-table :is(th, td) { padding-left: 2px; padding-right: 2px; }
-  #hp-airy-stokes-three .hp-point-ai > :last-child { font-size: 12px; }
+  #hp-airy-stokes-exponentials .hp-table :is(th, td) { padding-left: 2px; padding-right: 2px; }
+  #hp-airy-stokes-exponentials .hp-point-ai > :last-child { font-size: 12px; }
 }
-@media (pointer: coarse) {
-  #hp-airy-stokes-three select { min-height: 44px; font-size: 16px; }
-}
+#hp-airy-stokes-exponentials .hp-note { margin: 9px 0 0; color: var(--hp-dim); font-size: 11px; }
 </style>
 <script>
 (() => {
@@ -195,16 +179,15 @@ function airyReference(re, im) {
   return [Number(`${sumRe}e-${digits}`), Number(`${sumIm}e-${digits}`)];
 }
 
-const root = document.getElementById('hp-airy-stokes-three');
+const root = document.getElementById('hp-airy-stokes-exponentials');
 const map = root.querySelector('[data-map]');
 const svg = map.querySelector('.hp-svg');
-const terms = root.querySelector('[data-terms]');
 const maximumRadius = 8;
 const radians = Math.PI / 180;
 const sectors = [
-  { id: 'I',   start: -120, end:  120, color: '#8ec07c', multiplier:  0, state: 'one saddle' },
-  { id: 'II',  start:  120, end:  180, color: '#fe8019', multiplier:  1, state: 'two saddles' },
-  { id: 'III', start: -180, end: -120, color: '#d3869b', multiplier: -1, state: 'two saddles' }
+  { id: 'I',   start: -120, end:  120, color: '#8ec07c', multiplier:  0 },
+  { id: 'II',  start:  120, end:  180, color: '#fe8019', multiplier:  1 },
+  { id: 'III', start: -180, end: -120, color: '#d3869b', multiplier: -1 }
 ];
 
 const readouts = {};
@@ -212,38 +195,13 @@ for (const name of ['z-value', 'ai-value', 'radius', 'angle', 'region']) {
   readouts[name] = root.querySelector('[data-' + name + ']');
 }
 
-const multiply = ([a, b], [c, d]) => [a * c - b * d, a * d + b * c];
 const polar = (radius, phase) => [radius * Math.cos(phase), radius * Math.sin(phase)];
 
-function saddleTerms(radius, angle, setting) {
-  const modulus = (2 / 3) * radius ** 1.5;
-  const phase = 1.5 * angle * radians;
-  const [real, imaginary] = polar(modulus, phase);
-  const inverse = polar(1 / modulus, -phase);
-  const normalizer = 1 / (2 * Math.sqrt(Math.PI) * radius ** .25);
-  const minus = [1, 0];
-  const plus = [1, 0];
-  let term = [1, 0];
-  const limit = setting === 'least' ? 80 : Number(setting);
-  for (let k = 1; k < limit; k++) {
-    const coefficient = (6 * k - 5) * (6 * k - 1) / (72 * k);
-    if (setting === 'least' && coefficient >= modulus) break;
-    term = multiply(term, [coefficient * inverse[0], coefficient * inverse[1]]);
-    const sign = k % 2 ? -1 : 1;
-    minus[0] += sign * term[0];
-    minus[1] += sign * term[1];
-    plus[0] += term[0];
-    plus[1] += term[1];
-  }
-  return [
-    multiply(minus, polar(normalizer * Math.exp(-real), -angle * radians / 4 - imaginary)),
-    multiply(plus, polar(normalizer * Math.exp(real), -angle * radians / 4 + imaginary))
-  ];
-}
-
-function approximate(radius, angle, sector, setting) {
-  const [minus, plus] = saddleTerms(radius, angle, setting);
-  return [minus[0] - sector.multiplier * plus[1], minus[1] + sector.multiplier * plus[0]];
+function exponentialRecipe(radius, angle, multiplier) {
+  const [real, imaginary] = polar((2 / 3) * radius ** 1.5, 1.5 * angle * radians);
+  const minus = polar(Math.exp(-real), -imaginary);
+  const plus = polar(Math.exp(real), imaginary);
+  return [minus[0] - multiplier * plus[1], minus[1] + multiplier * plus[0]];
 }
 
 function magnitudeText(value, digits = 5) {
@@ -285,9 +243,9 @@ const rows = sectors.map((sector) => {
   name.setAttribute('aria-label', 'Sector ' + sector.id + ', ' + name.title);
   const recipe = document.createElement('td');
   recipe.className = 'hp-recipe';
-  recipe.innerHTML = '<i>E</i><sub>−</sub>' + ({
-    1: ' + <i>iE</i><sub>+</sub>',
-    '-1': ' − <i>iE</i><sub>+</sub>',
+  recipe.innerHTML = '<i>e</i><sup>−ζ</sup>' + ({
+    1: ' + <i>ie</i><sup>ζ</sup>',
+    '-1': ' − <i>ie</i><sup>ζ</sup>',
     0: ''
   })[sector.multiplier];
   const value = document.createElement('td');
@@ -359,7 +317,7 @@ function drawMap() {
   svg.append(line(origin, point(180, radius), '#928374', 1, '3 4'));
   for (const angle of [-120, 120]) {
     svg.append(line(origin, point(angle, radius), '#fabd2f', 1.45));
-    svg.append(label(point(angle, radius + 17), angleText(angle), '#fabd2f'));
+    svg.append(label(point(angle, radius + 17), angle < 0 ? '+240°' : angleText(angle), '#fabd2f'));
   }
 
   for (const sector of sectors) {
@@ -408,7 +366,7 @@ function update() {
   } else if (onJump) {
     readouts.region.textContent = 'Stokes jump';
   } else {
-    readouts.region.textContent = 'Sector ' + sectors[sector].id + ' · ' + sectors[sector].state;
+    readouts.region.textContent = 'Sector ' + sectors[sector].id;
   }
 
   const reference = airyReference(re, im);
@@ -427,8 +385,7 @@ function update() {
     }
     // Use the principal branch, with the two lateral arguments on the cut.
     const argument = onCut ? (sectors[i].multiplier < 0 ? -180 : 180) : angle;
-    const approximation = approximate(radius, argument, sectors[i], terms.value);
-    if (onCut && sectors[i].multiplier !== 0) approximation[1] = 0;
+    const approximation = exponentialRecipe(radius, argument, sectors[i].multiplier);
     const difference = Math.hypot(approximation[0] - reference[0], approximation[1] - reference[1]);
     complexText(row.value, approximation, 6);
     row.error.textContent = magnitudeText(100 * difference / referenceMagnitude, 3) + '%';
@@ -485,7 +442,6 @@ map.addEventListener('keydown', (event) => {
   const step = event.shiftKey ? .5 : .1;
   selectPoint(z[0] + step * delta[0], z[1] + step * delta[1]);
 });
-terms.addEventListener('change', update);
 
 drawMap();
 update();
