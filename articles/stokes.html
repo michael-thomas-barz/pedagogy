@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stokes phenomena</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body);">
+  </script>
+<script defer src="../site.js"></script>
+</head>
+<body class="article-page-body hp-page">
+<a class="hp-skip" href="#hp-main">Skip to content</a>
+
+<main class="page-shell" id="hp-main" tabindex="-1">
+
+  <header class="article-hero">
+    <a class="article-back-button" href="../index.html">← Back</a>
+
+    <div class="article-category">Algebra</div>
+
+    <h1 class="article-title">
+      Syzygies and higher groupoids
+    </h1>
+
+    <p class="article-description">
+    </p>
+
+    <div class="article-info">
+      <span class="article-badge">Level 4</span>
+      <span class="article-badge">Helpful: Algebra; group theory for the advanced asides</span>
+      <span class="article-badge">About 30 min read</span>
+      <span class="article-badge interactive">Interactive</span>
+    </div>
+
+    <p class="article-date">August 29, 2026</p>
+  </header>
+
+  <div class="hp-layout">
+    <nav class="article-toc hp-toc" aria-label="On this page">
+      <details class="hp-toc-details" open>
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#hp-section-1">Equivalence relations</a></li>
+          <li><a href="#hp-section-2">The formal definition of an equivalence relation</a></li>
+          <li><a href="#hp-section-3">Groupoids</a></li>
+          <li><a href="#hp-section-4">Groupoid-based mathematics</a></li>
+          <li><a href="#hp-section-5">The inadequacy of groupoids</a></li>
+          <li><a href="#hp-section-6">\(\infty\)-groupoids; or, anima</a></li>
+        </ol>
+      </details>
+    </nav>
+
+    <div class="hp-prose">
+
+<p>
+In 1850, George Gabriel Stokes -- an Irish mathematician and physicist -- set out to study the asymptotics of the <em>Airy function</em>. In doing so, he observed an incredibly strange behavior, now called the <em>Stokes phenomenon</em>.
+</p>
+
+<p>
+The goal of this article is to explain what Stokes discovered. To do that, we first need to explain what the Airy function is, what it means to study its asymptotics, and why Stokes was doing this. 
+</p>
+
+<h2>The Airy function</h2>
+
+<p>
+In a lot of these articles, to give an interesting explanation of some mathematical phenomenon, we have to invent some pseudo-history of how the phenomenon <em>could</em> have been discovered. But with the Stokes phenomenon, we don't need to guess: in his paper <a href="https://www.damtp.cam.ac.uk/user/gold/pdfs/teaching/Stokes1850.pdf">On the Numerical Calculation of a Class of Definite Integrals and Infinite Series</a>, Stokes tells us!
+</p>
+
+<p>
+The story begins with George Biddell Airy, an English mathematician and astronomer. Airy was trying to study the mathematics of rainbows. In this article, we won't go into the physics of rainbows -- instead focusing more on Stokes' work -- but we will briefly say what Airy was up to. 
+</p>
+
+<p>
+You've surely seen a rainbow before. However, you might not have seen a <em>supernumerary rainbow</em>. A supernumerary rainbow is a rare natural phenomena, where after the usual red-orange-yellow-green-blue-indigo-violet bands of a rainbow, additional, fainter bands appear. TODO PICTURE
+</p>
+
+<p>
+Descartes' theory of optics was able to explain ordinary rainbows, but not supernumerary rainbows. Airy was attempting to make a theory of optics that would explain these extra bands. TODO explain
+</p>
+
+<p>
+So, the name of the game in understanding rainbows is to understand the integral
+\[\int_0^{\infty} \cos\left(\frac{\pi}{2}(w^3 - mw)\right) \, dw,\]
+where \(m\) is a parameter; the values of \(m\) for which this integral is zero are the locations at which new bands will appear. 
+</p>
+
+<p>
+At this point, Airy faced a big problem: how does one actually calculate this integral? It's really hard -- especially in the era before computers! 
+</p>
+
+<p>
+This is where Stokes steps in: he found a way to quickly calculate this integral. In fact, he found a way to TODO
+</p>
+
+<h2>Approximations</h2>
+
+<p>
+We're trying to approximate
+\[\operatorname{Ai}(x) = \frac{1}{\pi}\int_0^{\infty}\cos\left(\frac{t^3}{3}+xt\right) \, dt.\]
+How?
+</p>
+
+<p>
+The most naive way to approximate a function is to take its <em>Taylor expansion</em>. To compute the Taylor expansion, one needs to know all the higher derivatives of \(\operatorname{Ai}(x).\) Fortunately, those aren't so hard to calculate, since we can interchange differentiation and integration to get
+\[\operatorname{Ai}'(x) = \frac{1}{\pi}\int_0^{\infty} \frac{d}{dx}\cos\left(\frac{t^3}{3} + xt\right) \, dt,\]
+which the chain rule simplifies to 
+\[\operatorname{Ai}'(x) = \frac{1}{\pi}\int_0^{\infty} -t\sin\left(\frac{t^3}{3} + xt\right) \, dt.\]
+</p>
+
+<p>
+If we differentiate again, we get
+\[\operatorname{Ai}''(x) = \frac{1}{\pi}\int_0^{\infty} -t^2\cos\left(\frac{t^3}{3} + xt\right) \, dt.\]
+At this point, it might seem we have to go on differentiating forever, and that each derivative we get will be an even stranger looking integral. However, this new integral can actually be simplified, using integration by parts: TODO
+</p>
+
+<p>
+todo thus ode
+</p>
+
+<p>
+The first observation is that the Airy function is the solution to a differential equation. I want to emphasize something rather unusual here: usually in physics, one describes the natural world in terms of differential equations, and then one has to <em>solve</em> the differential equation to get the answer. But Airy actually derived his integral from a direct calculation, without doing any differential equations. So, in some sense we're doing the reverse of how physics usually goes: nature has given us a function, and we're trying to find a differential equation it solves! 
+</p>
+
+<p>
+What does this equation buy us? 
+</p>
+
+<p>
+The equation \(f''(x) - xf(x) = 0\) is an example of a <em>linear ODE</em> with polynomial coefficients; here, the 'coefficients' are 1 (the coefficient on \(f''(x)\)) and \(-x\) (the coefficient on \(f(x)\)). 
+</p>
+
+<p>
+In a first course on differential equations, one of the first thing you'll learn to solve is linear ODEs with <em>constant coefficients</em>. For example, the equation
+\[f''(x) - 4f(x) = 0\]
+has solutions of the form
+\[f(x) = Ae^{2x} + Be^{-2x}\]
+where \(A, B\) are constants; that is, the original differential equation has a two-parameter family of solutions, all of which are of the form something times \(e^{2x}\) plus something times \(e^{-2x}.\) So, one might hope that we can similarly write down an 'easy' solution to
+\[f''(x) - xf(x) = 0,\]
+and hence express the Airy function in terms of well-understood functions.
+</p>
+
+<p>
+Which exponential functions \(f(x) = e^{S(x)}\) solve our ODE? Substituting this expression into the ODE, we get
+\[S''(x) + (S'(x))^2 = x.\]
+This is slightly unfortunate: we've turned our linear ODE into a non-linear ODE. 
+</p>
+
+<p>
+This non-linear ODE is quite hard to solve. However, one can find an <em>approximate</em> solution as follows. 
+</p>
+
+<p>
+Let's put \(p(x) = S'(x),\) so that our ODE becomes
+\[p'(x) + p(x)^2 = x.\]
+Given an ODE you can't solve, it's always tempting to try plugging in a simple function to see what happens. The simplest functions are the power functions \(Ax^n,\) so let's try plugging in \(p(x) = Ax^n.\) We'd get
+\[p'(x) + p(x)^2 = Anx^{n-1} + A^2x^{2n}.\]
+This expression \(Anx^{n-1} + A^2x^{2n}\) can never equal \(x.\) However, if say \(n \gt 0,\) then the term \(x^{2n}\) dominates \(nx^{n-1}\) for large \(x\); so, if we put \(n=1/2, A = 1\) then
+\[p'(x) + p(x)^2 = \frac{1}{2}x^{-1/2} + x \approx x,\]
+because for large values of \(x\) this term \(\frac{1}{2}x^{-1/2}\) is quite small. Similarly, \(n=1/2, A=-1\) gives an approximate solution. So, \(\sqrt{x}\) and \(-\sqrt{x}\) are both approximate solutions.
+</p>
+
+<p>
+Can we try making these approximations a little better? Let's add on another term, and write
+\[p(x) = \sqrt{x} + q(x).\]
+Then
+\[p'(x) + p(x)^2 = \frac{1}{2\sqrt{x}} + q'(x) + x + 2q(x)\sqrt{x} + q(x)^2.\] 
+For this right hand side to equal \(x,\) we want
+\[q'(x) + 2q(x)\sqrt{x} + q(x)^2 = -\frac{1}{2\sqrt{x}}.\]
+Again, let's make an ansatz that \(q(x) = Ax^n,\) from which we find
+\[Anx^{n-1} + 2Ax^{n+0.5} + A^2x^{2n} = -\frac{1}{2}x^{-1/2}.\]
+For any particular value of \(n,\) one of the terms \(x^{n-1}, x^{n+0.5}, x^{2n}\) will dominate the above expression for large values of \(x.\) For example, when \(n = 1,\) the three terms are \(x^0 = 1, x^{1.5}, x^2,\) and for large \(x\) this \(x^2\) term will dominate.
+</p>
+
+<p>
+Let's try to match the dominant term with \(-\frac{1}{2}x^{-1/2}.\) If the dominant term was \(A^2x^{2n},\) we'd be in trouble: we'd need to take \(n = -1/4\) to get \(2n = -1/2,\) but then the other two terms would be \(x^{-5/4}\) and \(x^{1/4},\) and for large \(x\) this \(x^{1/4}\) term would dominate. So it can't be that the dominant term is \(A^2x^{2n}.\)
+</p>
+
+<p>
+Similarly, if we try using \(Anx^{n-1}\) as our dominant term, we'd need to take \(n = 1/2,\) but then \(A^2x^{2n}\) would be \(A^2x,\) dominanting the other terms in the expression. 
+</p>
+
+<p>
+However, if we use \(2Ax^{n+0.5}\) as our dominant term, we find \(n=-1,\) and everything works out nicely: the expression is then
+\[-Ax^{-2} + 2Ax^{-1/2} + A^2x^{-2} = -\frac{1}{2}x^{-1/2},\]
+and \(2Ax^{-1/2}\) is the asymptotically dominant term on the right hand side. Thus 
+\[q(x) \approx -\frac{1}{4}x^{-1/2}\]
+(after solving \(2A = -1/2\)), so that
+\[p(x) \approx \sqrt{x} - \frac{1}{4x}.\]
+One can continue in this way to get even better approximations, but for our purposes this will be enough.
+</p>
+
+<p>
+Similarly, one can find that \(p(x) = -\sqrt{x} - \frac{1}{4x}\) is an approximate solution to our ODE. 
+</p>
+
+<p>
+Going back to \(S(x),\) which recall obeyed \(p(x) = S'(x),\) we expect that 
+\[S''(x) + (S'(x))^2 = x\]
+should have two solutions, \(S_+\) and \(S_-,\) such that
+\[S_+(x) \approx \frac{2}{3}x^{3/2} - \frac{1}{4}\ln(x)\]
+and
+\[S_-(x) \approx -\frac{2}{3}x^{3/2} - \frac{1}{4}\ln(x),\]
+where the right hand sides are just the antiderivatives of \(\sqrt{x} - 1/4x\) and \(-\sqrt{x} - 1/4x.\) 
+</p>
+
+<p>
+And unwinding one more layer, we expect that our original ODE
+\[f''(x) - xf(x) = 0\]
+has general solution of the form
+\[f(x) \approx Ax^{-1/4}e^{2x^{3/2}/3} + Bx^{-1/4}e^{2x^{-3/2}/3}.\]  
+These approximations get better and better for large \(x,\) because our approximate solution to \(p'(x) + p(x)^2 = x\) gets better for large \(x.\) 
+</p>
+
+<p>
+Airy computed a table values for the Airy function from \(x=-4\) to \(x=+4\) by evaluating the integral numerically. 
+</p>
+
+<p>
+We know that
+\[\Ai(x) \approx A \cdot x^{-1/4}e^{2x^{3/2}/3} + B \cdot x^{-1/4}e^{-2x^{3/2}/3},\]
+where \(A, B\) are unknown. This is two unknowns, so we need two pieces of information to solve them. Let's just use Airy's values of \(\operatorname{Ai}(3)\) and \(\operatorname{Ai}(4).\) Remember that the approximation gets better and better for larger values of \(x,\) which is why we're using these results at the edge of Airy's table. 
+</p>
+
+<p>
+If we use them, we find that
+\[A \approx 0.277, B \approx 0.000.\]
+We'll remark that modern theory tells us that the values of \(A\) and \(B\) which make the approximation as good as possible are \(A = 1/(2\sqrt{\pi})\) and \(B = 0.\) We won't say why these numbers work out so well, but because \(1/(2\sqrt{\pi})\) and \(0\) are a bit cleaner than \(0.277\) and \(0.000\), we'll use them instead. As a remark, \(1/(2\sqrt{\pi}) \approx 0.28221.\) The reason this disagrees with the value of \(A\) computed using Airy's table is because the approximation doesn't work so well for small values of \(x,\) and hence using \(\operatorname{Ai}(3)\) and \(\operatorname{Ai}(4)\) doesn't give the optimal constants.
+</p>
+
+<p>
+Anyways, the point of this long digression is that we should expect
+\[\operatorname{Ai}(x) \approx \frac{1}{2\sqrt{\pi}}x^{-1/4}e^{2x^{3/2}/3},\]
+at least for large values of \(x.\)
+</p>
+
+<h3>Enter the negative number line</h3>
+
+<p>
+Remember how Airy's table of values when from \(x=-4\) to \(x=+4\)? What would happen if we had instead used \(x=-4\) and \(x=-3\) to try getting our approximation? Those are still large <em>negative</em> numbers, so we might expect to get basically the same approximation. 
+</p>
+
+<p>
+Before saying what happens, let's remark that for negative values of \(x,\) there's a bit of a subtlety in the final answer, because our asymptotic involves expressions like \(x^{-1/4} = \sqrt{\sqrt{x}}\) and \(x^{3/2} = \sqrt{x^3},\) which involve taking square roots of \(x.\) In particular, these functions can give imaginary numbers as outputs, despite the Airy function being real-valued! This is because all the imaginary numbers involved end up cancelling out in the end. By the way, it's quite remarkable that the best way to understand the behavior of a real-valued function is to go through complex-valued functions!
+</p>
+
+<p>
+Anyways, with these subtleties on imaginary numbers discussed, we'll remark that using Airy's values for \(-3\) and \(-4\) lead you to calculate that
+\[A \approx 0.280 - 0.004i,\]
+\[B \approx -0.004 + 0.280i.\]
+The value for \(A\) is pretty close to \(1/(2\sqrt{\pi})),\) which we got before; so that is OK. But the new value for \(B\) is very strange: its <em>real</em> part is zero, but its <em>imaginary</em> part is very large! 
+
+As before, we'll remark that general theory tells us that \(A = 1/2\sqrt{\pi}\) and \(B = i/2\sqrt{\pi}\) end up giving the best results.
+</p>
+
+<p>
+This is the basic instance of <em>Stokes phenomena</em>: the approximation
+\[\operatorname{Ai}(x) \approx \frac{1}{2\sqrt{\pi}}x^{-1/4}e^{2x^{3/2}/3}\]
+works well for large <em>positive</em> values of \(x,\) but to get an approximation that works for large <em>negative</em> values of \(x\) (meaning something like \(x = -100\)), you need to use the <em>different</em> approximation
+\[\operatorname{Ai}(-x) \approx \frac{1}{2\sqrt{\pi}}x^{-1/4}e^{2x^{3/2}/3} + \frac{i}{2\sqrt{\pi}}x^{-1/4}e^{-2x^{3/2}/3} = \frac{(-x)^{-1/4}}{\sqrt{\pi}}\cos\left(\frac{2}{3}(-x)^{3/2} - \frac{\pi}{4}\right).\]
+The last simplification, rewriting a sum of complex exponentials as a trig function, is common in complex analysis; if you haven't seen it before, we'll just say that it's not as scary as it seems!
+</p>
+
+<h2>Going to the complex plane</h2>
+
+<p>
+At its face, the Stokes phenomena might not seem surprising: one has to use different approximations for positive and negative numbers, so what? 
+</p>
+
+<p>
+To see the true counterintuitiveness of Stokes phenomena, one needs to go to the complex plane. As mentioned above, the original purpose of the Airy function was to help understand rainbows using optics and classical mechanics. However, it turns out that the Airy function <em>also</em> appears in quantum mechanics! In its quantum mechanical instantiation, one wants to understand the Airy function \(\operatorname{Ai}(x)\) even for <em>complex numbers</em> \(x\) as an input, like \(1+3i\) or \(-5-12i.\) 
+</p>
+
+<p>
+We know that you have to use one asymptotic for the positive real axis, and a different one for the negative real axis. But in the complex plane, there are more than two directions: so, what asymptotics do you use? 
+</p>
+
+<p>
+In the widget below, 
+</p>
+
+TODO: dog time
+
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2110982');
+</script>
+<!-- End MailerLite Universal -->
+<footer>
+<a href="../index.html">← back to home page</a>
+<div class="ml-embedded" data-form="SnIhXR"></div>
+</footer>
+
+</div></div></main><section class="related-section hp-related" aria-labelledby="hp-related-heading"><div class="page-shell"><h2 class="related-heading" id="hp-related-heading">Where next?</h2><div class="related-grid"><a class="related-card" href="../articles/cubic.html"><div class="related-category">Algebra</div><h3>How to solve cubic and quartic equations II: cubics</h3><p>Using the mathematics of symmetry, we derive the cubic formula.</p><span class="related-arrow" aria-hidden="true">Explore →</span></a><a class="related-card" href="../articles/monodromy.html"><div class="related-category">Topology · Calculus</div><h3>Möbius strips and differential equations</h3><p>Have you been going around in circles? Well, you might have travelled further than you think!
+</p><span class="related-arrow" aria-hidden="true">Explore →</span></a></div></div></section><footer class="site-footer hp-site-footer"><div class="page-shell site-footer-inner"><p><a href="../index.html#latest">Browse all articles</a></p><p><a href="../about.html">About Hidden Phenomena</a></p></div></footer>
+<!-- Feedback button -->
+<button
+  class="hp-feedback-trigger"
+  id="hp-feedback-open"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span aria-hidden="true">✎</span>
+  Feedback
+</button>
+
+
+<!-- Feedback dialog -->
+<dialog
+  class="hp-feedback-dialog"
+  id="hp-feedback-dialog"
+  aria-labelledby="hp-feedback-title"
+>
+  <div class="hp-feedback-inner">
+
+    <div class="hp-feedback-header">
+      <h2
+        class="hp-feedback-title"
+        id="hp-feedback-title"
+      >
+        Send feedback
+      </h2>
+
+      <button
+        class="hp-feedback-close"
+        id="hp-feedback-close"
+        type="button"
+        aria-label="Close feedback form"
+      >
+        ×
+      </button>
+    </div>
+
+    <p class="hp-feedback-subtitle">
+    Have something you want to share with us? This feedback form will communicate it to Michael and Kenta, the writers of this blog. This feedback won't be public (mostly because moderating a comment section sounds hard).
+    </p>
+
+    <form id="hp-feedback-form">
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-message"
+        >
+          Feedback
+        </label>
+
+        <textarea
+          class="hp-feedback-textarea"
+          id="hp-feedback-message"
+          name="message"
+          maxlength="5000"
+          placeholder="What did you notice?"
+          required
+        ></textarea>
+      </div>
+
+      <div class="hp-feedback-field">
+        <label
+          class="hp-feedback-label"
+          for="hp-feedback-email"
+        >
+          Email
+          <span class="hp-feedback-email-note">
+            — optional, if you'd like a reply
+          </span>
+        </label>
+
+        <input
+          class="hp-feedback-email"
+          id="hp-feedback-email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </div>
+
+      <div class="hp-feedback-footer">
+        <p
+          class="hp-feedback-status"
+          id="hp-feedback-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button
+          class="hp-feedback-submit"
+          id="hp-feedback-submit"
+          type="submit"
+        >
+          Send feedback
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const openButton = document.getElementById("hp-feedback-open");
+  const closeButton = document.getElementById("hp-feedback-close");
+  const dialog = document.getElementById("hp-feedback-dialog");
+
+  const form = document.getElementById("hp-feedback-form");
+  const messageInput = document.getElementById("hp-feedback-message");
+
+  const status = document.getElementById("hp-feedback-status");
+  const submitButton = document.getElementById("hp-feedback-submit");
+
+  const originalSubmitText = submitButton.textContent;
+
+  function getPageTitle() {
+    const h1 = document.querySelector("h1");
+
+    if (h1 && h1.textContent.trim()) {
+      return h1.textContent.trim();
+    }
+
+    return document.title || "Untitled page";
+  }
+
+  function resetStatus() {
+    status.textContent = "";
+    status.removeAttribute("data-state");
+
+    submitButton.disabled = false;
+    submitButton.textContent = originalSubmitText;
+  }
+
+  // Open feedback dialog
+  openButton.addEventListener("click", () => {
+    resetStatus();
+    dialog.showModal();
+
+    requestAnimationFrame(() => {
+      messageInput.focus();
+    });
+  });
+
+  // Close button
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // Close when clicking the backdrop
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) {
+      dialog.close();
+    }
+  });
+
+  // Submit feedback
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    resetStatus();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    const payload = {
+      message: data.get("message"),
+      email: data.get("email"),
+      pageTitle: getPageTitle(),
+      pageUrl: window.location.href
+    };
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (_) {
+        // Ignore malformed/non-JSON response bodies.
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Could not send feedback."
+        );
+      }
+
+      status.textContent = "Thanks — your feedback was sent!";
+      status.dataset.state = "success";
+
+      submitButton.textContent = "Sent ✓";
+      submitButton.disabled = true;
+
+      // Clear the feedback but preserve the user's email address.
+      messageInput.value = "";
+
+      // Optional: automatically close after a short delay.
+      // Uncomment if you prefer this behavior:
+      //
+      // setTimeout(() => {
+      //   dialog.close();
+      // }, 1200);
+
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+
+      status.textContent =
+        "Something went wrong. Please try again.";
+
+      status.dataset.state = "error";
+
+      submitButton.textContent = originalSubmitText;
+      submitButton.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
