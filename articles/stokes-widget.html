@@ -1,4 +1,4 @@
-<div id="hp-airy-stokes-exponentials">
+<div id="hp-airy-stokes-leading">
   <div class="hp-frame">
     <header class="hp-heading">
       <div>
@@ -23,7 +23,7 @@
         </div>
       </section>
 
-      <section class="hp-comparison" aria-label="Airy values and exponential recipes">
+      <section class="hp-comparison" aria-label="Airy values and leading approximations">
         <div class="hp-point" aria-live="polite" aria-atomic="true">
           <div class="hp-point-z"><i>z</i> <span data-z-value></span></div>
           <div class="hp-point-ai"><span>Ai(<i>z</i>)</span><span data-ai-value></span></div>
@@ -31,18 +31,18 @@
         <div class="hp-table-top">
           <span data-region></span>
         </div>
-        <table class="hp-table" aria-label="Comparison of three exponential recipes">
-          <thead><tr><th scope="col">Sector</th><th scope="col">Exponential factors</th><th scope="col">Value</th><th scope="col" title="Absolute error divided by the modulus of Ai(z)">Rel. error</th></tr></thead>
+        <table class="hp-table" aria-label="Comparison of three leading approximations">
+          <thead><tr><th scope="col">Sector</th><th scope="col">Recipe</th><th scope="col">Value</th><th scope="col" title="Absolute error divided by the modulus of Ai(z)">Rel. error</th></tr></thead>
           <tbody></tbody>
         </table>
-        <p class="hp-note">ζ = (2/3)z<sup>3/2</sup>. Values omit the Airy amplitude.</p>
+        <p class="hp-note"><i>E</i><sub>±</sub> = e<sup>±ζ</sup>/(2√π z<sup>1/4</sup>), &nbsp; ζ = (2/3)z<sup>3/2</sup>.</p>
       </section>
     </div>
   </div>
 </div>
 
 <style>
-#hp-airy-stokes-exponentials {
+#hp-airy-stokes-leading {
   --hp-bg: #282828;
   --hp-stage: #1d2021;
   --hp-fg: #ebdbb2;
@@ -57,8 +57,8 @@
   color-scheme: dark;
   width: 100%;
 }
-#hp-airy-stokes-exponentials *, #hp-airy-stokes-exponentials *::before, #hp-airy-stokes-exponentials *::after { box-sizing: border-box; }
-#hp-airy-stokes-exponentials .hp-frame {
+#hp-airy-stokes-leading *, #hp-airy-stokes-leading *::before, #hp-airy-stokes-leading *::after { box-sizing: border-box; }
+#hp-airy-stokes-leading .hp-frame {
   max-width: 850px;
   margin: 0 auto;
   padding: clamp(12px, 3vw, 24px);
@@ -66,79 +66,79 @@
   border-radius: 15px;
   background: var(--hp-bg);
 }
-#hp-airy-stokes-exponentials .hp-heading {
+#hp-airy-stokes-leading .hp-heading {
   display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
   gap: 5px 14px; margin-bottom: 17px;
 }
-#hp-airy-stokes-exponentials .hp-heading h2 {
+#hp-airy-stokes-leading .hp-heading h2 {
   margin: 0; color: var(--hp-fg); font: 400 clamp(25px, 4vw, 34px)/1.1 var(--hp-serif);
 }
-#hp-airy-stokes-exponentials .hp-heading p { margin: 6px 0 0; color: var(--hp-dim); font-size: 12px; }
-#hp-airy-stokes-exponentials .hp-equation { color: var(--hp-dim); font: 400 17px/1.1 var(--hp-serif); }
-#hp-airy-stokes-exponentials .hp-layout {
+#hp-airy-stokes-leading .hp-heading p { margin: 6px 0 0; color: var(--hp-dim); font-size: 12px; }
+#hp-airy-stokes-leading .hp-equation { color: var(--hp-dim); font: 400 17px/1.1 var(--hp-serif); }
+#hp-airy-stokes-leading .hp-layout {
   display: grid; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
   align-items: start; gap: 17px;
 }
-#hp-airy-stokes-exponentials .hp-plane, #hp-airy-stokes-exponentials .hp-comparison { min-width: 0; }
-#hp-airy-stokes-exponentials .hp-map {
+#hp-airy-stokes-leading .hp-plane, #hp-airy-stokes-leading .hp-comparison { min-width: 0; }
+#hp-airy-stokes-leading .hp-map {
   display: block; width: 100%; padding: 0; aspect-ratio: 1;
   border: 1px solid var(--hp-border); border-radius: 10px;
   background: var(--hp-stage); color: var(--hp-fg); cursor: crosshair; touch-action: none;
 }
-#hp-airy-stokes-exponentials .hp-map:focus-visible { outline: 2px solid var(--hp-gold); outline-offset: 3px; }
-#hp-airy-stokes-exponentials .hp-svg { display: block; width: 100%; height: 100%; }
-#hp-airy-stokes-exponentials .hp-svg text { user-select: none; dominant-baseline: central; }
-#hp-airy-stokes-exponentials .hp-plane-readout, #hp-airy-stokes-exponentials .hp-legend {
+#hp-airy-stokes-leading .hp-map:focus-visible { outline: 2px solid var(--hp-gold); outline-offset: 3px; }
+#hp-airy-stokes-leading .hp-svg { display: block; width: 100%; height: 100%; }
+#hp-airy-stokes-leading .hp-svg text { user-select: none; dominant-baseline: central; }
+#hp-airy-stokes-leading .hp-plane-readout, #hp-airy-stokes-leading .hp-legend {
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
   gap: 4px 15px; color: var(--hp-dim); font-size: 11px;
 }
-#hp-airy-stokes-exponentials .hp-plane-readout { min-height: 32px; color: var(--hp-fg); }
-#hp-airy-stokes-exponentials .hp-legend i {
+#hp-airy-stokes-leading .hp-plane-readout { min-height: 32px; color: var(--hp-fg); }
+#hp-airy-stokes-leading .hp-legend i {
   display: inline-block; width: 14px; vertical-align: 3px; margin-right: 3px;
 }
-#hp-airy-stokes-exponentials .hp-ray-jump { border-top: 2px solid var(--hp-gold); }
-#hp-airy-stokes-exponentials .hp-ray-cut { border-top: 1px dashed var(--hp-axis); }
-#hp-airy-stokes-exponentials .hp-point {
+#hp-airy-stokes-leading .hp-ray-jump { border-top: 2px solid var(--hp-gold); }
+#hp-airy-stokes-leading .hp-ray-cut { border-top: 1px dashed var(--hp-axis); }
+#hp-airy-stokes-leading .hp-point {
   background: var(--hp-stage); border: 1px solid var(--hp-border);
   border-radius: 9px; padding: 10px 12px; overflow-wrap: anywhere;
 }
-#hp-airy-stokes-exponentials .hp-point-z { font-size: 12px; color: var(--hp-dim); }
-#hp-airy-stokes-exponentials .hp-point-ai { display: flex; flex-wrap: wrap; gap: 1px 10px; align-items: baseline; }
-#hp-airy-stokes-exponentials .hp-point-ai > :first-child { font: 400 23px var(--hp-serif); }
-#hp-airy-stokes-exponentials .hp-point-ai > :last-child { color: var(--hp-gold); font-size: 14px; }
-#hp-airy-stokes-exponentials .hp-table-top {
+#hp-airy-stokes-leading .hp-point-z { font-size: 12px; color: var(--hp-dim); }
+#hp-airy-stokes-leading .hp-point-ai { display: flex; flex-wrap: wrap; gap: 1px 10px; align-items: baseline; }
+#hp-airy-stokes-leading .hp-point-ai > :first-child { font: 400 23px var(--hp-serif); }
+#hp-airy-stokes-leading .hp-point-ai > :last-child { color: var(--hp-gold); font-size: 14px; }
+#hp-airy-stokes-leading .hp-table-top {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 4px 8px; margin: 8px 0 2px; min-height: 36px; font-size: 11px;
 }
-#hp-airy-stokes-exponentials .hp-table-top > span { color: var(--hp-fg); }
-#hp-airy-stokes-exponentials .hp-table {
+#hp-airy-stokes-leading .hp-table-top > span { color: var(--hp-fg); }
+#hp-airy-stokes-leading .hp-table {
   width: 100%; table-layout: auto; border-collapse: collapse;
   margin: 0; font: 11px/1.28 var(--hp-mono); color: var(--hp-fg);
 }
-#hp-airy-stokes-exponentials .hp-table :is(th, td) {
+#hp-airy-stokes-leading .hp-table :is(th, td) {
   border: 0; border-bottom: 1px solid var(--hp-border); padding: 6px 4px;
   text-align: left; vertical-align: middle; background: transparent;
 }
-#hp-airy-stokes-exponentials .hp-table thead th { color: var(--hp-dim); font-weight: 400; }
-#hp-airy-stokes-exponentials .hp-table tr > :first-child { padding-left: 6px; }
-#hp-airy-stokes-exponentials .hp-table tr > :last-child { text-align: right; padding-right: 5px; white-space: nowrap; }
-#hp-airy-stokes-exponentials .hp-table tbody th { width: 13%; font-weight: 500; color: var(--sector); }
-#hp-airy-stokes-exponentials .hp-table .hp-recipe { font: 400 15px/1.15 var(--hp-serif); white-space: nowrap; }
-#hp-airy-stokes-exponentials .hp-table .hp-value { width: 49%; }
-#hp-airy-stokes-exponentials .hp-value-part { display: inline-block; white-space: nowrap; }
-#hp-airy-stokes-exponentials .hp-table .hp-current { background: var(--sector-wash); }
-#hp-airy-stokes-exponentials .hp-table .hp-current > :first-child { box-shadow: inset 2px 0 var(--sector); }
-#hp-airy-stokes-exponentials .hp-recipe sub { font-size: .73em; }
+#hp-airy-stokes-leading .hp-table thead th { color: var(--hp-dim); font-weight: 400; }
+#hp-airy-stokes-leading .hp-table tr > :first-child { padding-left: 6px; }
+#hp-airy-stokes-leading .hp-table tr > :last-child { text-align: right; padding-right: 5px; white-space: nowrap; }
+#hp-airy-stokes-leading .hp-table tbody th { width: 13%; font-weight: 500; color: var(--sector); }
+#hp-airy-stokes-leading .hp-table .hp-recipe { font: 400 15px/1.15 var(--hp-serif); white-space: nowrap; }
+#hp-airy-stokes-leading .hp-table .hp-value { width: 49%; }
+#hp-airy-stokes-leading .hp-value-part { display: inline-block; white-space: nowrap; }
+#hp-airy-stokes-leading .hp-table .hp-current { background: var(--sector-wash); }
+#hp-airy-stokes-leading .hp-table .hp-current > :first-child { box-shadow: inset 2px 0 var(--sector); }
+#hp-airy-stokes-leading .hp-recipe sub { font-size: .73em; }
 @media (max-width: 650px) {
-  #hp-airy-stokes-exponentials .hp-layout { grid-template-columns: minmax(0, 1fr); gap: 13px; }
-  #hp-airy-stokes-exponentials .hp-plane { width: min(100%, 385px); justify-self: center; }
-  #hp-airy-stokes-exponentials .hp-plane-readout { min-height: 29px; }
+  #hp-airy-stokes-leading .hp-layout { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  #hp-airy-stokes-leading .hp-plane { width: min(100%, 385px); justify-self: center; }
+  #hp-airy-stokes-leading .hp-plane-readout { min-height: 29px; }
 }
 @media (max-width: 370px) {
-  #hp-airy-stokes-exponentials .hp-table :is(th, td) { padding-left: 2px; padding-right: 2px; }
-  #hp-airy-stokes-exponentials .hp-point-ai > :last-child { font-size: 12px; }
+  #hp-airy-stokes-leading .hp-table :is(th, td) { padding-left: 2px; padding-right: 2px; }
+  #hp-airy-stokes-leading .hp-point-ai > :last-child { font-size: 12px; }
 }
-#hp-airy-stokes-exponentials .hp-note { margin: 9px 0 0; color: var(--hp-dim); font-size: 11px; }
+#hp-airy-stokes-leading .hp-note { margin: 9px 0 0; color: var(--hp-dim); font-size: 11px; }
 </style>
 <script>
 (() => {
@@ -179,7 +179,7 @@ function airyReference(re, im) {
   return [Number(`${sumRe}e-${digits}`), Number(`${sumIm}e-${digits}`)];
 }
 
-const root = document.getElementById('hp-airy-stokes-exponentials');
+const root = document.getElementById('hp-airy-stokes-leading');
 const map = root.querySelector('[data-map]');
 const svg = map.querySelector('.hp-svg');
 const maximumRadius = 8;
@@ -197,10 +197,12 @@ for (const name of ['z-value', 'ai-value', 'radius', 'angle', 'region']) {
 
 const polar = (radius, phase) => [radius * Math.cos(phase), radius * Math.sin(phase)];
 
-function exponentialRecipe(radius, angle, multiplier) {
+function leadingApproximation(radius, angle, multiplier) {
   const [real, imaginary] = polar((2 / 3) * radius ** 1.5, 1.5 * angle * radians);
-  const minus = polar(Math.exp(-real), -imaginary);
-  const plus = polar(Math.exp(real), imaginary);
+  const amplitude = 1 / (2 * Math.sqrt(Math.PI) * radius ** .25);
+  const phase = -angle * radians / 4;
+  const minus = polar(amplitude * Math.exp(-real), phase - imaginary);
+  const plus = polar(amplitude * Math.exp(real), phase + imaginary);
   return [minus[0] - multiplier * plus[1], minus[1] + multiplier * plus[0]];
 }
 
@@ -243,9 +245,9 @@ const rows = sectors.map((sector) => {
   name.setAttribute('aria-label', 'Sector ' + sector.id + ', ' + name.title);
   const recipe = document.createElement('td');
   recipe.className = 'hp-recipe';
-  recipe.innerHTML = '<i>e</i><sup>−ζ</sup>' + ({
-    1: ' + <i>ie</i><sup>ζ</sup>',
-    '-1': ' − <i>ie</i><sup>ζ</sup>',
+  recipe.innerHTML = '<i>E</i><sub>−</sub>' + ({
+    1: ' + <i>iE</i><sub>+</sub>',
+    '-1': ' − <i>iE</i><sub>+</sub>',
     0: ''
   })[sector.multiplier];
   const value = document.createElement('td');
@@ -385,7 +387,8 @@ function update() {
     }
     // Use the principal branch, with the two lateral arguments on the cut.
     const argument = onCut ? (sectors[i].multiplier < 0 ? -180 : 180) : angle;
-    const approximation = exponentialRecipe(radius, argument, sectors[i].multiplier);
+    const approximation = leadingApproximation(radius, argument, sectors[i].multiplier);
+    if (onCut && sectors[i].multiplier !== 0) approximation[1] = 0;
     const difference = Math.hypot(approximation[0] - reference[0], approximation[1] - reference[1]);
     complexText(row.value, approximation, 6);
     row.error.textContent = magnitudeText(100 * difference / referenceMagnitude, 3) + '%';
