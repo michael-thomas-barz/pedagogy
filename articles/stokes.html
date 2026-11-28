@@ -25,20 +25,13 @@
     <div class="article-category">Algebra</div>
 
     <h1 class="article-title">
-      Syzygies and higher groupoids
+     Stokes phenomena 
     </h1>
 
     <p class="article-description">
     </p>
 
-    <div class="article-info">
-      <span class="article-badge">Level 4</span>
-      <span class="article-badge">Helpful: Algebra; group theory for the advanced asides</span>
-      <span class="article-badge">About 30 min read</span>
-      <span class="article-badge interactive">Interactive</span>
-    </div>
-
-    <p class="article-date">August 29, 2026</p>
+    <p class="article-date">November 28, 2026</p>
   </header>
 
   <div class="hp-layout">
@@ -77,21 +70,30 @@ The story begins with George Biddell Airy, an English mathematician and astronom
 </p>
 
 <p>
-You've surely seen a rainbow before. However, you might not have seen a <em>supernumerary rainbow</em>. A supernumerary rainbow is a rare natural phenomena, where after the usual red-orange-yellow-green-blue-indigo-violet bands of a rainbow, additional, fainter bands appear. TODO PICTURE
+You've surely seen a rainbow before. However, you might not have seen a <em>supernumerary rainbow</em>. A supernumerary rainbow is a rare natural phenomena, where after the usual red-orange-yellow-green-blue-indigo-violet bands of a rainbow, additional, fainter bands appear. 
+
+<figure style="text-align: center;">
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/2/24/Supernumerary-rainbows-jb.jpg"
+    alt="A supernumerary rainbow exhibiting interference fringes inside the primary bow."
+    style="width: 600px; max-width: 100%; height: auto;"
+    loading="lazy"
+  >
+  <figcaption>
+    A supernumerary rainbow, photographed by
+    <a href="https://commons.wikimedia.org/wiki/File:Supernumerary-rainbows-jb.jpg">Johannes Bahrdt</a>
+    (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>).
+  </figcaption>
+</figure>
 </p>
 
 <p>
-Descartes' theory of optics was able to explain ordinary rainbows, but not supernumerary rainbows. Airy was attempting to make a theory of optics that would explain these extra bands. TODO explain
+Descartes' theory of optics was able to explain ordinary rainbows, but not supernumerary rainbows. Airy was attempting to make a theory of optics that would explain these extra bands. His theory predicted that the sizes of the different bands of the supernumerary rainbow could be calculated using what is now called the <em>Airy function</em>, 
+\[\operatorname{Ai}(x) = \frac{1}{\pi}\int_0^{\infty} \cos\left(\frac{t^3}{3} + xt\right) \, dt.\]
 </p>
 
 <p>
-So, the name of the game in understanding rainbows is to understand the integral
-\[\int_0^{\infty} \cos\left(\frac{\pi}{2}(w^3 - mw)\right) \, dw,\]
-where \(m\) is a parameter; the values of \(m\) for which this integral is zero are the locations at which new bands will appear. 
-</p>
-
-<p>
-At this point, Airy faced a big problem: how does one actually calculate this integral? It's really hard -- especially in the era before computers! 
+So, the name of the game in understanding rainbows is to calculate that integral. Unfortunately, that integral has no closed form answer, which makes evaluating it -- and hence verifying that Airy's theory agrees with observation! -- quite difficult.
 </p>
 
 <p>
@@ -103,7 +105,6 @@ This is where Stokes steps in: he found a way to quickly calculate this integral
 <p>
 We're trying to approximate
 \[\operatorname{Ai}(x) = \frac{1}{\pi}\int_0^{\infty}\cos\left(\frac{t^3}{3}+xt\right) \, dt.\]
-How?
 </p>
 
 <p>
@@ -116,43 +117,65 @@ which the chain rule simplifies to
 <p>
 If we differentiate again, we get
 \[\operatorname{Ai}''(x) = \frac{1}{\pi}\int_0^{\infty} -t^2\cos\left(\frac{t^3}{3} + xt\right) \, dt.\]
-At this point, it might seem we have to go on differentiating forever, and that each derivative we get will be an even stranger looking integral. However, this new integral can actually be simplified, using integration by parts: TODO
+At this point, it might seem we have to go on differentiating forever, and that each derivative we get will be an even stranger looking integral. However, this new integral can actually be simplified.
+</p>
+
+  <details class="hp-aside"> 
+<summary>If you click here, you can see the full algebra, but the end result is
+	\[\operatorname{Ai}''(x) = \frac{x}{\pi}\int_0^{\infty}\cos\left(\frac{t^3}{3}+xt\right) \, dt\].</summary>
+<p>
+The trick is essentially integration by parts: 
+\[\frac{d}{dt}\sin\left(\frac{t^3}{3} + xt\right) = (t^2+x)\cos\left(\frac{t^3}{3}+xt\right),\]
+so that 
+\[\operatorname{Ai}''(x) = \frac{x}{\pi}\int_0^{\infty} \cos\left(\frac{t^3}{3}+xt\right) \, dt - \frac{1}{\pi}\left[\sin\left(\frac{t^3}{3}+xt\right)\right]^{\infty}_0.\]
+The boundary term is oscillatory, and one has to be a little careful about handling it formally, but it ends up being OK to neglect.
+</p>
+</details> 
+
+<p>
+Thus
+\[\operatorname{Ai}''(x) = x\operatorname{Ai}(x),\]
+so that \(\operatorname{Ai}(x)\) obeys a very simple ODE.
 </p>
 
 <p>
-todo thus ode
+I want to emphasize something rather unusual here: usually in physics, one describes the natural world in terms of differential equations, and then one has to <em>solve</em> the differential equation to get the answer. But Airy actually derived his integral from a direct calculation, without doing any differential equations. So, in some sense we're doing the reverse of how physics usually goes: nature has given us a function, and we went backwards and found a differential equation it solves!
 </p>
 
 <p>
-The first observation is that the Airy function is the solution to a differential equation. I want to emphasize something rather unusual here: usually in physics, one describes the natural world in terms of differential equations, and then one has to <em>solve</em> the differential equation to get the answer. But Airy actually derived his integral from a direct calculation, without doing any differential equations. So, in some sense we're doing the reverse of how physics usually goes: nature has given us a function, and we're trying to find a differential equation it solves! 
-</p>
-
-<p>
-What does this equation buy us? 
-</p>
-
-<p>
-The equation \(f''(x) - xf(x) = 0\) is an example of a <em>linear ODE</em> with polynomial coefficients; here, the 'coefficients' are 1 (the coefficient on \(f''(x)\)) and \(-x\) (the coefficient on \(f(x)\)). 
+Remember that we're trying to find some formula for the Airy function. This Airy equation,
+\[f''(x) = xf(x),\]
+is an example of a <em>linear ODE</em> with polynomial coefficients; here the 'coefficients' are 1 (the coefficient on \(f''(x)\)) and \(x\) (the coefficient on \(f(x)\)). So, we can hope that the theory of ODEs might give us a way to quickly write down a closed form for \(\operatorname{Ai}(x).\) 
 </p>
 
 <p>
 In a first course on differential equations, one of the first thing you'll learn to solve is linear ODEs with <em>constant coefficients</em>. For example, the equation
-\[f''(x) - 4f(x) = 0\]
+\[g''(x) - 4g(x) = 0\]
 has solutions of the form
-\[f(x) = Ae^{2x} + Be^{-2x}\]
+\[g(x) = Ae^{2x} + Be^{-2x}\]
 where \(A, B\) are constants; that is, the original differential equation has a two-parameter family of solutions, all of which are of the form something times \(e^{2x}\) plus something times \(e^{-2x}.\) So, one might hope that we can similarly write down an 'easy' solution to
 \[f''(x) - xf(x) = 0,\]
 and hence express the Airy function in terms of well-understood functions.
 </p>
 
 <p>
-Which exponential functions \(f(x) = e^{S(x)}\) solve our ODE? Substituting this expression into the ODE, we get
+Which exponential functions \(f(x) = e^{S(x)}\) solve our ODE? Substituting this expression into the ODE, the equation
+\[f''(x) = xf(x)\]
+turns into
+\[S''(x)e^{S(x)} + S'(x)^2e^{S(x)} = xe^{S(x)},\]
+or equivalently
 \[S''(x) + (S'(x))^2 = x.\]
 This is slightly unfortunate: we've turned our linear ODE into a non-linear ODE. 
 </p>
 
 <p>
-This non-linear ODE is quite hard to solve. However, one can find an <em>approximate</em> solution as follows. 
+This non-linear ODE, like most non-linear ODEs, is quite hard to solve. However, one can find an <em>approximate</em> solution as follows. 
+</p>
+
+<h3>Solving an equation</h3>
+
+<p>
+Here we'll get quite in the weeds of algebra for a little; feel free to skim through to the next header if that's not quite your thing.
 </p>
 
 <p>
@@ -196,21 +219,22 @@ One can continue in this way to get even better approximations, but for our purp
 </p>
 
 <p>
-Similarly, one can find that \(p(x) = -\sqrt{x} - \frac{1}{4x}\) is an approximate solution to our ODE. 
+Similarly, one can find that \(p(x) = -\sqrt{x} - \frac{1}{4x}\) is an approximate solution to our ODE. Recall that \(p(x) = S'(x),\) so integrating these two approximate solutions, we get two approximate solutions for \(S(x).\) 
 </p>
 
+<h3>Going back</h3>
+
 <p>
-Going back to \(S(x),\) which recall obeyed \(p(x) = S'(x),\) we expect that 
+From our work in the last section, we find that 
 \[S''(x) + (S'(x))^2 = x\]
 should have two solutions, \(S_+\) and \(S_-,\) such that
 \[S_+(x) \approx \frac{2}{3}x^{3/2} - \frac{1}{4}\ln(x)\]
 and
-\[S_-(x) \approx -\frac{2}{3}x^{3/2} - \frac{1}{4}\ln(x),\]
-where the right hand sides are just the antiderivatives of \(\sqrt{x} - 1/4x\) and \(-\sqrt{x} - 1/4x.\) 
+\[S_-(x) \approx -\frac{2}{3}x^{3/2} - \frac{1}{4}\ln(x).\]
 </p>
 
 <p>
-And unwinding one more layer, we expect that our original ODE
+Unwinding one more layer, we expect that our original ODE
 \[f''(x) - xf(x) = 0\]
 has general solution of the form
 \[f(x) \approx Ax^{-1/4}e^{2x^{3/2}/3} + Bx^{-1/4}e^{2x^{-3/2}/3}.\]  
@@ -218,7 +242,7 @@ These approximations get better and better for large \(x,\) because our approxim
 </p>
 
 <p>
-Airy computed a table values for the Airy function from \(x=-4\) to \(x=+4\) by evaluating the integral numerically. 
+Airy computed a table values for the Airy function from \(x=-4\) to \(x=+4\) by evaluating the integral numerically. Using his table of values, we can figure out what the particular constants \(A\) and \(B\) should be for the Airy function.
 </p>
 
 <p>
@@ -230,7 +254,7 @@ where \(A, B\) are unknown. This is two unknowns, so we need two pieces of infor
 <p>
 If we use them, we find that
 \[A \approx 0.277, B \approx 0.000.\]
-We'll remark that modern theory tells us that the values of \(A\) and \(B\) which make the approximation as good as possible are \(A = 1/(2\sqrt{\pi})\) and \(B = 0.\) We won't say why these numbers work out so well, but because \(1/(2\sqrt{\pi})\) and \(0\) are a bit cleaner than \(0.277\) and \(0.000\), we'll use them instead. As a remark, \(1/(2\sqrt{\pi}) \approx 0.28221.\) The reason this disagrees with the value of \(A\) computed using Airy's table is because the approximation doesn't work so well for small values of \(x,\) and hence using \(\operatorname{Ai}(3)\) and \(\operatorname{Ai}(4)\) doesn't give the optimal constants.
+We'll remark that modern theory tells us that the values of \(A\) and \(B\) which make the approximation as good as possible are \(A = 1/(2\sqrt{\pi})\) and \(B = 0.\) We won't say why these numbers work out so well, but because \(1/(2\sqrt{\pi})\) and \(0\) look at bit nicer on the page than \(0.277\) and \(0.000\), we'll use them instead. As a remark, \(1/(2\sqrt{\pi}) \approx 0.28221.\) The reason this disagrees with the value of \(A\) computed using Airy's table is because the approximation doesn't work so well for small values of \(x,\) and hence using \(\operatorname{Ai}(3)\) and \(\operatorname{Ai}(4)\) doesn't give the optimal constants.
 </p>
 
 <p>
@@ -246,7 +270,7 @@ Remember how Airy's table of values when from \(x=-4\) to \(x=+4\)? What would h
 </p>
 
 <p>
-Before saying what happens, let's remark that for negative values of \(x,\) there's a bit of a subtlety in the final answer, because our asymptotic involves expressions like \(x^{-1/4} = \sqrt{\sqrt{x}}\) and \(x^{3/2} = \sqrt{x^3},\) which involve taking square roots of \(x.\) In particular, these functions can give imaginary numbers as outputs, despite the Airy function being real-valued! This is because all the imaginary numbers involved end up cancelling out in the end. By the way, it's quite remarkable that the best way to understand the behavior of a real-valued function is to go through complex-valued functions!
+Before saying what happens, let's remark that for negative values of \(x,\) there's a bit of a subtlety in the final answer, because our asymptotic involves expressions like \(x^{-1/4} = \sqrt{\sqrt{x}}\) and \(x^{3/2} = \sqrt{x^3},\) which involve taking square roots. In particular, these functions can give imaginary numbers as outputs, despite the Airy function being real-valued! However, all the imaginary numbers involved end up cancelling out in the end, so it is still sensible to use these complex-valued functions to approximate a real-valued function. By the way, it's quite remarkable that the best way to understand the behavior of a real-valued function is to go through complex-valued functions!
 </p>
 
 <p>
@@ -273,11 +297,11 @@ At its face, the Stokes phenomena might not seem surprising: one has to use diff
 </p>
 
 <p>
-To see the true counterintuitiveness of Stokes phenomena, one needs to go to the complex plane. As mentioned above, the original purpose of the Airy function was to help understand rainbows using optics and classical mechanics. However, it turns out that the Airy function <em>also</em> appears in quantum mechanics! In its quantum mechanical instantiation, one wants to understand the Airy function \(\operatorname{Ai}(x)\) even for <em>complex numbers</em> \(x\) as an input, like \(1+3i\) or \(-5-12i.\) 
+To see the true strangeness of Stokes phenomena, one needs to go to the complex plane. As mentioned above, the original purpose of the Airy function was to help understand rainbows using optics and classical mechanics. However, it turns out that the Airy function <em>also</em> appears in quantum mechanics! In its quantum mechanical instantiation, one wants to understand the Airy function \(\operatorname{Ai}(x)\) even for <em>complex numbers</em> \(x\) as an input, like \(1+3i\) or \(-5-12i.\) 
 </p>
 
 <p>
-We know that you have to use one asymptotic for the positive real axis, and a different one for the negative real axis. But in the complex plane, there are more than two directions: so, what asymptotics do you use? 
+We know that you have to use one asymptotic for the positive real axis, and a different one for the negative real axis. But in the complex plane, there are more than two directions: so, what asymptotic formula do you use? 
 </p>
 
 <p>
